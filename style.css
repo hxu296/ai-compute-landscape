@@ -267,3 +267,5 @@ html{scroll-padding-top:74px}
 #tokenTable td:last-child{min-width:240px;max-width:400px}
 #tokenTable td:first-child{min-width:180px}
 #tokens summary{font-size:13px;cursor:pointer}
+
+.inference-tokens{margin-top:44px;scroll-margin-top:74px}.inference-tokens .prose h3{font:500 30px/1.2 var(--serif);margin:0 0 14px}

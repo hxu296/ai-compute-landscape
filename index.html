@@ -6,15 +6,15 @@
 <title>AI Compute Landscape: fleets, contracts, prices and inference</title>
 <meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Source-linked facts, scope-aware comparisons and explicit uncertainty.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=35f9619b5921">
+<link rel="stylesheet" href="style.css?v=0b4661d1120d">
 </head>
 <body>
 <div class="tip" id="tip"></div>
 <header class="masthead">
   <a class="brand" href="#top"><svg id="brandArt" viewBox="0 0 64 64" aria-hidden="true"></svg><span><b>AI Compute Landscape</b><small>An illustrated data guide</small></span></a>
-  <nav><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#tokens">Tokens</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a><a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository">GitHub ↗</a></nav>
+  <nav><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a><a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository">GitHub ↗</a></nav>
 </header>
-<div class="reading-nav" id="readingNav"><div class="reading-progress" id="readingProgress"></div><nav aria-label="Sections"><a href="#landscape">Landscape</a><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#tokens">Tokens</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav></div>
+<div class="reading-nav" id="readingNav"><div class="reading-progress" id="readingProgress"></div><nav aria-label="Sections"><a href="#landscape">Landscape</a><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav></div>
 
 <main id="top">
 <aside id="dailyBrief" class="news-banner" aria-label="Daily compute news"></aside>
@@ -161,19 +161,18 @@
 </section>
 <section class="chapter" id="usage">
   <div class="prose">
-    <div class="label"><span class="num">05</span>Inference vs training</div>
-    <h2>Inference and training workloads</h2>
-    <p>Nobody measures this split directly. What exists are statements: a cloud's share of AI revenue, a lab's spending breakdown, an analyst's forecast for the whole market. They answer different questions, so the figure keeps them apart. Token counts are the closest thing to a meter for inference.</p>
+    <div class="label"><span class="num">05</span>Inference</div>
+    <h2>Inference workloads and token demand</h2>
+    <p>Public disclosures describe inference through shares of spending or usage, and through tokens served. These views answer different questions: revenue, compute, spending and token counts are distinct measures. Each chart retains its sources, dates and scope.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Inference shares of revenue, usage, spend or compute</h3></div>
     <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="max-width:680px;display:block;margin:auto"></svg>
     <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
   </div></div>
-</section>
 
-<section class="chapter" id="tokens">
-  <div class="prose"><div class="label"><span class="num">06</span>Token demand</div><h2>Inference tokens served</h2><p>Token disclosures track activity rather than installed hardware. Each point retains its original period, date, model coverage and reporting basis. Providers count different products and token types; these figures do not measure equal compute or form an additive market total.</p></div>
+  <div id="tokens" class="inference-tokens">
+  <div class="prose"><h3>Tokens served</h3><p>Token disclosures track activity rather than installed hardware. Each point retains its original period, date, model coverage and reporting basis. Providers count different products and token types; these figures do not measure equal compute or form an additive market total.</p></div>
   <div class="fig"><div class="fig-frame"><div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest disclosures by reporting period</h3></div>
     <div class="fig-controls"><label class="ctl">Reporting period <select id="tokenPeriod"></select></label></div>
     <svg id="tokenSvg" role="img" aria-label="Latest disclosed token activity in its native reporting period"></svg>
@@ -181,11 +180,12 @@
     <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
+  </div>
 </section>
 
 <section class="chapter" id="china">
   <div class="prose">
-    <div class="label"><span class="num">07</span>China</div>
+    <div class="label"><span class="num">06</span>China</div>
     <h2>China’s compute infrastructure</h2>
     <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company.</p>
   </div>
@@ -201,7 +201,7 @@
 
 <section class="chapter" id="providers">
   <div class="prose">
-    <div class="label"><span class="num">08</span>Providers</div>
+    <div class="label"><span class="num">07</span>Providers</div>
     <h2>Provider reference</h2>
     <p>Empty fields mean not disclosed, not zero. Hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
   </div>
@@ -211,7 +211,7 @@
 
 <section class="chapter" id="method">
   <div class="prose">
-    <div class="label"><span class="num">09</span>Sources and method</div>
+    <div class="label"><span class="num">08</span>Sources and method</div>
     <h2>Sources, definitions and evidence limits</h2>
     <div class="method" id="methodBox"></div>
     <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
