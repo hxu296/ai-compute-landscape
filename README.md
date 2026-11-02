@@ -1,4 +1,4 @@
-# AI compute landscape (November 2026)
+# Who powers the Token Economy?
 
 An interactive page on who supplies AI compute: hyperscalers (AWS, Microsoft Azure, Google Cloud, Oracle, Meta, xAI/SpaceX), neoclouds (CoreWeave, Nebius, Lambda, Crusoe, Nscale, Fluidstack and others), power hosts, and the Chinese clouds.
 

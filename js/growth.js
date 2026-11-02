@@ -38,7 +38,6 @@
     $("#growthLegend").innerHTML=subs.map(s=>`<span><i style="background:var(${s.c})"></i>${esc(s.n)}</span>`).join("");
     const rows=subs.map(s=>{const a=s.pts[0],b=s.pts.at(-1);return {name:s.n,start:a[0],first:a[1],end:b[0],last:b[1],mult:b[1]/a[1],scope:b[4]||"company",source_url:b[3]};});
     table("#growthSummary",rows,[{k:"name",h:"Company"},{k:"start",h:"First date"},{k:"first",h:"First",f:r=>metric==="mw_online"?num(r.first):money(r.first)},{k:"end",h:"Latest date"},{k:"last",h:"Latest",f:r=>metric==="mw_online"?num(r.last):money(r.last)},{k:"mult",h:"Multiple",f:r=>r.mult.toFixed(2)+"×"},{k:"scope",h:"Reporting scope"},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
-    $("#growthTake").innerHTML=`<span class="verdict">${mode==="absolute"?"Absolute scale and growth rate answer different questions":"A shared baseline makes relative growth visible"}</span>${mode==="absolute"?"All selected companies share the same dates and vertical scale. Switch to Indexed to see smaller firms’ percentage growth.":"Each company’s Q2 2025 observation is set to 100. Fiscal quarter ends can differ by one month; exact dates appear below."} Lines connect source observations only. Latest reporting dates differ, and consolidated group revenue can include non-cloud businesses; use the scope column.`;
   }
   $("#growthAbs").onclick=()=>{mode="absolute";draw();};$("#growthIdx").onclick=()=>{mode="index";draw();};
   $("#growthAll").onclick=()=>{Object.keys(NC.growth).forEach(n=>selected.add(n));draw();};

@@ -20,11 +20,6 @@
       el("text", { x: x(r.total) + 6, y: y + 21, class: "ink", "font-family": "JetBrains Mono, monospace", "font-size": 11.5 }, svg).textContent = `${(r.total / 1e6).toFixed(2)}M` + (other > 1000 ? " (incl. other)" : "");
     });
     $("#supLegend").innerHTML = DES.filter(([k])=>designer==="All"||k===designer).map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("");
-    const g = rows[0], tpu = (g.d.Google || 0) / g.total;
-    const cust = Math.round(rows.reduce((a, r) => a + (r.d.Google || 0) + (r.d.Amazon || 0), 0) / rows.reduce((a, r) => a + r.total, 0) * 100);
-    $("#supTake").innerHTML = `<span class="verdict">Custom chips are ${cust}% of the largest fleets</span><b>${esc(g.name)}</b> leads with ${(g.total / 1e6).toFixed(1)}M H100-equivalents,
-      ${Math.round(tpu * 100)}% of them its own TPUs. Across the ${rows.length} fleets shown, ${cust}% of the compute is Google or Amazon silicon and nearly all the rest is Nvidia.`;
-    if(designer!=="All")$("#supTake").innerHTML=`<span class="verdict">${esc(designer==="Nvidia"?"NVIDIA":designer==="Google"?"Google TPU":designer==="Amazon"?"AWS Trainium":"AMD Instinct")} fleet estimates</span>${rows.length} owners have a positive end-2025 estimate in this designer view. ${esc(g.name)} has the largest modeled holding at ${num(g.total)} H100-equivalents. These are estimated cumulative deliveries, not measured online inventory. Native chip counts appear below.`;
     $("#supNote").innerHTML = `Epoch AI "AI chip owners" estimate: median cumulative deliveries to 2025-12-31, in H100-equivalents at dense 8-bit
       performance. An estimate, not a disclosure, and never added to our own totals. ${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology", "Epoch's method")}`;
   }
@@ -50,8 +45,6 @@
         r.inserviceCommitted ? `${num(r.on.value)} MW · in service` : r.partial ? `${num(r.on.value)} MW · sites only` : `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
     });
     $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>company online</span><span><i style="background:var(--s2);opacity:.45"></i>company contracted</span><span><i style="background:var(--s4)"></i>Epoch documented AI sites only (incomplete)</span>`;
-    const cw = rows.find(r => r.name === "CoreWeave");
-    $("#supTake").innerHTML = `<span class="verdict">Hyperscalers are shown, with the coverage limit visible</span>Google, AWS, Microsoft and Oracle use Epoch’s subtotal of documented AI sites when no company-wide online figure is disclosed. It omits untracked and older sites. ${cw && cw.on ? `CoreWeave reports ${num(cw.on.value)} MW online.` : ""} Hosts and their tenants can refer to the same buildings, so these bars must not be summed.`;
     $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). VNET’s bar shows only in-service capacity; its customer-committed subset is described in the tooltip and is excluded from the total-contracted series. Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; (mode === "compute" ? drawCompute : drawPower)(svg);

@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Who powers AI? | AI Compute Landscape</title>
-<meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Source-linked facts, scope-aware comparisons and explicit uncertainty.">
+<title>Who powers the Token Economy?</title>
+<meta name="description" content="Explore AI chip ownership, cloud deals, GPU prices and reported token demand, with sources and an interactive DeepSeek capacity calculator.">
+<meta property="og:title" content="Who powers the Token Economy?">
+<meta property="og:description" content="Explore AI chip ownership, cloud deals, GPU prices and reported token demand, with sources and an interactive DeepSeek capacity calculator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
 <style>
 /* AI compute landscape. Editorial layout: warm paper, serif headlines, figure frames.
@@ -104,10 +108,6 @@ select { font: 500 13px/1 var(--sans); color: var(--ink); background: var(--pape
 .fig-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
 .fig-grid > * { min-width: 0; }
 .fig-grid h4 { font: 500 17px/1.3 var(--serif); margin: 0 0 6px; color: var(--ink); }
-.takeaway { border-left: 3px solid var(--accent); background: var(--accent-wash); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 14.5px; line-height: 1.5; color: var(--ink); margin-top: 14px; }
-.takeaway .verdict { display: block; font: 600 11px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-.takeaway b { font-weight: 600; }
-.takeaway.warn { border-left-color: var(--accent-2); background: #f6e6e1; } .takeaway.warn .verdict { color: var(--accent-2); }
 .fig-caption, .note { font-size: 13.5px; line-height: 1.55; color: var(--muted); margin: 12px 2px 0; }
 details.fig-notes { margin-top: 10px; border-top: 1px solid var(--grid); padding-top: 8px; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
 details.fig-notes summary { cursor: pointer; font: 600 12px/1.4 var(--sans); color: var(--muted); letter-spacing: .02em; list-style: none; display: inline-flex; align-items: center; gap: 6px; }
@@ -317,12 +317,14 @@ html{scroll-padding-top:74px}
 @media(max-width:520px){.capacity-controls{grid-template-columns:1fr}.capacity .fig-head h3{font-size:26px}.capacity-bar-row{grid-template-columns:78px minmax(0,1fr) 92px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.capacity-bar-fill,.capacity-mix-bar span{transition:none}}
 #native-accelerators{scroll-margin-top:76px}.native-stack-scroll{overflow-x:auto}#chipStackSvg{display:block;width:100%;min-width:660px}.native-stack-scroll+ .legend{margin-top:18px}#supply details summary{cursor:pointer}
+
+.capacity-summary{font:500 19px/1.55 var(--serif);margin:26px 0 18px}
 </style>
 </head>
 <body>
 <div class="tip" id="tip"></div>
 <header class="masthead">
-  <a class="brand" href="#top"><svg id="brandArt" viewBox="0 0 64 64" aria-hidden="true"></svg><span><b>AI Compute Landscape</b><small>An illustrated data guide</small></span></a>
+  <a class="brand" href="#top"><svg id="brandArt" viewBox="0 0 64 64" aria-hidden="true"></svg><span><b>Token Economy</b><small>An illustrated data guide</small></span></a>
   <nav><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a><a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository">GitHub ↗</a></nav>
 </header>
 <div class="reading-nav" id="readingNav"><div class="reading-progress" id="readingProgress"></div><nav aria-label="Sections"><a href="#landscape">Landscape</a><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav></div>
@@ -332,8 +334,8 @@ html{scroll-padding-top:74px}
 <section class="hero">
   <div>
     <div class="kicker">AI infrastructure · a source-linked field guide</div>
-    <h1>Who powers AI?</h1>
-    <p class="dek">Explore the companies behind AI: their chips, data centers, contracts and prices. Every figure links to its source.</p>
+    <h1>Who powers the Token Economy?</h1>
+    <p class="dek">Explore the companies behind AI tokens: their chips, data centers, contracts, prices and inference traffic. Every figure links to its source.</p>
     <div class="byline" id="byline"></div>
   </div>
   <figure><svg id="heroArt" viewBox="0 0 400 300" role="img" aria-label="Sketch of a data hall fed by a power line"></svg></figure>
@@ -373,12 +375,11 @@ html{scroll-padding-top:74px}
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button></span></div><div class="ctl" id="supDesignerCtl"><label for="supDesigner" class="ctl-label">Chip designer</label><select id="supDesigner"><option value="All">All designers</option><option value="Nvidia">NVIDIA</option><option value="AMD">AMD Instinct</option><option value="Google">Google TPU</option><option value="Amazon">AWS Trainium</option></select></div></div>
     <div class="fig-body"><svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg></div>
     <div class="legend" id="supLegend"></div>
-    <div class="takeaway" id="supTake"></div>
     <p class="fig-caption" id="supNote"></p>
   </div></div>
   <div class="fig" id="native-accelerators"><div class="fig-frame"><h3 class="fig-title">Native accelerator counts: NVIDIA, AMD, TPU and Trainium</h3>
     <p class="fig-sub">Estimated delivered chips, stacked by owner. These are physical chip counts, not equal units of performance. Renting capacity does not transfer chip ownership.</p>
-    <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model">Accelerator model</option></select></label></div>
+    <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model" selected>Accelerator model</option></select></label></div>
     <div class="native-stack-scroll"><svg id="chipStackSvg" role="img" aria-label="Native accelerator counts stacked by chip owner"></svg></div>
     <div class="legend" id="chipStackLegend"></div>
     <p class="fig-caption" id="chipStackNote"></p>
@@ -406,7 +407,6 @@ html{scroll-padding-top:74px}
       <div class="ctl"><label for="dealMin" class="ctl-label">Minimum disclosed value</label><input id="dealMin" type="range" min="0" max="100" value="0" step="1"><output id="dealMinLabel" for="dealMin">All values</output></div><label class="small"><input type="checkbox" id="dealUnpriced" checked> Include unpriced</label><span id="dealSel" class="muted small"></span><button id="dealReset">Clear selection</button>
     </div>
     <div class="fig-body"><svg id="sankey" class="sankey" viewBox="0 0 900 560" role="img" aria-label="Contracts from buyers to suppliers"></svg></div>
-    <div class="takeaway" id="dealTake"></div>
     <details class="fig-notes"><summary>How implied prices are worked out</summary><div>
       <p>$/GPU-hour is shown only when a deal gives a GPU count. Otherwise the page gives an all-in $/kW-month from the megawatts, which stays comparable across chip generations. For GPU deals it adds an estimated $/GPU-hour range at pre-Rubin power draw, which is a floor for 2027 and later deliveries. Leases of powered buildings are priced per kW-month and include no chips.</p></div></details>
   </div></div>
@@ -430,7 +430,6 @@ html{scroll-padding-top:74px}
     <svg id="growthSvg" viewBox="0 0 900 390" role="img" aria-label="Company growth lines on common dates and scale"></svg>
     <div id="growthLegend" class="legend"></div>
     <details class="fig-notes"><summary>Dates, values and reporting scope</summary><div class="scroll"><table class="t" id="growthSummary"></table></div></details>
-    <div class="takeaway" id="growthTake"></div>
   </div></div>
 </section>
 
@@ -454,7 +453,6 @@ html{scroll-padding-top:74px}
     <div class="fig-controls"><label>Providers <select id="priceGroup"><option>All</option><option>Neocloud</option><option>Hyperscaler</option><option>Marketplace</option><option>China</option></select></label><label>Silicon <select id="priceFamily"><option>All</option><option>NVIDIA</option><option>AMD</option><option>Google TPU</option><option>AWS Trainium</option></select></label></div>
     <div class="fig-body"><svg id="priceSvg" viewBox="0 0 900 460" role="img" aria-label="Price per GPU-hour by chip"></svg></div>
     <div class="legend" id="priceLegend"></div>
-    <div class="takeaway" id="priceTake"></div>
     <p class="fig-caption" id="priceBasisNote"></p>
     <details class="fig-notes"><summary>Rate cards, original billing units and conversions</summary><div class="scroll"><table class="t" id="priceTable"></table></div></details>
   </div></div>
@@ -472,7 +470,7 @@ html{scroll-padding-top:74px}
 <section class="chapter" id="spot">
   <div class="wrap"><div class="label">Price history · matched regional quotes</div><h2>Spot prices over time</h2>
   <p class="lede">Nebius hourly posted spot quotes, October 26–November 2. These can be interrupted and are not executed trades or reserved contracts.</p>
-  <div class="fig-frame"><div class="seg controls" id="spotCtl"></div><svg id="spotSvg" role="img" aria-label="Hourly spot prices"></svg><div class="takeaway" id="spotTake"></div></div>
+  <div class="fig-frame"><div class="seg controls" id="spotCtl"></div><svg id="spotSvg" role="img" aria-label="Hourly spot prices"></svg></div>
   <div class="table-wrap"><table class="t" id="tSpot"></table></div>
   <p class="small muted">First and last daily medians use 24 hourly observations each; the final endpoint is outside the last daily window. The line includes all 169 endpoints. Prices have no volume weighting or delivery guarantee.</p>
   </div>
@@ -518,7 +516,7 @@ html{scroll-padding-top:74px}
     <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
     <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
-      <p class="takeaway" id="capacitySummary" aria-live="polite"></p>
+      <p class="capacity-summary" id="capacitySummary" aria-live="polite"></p>
       <div id="capacityBars" aria-label="Conditional rack comparison"></div>
       <div class="table-wrap"><table class="t" id="capacityComparison"></table></div>
       <h4>Tokens are not all the same work</h4>
@@ -897,11 +895,6 @@ function markConflict(svg,subject,metric,x,y,match) {
       el("text", { x: x(r.total) + 6, y: y + 21, class: "ink", "font-family": "JetBrains Mono, monospace", "font-size": 11.5 }, svg).textContent = `${(r.total / 1e6).toFixed(2)}M` + (other > 1000 ? " (incl. other)" : "");
     });
     $("#supLegend").innerHTML = DES.filter(([k])=>designer==="All"||k===designer).map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("");
-    const g = rows[0], tpu = (g.d.Google || 0) / g.total;
-    const cust = Math.round(rows.reduce((a, r) => a + (r.d.Google || 0) + (r.d.Amazon || 0), 0) / rows.reduce((a, r) => a + r.total, 0) * 100);
-    $("#supTake").innerHTML = `<span class="verdict">Custom chips are ${cust}% of the largest fleets</span><b>${esc(g.name)}</b> leads with ${(g.total / 1e6).toFixed(1)}M H100-equivalents,
-      ${Math.round(tpu * 100)}% of them its own TPUs. Across the ${rows.length} fleets shown, ${cust}% of the compute is Google or Amazon silicon and nearly all the rest is Nvidia.`;
-    if(designer!=="All")$("#supTake").innerHTML=`<span class="verdict">${esc(designer==="Nvidia"?"NVIDIA":designer==="Google"?"Google TPU":designer==="Amazon"?"AWS Trainium":"AMD Instinct")} fleet estimates</span>${rows.length} owners have a positive end-2025 estimate in this designer view. ${esc(g.name)} has the largest modeled holding at ${num(g.total)} H100-equivalents. These are estimated cumulative deliveries, not measured online inventory. Native chip counts appear below.`;
     $("#supNote").innerHTML = `Epoch AI "AI chip owners" estimate: median cumulative deliveries to 2025-12-31, in H100-equivalents at dense 8-bit
       performance. An estimate, not a disclosure, and never added to our own totals. ${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology", "Epoch's method")}`;
   }
@@ -927,8 +920,6 @@ function markConflict(svg,subject,metric,x,y,match) {
         r.inserviceCommitted ? `${num(r.on.value)} MW · in service` : r.partial ? `${num(r.on.value)} MW · sites only` : `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
     });
     $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>company online</span><span><i style="background:var(--s2);opacity:.45"></i>company contracted</span><span><i style="background:var(--s4)"></i>Epoch documented AI sites only (incomplete)</span>`;
-    const cw = rows.find(r => r.name === "CoreWeave");
-    $("#supTake").innerHTML = `<span class="verdict">Hyperscalers are shown, with the coverage limit visible</span>Google, AWS, Microsoft and Oracle use Epoch’s subtotal of documented AI sites when no company-wide online figure is disclosed. It omits untracked and older sites. ${cw && cw.on ? `CoreWeave reports ${num(cw.on.value)} MW online.` : ""} Hosts and their tenants can refer to the same buildings, so these bars must not be summed.`;
     $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). VNET’s bar shows only in-service capacity; its customer-committed subset is described in the tooltip and is excluded from the total-contracted series. Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; (mode === "compute" ? drawCompute : drawPower)(svg);
@@ -1000,7 +991,6 @@ function markConflict(svg,subject,metric,x,y,match) {
     const svg = $("#sankey"); svg.innerHTML = "";
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const ds = deals().filter(c => c.value_usd > 0 && (c.kind !== "compute" || firmCompute(c)));
-    $("#dealTake").innerHTML=`<span class="verdict">Disclosed values keep their contractual limits</span>The relationship view keeps unpriced TPU access and cancellable or scenario-dependent agreements visible. Widths show disclosed nominal amounts and spend floors, with conditional and cancellable agreements excluded from this view. They do not measure delivered capacity or annual spend; relationships can still overlap.`;
     const tot = (key) => { const m = new Map(); ds.forEach(c => m.set(c[key], (m.get(c[key]) || 0) + c.value_usd)); return [...m].sort((a, b) => b[1] - a[1]); };
     const topB = tot("buyer").slice(0, 7).map(x => x[0]), topS = tot("supplier").slice(0, 14).map(x => x[0]);
     const bk = c => topB.includes(c.buyer) ? c.buyer : "Other buyers", sk = c => topS.includes(c.supplier) ? c.supplier : "Other suppliers";
@@ -1066,7 +1056,6 @@ function markConflict(svg,subject,metric,x,y,match) {
     nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
     suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
     $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; width follows disclosed nominal value`;
-    $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Widths show disclosed nominal amounts, with floors, options and cancellation terms retained; thin unpriced links do not mean zero. Dashed lines are hardware supply. Click any company for its terms and sources below.`;
   }
   function table1() {
     const rows = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
@@ -1127,7 +1116,6 @@ function markConflict(svg,subject,metric,x,y,match) {
     $("#growthLegend").innerHTML=subs.map(s=>`<span><i style="background:var(${s.c})"></i>${esc(s.n)}</span>`).join("");
     const rows=subs.map(s=>{const a=s.pts[0],b=s.pts.at(-1);return {name:s.n,start:a[0],first:a[1],end:b[0],last:b[1],mult:b[1]/a[1],scope:b[4]||"company",source_url:b[3]};});
     table("#growthSummary",rows,[{k:"name",h:"Company"},{k:"start",h:"First date"},{k:"first",h:"First",f:r=>metric==="mw_online"?num(r.first):money(r.first)},{k:"end",h:"Latest date"},{k:"last",h:"Latest",f:r=>metric==="mw_online"?num(r.last):money(r.last)},{k:"mult",h:"Multiple",f:r=>r.mult.toFixed(2)+"×"},{k:"scope",h:"Reporting scope"},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
-    $("#growthTake").innerHTML=`<span class="verdict">${mode==="absolute"?"Absolute scale and growth rate answer different questions":"A shared baseline makes relative growth visible"}</span>${mode==="absolute"?"All selected companies share the same dates and vertical scale. Switch to Indexed to see smaller firms’ percentage growth.":"Each company’s Q2 2025 observation is set to 100. Fiscal quarter ends can differ by one month; exact dates appear below."} Lines connect source observations only. Latest reporting dates differ, and consolidated group revenue can include non-cloud businesses; use the scope column.`;
   }
   $("#growthAbs").onclick=()=>{mode="absolute";draw();};$("#growthIdx").onclick=()=>{mode="index";draw();};
   $("#growthAll").onclick=()=>{Object.keys(NC.growth).forEach(n=>selected.add(n));draw();};
@@ -1174,7 +1162,6 @@ function markConflict(svg,subject,metric,x,y,match) {
       el("text",{x:R+8,y:y+4,"font-size":11},svg).textContent=`$${med.toFixed(2)} · n=${row.length}`;
     });
     table("#priceTable",raw.sort((a,b)=>a.sku.localeCompare(b.sku)||a.usd-b.usd),[{k:"provider",h:"Provider"},{k:"sku",h:"Chip"},{k:"usd",h:"USD / accelerator-h",f:r=>`${r.is_floor?"from ":""}$${r.usd.toFixed(4)}`},{k:"basis",h:"Terms"},{k:"region",h:"Region"},{k:"configuration",h:"Configuration"},{k:"date",h:"Observed"},{k:"note",h:"Original unit / formula",f:r=>esc(r.method||r.note)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
-    $("#priceTake").innerHTML=`<span class="verdict">A retail reservation is not the market contract price</span>Azure’s East US H100 list reservation is $551,221 ÷ 8 GPUs ÷ 8,760 hours = <b>$7.87/GPU-hour</b> for one year. Its GB200 list VM is $108.16 ÷ 4 GPUs = <b>$27.04/GPU-hour</b>. CoreWeave lists GB200 at $42 ÷ 4 = <b>$10.50/GPU-hour</b>. These published full-instance rates include host resources and do not establish a negotiated market price. ${src("https://prices.azure.com/api/retail/prices?$filter=armSkuName%20eq%20%27Standard_ND96isr_H100_v5%27","Azure H100 API")} · ${src("https://www.coreweave.com/pricing","CoreWeave rate card")}`;
     $("#priceBasisNote").textContent=`${ps.length} provider/chip quotes shown from ${raw.length} region/configuration rows. ${basis==="reserved 3yr"?"Three-year retail commitments are shown only where published; no market discount is inferred. ":""}${basis==="starting from"?"Minimum advertised prices: commitment and allocation may differ. ":""}Blackwell prices are per physical GPU in the specified NVL72 VM/tray, not per entire 72-GPU rack. No chart value is clipped.`;
   }
   function drawIdx() {
@@ -1446,7 +1433,6 @@ function markConflict(svg,subject,metric,x,y,match) {
   }
   [['All','All'],['real_conflict','Conflicts'],['revision','Later evidence / source dates'],['scope_difference','Different bases']].forEach(([k,l])=>{const b=document.createElement('button');b.textContent=l;b.dataset.k=k;b.onclick=()=>{category=k;ledger();};$('#conflictCtl').appendChild(b);});ledger();
   let selected=0;const panels=NC.spot_panels||[];
-  function pct(v){return `${v>0?'+':''}${v.toFixed(1)}%`;}
   function draw(){
     $('#spotCtl').querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===selected));
     const p=panels[selected];if(!p)return;const svg=$('#spotSvg');svg.innerHTML='';svg.setAttribute('viewBox','0 0 900 290');
@@ -1456,8 +1442,6 @@ function markConflict(svg,subject,metric,x,y,match) {
     [0,2,4,6,7].forEach(i=>{const d=new Date(x0+i*864e5).toISOString();el('text',{x:x(d),y:263,'text-anchor':'middle'},svg).textContent=d.slice(5,10);});
     el('path',{d:pts.map((v,i)=>`${i?'L':'M'}${x(v.timestamp)},${y(v.usd)}`).join(''),fill:'none',stroke:css('--s1'),'stroke-width':2},svg);
     pts.forEach(v=>hover(el('circle',{cx:x(v.timestamp),cy:y(v.usd),r:3,fill:css('--s1'),'fill-opacity':.25},svg),`<b>Nebius ${esc(p.gpu)} · ${esc(p.region)}</b>${esc(v.timestamp)}<br>$${v.usd.toFixed(3)}/GPU-hour · posted spot quote`));
-    const a=pts[0].usd,b=pts.at(-1).usd,change=100*(p.last_24h.median/p.first_24h.median-1);
-    $('#spotTake').innerHTML=`<span class="verdict">${esc(p.gpu)}: endpoints ${pct(100*(b/a-1))}; daily medians ${pct(change)}</span>First-day median <b>$${p.first_24h.median.toFixed(2)}</b> → last-day median <b>$${p.last_24h.median.toFixed(2)}</b>. Week minimum/median/maximum: $${p.week.min.toFixed(2)} / $${p.week.median.toFixed(2)} / $${p.week.max.toFixed(2)}. ${src(p.url,'Reproduce provider API query')}<br><span class="small">${esc(p.aggregation)}. ${esc(p.note)}</span>`;
   }
   panels.forEach((p,i)=>{const b=document.createElement('button');b.textContent=`${p.gpu} · ${p.region}`;b.onclick=()=>{selected=i;draw();};$('#spotCtl').appendChild(b);});
   table('#tSpot',panels,[{k:'gpu',h:'Chip'},{k:'region',h:'Region'},{k:'start',h:'Start (UTC)'},{k:'end',h:'End (UTC)'},{k:'first_24h',h:'First day median',f:p=>'$'+p.first_24h.median.toFixed(2)},{k:'last_24h',h:'Last day median',f:p=>'$'+p.last_24h.median.toFixed(2)},{k:'sku',h:'Matched SKU'},{k:'url',h:'',f:p=>src(p.url)}]);

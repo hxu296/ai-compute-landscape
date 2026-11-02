@@ -21,7 +21,6 @@
     const svg = $("#sankey"); svg.innerHTML = "";
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const ds = deals().filter(c => c.value_usd > 0 && (c.kind !== "compute" || firmCompute(c)));
-    $("#dealTake").innerHTML=`<span class="verdict">Disclosed values keep their contractual limits</span>The relationship view keeps unpriced TPU access and cancellable or scenario-dependent agreements visible. Widths show disclosed nominal amounts and spend floors, with conditional and cancellable agreements excluded from this view. They do not measure delivered capacity or annual spend; relationships can still overlap.`;
     const tot = (key) => { const m = new Map(); ds.forEach(c => m.set(c[key], (m.get(c[key]) || 0) + c.value_usd)); return [...m].sort((a, b) => b[1] - a[1]); };
     const topB = tot("buyer").slice(0, 7).map(x => x[0]), topS = tot("supplier").slice(0, 14).map(x => x[0]);
     const bk = c => topB.includes(c.buyer) ? c.buyer : "Other buyers", sk = c => topS.includes(c.supplier) ? c.supplier : "Other suppliers";
@@ -87,7 +86,6 @@
     nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
     suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
     $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; width follows disclosed nominal value`;
-    $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Widths show disclosed nominal amounts, with floors, options and cancellation terms retained; thin unpriced links do not mean zero. Dashed lines are hardware supply. Click any company for its terms and sources below.`;
   }
   function table1() {
     const rows = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
