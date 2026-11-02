@@ -1,6 +1,5 @@
-// Recent evidence and the source-comparison ledger use the same source records as the charts.
+// Source ledger and matched regional spot histories.
 (function(){
-  $('#evidenceCards').innerHTML=(NC.updates||[]).map(r=>`<article class="evidence-card"><h3>${esc(r.title)}</h3><p>${esc(r.body)}</p><div class="small muted">${esc(r.date)} · ${src(r.url)} ${conflictBadge(r.subject,r.metric,r.match)}</div></article>`).join('');
   const facts=NC.research_facts||[];
   function evidence(){const q=$('#evidenceSearch').value.toLowerCase();table('#tEvidence',facts.filter(r=>JSON.stringify(r).toLowerCase().includes(q)),[{k:'subject',h:'Subject'},{k:'metric',h:'Metric / unit',f:r=>`${esc(r.metric)} · ${esc(r.unit)}`},{k:'value',h:'Checked claim',f:r=>`${esc(r.value_relation||'')} ${esc(typeof r.value==='number'?r.value.toLocaleString():r.value)}${badge(r.confidence)}${conflictBadge(r.subject,r.metric)}`},{k:'as_of',h:'Observation / claim date'},{k:'scope',h:'Scope'},{k:'note',h:'Limits / interpretation'},{k:'source_url',h:'',f:r=>src(r.source_url)}]);}
   $('#evidenceSearch').oninput=evidence;evidence();

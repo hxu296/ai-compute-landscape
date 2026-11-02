@@ -26,7 +26,16 @@
   <figure><svg id="heroArt" viewBox="0 0 400 300" role="img" aria-label="Sketch of a data hall fed by a power line"></svg></figure>
 </section>
 
-<div class="strip"><div class="tiles" id="tiles"></div><p class="asof" id="asof"></p></div>
+<section class="chapter" id="landscape">
+  <div class="fig" style="margin-top:0"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">The landscape</span><h2>Halls, clouds and their customers</h2></div>
+    <p class="fig-sub">Facility owners lease powered space to cloud operators. Clouds supply AI labs and other clouds. Follow the disclosed links to see who depends on whom.</p>
+    <div class="fig-controls"><div class="ctl"><label for="flowFocus" class="ctl-label">Explore</label><select id="flowFocus"><option value="">All relationships</option></select></div><button id="flowMotion" aria-pressed="true">Pause motion</button><button id="flowReset">Clear selection</button></div>
+    <p class="flow-mobile-hint">Swipe across the diagram to follow facilities → clouds → buyers, or choose a company above.</p><div class="flow-scroll"><svg id="flowSvg" role="img" aria-label="Public relationships between facility owners, clouds and AI buyers"></svg></div>
+    <div class="flow-meta" id="flowMeta"></div><p class="fig-caption">Equal-width links show selected public agreements, including unpriced ones. Motion indicates direction, not volume. Small numbers count counterparties. A connected path does not allocate particular racks or megawatts through a reseller. Undisclosed relationships stay absent.</p>
+    <div id="flowDetails" hidden><div class="scroll" style="max-height:220px"><table class="t" id="flowTable"></table></div></div>
+  </div></div>
+</section>
 
 <div class="prose" style="margin-top:44px">
   <p class="lede">Most numbers in this business are announced rather than measured. Contract terms can include floors or ceilings, a GPU count is often worked out from megawatts, and a hyperscaler's fleet is somebody else's model. So every figure here carries its source and a tag distinguishing reporting, calculation, and estimation.</p>
@@ -39,12 +48,6 @@
 
 <div class="part-title">Part I · Who has the compute</div>
 
-<section class="chapter" id="updates">
-  <div class="wrap"><div class="label">Latest evidence · November 2</div><h2>What changed in the source record</h2>
-    <div class="evidence-grid" id="evidenceCards"></div>
-    <details><summary>Newly checked evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
-  </div>
-</section>
 <section class="chapter" id="supply">
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
@@ -179,6 +182,10 @@
       <div class="legend"><span><i style="background:var(--s1)"></i>US chips (export versions)</span><span><i style="background:var(--s2)"></i>Chinese chips</span></div></div>
     <div><div class="fig-head"><span class="fig-no">Table 3</span></div><h4>What the Chinese clouds disclose</h4><div class="table-scroll"><table class="t" id="tChina"></table></div></div>
   </div></div></div>
+  <div class="fig"><div class="fig-frame"><div class="fig-head"><span class="fig-no">Capacity in practice</span><h3 class="fig-title">VNET: built capacity, commitments and use</h3></div>
+    <svg id="vnetSvg" role="img" aria-label="VNET in-service capacity divided into utilized, committed and uncommitted capacity"></svg>
+    <div id="vnetNote" class="fig-caption"></div>
+  </div></div>
 </section>
 
 <div class="part-title">Part III · Reference</div>
@@ -198,6 +205,7 @@
     <div class="label"><span class="num">08</span>Sources and method</div>
     <h2>How the numbers were collected, and what they cannot tell you</h2>
     <div class="method" id="methodBox"></div>
+    <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
     <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
     <details class="fig-notes"><summary>Related surveys: where they are stronger and what this page adds</summary><p>Established surveys already cover this market. This comparison describes inspected public features; it is not a ranking of accuracy or a claim to be first.</p><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
     <p class="download-links">Download the presentation data: <a href="data/providers.csv">providers CSV</a> · <a href="data/contracts.csv">contracts CSV</a> · <a href="data/prices.csv">prices CSV</a>. Source URLs, units and dates are retained.</p>
@@ -205,12 +213,13 @@
   </div>
 </section>
 </main>
-<footer class="colophon">Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
+<footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="theme" hidden></button>
 <script src="data/nc.js"></script>
 <script src="js/common.js"></script>
 <script src="js/conflicts.js"></script>
 <script src="js/sketch.js"></script>
+<script src="js/landscape.js"></script>
 <script src="js/supply.js"></script>
 <script src="js/deals.js"></script>
 <script src="js/growth.js"></script>
