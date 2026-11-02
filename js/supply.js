@@ -29,7 +29,7 @@
   }
   function drawPower(svg) {
     const rows = NC.providers.filter(p => p.latest.mw_online || p.latest.mw_contracted || p.documented_power).map(p => ({
-      name: p.name, group: p.group, on: p.latest.mw_online || p.documented_power, partial: !p.latest.mw_online && !!p.documented_power, ct: p.latest.mw_contracted && p.latest.mw_contracted.stage !== "mixed" ? p.latest.mw_contracted : null,
+      name: p.name, group: p.group, on: p.latest.mw_online || p.documented_power, partial: !p.latest.mw_online && !!p.documented_power, ct: p.latest.mw_contracted && !["mixed","in-service commitment"].includes(p.latest.mw_contracted.stage) ? p.latest.mw_contracted : null, inserviceCommitted: p.latest.mw_contracted?.stage === "in-service commitment" ? p.latest.mw_contracted : null,
       mixed: p.latest.mw_contracted && p.latest.mw_contracted.stage === "mixed" ? p.latest.mw_contracted : null, pipe: p.latest.mw_pipeline }))
       .filter(r => r.on || r.ct).sort((a, b) => (b.partial ? 1 : 0) - (a.partial ? 1 : 0) || ((b.ct || b.on || {}).value || 0) - ((a.ct || a.on || {}).value || 0)).slice(0, 20);
     const L = 205, R = 710, T = 20, rh = 26, max = Math.max(...rows.map(r => Math.max(r.on ? r.on.value : 0, r.ct ? r.ct.value : 0)));
@@ -41,17 +41,17 @@
       const y = T + i * rh;
       markConflict(svg,r.name,"mw_online",L-193,y+15);
       el("text", { x: L - 10, y: y + 15, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
-      const tipHtml = () => `<b>${esc(r.name)}</b> (${r.group})<br>Online: ${r.on ? cell(r.on, "mw") : "not disclosed"}<br>Contracted: ${r.ct ? cell(r.ct, "mw") : "not disclosed"}` +
+      const tipHtml = () => `<b>${esc(r.name)}</b> (${r.group})<br>Online: ${r.on ? cell(r.on, "mw") : "not disclosed"}<br>Total contracted: ${r.ct ? cell(r.ct, "mw") : "not disclosed"}` + (r.inserviceCommitted ? `<br>Within the in-service fleet: ${cell(r.inserviceCommitted,"mw")} customer-committed (subset, not a total including future capacity)` : "") +
         (r.partial ? `<br><b>Incomplete AI-site subtotal, ${r.on.n_sites} sites; not total fleet</b><br>${r.on.sites.map(s=>`${esc(s.site)}: ${num(s.value)} MW (${ym(s.as_of)})`).join("<br>")}` : "") + (r.pipe ? `<br>Pipeline (not contracted): ${cell(r.pipe, "mw")}` : "");
       if (r.ct) hover(el("rect", { x: L, y: y + 4, width: Math.max(2, x(r.ct.value) - L), height: 16, rx: 4, fill: css("--s2"), opacity: 0.45 }, svg), tipHtml);
       if (r.on) hover(el("rect", { x: L, y: y + 8, width: Math.max(2, x(r.on.value) - L), height: 8, rx: 3, fill: r.partial ? css("--s4") : css("--s1"), opacity:r.partial?.75:1, stroke:r.partial?css("--s4"):"none","stroke-dasharray":r.partial?"4 2":"" }, svg), tipHtml);
       el("text", { x: x(Math.max(r.on ? r.on.value : 0, r.ct ? r.ct.value : 0)) + 6, y: y + 16 }, svg).textContent =
-        r.partial ? `${num(r.on.value)} MW · sites only` : `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
+        r.inserviceCommitted ? `${num(r.on.value)} MW · in service` : r.partial ? `${num(r.on.value)} MW · sites only` : `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
     });
     $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>company online</span><span><i style="background:var(--s2);opacity:.45"></i>company contracted</span><span><i style="background:var(--s4)"></i>Epoch documented AI sites only (incomplete)</span>`;
     const cw = rows.find(r => r.name === "CoreWeave");
     $("#supTake").innerHTML = `<span class="verdict">Hyperscalers are shown, with the coverage limit visible</span>Google, AWS, Microsoft and Oracle use Epoch’s subtotal of documented AI sites when no company-wide online figure is disclosed. It omits untracked and older sites. ${cw && cw.on ? `CoreWeave reports ${num(cw.on.value)} MW online.` : ""} Hosts and their tenants can refer to the same buildings, so these bars must not be summed.`;
-    $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). VNET’s commitments cover its in-service fleet; other providers may include future sites, so contracted capacity is not always larger than online capacity. Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
+    $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). VNET’s bar shows only in-service capacity; its customer-committed subset is described in the tooltip and is excluded from the total-contracted series. Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; (mode === "compute" ? drawCompute : drawPower)(svg);
     $("#supCompute").classList.toggle("on", mode === "compute"); $("#supPower").classList.toggle("on", mode === "power"); }

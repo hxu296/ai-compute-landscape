@@ -66,22 +66,3 @@
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;motion();}).observe(svg);motion();choose('');
 })();
 
-// Capacity can be installed, committed and utilized in different proportions.
-(function(){
-  const p=PROV['VNET'].latest,on=p.mw_online,comm=p.mw_contracted,used=p.mw_utilized,orders=p.mw_order_wins,build=p.mw_under_construction;
-  function draw(){
-    const svg=$('#vnetSvg');svg.innerHTML='';svg.setAttribute('viewBox','0 0 900 230');
-    const L=30,R=870,y=54,w=v=>v/on.value*(R-L),parts=[{v:used.value,label:'Utilized',color:'--s3',note:'Capacity used by customers.'},{v:comm.value-used.value,label:'Committed, not utilized',color:'--s4',note:'Committed capacity minus utilized capacity; not automatically available for rental.'},{v:on.value-comm.value,label:'Uncommitted',color:'--text-muted',note:'In-service capacity not committed under customer agreements.'}];let x=L;
-    el('text',{x:L,y:24,class:'ink','font-size':14},svg).textContent=`${num(on.value)} MW in service · ${on.as_of}`;
-    parts.forEach(r=>{const rect=el('rect',{x,y,width:w(r.v),height:40,fill:css(r.color),opacity:.8},svg);hover(rect,`<b>${esc(r.label)}: ${num(r.v)} MW</b>${esc(r.note)}<br>${src(on.source_url)}`);x+=w(r.v);});
-    el('text',{x:L+12,y:y+25,fill:'#fff','font-size':14},svg).textContent=`${num(used.value)} MW utilized`;
-    el('text',{x:L+w(used.value)+w(comm.value-used.value)/2,y:y+17,'text-anchor':'middle',fill:css('--ink'),'font-size':12},svg).textContent=`${num(comm.value-used.value)} MW`;
-    el('text',{x:L+w(used.value)+w(comm.value-used.value)/2,y:y+36,'text-anchor':'middle','font-size':10},svg).textContent='committed, not utilized';
-    el('text',{x:R,y:117,'text-anchor':'end','font-size':12},svg).textContent=`${num(on.value-comm.value)} MW uncommitted`;
-    el('line',{x1:L,x2:L+w(comm.value),y1:138,y2:138,stroke:css('--s1'),'stroke-width':2},svg);
-    el('text',{x:L,y:160,'font-size':13,fill:css('--s1')},svg).textContent=`${num(comm.value)} MW committed within the in-service fleet · ${(100*comm.value/on.value).toFixed(1)}%`;
-    el('text',{x:L,y:204,'font-size':13},svg).textContent=`Separate measures: ${orders.value} MW new orders in Jan–Jun 2026 · ${build.value} MW under construction at June 30`;
-  }
-  $('#vnetNote').innerHTML=`Customer commitments cover ${num(comm.value)} of ${num(on.value)} MW in service; utilized capacity is a subset. New orders are a flow during a period and can cover future delivery. Under-construction capacity is another stock. These figures do not describe metered electricity consumption. ${src(on.source_url,'VNET Q2 filing, operational results and definitions')}${conflictBadge('VNET','mw_contracted')}`;
-  onTheme(draw);draw();
-})();
