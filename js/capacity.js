@@ -21,7 +21,7 @@
     const volume=$('#capacityVolume').valueAsNumber,q=$('#capacityOutput').valueAsNumber/100,h=$('#capacityCache').valueAsNumber/100,u=$('#capacityUse').valueAsNumber/100;
     const options={tokensPerDay:volume*1e12,outputShare:q,cacheHit:h,usableCapacity:u,costPerGpuHour:$('#capacityCost').valueAsNumber,powerKwPerGpu:$('#capacityPower').valueAsNumber};
     const valid=volume>0&&volume<=1e7&&Number.isFinite(options.costPerGpuHour)&&options.costPerGpuHour>=0&&Number.isFinite(options.powerKwPerGpu)&&options.powerKwPerGpu>=0;
-    $('#capacityError').hidden=valid;if(!valid){$('#capacityResults').hidden=true;return;}$('#capacityResults').hidden=false;
+    $('#capacityError').hidden=valid;$('#capacityCopy').disabled=!valid;if(!valid){$('#capacityResults').hidden=true;$('#capacityPacking').innerHTML='';$('#capacityProfiles').innerHTML='';$('#capacityScenario').value='';return;}$('#capacityResults').hidden=false;
     $('#capacityOutputValue').textContent=(q*100).toFixed(1)+'%';$('#capacityCacheValue').textContent=(h*100).toFixed(1)+'%';$('#capacityUseValue').textContent=fmt(u*100)+'%';
     const rows=[$('#capacityPro').value,$('#capacityFlash').value].map(id=>{const p=byId.get(id);return {p,r:CapacityMath.estimate(p,options,data.hardware)};});
     const max=Math.max(...rows.map(({r})=>r.racks),1);
