@@ -233,6 +233,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 
 .flow-mobile-hint{display:none;font-size:12px;color:var(--muted)}
 @media(max-width:700px){.flow-mobile-hint{display:block}}
+#dealMin{width:135px;accent-color:var(--accent)}#dealMinLabel{font:11px var(--mono);min-width:100px}
 </style>
 </head>
 <body>
@@ -278,7 +279,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="supply">
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
-    <h2>Epoch estimates Google has the largest fleet, mostly its own chips</h2>
+    <h2>Accelerator fleets and power capacity</h2>
     <p>No hyperscaler says how many accelerators it owns. The best public estimate is Epoch AI's model of chip deliveries, which converts every chip into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts rarely disclose GPU counts either, but they do disclose power, so the second view compares them in megawatts, including clearly labelled partial AI-site estimates for the hyperscalers.</p>
   </div>
   <div class="fig"><div class="fig-frame">
@@ -298,18 +299,18 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="deals">
   <div class="prose">
     <div class="label"><span class="num">02</span>Contracts</div>
-    <h2>Two AI labs signed most of the compute contracts</h2>
+    <h2>Compute contracts and commercial relationships</h2>
     <p>A compute contract is a promise to pay for capacity over several years. The flow below runs from buyer to supplier, and the default view shows relationships even when prices are undisclosed. Switch to disclosed dollars to size the bands by value. Framework deals such as Stargate's $500B plan are left out, because they commit no one to a price.</p>
     <p>Building leases get their own view. A host that rents a powered hall to Fluidstack, which then sells the same capacity to Anthropic, would otherwise be counted twice.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 2</span><h3 class="fig-title">Who buys capacity from whom</h3></div>
-    <p class="fig-sub">Relationships include unpriced TPU access and AMD supply agreements. Equal-width links carry no dollar estimate; select Disclosed dollars for the value-weighted view.</p>
+    <p class="fig-sub">Relationships include unpriced TPU access and AMD supply agreements. Link widths scale with disclosed nominal value; unpriced links stay thin. Filter smaller agreements with the slider, or select Disclosed dollars for a stacked value view. Amounts retain their conditions and can overlap.</p>
     <div class="fig-controls">
       <div class="ctl"><span class="seg"><button id="dealRelations" class="on">Relationships</button><button id="dealDollars">Disclosed dollars</button></span></div>
       <div class="ctl"><span class="ctl-label">Announced from</span><select id="dealFrom"><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option></select></div>
       <div class="ctl"><span class="ctl-label">Show</span><select id="dealKind"><option value="all" selected>all relationships</option><option value="compute">compute services</option><option value="lease">building leases (no chips)</option><option value="hardware">hardware orders</option></select></div>
-      <span id="dealSel" class="muted small"></span><button id="dealReset">Clear selection</button>
+      <div class="ctl"><label for="dealMin" class="ctl-label">Minimum disclosed value</label><input id="dealMin" type="range" min="0" max="100" value="0" step="1"><output id="dealMinLabel" for="dealMin">All values</output></div><label class="small"><input type="checkbox" id="dealUnpriced" checked> Include unpriced</label><span id="dealSel" class="muted small"></span><button id="dealReset">Clear selection</button>
     </div>
     <div class="fig-body"><svg id="sankey" class="sankey" viewBox="0 0 900 560" role="img" aria-label="Contracts from buyers to suppliers"></svg></div>
     <div class="takeaway" id="dealTake"></div>
@@ -325,7 +326,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="growth">
   <div class="prose">
     <div class="label"><span class="num">03</span>Growth</div>
-    <h2>Neoclouds are growing far faster than the clouds they compete with</h2>
+    <h2>Company growth on shared axes</h2>
     <p>All selected companies share one set of axes. Absolute values show scale; Indexed compares growth from a Q2 2025 baseline. Revenue uses a cloud segment where available and otherwise the reported group; exact scope and dates appear below.</p>
   </div>
   <div class="fig"><div class="fig-frame">
@@ -345,12 +346,12 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="pricing">
   <div class="prose">
     <div class="label"><span class="num">04</span>Prices</div>
-    <h2>Retail rate cards and market contracts have different prices</h2>
+    <h2>Rental prices and commitment terms</h2>
     <p>Compare market benchmarks first, then published provider rates by commitment term. A hyperscaler’s one-year retail reservation is not a negotiated neocloud contract. TPU and Trainium rates use physical chip-hours; price alone does not compare model throughput.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div id="benchmarks" class="benchmark-grid"></div>
-    <h3 class="fig-title">Recent prices: softness differs by chip and market</h3>
+    <h3 class="fig-title">Market price movements</h3>
     <p class="fig-sub">Same-series changes from public benchmark data, calculated over calendar windows. Hover a change for its exact start and end dates. A rental index is not a GPU resale price.</p>
     <div class="scroll"><table class="t" id="marketChanges"></table></div>
     <p class="fig-caption">H100 one-year rental eased about 3.1% over the last 30 days while B200/B300 one-year indices rose. SemiAnalysis’s B200 composite fell about 6.3% in the last week but remains higher over 30 and 90 days. These observations do not show a broad collapse across GPU markets.</p>
@@ -376,7 +377,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 </section>
 
 <section class="chapter" id="spot">
-  <div class="wrap"><div class="label">Price history · matched regional quotes</div><h2>A price drop depends on the window</h2>
+  <div class="wrap"><div class="label">Price history · matched regional quotes</div><h2>Spot prices over time</h2>
   <p class="lede">Nebius hourly posted spot quotes, October 26–November 2. These can be interrupted and are not executed trades or reserved contracts.</p>
   <div class="fig-frame"><div class="seg controls" id="spotCtl"></div><svg id="spotSvg" role="img" aria-label="Hourly spot prices"></svg><div class="takeaway" id="spotTake"></div></div>
   <div class="table-wrap"><table class="t" id="tSpot"></table></div>
@@ -386,7 +387,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="usage">
   <div class="prose">
     <div class="label"><span class="num">05</span>Inference vs training</div>
-    <h2>Inference shares depend on what is being counted</h2>
+    <h2>Inference and training workloads</h2>
     <p>Nobody measures this split directly. What exists are statements: a cloud's share of AI revenue, a lab's spending breakdown, an analyst's forecast for the whole market. They answer different questions, so the figure keeps them apart. Token counts are the closest thing to a meter for inference.</p>
   </div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
@@ -400,7 +401,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="china">
   <div class="prose">
     <div class="label"><span class="num">06</span>China</div>
-    <h2>Estimated accelerator deliveries to China, by chip</h2>
+    <h2>China’s compute infrastructure</h2>
     <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company.</p>
   </div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
@@ -416,7 +417,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="providers">
   <div class="prose">
     <div class="label"><span class="num">07</span>Providers</div>
-    <h2>Every company tracked, with its latest numbers</h2>
+    <h2>Provider reference</h2>
     <p>Empty fields mean not disclosed, not zero. Hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
   </div>
   <div class="fig"><div class="fig-controls"><div class="ctl"><span class="ctl-label">Group</span><span class="seg" id="provCtl"></span></div></div>
@@ -426,7 +427,7 @@ input[type=search] { font:13px var(--sans);border:1px solid var(--line);backgrou
 <section class="chapter" id="method">
   <div class="prose">
     <div class="label"><span class="num">08</span>Sources and method</div>
-    <h2>How the numbers were collected, and what they cannot tell you</h2>
+    <h2>Sources, definitions and evidence limits</h2>
     <div class="method" id="methodBox"></div>
     <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
     <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
@@ -773,7 +774,8 @@ function markConflict(svg,subject,metric,x,y,match) {
 <script>
 // Contracts: buyer -> supplier flow (band width = disclosed value) and a table that follows the selection.
 (function () {
-  let from = "2025", kind = "all", view = "relations", sel = null;
+  let from = "2025", kind = "all", view = "relations", sel = null, minimum = 0;
+  const maxDeal=Math.max(...[...NC.contracts,...NC.hardware].map(c=>c.value_usd||0));
   const W = 900, H = 560, NW = 14, GAP = 8, LX = 170, RX = 900 - 250;
   const short = s => s.length > 24 ? s.slice(0, 23) + "…" : s;
   function priceTxt(c) {
@@ -785,7 +787,7 @@ function markConflict(svg,subject,metric,x,y,match) {
   }
   function deals() {
     const base = kind === "all" ? [...NC.contracts, ...NC.hardware] : kind === "hardware" ? NC.hardware : NC.contracts.filter(c => c.kind === kind);
-    return base.filter(c => !c.excluded && String(c.announced || "").slice(0, 4) >= from);
+    return base.filter(c => !c.excluded && String(c.announced || "").slice(0, 4) >= from && (c.value_usd ? c.value_usd >= minimum : $("#dealUnpriced").checked));
   }
   function draw() {
     $("#dealRelations").classList.toggle("on", view === "relations"); $("#dealDollars").classList.toggle("on", view === "dollars");
@@ -841,7 +843,7 @@ function markConflict(svg,subject,metric,x,y,match) {
       const c = cs[0], active = !sel || (sel.side === "buyer" ? c.buyer : c.supplier) === sel.name;
       const col = css(SER[buyers.indexOf(c.buyer) % SER.length]);
       const path = el("path", {d:`M190,${y(buyers,c.buyer)} C400,${y(buyers,c.buyer)} 490,${y(suppliers,c.supplier)} 690,${y(suppliers,c.supplier)}`,
-        fill:"none",stroke:col,"stroke-width":active ? 2.3 : 1,"stroke-opacity": active ? .48 : .06,
+        fill:"none",stroke:col,"stroke-width":active ? (cs.some(d=>d.value_usd)?1.2+12*Math.sqrt(cs.reduce((v,d)=>v+(d.value_usd||0),0)/maxDeal):1.2) : 1,"stroke-opacity": active ? .48 : .06,
         "stroke-dasharray":cs.every(c=>c.kind === "hardware") ? "5 4" : ""},svg);
       hover(path, `<b>${esc(c.buyer)} → ${esc(c.supplier)}</b>` + cs.map(c=>`${esc(c.gpu_type || "chip type undisclosed")} · ${c.value_usd ? money(c.value_usd) : "value undisclosed"}<br>${esc(c.evidence || c.structure)}${badge(c.confidence)}`).join("<br>"));
       path.onclick = () => {sel={side:"supplier",name:c.supplier};draw();};
@@ -854,8 +856,8 @@ function markConflict(svg,subject,metric,x,y,match) {
     });
     nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
     suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
-    $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; equal-width lines, no implied dollar value`;
-    $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Dashed lines are hardware supply; solid lines are cloud or hosting relationships. Click any company for its terms and sources below.`;
+    $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; width follows disclosed nominal value`;
+    $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Widths show disclosed nominal amounts, with floors, options and cancellation terms retained; thin unpriced links do not mean zero. Dashed lines are hardware supply. Click any company for its terms and sources below.`;
   }
   function table1() {
     const rows = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
@@ -870,6 +872,8 @@ function markConflict(svg,subject,metric,x,y,match) {
   $("#dealReset").onclick = () => { sel = null; draw(); };
   $("#dealRelations").onclick=()=>{view="relations";draw();};
   $("#dealDollars").onclick=()=>{view="dollars";if(kind==="all"){kind="compute";$("#dealKind").value=kind;}sel=null;draw();};
+  $("#dealMin").oninput=e=>{minimum=maxDeal*(Number(e.target.value)/100)**2;$("#dealMinLabel").textContent=minimum?money(minimum)+" and above":"All values";if(minimum>0)$("#dealUnpriced").checked=false;sel=null;draw();};
+  $("#dealUnpriced").onchange=()=>{sel=null;draw();};
   onTheme(draw); draw();
 })();
 </script>

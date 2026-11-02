@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "date": "2026-11-02",
+      "title": "Anthropic’s compute commitments carry different risks",
+      "summary": "Anthropic’s October 26 S-1 shows why headline compute commitments need their contract terms. It describes minimum spending of $110 billion with AWS from May 2026 through April 2036 and $44.9 billion with Microsoft from November 2026 through May 2033, with specified breach and delivery exceptions. Its SpaceX arrangements have a nominal aggregate of up to $120.5 billion through 2029, but either party can cancel on 90 days’ notice after initial noncancelable periods ending in January and March 2027. The guaranteed SpaceX minimum is not separately quantified. These agreements create different revenue certainty for suppliers; their announced totals do not establish delivered capacity, and amendments must not be counted again as new deals.",
+      "sources": [
+        {
+          "title": "Anthropic Form S-1, Infrastructure Service Arrangements, pages 171–172",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+          "date": "2026-10-26"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "analysis"
+    }
+  ]
+}
