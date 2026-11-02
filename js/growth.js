@@ -2,7 +2,7 @@
 (function () {
   const METRICS = [["revenue_usd", "Quarterly revenue"], ["mw_online", "MW online"], ["backlog_usd", "Backlog"]];
   let metric = "revenue_usd", mode = "absolute";
-  const selected = new Set(["AWS", "Microsoft Azure", "Google Cloud", "Oracle OCI", "CoreWeave", "Nebius"]);
+  const selected = new Set(Object.keys(NC.growth));
   const ctl = $("#growthCtl");
   METRICS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{metric=k;draw();};ctl.appendChild(b);});
   function draw() {

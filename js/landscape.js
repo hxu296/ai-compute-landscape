@@ -65,4 +65,3 @@
   $('#flowMotion').onclick=()=>{playing=!playing;motion();};$('#flowFocus').onchange=e=>choose(e.target.value);$('#flowReset').onclick=()=>choose('');
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;motion();}).observe(svg);motion();choose('');
 })();
-

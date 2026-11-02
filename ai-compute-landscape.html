@@ -699,7 +699,6 @@ function markConflict(svg,subject,metric,x,y,match) {
   $('#flowMotion').onclick=()=>{playing=!playing;motion();};$('#flowFocus').onchange=e=>choose(e.target.value);$('#flowReset').onclick=()=>choose('');
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;motion();}).observe(svg);motion();choose('');
 })();
-
 </script>
 <script>
 // Who supplies it: Epoch H100e stacked by chip designer (end-2025), or MW online/contracted per provider.
@@ -879,7 +878,7 @@ function markConflict(svg,subject,metric,x,y,match) {
 (function () {
   const METRICS = [["revenue_usd", "Quarterly revenue"], ["mw_online", "MW online"], ["backlog_usd", "Backlog"]];
   let metric = "revenue_usd", mode = "absolute";
-  const selected = new Set(["AWS", "Microsoft Azure", "Google Cloud", "Oracle OCI", "CoreWeave", "Nebius"]);
+  const selected = new Set(Object.keys(NC.growth));
   const ctl = $("#growthCtl");
   METRICS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{metric=k;draw();};ctl.appendChild(b);});
   function draw() {
