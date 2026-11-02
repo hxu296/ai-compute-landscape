@@ -285,3 +285,16 @@ html{scroll-padding-top:74px}
 .inference-shares,.inference-tokens{overflow-x:auto}
 #usage #infSvg{min-width:440px}#usage #tokenSvg{min-width:560px}
 #tokenSvg .token-company{font-size:14px}#tokenSvg .token-scope{font-size:10px}#tokenSvg .token-value{font-size:12px}
+.capacity{scroll-margin-top:76px}.capacity .fig-head{flex-wrap:wrap}.capacity .fig-head h3{font-size:30px}
+.capacity-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 24px;margin:24px 0 12px}
+.capacity-controls label{display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--muted);position:relative}
+.capacity-controls select,.capacity-controls input[type=number]{box-sizing:border-box;width:100%;min-width:0;border:1px solid var(--grid);border-radius:4px;background:var(--paper);color:var(--ink);padding:10px;font:13px var(--sans)}
+.capacity-controls input[type=range]{width:100%;accent-color:var(--accent);margin:8px 0}.capacity-controls output{position:absolute;right:0;top:0;color:var(--ink);font-family:var(--mono)}
+.capacity h4{font:500 22px var(--serif);margin:30px 0 14px}.capacity-bar-row{display:grid;grid-template-columns:110px minmax(0,1fr) 130px;gap:16px;align-items:center;margin:20px 0;font-size:14px}
+.capacity-bar-row strong{text-align:right;font-family:var(--mono);font-size:14px}.capacity-bar-track{height:30px;background:var(--grid);border-radius:3px;overflow:hidden}.capacity-bar-fill{height:100%;min-width:2px;transition:width .25s}
+.capacity-mix-bar{display:flex;overflow:hidden;height:24px;border-radius:3px}.capacity-mix-bar span{height:100%;transition:width .25s}.capacity details{margin-top:28px}.capacity summary{cursor:pointer;font-size:14px}
+.capacity-costs{grid-template-columns:repeat(2,minmax(0,260px))}#capacityScenario{box-sizing:border-box;width:100%;min-height:180px;font:12px var(--mono);margin-top:16px}.capacity .small{line-height:1.65}.capacity table td{min-width:100px}.capacity table td:first-child{min-width:260px}
+@media(max-width:900px){.capacity-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.capacity-bar-row{grid-template-columns:90px minmax(0,1fr) 105px;gap:8px}.capacity-bar-row strong{font-size:12px}}
+@media(max-width:520px){.capacity-controls{grid-template-columns:1fr}.capacity .fig-head h3{font-size:26px}.capacity-bar-row{grid-template-columns:78px minmax(0,1fr) 92px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.capacity-bar-fill,.capacity-mix-bar span{transition:none}}
+#native-accelerators{scroll-margin-top:76px}.native-stack-scroll{overflow-x:auto}#chipStackSvg{display:block;width:100%;min-width:660px}.native-stack-scroll+ .legend{margin-top:18px}#supply details summary{cursor:pointer}

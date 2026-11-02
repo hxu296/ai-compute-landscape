@@ -12,6 +12,8 @@ It covers:
 - published GPU-hour prices and price indices;
 - what the large deals imply per kW-month;
 - statements on inference versus training;
+- dated token disclosures and conditional DeepSeek rack, power and ownership-cost scenarios;
+- native accelerator counts stacked by owner, using a consistent Epoch snapshot;
 - China's chip mix.
 
 ## Reading the numbers
@@ -32,6 +34,8 @@ The rules used throughout:
 - **Building leases are counted apart from compute contracts**, because the same capacity often appears twice: once in the lease and again in the compute deal built on it. Hardware orders, options, backstops and framework deals are also kept apart.
 
 The method section at the bottom of the page lists what the data cannot tell you, with a [prioritized evidence queue](research/GAPS.md).
+
+The inference calculator uses raw SemiAnalysis InferenceX serving-group rates, not the interpolated total-token headline. Its default 500T/day traffic is an **assumption**, not an observed market total. Cached input, output and fresh input are distinct. Cache composition does not recalibrate rack demand because isolated uncached-prefill capacity is unavailable. All 72 physical GPUs per rack incur the displayed cost and power allowance. Selected benchmark records and exact API URLs are in [research/capacity.json](research/capacity.json); run arithmetic and dataset checks with `node --test tests/*.test.cjs`.
 
 ## Files
 

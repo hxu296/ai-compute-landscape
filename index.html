@@ -6,7 +6,7 @@
 <title>Who powers AI? | AI Compute Landscape</title>
 <meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Source-linked facts, scope-aware comparisons and explicit uncertainty.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=4a8b3da34fa4">
+<link rel="stylesheet" href="style.css?v=1fcd292f9c37">
 </head>
 <body>
 <div class="tip" id="tip"></div>
@@ -65,9 +65,16 @@
     <div class="takeaway" id="supTake"></div>
     <p class="fig-caption" id="supNote"></p>
   </div></div>
-  <div class="fig"><div class="fig-frame"><h3 class="fig-title">Native accelerator counts: NVIDIA, AMD, TPU and Trainium</h3>
-    <p class="fig-sub">Chip counts retain the source’s date and status. Delivered chips, planned deployments, and H100-equivalent estimates are different quantities; these rows are not additive.</p>
+  <div class="fig" id="native-accelerators"><div class="fig-frame"><h3 class="fig-title">Native accelerator counts: NVIDIA, AMD, TPU and Trainium</h3>
+    <p class="fig-sub">Estimated delivered chips, stacked by owner. These are physical chip counts, not equal units of performance. Renting capacity does not transfer chip ownership.</p>
+    <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model">Accelerator model</option></select></label></div>
+    <div class="native-stack-scroll"><svg id="chipStackSvg" role="img" aria-label="Native accelerator counts stacked by chip owner"></svg></div>
+    <div class="legend" id="chipStackLegend"></div>
+    <p class="fig-caption" id="chipStackNote"></p>
+    <details><summary>Individual disclosures and source records</summary>
+    <p class="small">The table also includes reported deliveries, customer-use subsets and planned deployments. These records can overlap the chart and one another. H100/H200 is one combined source category; it is not split into invented counts.</p>
     <div class="seg" id="chipCtl"></div><div class="scroll" style="max-height:420px"><table class="t" id="nativeChips"></table></div>
+    </details>
   </div></div>
 </section>
 
@@ -184,6 +191,47 @@
     <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
+  <div class="fig capacity" id="capacity"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3>If this traffic ran on DeepSeek</h3></div>
+    <p class="fig-sub">Compare V4 Pro and V4.1 Flash on 72-GPU <b>GB200 NVL72</b> racks. There is no verified, non-overlapping total for the entire inference market here. Choose a disclosed traffic boundary or enter an explicit market assumption.</p>
+    <div class="capacity-controls">
+      <label>Traffic boundary<select id="capacityPreset"></select></label>
+      <label>Logical tokens / day (trillions)<input id="capacityVolume" type="number" min="0.001" max="10000000" step="any" value="500"></label>
+      <label>Output share <output id="capacityOutputValue"></output><input id="capacityOutput" type="range" min="0" max="100" step="0.1" value="2"></label>
+      <label>Input cache hits <output id="capacityCacheValue"></output><input id="capacityCache" type="range" min="0" max="100" step="0.1" value="98"></label>
+      <label>Usable reference capacity <output id="capacityUseValue"></output><input id="capacityUse" type="range" min="10" max="100" step="1" value="70"></label>
+      <label>Pro operating point<select id="capacityPro"></select></label>
+      <label>Flash operating point<select id="capacityFlash"></select></label>
+    </div>
+    <p id="capacityBoundary" class="small"></p>
+    <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
+    <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
+    <div id="capacityResults">
+      <p class="takeaway" id="capacitySummary" aria-live="polite"></p>
+      <div id="capacityBars" aria-label="Conditional rack comparison"></div>
+      <div class="table-wrap"><table class="t" id="capacityComparison"></table></div>
+      <h4>Tokens are not all the same work</h4>
+      <div id="capacityMix"></div>
+      <p class="small">Cache hits apply only to input tokens. This control changes the token composition above; <b>it does not change the rack estimate</b>. The runs do not isolate uncached prefill capacity, so they cannot calibrate a cache-hit-to-rack curve. Rack estimates retain the chosen benchmark’s context and cache behavior.</p>
+      <details><summary>Assumptions, packing and source checks</summary>
+        <div class="capacity-controls capacity-costs">
+          <label>Ownership cost ($ / GPU-hour)<input id="capacityCost" type="number" min="0" step="0.01" value="1.86"></label>
+          <label>All-in power (kW / GPU)<input id="capacityPower" type="number" min="0" step="0.01" value="1.87"></label>
+        </div>
+        <p class="small">Defaults: <a href="https://inferencex.semianalysis.com/chips/gb200-nvl72" target="_blank" rel="noopener">SemiAnalysis’s public GB200 specifications and ownership model</a>, retrieved November 2, 2026. Annual cost = all physical GPUs × hourly ownership cost × 8,760. Power includes the source’s host, networking and cooling allowance; no extra PUE multiplier is applied. Neither figure is a purchase quote.</p>
+        <div id="capacityPacking" class="small"></div>
+        <p class="small"><b>Method:</b> group equivalents = max(input tokens/day ÷ 86,400 ÷ group input TPS, output tokens/day ÷ 86,400 ÷ group output TPS) ÷ usable capacity. Round up to groups, then to whole racks. This is a fixed-rate extrapolation from coding-trace replay. A different input/output mix, context length, cache distribution or serving stack can change the attainable rates. Full-rack packing was not measured.</p>
+        <div id="capacityProfiles" class="small"></div>
+        <p class="small"><b>Benchmark scope:</b> AgentX variable-length coding traces, prefix caching and speculative decoding. The Flash configurations use different engines and cache setups; this is a configuration comparison, not a controlled model-only comparison. The vLLM Flash run also uses synthetic speculative acceptance. Input throughput counts reused context as well as fresh input.</p>
+        <p class="small"><b>Why not use the headline?</b> The run pages’ 100-token/s figures interpolate total logical throughput. They are not output throughput. Pro’s overview also applies a decode-share factor after the raw producer has already divided by all allocated GPUs. This calculator uses the raw absolute input and output rates and explicit physical groups instead. <a href="https://github.com/SemiAnalysisAI/InferenceX/blob/bde2579a49696924c7783519224fbe49e2c678b7/inferencex-e2e/infx/results/agentic/__init__.py#L236" target="_blank" rel="noopener">Producer</a> · <a href="https://github.com/SemiAnalysisAI/InferenceX-app/blob/f5d2bd4a6b6be1c9438c576afd23d274019a200a/packages/app/src/lib/overview/overview-data.ts#L708" target="_blank" rel="noopener">Overview transformation</a>.</p>
+        <p class="small"><b>Unresolved source metadata:</b> Pro’s API labels precision “fp4”; inspected worker logs name <code>deepseek_v4_fp8</code> with bfloat16 dtype. The API’s October 14 date also differs from the September run timestamps. These fields do not establish uniform arithmetic precision or an exact measurement date. The selected raw values and source URLs are preserved in the <a href="research/capacity.json">benchmark snapshot</a>.</p>
+        <p class="small">The earlier 40T/day example can be reproduced with 2% output, 100% usable capacity and Pro result 444911: 244 racks. Its 60 allocated GPUs per rack include both prefill and decode; only 36 are decode GPUs. This configuration reaches 95.8, rather than 100, tokens/s/user at P90 latency.</p>
+        <p class="small">The historical Fireworks Pro 0813 serverless tariff is not used as current revenue: <a href="https://fireworks.ai/models/deepseek-ai/deepseek-v4-pro-0813" target="_blank" rel="noopener">Fireworks says that endpoint was retired from serverless</a>. Current GPU ownership cost and hypothetical API billing are different quantities.</p>
+        <button type="button" id="capacityCopy" class="ctl">Copy scenario as JSON</button>
+        <textarea id="capacityScenario" hidden readonly aria-label="Scenario JSON"></textarea>
+      </details>
+    </div>
+  </div></div>
 </section>
 
 <section class="chapter" id="china">
@@ -228,18 +276,21 @@
 <footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
-<script src="data/nc.js?v=261ad0b1c946"></script>
+<script src="data/nc.js?v=5214e183e486"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
 <script src="js/sketch.js?v=988580f7f567"></script>
 <script src="js/landscape.js?v=cf5a64e11cb0"></script>
-<script src="js/supply.js?v=ec4ef09ad6b8"></script>
+<script src="js/supply.js?v=27224b80461e"></script>
+<script src="js/chip_stacks.js?v=e47bb6932e2c"></script>
 <script src="js/deals.js?v=a8e23086df70"></script>
 <script src="js/growth.js?v=88d90c17b2bb"></script>
 <script src="js/pricing.js?v=b1e69146c7af"></script>
 <script src="js/usage.js?v=5cf52da7045f"></script>
 <script src="js/tokens.js?v=d1d3debabfc7"></script>
+<script src="js/capacity_math.js?v=626c07e1375f"></script>
+<script src="js/capacity.js?v=ffb258f9b73d"></script>
 <script src="js/lists.js?v=6b9ec599d94c"></script>
 <script src="js/research.js?v=74b48893207f"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>
