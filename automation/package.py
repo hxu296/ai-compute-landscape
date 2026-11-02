@@ -9,6 +9,8 @@ def package(root,out):
     for name in ['index.html','style.css','AUDIT.md','README.md','.nojekyll']:
         if (root/name).exists():shutil.copy2(root/name,out/name)
     for name in ['js','data','fonts','research']:shutil.copytree(root/name,out/name)
+    (out/'automation').mkdir()
+    shutil.copy2(root/'automation/DESIGN.md',out/'automation/DESIGN.md')
     html=(root/'index.html').read_text()
     # Strip old content hashes before calculating the new release.
     html=re.sub(r'((?:src|href)="[^"?]+)\?v=[a-f0-9]+"',r'\1"',html)

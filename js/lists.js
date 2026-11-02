@@ -1,6 +1,6 @@
 // China, provider reference, method and source coverage.
 (function () {
-  $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} companies · compiled ${String(NC.built).slice(0, 10)}`;
+  $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} provider profiles · compiled ${String(NC.built).slice(0, 10)}`;
   // takeaways computed from the data, so they stay true when the data is rebuilt
   (function takeaways() {
     const kw = NC.contracts.filter(c => !c.excluded), all = kw.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = kw.map(c => c.implied_usd_per_kw_month).filter(Boolean);
@@ -35,7 +35,9 @@
     b.onclick = () => { grp = g; cards(); }; ctl.appendChild(b); });
   function cards() {
     ctl.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.g === grp));
-    const ps = NC.providers.filter(p => grp === "All" || p.group === grp);
+    const q=$("#providerSearch").value.toLowerCase();
+    const ps = NC.providers.filter(p => (grp === "All" || p.group === grp) && (p.name+" "+p.group).toLowerCase().includes(q));
+    $("#providerCount").textContent=`${ps.length} providers`;
     $("#provCards").innerHTML = ps.map(p => { const l = p.latest, host = p.group === "Host";
       const items = [!host && ["GPUs installed", cell(l.gpus_total, "gpus")], p.epoch && p.epoch.length && ["Epoch estimate", `${num(p.epoch.at(-1)[1])} H100e${badge("estimated")} <span class="muted small">${ym(p.epoch.at(-1)[0])}</span>`],
         ["MW online", cell(l.mw_online, "mw")], [p.name==="VNET"?"MW committed within in-service fleet":"MW contracted (source scope)", cell(l.mw_contracted, "mw")], l.mw_utilized && ["MW utilized",cell(l.mw_utilized,"mw")], l.mw_order_wins && ["New order wins (period flow)",cell(l.mw_order_wins,"mw")], l.mw_pipeline && ["MW pipeline", cell(l.mw_pipeline, "mw")],
@@ -44,7 +46,7 @@
         l.valuation_usd && ["Valuation", cell(l.valuation_usd, "usd")], host && p.tenants.length && ["Tenants", esc(p.tenants.join(", "))]].filter(Boolean);
       return `<div class="card pcard"><h3>${esc(p.name)}${conflictBadge(p.name,"mw_online")}${conflictBadge(p.name,"gpus_total")} <span class="muted small">${p.group} · ${p.n_facts} facts</span></h3><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`; }).join("");
   }
-  cards();
+  $("#providerSearch").oninput=cards;cards();
   $("#methodBox").innerHTML = `<p><b>Sources and definitions.</b> SEC filings, earnings releases and calls, company pages and price APIs, named press reports and Epoch AI's public datasets provide the evidence. Each row keeps its source. Pipeline, contracted and online power are separate measures; company and segment revenue retain their scope. Hosts and tenants can refer to the same buildings, and dated observations are not additive.</p>
     <p><b>Rules.</b> Hosts carry MW only; GPUs belong to their owners. Money uses the cloud segment where one is reported. Estimates from power use
     1,400 W IT per Hopper GPU and 2,000 W per GB200/GB300 GPU (PUE 1.3 from gross). Source ranges are retained where available; other estimates carry an approximation mark.

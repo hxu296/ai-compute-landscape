@@ -1,29 +1,30 @@
 // Who supplies it: Epoch H100e stacked by chip designer (end-2025), or MW online/contracted per provider.
 (function () {
-  let mode = "compute";
+  let mode = "compute",designer="All";
   const DES = [["Nvidia", "--s1"], ["Google", "--s2"], ["Amazon", "--s3"], ["AMD", "--s4"]];
   function drawCompute(svg) {
     const rows = NC.providers.filter(p => Object.keys(p.epoch_designers || {}).length)
-      .map(p => ({ name: p.name, d: p.epoch_designers, total: Object.values(p.epoch_designers).reduce((a, b) => a + b, 0) })).sort((a, b) => b.total - a.total);
+      .map(p => ({ name: p.name, d: Object.fromEntries(Object.entries(p.epoch_designers).filter(([k])=>designer==="All"||k===designer)), total: Object.entries(p.epoch_designers).filter(([k])=>designer==="All"||k===designer).reduce((a, [,b]) => a + b, 0) })).filter(r=>r.total>0).sort((a, b) => b.total - a.total);
     const L = 150, R = 820, T = 20, rh = 36, max = Math.max(...rows.map(r => r.total));
     svg.setAttribute("viewBox", `0 0 900 ${T + rows.length * rh + 40}`);
     const x = v => L + (v / max) * (R - L);
-    for (let v = 0; v <= max; v += 1e6) { el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: T + rows.length * rh, stroke: css("--grid") }, svg);
-      el("text", { x: x(v), y: T + rows.length * rh + 16, "text-anchor": "middle" }, svg).textContent = `${v / 1e6}M`; }
+    for (let i=0;i<=4;i++) { const v=max*i/4; el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: T + rows.length * rh, stroke: css("--grid") }, svg);
+      el("text", { x: x(v), y: T + rows.length * rh + 16, "text-anchor": "middle" }, svg).textContent = max>=1e6?`${+(v/1e6).toFixed(2)}M`:num(v); }
     rows.forEach((r, i) => {
       const y = T + i * rh; let acc = 0;
       el("text", { x: L - 10, y: y + 21, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
       DES.forEach(([k, c]) => { const v = r.d[k] || 0; if (!v) return;
         const b = el("rect", { x: x(acc) + 1, y: y + 9, width: Math.max(1, x(acc + v) - x(acc) - 2), height: 16, rx: 3, fill: css(c) }, svg); acc += v;
-        hover(b, `<b>${esc(r.name)}: ${k} chips</b>${num(v)} H100-equivalents (Epoch median, end-2025)`); });
+        hover(b, `<b>${esc(r.name)}: ${k} chips</b>${num(v)} H100-equivalents (Epoch median, end-2025)<br>${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology","Epoch methodology")}`); });
       const other = r.total - DES.reduce((a, [k]) => a + (r.d[k] || 0), 0);
       el("text", { x: x(r.total) + 6, y: y + 21, class: "ink", "font-family": "JetBrains Mono, monospace", "font-size": 11.5 }, svg).textContent = `${(r.total / 1e6).toFixed(2)}M` + (other > 1000 ? " (incl. other)" : "");
     });
-    $("#supLegend").innerHTML = DES.map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("");
+    $("#supLegend").innerHTML = DES.filter(([k])=>designer==="All"||k===designer).map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("");
     const g = rows[0], tpu = (g.d.Google || 0) / g.total;
     const cust = Math.round(rows.reduce((a, r) => a + (r.d.Google || 0) + (r.d.Amazon || 0), 0) / rows.reduce((a, r) => a + r.total, 0) * 100);
     $("#supTake").innerHTML = `<span class="verdict">Custom chips are ${cust}% of the largest fleets</span><b>${esc(g.name)}</b> leads with ${(g.total / 1e6).toFixed(1)}M H100-equivalents,
       ${Math.round(tpu * 100)}% of them its own TPUs. Across the ${rows.length} fleets shown, ${cust}% of the compute is Google or Amazon silicon and nearly all the rest is Nvidia.`;
+    if(designer!=="All")$("#supTake").innerHTML=`<span class="verdict">${esc(designer==="Nvidia"?"NVIDIA":designer==="Google"?"Google TPU":designer==="Amazon"?"AWS Trainium":"AMD Instinct")} fleet estimates</span>${rows.length} owners have a positive end-2025 estimate in this designer view. ${esc(g.name)} has the largest modeled holding at ${num(g.total)} H100-equivalents. These are estimated cumulative deliveries, not measured online inventory. Native chip counts appear below.`;
     $("#supNote").innerHTML = `Epoch AI "AI chip owners" estimate: median cumulative deliveries to 2025-12-31, in H100-equivalents at dense 8-bit
       performance. An estimate, not a disclosure, and never added to our own totals. ${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology", "Epoch's method")}`;
   }
@@ -54,8 +55,10 @@
     $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). VNET’s bar shows only in-service capacity; its customer-committed subset is described in the tooltip and is excluded from the total-contracted series. Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; (mode === "compute" ? drawCompute : drawPower)(svg);
+    $("#supDesignerCtl").hidden=mode!=="compute";
     $("#supCompute").classList.toggle("on", mode === "compute"); $("#supPower").classList.toggle("on", mode === "power"); }
   $("#supCompute").onclick = () => { mode = "compute"; draw(); }; $("#supPower").onclick = () => { mode = "power"; draw(); };
+  $("#supDesigner").onchange=()=>{designer=$("#supDesigner").value;draw();};
   onTheme(draw); draw();
   const family = c => /^MI/.test(c) ? "AMD" : /^TPU/.test(c) ? "Google TPU" : /^Trainium/.test(c) ? "AWS Trainium" : /^Ascend/.test(c) ? "Huawei" : "NVIDIA";
   let chipFamily="All";

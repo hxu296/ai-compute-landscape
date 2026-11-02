@@ -32,7 +32,7 @@
       el("line",{x1:x(med),x2:x(med),y1:y-9,y2:y+9,stroke:css("--text-primary"),"stroke-width":2},svg);
       const seen={};row.forEach(p=>{const k=Math.round(x(p.usd)),dy=(seen[k]=(seen[k]||0)+1)-1;
         const c=el("circle",{cx:x(p.usd),cy:y+(dy?((dy%3)-1)*5:0),r:5,fill:css((GROUPS.find(g=>g[0]===p.group)||["","--text-muted"])[1]),stroke:css("--surface-1"),"stroke-width":2},svg);
-        hover(c,`<b>${esc(p.provider)}: ${esc(s)}</b>${p.is_floor?"from ":""}$${p.usd.toFixed(2)} ${esc(p.unit)}${badge(p.confidence)}<br>${esc(p.configuration)} · ${esc(p.region||"")} · ${p.date}<br>${esc(p.basis)}<br><span class="muted">${esc(p.note)}</span><br>${src(p.source_url)}`);c.onclick=()=>open(p.source_url,"_blank");});
+        hover(c,`<b>${esc(p.provider)}: ${esc(s)}</b>${p.is_floor?"from ":""}$${p.usd.toFixed(2)} ${esc(p.unit)}${badge(p.confidence)}<br>${esc(p.configuration)} · ${esc(p.region||"")} · ${p.date}<br>${esc(p.basis)}<br><span class="muted">${esc(p.note)}</span><br>${src(p.source_url)}`);});
       el("text",{x:R+8,y:y+4,"font-size":11},svg).textContent=`$${med.toFixed(2)} · n=${row.length}`;
     });
     table("#priceTable",raw.sort((a,b)=>a.sku.localeCompare(b.sku)||a.usd-b.usd),[{k:"provider",h:"Provider"},{k:"sku",h:"Chip"},{k:"usd",h:"USD / accelerator-h",f:r=>`${r.is_floor?"from ":""}$${r.usd.toFixed(4)}`},{k:"basis",h:"Terms"},{k:"region",h:"Region"},{k:"configuration",h:"Configuration"},{k:"date",h:"Observed"},{k:"note",h:"Original unit / formula",f:r=>esc(r.method||r.note)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);

@@ -31,17 +31,7 @@
       const c = el("circle", { cx: x(p.value), cy, r: 5.5, fill: filled ? col : css("--surface-1"), stroke: col, "stroke-width": 2 }, svg);
       el("text", { x: x(p.value) + (lb ? 26 : 9), y: cy + 4, "font-size": 10 }, svg).textContent = `${lb ? "≥" : ""}${Math.round(p.value * 100)}%`;
       hover(c, `<b>${esc(who)}</b>${lb ? "at least " : ""}${Math.round(p.value * 100)}% inference${badge(p.confidence)} · ${esc(p.as_of)}<br><span class="muted">${esc(p.note)}</span><br>${src(p.source_url)}`);
-      c.onclick = () => p.source_url && open(p.source_url, "_blank");
     });
   }
-  function tokens() {
-    const tok = v => { const a = Math.abs(v), u = [[1e15, "quadrillion"], [1e12, "trillion"], [1e9, "billion"], [1e6, "million"]].find(([d]) => a >= d);
-      return u ? `${+(v / u[0]).toPrecision(3)} ${u[1]}` : num(v); };
-    const by = {}; NC.tokens.filter(t => /^tokens/.test(t.unit)).forEach(t => { const k = `${t.subject} · ${t.unit}`; (by[k] = by[k] || []).push(t); });
-    const rows = Object.entries(by).map(([k, ts]) => { ts.sort((a, b) => a.as_of.localeCompare(b.as_of)); const a = ts[0], b = ts.at(-1);
-      return { k, first: a, last: b, mult: a.value ? b.value / a.value : 0 }; }).filter(r => r.last.value > 0).sort((a, b) => b.mult - a.mult);
-    $("#tokens").innerHTML = `<table class="t"><thead><tr><th>Series</th><th>First</th><th>Latest</th><th>×</th></tr></thead><tbody>` + rows.map(r =>
-      `<tr><td>${esc(r.k)}</td><td>${tok(r.first.value)} <span class="muted">${ym(r.first.as_of)}</span></td><td>${tok(r.last.value)}${badge(r.last.confidence)} <span class="muted">${ym(r.last.as_of)}</span> ${src(r.last.source_url, "↗")}</td><td>${r.mult > 1.05 ? r.mult.toFixed(0) + "×" : ""}</td></tr>`).join("") + "</tbody></table>";
-  }
-  onTheme(draw); draw(); tokens();
+  onTheme(draw); draw();
 })();

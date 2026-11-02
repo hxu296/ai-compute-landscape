@@ -38,21 +38,28 @@ def semi(payload,today):
     if lo>hi or date(p['period_start'])>today:raise ValueError('Invalid survey range or date')
     return dict(market_checks=rows,benchmarks=[dict(name='SemiAnalysis contract survey',sku='H100',usd=None,range_low=lo,range_high=hi,date=p['period'],terms='One-year rental, 25th–75th percentile; typically 25% prepay. Latest public survey month.',source_url='https://gpu-index.semianalysis.com/')])
 def editorial(document,today):
-    if document.get('schema_version')!=1 or not isinstance(document.get('items'),list):raise ValueError('Unknown editorial schema')
+    if document.get('schema_version')!=2 or not isinstance(document.get('items'),list):raise ValueError('Unknown editorial schema')
     seen=set()
     for item in document['items']:
         day=dt.date.fromisoformat(item['date']).isoformat()
-        if day in seen or day>today:raise ValueError('Duplicate or future editorial date')
-        seen.add(day)
+        identity=item.get('id')
+        if not isinstance(identity,str) or not identity or len(identity)>100:raise ValueError('Missing editorial id')
+        if identity in seen or day>today:raise ValueError('Duplicate id or future editorial date')
+        seen.add(identity)
+        if isinstance(item.get('impact_score'),bool) or not isinstance(item.get('impact_score'),int) or not 1<=item['impact_score']<=5:raise ValueError('Impact must be an integer 1–5')
+        if not isinstance(item.get('impact_reason'),str) or not 10<=len(item['impact_reason'])<=500:raise ValueError('Missing impact rationale')
         if item.get('status')!='reviewed' or item.get('kind') not in ['analysis','news']:raise ValueError('Editorial item must be reviewed news or analysis')
         for k,limit in [('title',180),('summary',1800)]:
             if not isinstance(item.get(k),str) or not 1<=len(item[k])<=limit:raise ValueError('Invalid editorial '+k)
+        for k in ['confidence','event_date_scope','future_target']:
+            if item.get(k) is not None and (not isinstance(item[k],str) or len(item[k])>1000):raise ValueError('Invalid editorial '+k)
+        if item.get('event_date') and dt.date.fromisoformat(item['event_date']).isoformat()>day:raise ValueError('Future event must be a target, not an observed event')
         if not 1<=len(item.get('sources',[]))<=8:raise ValueError('Missing supporting sources')
         for source in item['sources']:
             u=urllib.parse.urlparse(source['url'])
             if u.scheme!='https' or not u.hostname or u.username or u.password:raise ValueError('Unsafe source URL')
             if not source.get('title') or date(source['date'])>day:raise ValueError('Invalid source publication date')
-    return sorted(document['items'],key=lambda i:i['date'],reverse=True)
+    return sorted(document['items'],key=lambda i:(i['date'],i['impact_score'],i.get('published_at','')),reverse=True)
 def load(path,default):return json.loads(path.read_text()) if path.exists() else default
 def write(path,value):path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
 def fetch(key,cache):
@@ -70,7 +77,7 @@ def run(root,offline=False):
     now=dt.datetime.now(dt.timezone.utc);today=now.date().isoformat();stamp=now.isoformat()
     data=root/'data';live=load(data/'live.json',{'schema_version':1,'sources':{},'daily':{'items':[]}})
     if live.get('schema_version')!=1:raise ValueError('Unknown live data schema')
-    curated=editorial(load(root/'research/daily.json',{'schema_version':1,'items':[]}),today)
+    curated=editorial(load(root/'research/daily.json',{'schema_version':2,'items':[]}),today)
     successes=0;status={}
     for key,adapter in [('compute_desk',desk),('semianalysis',semi)]:
         old=live['sources'].get(key,{})
@@ -93,7 +100,7 @@ def run(root,offline=False):
     live['market_checks']=[r for s in live['sources'].values() for r in s.get('market_checks',[])]
     live['benchmarks']=[r for s in live['sources'].values() for r in s.get('benchmarks',[])]
     # One deterministic fallback brief per UTC day; the editor's reviewed item wins that day.
-    history={i['date']:i for i in live.get('daily',{}).get('items',[]) if i.get('status')=='automated'}
+    history={i.get('id','brief-'+i['date']):i for i in live.get('daily',{}).get('items',[]) if i.get('status')=='automated' and i['date'] not in {c['date'] for c in curated}}
     if not offline and today not in {i['date'] for i in curated}:
         h100=sorted([r for r in live['market_checks'] if r['sku']=='H100'],key=lambda r:r['date'],reverse=True)
         fresh=[r for r in h100 if (now.date()-dt.date.fromisoformat(r['date'])).days<=2]
@@ -103,8 +110,8 @@ def run(root,offline=False):
             sources=[dict(title=r['name'],url=r['source_url'],date=r['date'])]
         else:
             title='Daily market brief: no fresh benchmark observation';summary='The tracked public benchmark feeds have no observation within the past two days. Their last good dated readings remain visible. This source check does not establish that no other market news occurred.';sources=[]
-        history[today]=dict(date=today,title=title,summary=summary,sources=sources,status='automated',kind='market_brief')
-    history.update({i['date']:i for i in curated});live['daily']={'schema_version':1,'items':sorted(history.values(),key=lambda i:i['date'],reverse=True)}
+        history['brief-'+today]=dict(id='brief-'+today,date=today,impact_score=1,impact_reason='Routine benchmark reading; not an independently reviewed major news event.',title=title,summary=summary,sources=sources,status='automated',kind='market_brief')
+    history.update({i['id']:i for i in curated});live['daily']={'schema_version':2,'items':sorted(history.values(),key=lambda i:(i['date'],i.get('impact_score',1),i.get('published_at','')),reverse=True)}
     write(data/'live.json',live);(data/'live.js').write_text('window.LIVE = '+json.dumps(live,ensure_ascii=False,separators=(',',':'))+';\n')
     if not offline:
         write(data/'history'/(today+'.json'),dict(checked_at=stamp,sources=status,observations=live['market_checks'],headline=live['daily']['items'][0] if live['daily']['items'] else None))

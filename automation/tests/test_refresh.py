@@ -13,11 +13,15 @@ class ETL(unittest.TestCase):
             with self.assertRaises(ValueError):m.number(v)
         with self.assertRaises(ValueError):m.checks('x','H','x','https://example.com',[{'date':'2099-01-01','value':1}],'2026-11-02')
     def test_editorial_dates_and_links(self):
-        item={'date':'2026-11-02','title':'A dated analysis','summary':'Evidence from an earlier filing.','status':'reviewed','kind':'analysis','sources':[{'date':'2026-10-26','url':'https://example.com/filing','title':'Filing'}]}
-        self.assertEqual(m.editorial({'schema_version':1,'items':[item]},'2026-11-02'),[item])
-        with self.assertRaises(ValueError):m.editorial({'schema_version':1,'items':[item,item]},'2026-11-02')
+        item={'id':'test-story','impact_score':3,'impact_reason':'Material provider-specific capacity implications.','date':'2026-11-02','title':'A dated analysis','summary':'Evidence from an earlier filing.','status':'reviewed','kind':'analysis','sources':[{'date':'2026-10-26','url':'https://example.com/filing','title':'Filing'}]}
+        self.assertEqual(m.editorial({'schema_version':2,'items':[item]},'2026-11-02'),[item])
+        with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[item,item]},'2026-11-02')
+        other={**item,'id':'second-story'}
+        self.assertEqual(len(m.editorial({'schema_version':2,'items':[item,other]},'2026-11-02')),2)
+        for score in [0,6,True,3.5]:
+            with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[{**item,'impact_score':score}]},'2026-11-02')
         item['sources'][0]['url']='javascript:bad'
-        with self.assertRaises(ValueError):m.editorial({'schema_version':1,'items':[item]},'2026-11-02')
+        with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[item]},'2026-11-02')
     def test_total_failure_preserves_published_cache(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);m.write(root/'data/live.json',{'schema_version':1,'sources':{},'daily':{'items':[]}});before=(root/'data/live.json').read_bytes()

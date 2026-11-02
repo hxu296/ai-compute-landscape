@@ -13,12 +13,27 @@ const NS = "http://www.w3.org/2000/svg";
 function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; }
 function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 const tip = $("#tip");
-function showTip(html, ev) { tip.innerHTML = html; tip.style.display = "block";
-  tip.style.left = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8) + "px"; tip.style.top = Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8) + "px"; }
-function hideTip() { tip.style.display = "none"; }
-function hover(node, html) { node.addEventListener("mousemove", ev => showTip(typeof html === "function" ? html() : html, ev)); node.addEventListener("mouseleave", hideTip);
-  node.addEventListener("pointerup", ev => { if (ev.pointerType !== "mouse") showTip(typeof html === "function" ? html() : html, ev); }); }
-document.addEventListener("pointerdown", ev => { if (ev.pointerType !== "mouse" && !ev.target.closest("svg")) hideTip(); });
+let tipPinned=false,tipAnchor=null;
+function showTip(html, ev, pin=false) {
+  if(tipPinned&&!pin)return;
+  tipPinned=pin;tip.classList.toggle('pinned',pin);
+  tip.innerHTML=(pin?'<button type="button" class="tip-close" aria-label="Close pinned chart detail">×</button><span class="tip-state">Pinned · Escape to close</span>':'')+html+(pin?'':'<span class="tip-hint">Click to pin details</span>');
+  tip.style.display='block';tip.setAttribute('role',pin?'dialog':'tooltip');tip.setAttribute('aria-label','Chart detail');
+  tip.style.left=Math.max(8,Math.min(ev.clientX+14,innerWidth-tip.offsetWidth-8))+'px';
+  tip.style.top=Math.max(8,Math.min(ev.clientY+14,innerHeight-tip.offsetHeight-8))+'px';
+  if(pin)tip.querySelector('.tip-close').onclick=()=>hideTip(true);
+}
+function hideTip(force=false) {if(tipPinned&&!force)return;tipPinned=false;tipAnchor=null;tip.classList.remove('pinned');tip.style.display='none';}
+function hover(node, html) {
+  const content=()=>typeof html==='function'?html():html;
+  node.dataset.tip='true';
+  node.addEventListener('mousemove',ev=>showTip(content(),ev));
+  node.addEventListener('mouseleave',()=>hideTip());
+  node.addEventListener('click',ev=>{if(tipPinned&&tipAnchor===node){hideTip(true);return;}showTip(content(),ev,true);tipAnchor=node;});
+}
+ document.addEventListener('pointerdown',ev=>{if(!tip.contains(ev.target)&&!ev.target.closest('[data-tip]'))hideTip(true);});
+ document.addEventListener('keydown',ev=>{if(ev.key==='Escape')hideTip(true);});
+ addEventListener('resize',()=>hideTip(true));
 const qTheme = new URLSearchParams(location.search).get("theme");
 if (qTheme === "light" || qTheme === "dark") document.documentElement.setAttribute("data-theme", qTheme);
 const redraw = [];

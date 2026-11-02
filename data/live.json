@@ -273,8 +273,60 @@
     }
   },
   "daily": {
-    "schema_version": 1,
+    "schema_version": 2,
     "items": [
+      {
+        "id": "marvell-lumentum-merger-announcement-20261102",
+        "date": "2026-11-02",
+        "title": "Marvell proposes $115B Lumentum acquisition to combine chip and optical connectivity",
+        "summary": "Marvell and Lumentum announced on November 2 that Marvell would acquire Lumentum in an all-stock transaction with an implied enterprise value of $115 billion. Each Lumentum share would receive 4.500 Marvell shares. Combining Marvell’s interconnect and custom-silicon portfolio with Lumentum’s lasers, optical transceivers and optical switching could change how AI systems source connections between chips and data centers. That integration remains prospective: the companies expect closing in the first half of 2028, subject to both companies’ shareholder approvals, regulatory approvals and other conditions. The announced valuation is not cash investment in new compute capacity or evidence of measured performance gains.",
+        "sources": [
+          {
+            "title": "Marvell and Lumentum to Combine, Creating a Category Leader in AI Connectivity",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1040/marvell-and-lumentum-to-combine-creating-a-category-leader-in-ai-connectivity",
+            "date": "2026-11-02"
+          },
+          {
+            "title": "Marvell Form 8-K, report dated November 1 and furnished November 2, 2026",
+            "url": "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001193125-26-442714/0001193125-26-442714.pdf",
+            "date": "2026-11-02"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 4,
+        "impact_reason": "A very large proposed combination of electrical and optical connectivity suppliers could reshape AI-system integration and sourcing across customers. The long closing horizon and required approvals limit immediate delivery implications.",
+        "confidence": "High for announced terms, based on the joint primary release and Marvell’s 8-K; future integration benefits remain company expectations.",
+        "event_date": "2026-11-02",
+        "event_date_scope": "Public announcement. Marvell’s 8-K cover identifies November 1 as the earliest event reported; do not conflate the announcement with signing or closing.",
+        "future_target": "First half of calendar 2028, expected closing subject to conditions"
+      },
+      {
+        "id": "oracle-preliminary-stock-and-notes-offerings-20261102",
+        "date": "2026-11-02",
+        "title": "Oracle files for $10B stock sale and separate $10B debt offering",
+        "summary": "Oracle filed preliminary prospectus supplements dated November 2 for $10 billion of common stock and a separate $10 billion senior-notes offering. The proposed financing is material to a cloud supplier expanding its infrastructure, but the filings allow broad corporate uses, including capital spending, debt repayment, acquisitions and shareholder distributions. Neither offering depends on the other closing, and pricing and several terms remain blank in the preliminary documents. The combined $20 billion is proposed gross financing, not completed fundraising, a dedicated AI construction budget or delivered data-center capacity.",
+        "sources": [
+          {
+            "title": "Oracle preliminary common-stock prospectus supplement, Form 424B5",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
+            "date": "2026-11-02"
+          },
+          {
+            "title": "Oracle preliminary senior-notes prospectus supplement, Form 424B2",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442722/d181336d424b2.htm",
+            "date": "2026-11-02"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 4,
+        "impact_reason": "A proposed $20B capital raise by a major cloud infrastructure supplier is a significant financing development. Infrastructure allocation and completion remain uncertain, so no capacity conversion is justified.",
+        "confidence": "High for proposed amounts, independent closing conditions and permitted uses, verified directly in both SEC prospectus supplements. No confidence claim about final pricing, completion or AI-specific allocation.",
+        "event_date": "2026-11-02",
+        "event_date_scope": "Preliminary prospectus filings; no completed issuance or allocation to particular sites established.",
+        "future_target": null
+      },
       {
         "date": "2026-11-02",
         "title": "Anthropic’s compute commitments carry different risks",
@@ -287,7 +339,31 @@
           }
         ],
         "status": "reviewed",
-        "kind": "analysis"
+        "kind": "analysis",
+        "id": "anthropic-contract-risks-20261102",
+        "impact_score": 4,
+        "impact_reason": "Material commitments across several major compute suppliers; cancellation rights affect revenue certainty without establishing delivered capacity."
+      },
+      {
+        "id": "lg-cns-jakarta-completion-20261102",
+        "date": "2026-11-02",
+        "title": "LG CNS reports completion of a 30MW-class AI data center in Jakarta",
+        "summary": "LG CNS said on November 2 that it had completed a 30MW-class AI data center in Jakarta for KMG, a venture backed by Sinar Mas and Korea Investment Real Asset Management. The company says customers for its full capacity were secured before completion. This is a concrete regional construction milestone, while GPU deployment and utilization remain undisclosed. The first phase uses air cooling; liquid cooling is planned for later phases. A future expansion to 400MW of total incoming electrical capacity remains in design and must not be counted as completed capacity. The release does not establish a comparable IT-load figure or installed GPU count.",
+        "sources": [
+          {
+            "title": "LG CNS: first overseas AI data-center construction completed, 30MW-class facility in Indonesia (Korean)",
+            "url": "https://www.lg.co.kr/media/release/30737",
+            "date": "2026-11-02"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "A completed and reportedly customer-contracted facility adds a meaningful regional supply milestone. Its scale and undisclosed GPU/service ramp do not establish a global capacity shift.",
+        "confidence": "High that LG CNS made this disclosure; capacity and customer claims are company-reported, not independently verified. IT-load scope and GPU availability remain unresolved.",
+        "event_date": "2026-11-02",
+        "event_date_scope": "Completion announcement; exact physical completion and customer service-start dates are not established by the release.",
+        "future_target": "Later-phase design envisages 400MW total incoming electrical capacity; no completion date stated"
       }
     ]
   },

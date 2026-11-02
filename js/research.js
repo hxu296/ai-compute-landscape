@@ -2,9 +2,22 @@
 (function(){
   const daily=NC.daily?.items||[],lead=daily[0];
   if(lead){
-    const sentence=lead.summary.match(/^.*?[.!?](?:\s|$)/)?.[0]||lead.summary.slice(0,210);
-    $('#dailyBrief').innerHTML=`<div class="kicker">${lead.status==='reviewed'?'Daily analysis':'Daily market brief'} · ${esc(lead.date)}</div><h2>${esc(lead.title)}</h2><p>${esc(sentence)}</p><details><summary>Read the brief and sources</summary><p>${esc(lead.summary)}</p>${(lead.sources||[]).map(s=>src(s.url,esc(s.title))+` <span class="muted small">${esc(s.date)}</span>`).join('<br>')}</details>`+
-      (daily.length>1?`<details><summary>Previous daily briefs</summary><ol>${daily.slice(1,15).map(i=>`<li><span class="small muted">${esc(i.date)}</span> ${esc(i.title)}</li>`).join('')}</ol></details>`:'');
+    const rating=i=>`<span class="impact impact-${i.impact_score||1}" title="${esc(i.impact_reason||'Routine market observation')}">Impact ${i.impact_score||1}/5</span>`;
+    $('#dailyBrief').innerHTML=`<div class="news-meta"><span class="kicker">${lead.status==='reviewed'?'Compute news':'Daily market brief'}</span><time>${esc(lead.date)}</time>${rating(lead)}</div><div class="news-lead"><button type="button" id="newsLead">${esc(lead.title)}</button><button type="button" id="newsArchive">All news (${daily.length})</button></div>`;
+    const dialog=document.createElement('dialog');dialog.id='newsDialog';dialog.className='news-dialog';dialog.setAttribute('aria-labelledby','newsHeading');
+    dialog.innerHTML=`<div class="news-dialog-head"><h2 id="newsHeading">Compute news archive</h2><button type="button" id="newsClose" aria-label="Close news archive">×</button></div><div class="news-filters"><label>Search<input type="search" id="newsSearch" placeholder="Company, topic or date"></label><label>Minimum impact<select id="newsImpact"><option value="1">All impact levels</option><option value="2">2 and above</option><option value="3">3 and above</option><option value="4">4 and above</option><option value="5">5 only</option></select></label><span id="newsCount" role="status"></span></div><details class="impact-guide"><summary>How impact is rated</summary><p>Editorial assessment of scale, scope and delivery implications: 1 minor or routine; 2 incremental; 3 substantial regional or segment development; 4 major industry change; 5 exceptional ecosystem-wide change. Conditions and timing affect the rating. Impact is separate from confidence in the evidence.</p></details><div id="newsItems"></div>`;
+    document.body.appendChild(dialog);
+    function stories(){
+      const q=$('#newsSearch').value.trim().toLowerCase(),min=Number($('#newsImpact').value);
+      const shown=daily.filter(i=>(i.impact_score||1)>=min&&JSON.stringify(i).toLowerCase().includes(q));
+      $('#newsCount').textContent=`${shown.length} of ${daily.length} stories`;
+      $('#newsItems').innerHTML=shown.length?shown.map(i=>`<article class="news-story"><div class="news-meta"><time>${esc(i.date)}</time>${rating(i)}<span>${i.kind==='news'?'News':i.status==='reviewed'?'Analysis':'Automated market brief'}</span></div><h3>${esc(i.title)}</h3><p>${esc(i.summary)}</p><p class="news-reason"><b>Why this rating:</b> ${esc(i.impact_reason||'Routine benchmark observation.')}</p>${i.confidence?`<p class="news-confidence"><b>Evidence confidence:</b> ${esc(i.confidence)}</p>`:''}${i.event_date?`<p class="news-dates"><b>Event / announcement:</b> ${esc(i.event_date)}${i.event_date_scope?' · '+esc(i.event_date_scope):''}</p>`:''}${i.future_target?`<p class="news-dates"><b>Future target:</b> ${esc(i.future_target)}</p>`:''}<ul class="news-sources">${(i.sources||[]).map(s=>`<li>${src(s.url,esc(s.title))} <time>${esc(s.date)}</time></li>`).join('')}</ul></article>`).join(''):'<p class="news-empty">No stories match these filters.</p>';
+    }
+    function open(){$('#newsSearch').value='';$('#newsImpact').value='1';stories();dialog.showModal();dialog.scrollTop=0;document.body.classList.add('news-open');$('#newsSearch').focus();}
+    $('#newsLead').onclick=open;$('#newsArchive').onclick=open;$('#newsClose').onclick=()=>dialog.close();
+    $('#newsSearch').oninput=stories;$('#newsImpact').onchange=stories;
+    dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+    dialog.addEventListener('close',()=>document.body.classList.remove('news-open'));
   }else $('#dailyBrief').hidden=true;
 
   const facts=NC.research_facts||[];

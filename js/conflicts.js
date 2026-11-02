@@ -29,7 +29,7 @@ function markConflict(svg,subject,metric,x,y,match) {
   let pinned=false,timer=null,active=null;
   const close=()=>{panel.hidden=true;pinned=false;active=null;};
   function show(n,pin=false){
-    clearTimeout(timer);hideTip();active=n;pinned=pin;const ids=(n.dataset.conflict||'').split(',');
+    clearTimeout(timer);hideTip(true);active=n;pinned=pin;const ids=(n.dataset.conflict||'').split(',');
     panel.innerHTML='<button class="source-close" aria-label="Close source comparison">×</button>'+ids.map(id=>CONFLICTS.has(id)?conflictHtml(CONFLICTS.get(id)):'').join('');
     panel.hidden=false;panel.querySelector('.source-close').onclick=close;
     const r=n.getBoundingClientRect();panel.style.width=Math.min(460,innerWidth-24)+'px';panel.style.left=Math.max(12,Math.min(r.left,innerWidth-panel.offsetWidth-12))+'px';
