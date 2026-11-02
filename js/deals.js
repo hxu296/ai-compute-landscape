@@ -74,9 +74,13 @@
       hover(path, `<b>${esc(c.buyer)} → ${esc(c.supplier)}</b>` + cs.map(c=>`${esc(c.gpu_type || "chip type undisclosed")} · ${c.value_usd ? money(c.value_usd) : "value undisclosed"}<br>${esc(c.evidence || c.structure)}${badge(c.confidence)}`).join("<br>"));
       path.onclick = () => {sel={side:"supplier",name:c.supplier};draw();};
     });
+    const totals=(side,n)=>ds.filter(c=>c[side]===n).reduce((sum,c)=>sum+(c.value_usd||0),0);
+    const maxNode=Math.max(...buyers.map(n=>totals("buyer",n)),...suppliers.map(n=>totals("supplier",n)),1);
     const nodes = (arr, side, x, tx, anchor) => arr.forEach((n,i)=>{
       const active=!sel || sel.side === side && sel.name === n;
-      const circle=el("circle",{cx:x,cy:y(arr,n),r:5,fill:css(side === "buyer" ? SER[i%8] : "--s1"),opacity:active?1:.45},svg);
+      const total=totals(side,n),radius=total?Math.max(3,10*Math.sqrt(total/maxNode)):3;
+      const circle=el("circle",{cx:x,cy:y(arr,n),r:radius,fill:total?css(side === "buyer" ? SER[i%8] : "--s1"):css("--paper"),stroke:css(side === "buyer" ? SER[i%8] : "--s1"),"stroke-width":1.2,opacity:active?1:.45},svg);
+      hover(circle,`<b>${esc(n)}</b>${total?money(total)+" disclosed nominal deal value":"Deal value undisclosed"} in the current view. Circle area follows value, with a minimum visible size; overlapping or conditional amounts are retained.`);
       const t=el("text",{x:tx,y:y(arr,n)+4,"text-anchor":anchor,class:"ink","font-size":12},svg);t.textContent=short(n);el("title",{},t).textContent=n;
       t.style.cursor=circle.style.cursor="pointer"; t.onclick=circle.onclick=()=>{sel=sel?.side===side&&sel.name===n?null:{side,name:n};draw();};
     });

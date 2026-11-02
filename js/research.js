@@ -1,5 +1,12 @@
 // Source ledger and matched regional spot histories.
 (function(){
+  const daily=NC.daily?.items||[],lead=daily[0];
+  if(lead){
+    const sentence=lead.summary.match(/^.*?[.!?](?:\s|$)/)?.[0]||lead.summary.slice(0,210);
+    $('#dailyBrief').innerHTML=`<div class="kicker">${lead.status==='reviewed'?'Daily analysis':'Daily market brief'} · ${esc(lead.date)}</div><h2>${esc(lead.title)}</h2><p>${esc(sentence)}</p><details><summary>Read the brief and sources</summary><p>${esc(lead.summary)}</p>${(lead.sources||[]).map(s=>src(s.url,esc(s.title))+` <span class="muted small">${esc(s.date)}</span>`).join('<br>')}</details>`+
+      (daily.length>1?`<details><summary>Previous daily briefs</summary><ol>${daily.slice(1,15).map(i=>`<li><span class="small muted">${esc(i.date)}</span> ${esc(i.title)}</li>`).join('')}</ol></details>`:'');
+  }else $('#dailyBrief').hidden=true;
+
   const facts=NC.research_facts||[];
   function evidence(){const q=$('#evidenceSearch').value.toLowerCase();table('#tEvidence',facts.filter(r=>JSON.stringify(r).toLowerCase().includes(q)),[{k:'subject',h:'Subject'},{k:'metric',h:'Metric / unit',f:r=>`${esc(r.metric)} · ${esc(r.unit)}`},{k:'value',h:'Checked claim',f:r=>`${esc(r.value_relation||'')} ${esc(typeof r.value==='number'?r.value.toLocaleString():r.value)}${badge(r.confidence)}${conflictBadge(r.subject,r.metric)}`},{k:'as_of',h:'Observation / claim date'},{k:'scope',h:'Scope'},{k:'note',h:'Limits / interpretation'},{k:'source_url',h:'',f:r=>src(r.source_url)}]);}
   $('#evidenceSearch').oninput=evidence;evidence();

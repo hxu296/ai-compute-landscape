@@ -1,0 +1,62 @@
+name: Daily data and publication
+on:
+  schedule:
+    - cron: '17 13 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: landscape-production
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Validate adapters and failure behavior
+        run: python -m unittest discover -s automation/tests -v
+      - name: Refresh dated public feeds
+        if: github.event_name != 'push'
+        run: python automation/refresh.py
+      - name: Validate editorial input and cached feeds
+        if: github.event_name == 'push'
+        run: python automation/refresh.py --offline
+      - name: Build public release
+        run: python automation/package.py
+      - name: Retain normalized daily observations
+        if: github.event_name != 'push'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/live.json data/live.js data/history
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh dated public benchmark observations'
+            git push origin HEAD:main
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment
+      - name: Retain source responses and failure diagnostics
+        if: always() && github.event_name != 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-responses-${{ github.run_id }}
+          path: .cache/etl
+          retention-days: 30
+          if-no-files-found: ignore

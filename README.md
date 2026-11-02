@@ -54,3 +54,7 @@ The figures were compiled from public filings, earnings calls, company pages and
 The November 2 [source audit](AUDIT.md) documents corrected units, unpriced relationships, benchmark dates and remaining coverage limits. Rental-rate changes use the same index series with exact calendar comparison endpoints.
 
 Source notes open both dated claims on hover, keyboard focus or tap. Factual conflicts, later evidence and different definitions have separate labels. This is not the first survey; the [comparison](research/COMPARISON.md) describes specialist strengths and this page’s limits.
+
+## Daily operation
+
+The [daily ETL design](automation/DESIGN.md) documents source coverage, validation, snapshots, failure recovery and editorial ownership. GitHub Actions refreshes the two public benchmark feeds at13:17UTC daily and deploys a checked Pages artifact. Reviewed daily analysis and dated automated market briefs have separate labels. Company facts retain their own observation dates.

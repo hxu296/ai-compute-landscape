@@ -1,6 +1,6 @@
 // China, provider reference, method and source coverage.
 (function () {
-  $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} companies · data as of ${String(NC.built).slice(0, 10)}`;
+  $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} companies · compiled ${String(NC.built).slice(0, 10)}`;
   // takeaways computed from the data, so they stay true when the data is rebuilt
   (function takeaways() {
     const kw = NC.contracts.filter(c => !c.excluded), all = kw.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = kw.map(c => c.implied_usd_per_kw_month).filter(Boolean);
@@ -11,6 +11,7 @@
   const c = NC.counts;
   $("#asof").innerHTML = `Built ${NC.built}: ${c.facts.toLocaleString()} facts, ${c.contracts} contracts, ${c.prices} price points; ${c.reported.toLocaleString()} reported,
     ${c.derived} derived, ${c.estimated} estimated; ${c.gaps} known gaps listed under Method.`;
+  if(NC.live?.checked_at)$('#asof').innerHTML+=` <br>Public benchmark feeds checked ${esc(NC.live.checked_at)}; company facts retain their individual observation dates. ${src('data/live.json','Feed freshness and source status')}`;
   // China chips
   (function china() {
     const draw = () => { const svg = $("#cnSvg"); svg.innerHTML = "";

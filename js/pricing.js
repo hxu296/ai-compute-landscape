@@ -11,7 +11,7 @@
   $("#benchmarks").innerHTML=NC.benchmarks.map(b=>`<div class="benchmark"><div class="kicker">${esc(b.name)}</div><strong>${b.range_low!=null?`$${b.range_low.toFixed(2)}–${b.range_high.toFixed(2)}`:b.usd==null?"No public fixing":`$${b.usd.toFixed(2)}`}</strong><p>${esc(b.sku)} · ${b.usd==null?"checked":"as of"} ${b.date}</p><p>${esc(b.terms)}</p>${src(b.source_url)}</div>`).join("");
   $("#priceLegend").innerHTML = GROUPS.map(([g,c])=>`<span><i style="background:var(${c})"></i>${g}</span>`).join("")+`<span>│ median of shown providers</span>`;
   const pct = v => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
-  table("#marketChanges", NC.market_checks, [{k:"name",h:"Benchmark"},{k:"terms",h:"Market / terms"},{k:"date",h:"Last observation"},{k:"usd",h:"USD / GPU-h",f:r=>`$${r.usd.toFixed(2)}`}, ...[7,30,90].map(n=>({k:`change${n}`,h:`${n}d change`,f:r=>{const c=r.changes[n];return `<span title="${esc(`${c.first_date}: $${c.first} → ${c.last_date}: $${c.last}`)}">${pct(c.percent)}</span>`;}})),{k:"source_url",h:"",f:r=>src(r.source_url)}]);
+  table("#marketChanges", NC.market_checks, [{k:"name",h:"Benchmark"},{k:"terms",h:"Market / terms"},{k:"date",h:"Last observation"},{k:"usd",h:"USD / GPU-h",f:r=>`$${r.usd.toFixed(2)}`}, ...[7,30,90].map(n=>({k:`change${n}`,h:`${n}d change`,f:r=>{const c=r.changes[n];if(!c)return "unavailable";return `<span title="${esc(`${c.first_date}: $${c.first} → ${c.last_date}: $${c.last}`)}">${pct(c.percent)}</span>`;}})),{k:"source_url",h:"",f:r=>src(r.source_url)}]);
   function draw() {
     ctl.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===basis));
     const svg=$("#priceSvg");svg.innerHTML="";

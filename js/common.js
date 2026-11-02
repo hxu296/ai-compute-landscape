@@ -1,5 +1,12 @@
 // Shared helpers: tooltip, theme, SVG builder, number formats, confidence badges, sortable tables.
 const NC = window.NC;
+if(window.LIVE){
+  NC.live=window.LIVE;
+  if(window.LIVE.market_checks?.length)NC.market_checks=window.LIVE.market_checks;
+  const fresh=new Map((window.LIVE.benchmarks||[]).map(b=>[b.name,b]));
+  NC.benchmarks=NC.benchmarks.map(b=>fresh.get(b.name)||b);
+  NC.daily=window.LIVE.daily;
+}
 const $ = (s, r = document) => r.querySelector(s);
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const NS = "http://www.w3.org/2000/svg";
