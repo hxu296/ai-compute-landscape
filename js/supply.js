@@ -28,11 +28,11 @@
       performance. An estimate, not a disclosure, and never added to our own totals. ${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology", "Epoch's method")}`;
   }
   function drawPower(svg) {
-    const rows = NC.providers.filter(p => p.latest.mw_online || p.latest.mw_contracted).map(p => ({
-      name: p.name, group: p.group, on: p.latest.mw_online, ct: p.latest.mw_contracted && p.latest.mw_contracted.stage !== "mixed" ? p.latest.mw_contracted : null,
+    const rows = NC.providers.filter(p => p.latest.mw_online || p.latest.mw_contracted || p.documented_power).map(p => ({
+      name: p.name, group: p.group, on: p.latest.mw_online || p.documented_power, partial: !p.latest.mw_online && !!p.documented_power, ct: p.latest.mw_contracted && p.latest.mw_contracted.stage !== "mixed" ? p.latest.mw_contracted : null,
       mixed: p.latest.mw_contracted && p.latest.mw_contracted.stage === "mixed" ? p.latest.mw_contracted : null, pipe: p.latest.mw_pipeline }))
-      .filter(r => r.on || r.ct).sort((a, b) => ((b.ct || b.on || {}).value || 0) - ((a.ct || a.on || {}).value || 0)).slice(0, 18);
-    const L = 150, R = 800, T = 20, rh = 26, max = Math.max(...rows.map(r => Math.max(r.on ? r.on.value : 0, r.ct ? r.ct.value : 0)));
+      .filter(r => r.on || r.ct).sort((a, b) => (b.partial ? 1 : 0) - (a.partial ? 1 : 0) || ((b.ct || b.on || {}).value || 0) - ((a.ct || a.on || {}).value || 0)).slice(0, 20);
+    const L = 205, R = 710, T = 20, rh = 26, max = Math.max(...rows.map(r => Math.max(r.on ? r.on.value : 0, r.ct ? r.ct.value : 0)));
     svg.setAttribute("viewBox", `0 0 900 ${T + rows.length * rh + 40}`);
     const x = v => L + (v / max) * (R - L);
     for (let v = 0; v <= max; v += 1000) { el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: T + rows.length * rh, stroke: css("--grid") }, svg);
@@ -41,21 +41,27 @@
       const y = T + i * rh;
       el("text", { x: L - 10, y: y + 15, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
       const tipHtml = () => `<b>${esc(r.name)}</b> (${r.group})<br>Online: ${r.on ? cell(r.on, "mw") : "not disclosed"}<br>Contracted: ${r.ct ? cell(r.ct, "mw") : "not disclosed"}` +
-        (r.pipe ? `<br>Pipeline (not contracted): ${cell(r.pipe, "mw")}` : "");
+        (r.partial ? `<br><b>Incomplete AI-site subtotal, ${r.on.n_sites} sites; not total fleet</b><br>${r.on.sites.map(s=>`${esc(s.site)}: ${num(s.value)} MW (${ym(s.as_of)})`).join("<br>")}` : "") + (r.pipe ? `<br>Pipeline (not contracted): ${cell(r.pipe, "mw")}` : "");
       if (r.ct) hover(el("rect", { x: L, y: y + 4, width: Math.max(2, x(r.ct.value) - L), height: 16, rx: 4, fill: css("--s2"), opacity: 0.45 }, svg), tipHtml);
-      if (r.on) hover(el("rect", { x: L, y: y + 8, width: Math.max(2, x(r.on.value) - L), height: 8, rx: 3, fill: css("--s1") }, svg), tipHtml);
+      if (r.on) hover(el("rect", { x: L, y: y + 8, width: Math.max(2, x(r.on.value) - L), height: 8, rx: 3, fill: r.partial ? css("--s4") : css("--s1"), opacity:r.partial?.75:1, stroke:r.partial?css("--s4"):"none","stroke-dasharray":r.partial?"4 2":"" }, svg), tipHtml);
       el("text", { x: x(Math.max(r.on ? r.on.value : 0, r.ct ? r.ct.value : 0)) + 6, y: y + 16 }, svg).textContent =
-        `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
+        r.partial ? `${num(r.on.value)} MW · sites only` : `${r.on ? num(r.on.value) : "?"} / ${r.ct ? num(r.ct.value) : "?"} MW`;
     });
-    $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>online</span><span><i style="background:var(--s2);opacity:.45"></i>contracted</span>`;
+    $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>company online</span><span><i style="background:var(--s2);opacity:.45"></i>company contracted</span><span><i style="background:var(--s4)"></i>Epoch documented AI sites only (incomplete)</span>`;
     const cw = rows.find(r => r.name === "CoreWeave");
-    $("#supTake").innerHTML = `<span class="verdict">Contracted power runs far ahead of power online</span>Across the ${rows.length} companies shown, ${num(rows.reduce((a, r) => a + (r.on ? r.on.value : 0), 0))} MW is online and
-      ${num(rows.reduce((a, r) => a + (r.ct ? r.ct.value : 0), 0))} MW is contracted.${cw && cw.on && cw.ct ? ` CoreWeave alone has ${(cw.ct.value / cw.on.value).toFixed(1)}× more contracted than running.` : ""}`;
-    $("#supNote").innerHTML = `Latest disclosed MW per company (company totals, not sites). Hosts' MW is shown even though tenants own the GPUs. Power basis
-      varies (IT, gross or billable; hover a bar). Pipelines and figures that mix online with planned capacity are not drawn. Hyperscalers do not disclose MW.`;
+    $("#supTake").innerHTML = `<span class="verdict">Hyperscalers are shown, with the coverage limit visible</span>Google, AWS, Microsoft and Oracle use Epoch’s subtotal of documented AI sites when no company-wide online figure is disclosed. It omits untracked and older sites. ${cw && cw.on ? `CoreWeave reports ${num(cw.on.value)} MW online.` : ""} Hosts and their tenants can refer to the same buildings, so these bars must not be summed.`;
+    $("#supNote").innerHTML = `Epoch subtotals use the latest dated IT-power observation per documented site, exclude future projections, and are estimates rather than metered energization. Company figures can use IT, gross or billable power (hover for basis). Planned additions and utility contracts are not online fleet capacity. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; (mode === "compute" ? drawCompute : drawPower)(svg);
     $("#supCompute").classList.toggle("on", mode === "compute"); $("#supPower").classList.toggle("on", mode === "power"); }
   $("#supCompute").onclick = () => { mode = "compute"; draw(); }; $("#supPower").onclick = () => { mode = "power"; draw(); };
   onTheme(draw); draw();
+  const family = c => /^MI/.test(c) ? "AMD" : /^TPU/.test(c) ? "Google TPU" : /^Trainium/.test(c) ? "AWS Trainium" : /^Ascend/.test(c) ? "Huawei" : "NVIDIA";
+  let chipFamily="All";
+  function chipTable(){
+    $("#chipCtl").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.textContent===chipFamily));
+    const rows=NC.native_chips.filter(r=>chipFamily==="All"||family(r.gpu_type)===chipFamily).sort((a,b)=>family(a.gpu_type).localeCompare(family(b.gpu_type))||b.value-a.value);
+    table("#nativeChips",rows,[{k:"subject",h:"Provider / owner"},{k:"gpu_type",h:"Accelerator"},{k:"value",h:"Native count",f:r=>num(r.value)+badge(r.confidence)},{k:"as_of",h:"As of"},{k:"status",h:"Scope / status",f:r=>esc(r.note||r.status)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
+  }
+  ["All","NVIDIA","AMD","Google TPU","AWS Trainium","Huawei"].forEach(n=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>{chipFamily=n;chipTable();};$("#chipCtl").appendChild(b);});chipTable();
 })();

@@ -1,6 +1,6 @@
 // Contracts: buyer -> supplier flow (band width = disclosed value) and a table that follows the selection.
 (function () {
-  let from = "2025", kind = "compute", sel = null;   // sel = {side: "buyer"|"supplier", name}
+  let from = "2025", kind = "all", view = "relations", sel = null;
   const W = 900, H = 560, NW = 14, GAP = 8, LX = 170, RX = 900 - 250;
   const short = s => s.length > 24 ? s.slice(0, 23) + "…" : s;
   function priceTxt(c) {
@@ -11,12 +11,16 @@
     return s;
   }
   function deals() {
-    const base = kind === "hardware" ? NC.hardware : NC.contracts.filter(c => c.kind === kind);
+    const base = kind === "all" ? [...NC.contracts, ...NC.hardware] : kind === "hardware" ? NC.hardware : NC.contracts.filter(c => c.kind === kind);
     return base.filter(c => !c.excluded && String(c.announced || "").slice(0, 4) >= from);
   }
   function draw() {
+    $("#dealRelations").classList.toggle("on", view === "relations"); $("#dealDollars").classList.toggle("on", view === "dollars");
+    if (view === "relations") { drawRelations(); table1(); return; }
     const svg = $("#sankey"); svg.innerHTML = "";
-    const ds = deals().filter(c => c.value_usd > 0);
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const ds = deals().filter(c => c.value_usd > 0 && (kind !== "compute" || firmCompute(c)));
+    $("#dealTake").innerHTML=`<span class="verdict">Only disclosed firm compute values enter the dollar total</span>The relationship view keeps unpriced TPU access and cancellable or scenario-dependent agreements visible. Dollar widths do not measure delivered capacity, annual spend, or customer revenue.`;
     const tot = (key) => { const m = new Map(); ds.forEach(c => m.set(c[key], (m.get(c[key]) || 0) + c.value_usd)); return [...m].sort((a, b) => b[1] - a[1]); };
     const topB = tot("buyer").slice(0, 7).map(x => x[0]), topS = tot("supplier").slice(0, 14).map(x => x[0]);
     const bk = c => topB.includes(c.buyer) ? c.buyer : "Other buyers", sk = c => topS.includes(c.supplier) ? c.supplier : "Other suppliers";
@@ -51,16 +55,46 @@
     $("#dealSel").textContent = sel ? `Showing ${sel.side} ${sel.name}` : `${ds.length} deals with a disclosed value, ${money(total)} in total`;
     table1();
   }
+  function drawRelations() {
+    const svg = $("#sankey"); svg.innerHTML = "";
+    const ds = deals(), buyers = [...new Set(ds.map(c => c.buyer))], suppliers = [...new Set(ds.map(c => c.supplier))];
+    const degree = (k, n) => ds.filter(c => c[k] === n).length;
+    buyers.sort((a,b) => degree("buyer",b)-degree("buyer",a)); suppliers.sort((a,b) => degree("supplier",b)-degree("supplier",a));
+    const h = Math.max(360, Math.max(buyers.length, suppliers.length) * 25 + 50);
+    svg.setAttribute("viewBox", `0 0 900 ${h}`);
+    const y = (arr, n) => 30 + arr.indexOf(n) * ((h - 60) / Math.max(1, arr.length - 1));
+    const pairs = new Map(); ds.forEach(c => { const k = c.buyer + "→" + c.supplier; if (!pairs.has(k)) pairs.set(k, []); pairs.get(k).push(c); });
+    pairs.forEach(cs => {
+      const c = cs[0], active = !sel || (sel.side === "buyer" ? c.buyer : c.supplier) === sel.name;
+      const col = css(SER[buyers.indexOf(c.buyer) % SER.length]);
+      const path = el("path", {d:`M190,${y(buyers,c.buyer)} C400,${y(buyers,c.buyer)} 490,${y(suppliers,c.supplier)} 690,${y(suppliers,c.supplier)}`,
+        fill:"none",stroke:col,"stroke-width":active ? 2.3 : 1,"stroke-opacity": active ? .48 : .06,
+        "stroke-dasharray":cs.every(c=>c.kind === "hardware") ? "5 4" : ""},svg);
+      hover(path, `<b>${esc(c.buyer)} → ${esc(c.supplier)}</b>` + cs.map(c=>`${esc(c.gpu_type || "chip type undisclosed")} · ${c.value_usd ? money(c.value_usd) : "value undisclosed"}<br>${esc(c.evidence || c.structure)}${badge(c.confidence)}`).join("<br>"));
+      path.onclick = () => {sel={side:"supplier",name:c.supplier};draw();};
+    });
+    const nodes = (arr, side, x, tx, anchor) => arr.forEach((n,i)=>{
+      const active=!sel || sel.side === side && sel.name === n;
+      const circle=el("circle",{cx:x,cy:y(arr,n),r:5,fill:css(side === "buyer" ? SER[i%8] : "--s1"),opacity:active?1:.45},svg);
+      const t=el("text",{x:tx,y:y(arr,n)+4,"text-anchor":anchor,class:"ink","font-size":12},svg);t.textContent=short(n);el("title",{},t).textContent=n;
+      t.style.cursor=circle.style.cursor="pointer"; t.onclick=circle.onclick=()=>{sel=sel?.side===side&&sel.name===n?null:{side,name:n};draw();};
+    });
+    nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
+    $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; equal-width lines, no implied dollar value`;
+    $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Dashed lines are hardware supply; solid lines are cloud or hosting relationships. Click any company for its terms and sources below.`;
+  }
   function table1() {
     const rows = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
-      .map(c => ({ ...c, price: priceTxt(c), cap: c.capacity_gpus ? `${num(c.capacity_gpus)} ${/TPU/.test(c.structure + c.supplier) && /Google/.test(c.supplier) ? "TPUs" : /Rainier|Trainium/.test(c.structure) ? "Trainium chips" : "GPUs"}` : c.capacity_mw ? `${num(c.capacity_mw)} MW` : "" }))
+      .map(c => ({ ...c, price: priceTxt(c), cap: c.capacity_text || (c.capacity_accelerators ? `${c.capacity_relation || ""} ${num(c.capacity_accelerators)} ${c.accelerator_unit}` : c.capacity_gpus ? `${c.capacity_relation || ""} ${num(c.capacity_gpus)} GPUs` : c.capacity_mw ? `${c.capacity_mw_relation || ""} ${num(c.capacity_mw)} MW` : "not disclosed") }))
       .sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0));
     table("#tDeals", rows, [{ k: "buyer", h: "Buyer" }, { k: "supplier", h: "Supplier" }, { k: "announced", h: "Announced", f: r => `<span class="nw">${esc(String(r.announced || "").slice(0, 10))}</span>` },
-      { k: "value_usd", h: "Value", f: r => money(r.value_usd) + badge(r.confidence) }, { k: "term_years", h: "Years" }, { k: "cap", h: "Capacity" },
-      { k: "price", h: "Implied price" }, { k: "structure", h: "Structure", f: r => { const s = String(r.structure || ""); return s.length > 100 ? `<span title="${esc(s)}">${esc(s.slice(0, 97).replace(/\s+\S*$/, ""))}…</span>` : esc(s); } }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
+      { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : esc(r.value_text || "not disclosed")) + badge(r.confidence) }, { k: "term_years", h: "Years", f:r=>r.term_years || "not disclosed" }, { k: "cap", h: "Capacity" },
+      { k:"gpu_type", h:"Chip / system" }, { k: "price", h: "Implied price" }, { k: "structure", h: "Terms / evidence", f: r => `<span title="${esc(r.note || "")}">${esc(r.evidence || r.structure)}<br><span class="muted small">${esc(r.note || "")}</span></span>` }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
   }
   $("#dealFrom").onchange = e => { from = e.target.value; sel = null; draw(); };
-  $("#dealKind").onchange = e => { kind = e.target.value; sel = null; draw(); };
+  $("#dealKind").onchange = e => { kind = e.target.value; if(kind === "all")view="relations"; sel = null; draw(); };
   $("#dealReset").onclick = () => { sel = null; draw(); };
+  $("#dealRelations").onclick=()=>{view="relations";draw();};
+  $("#dealDollars").onclick=()=>{view="dollars";if(kind==="all"){kind="compute";$("#dealKind").value=kind;}sel=null;draw();};
   onTheme(draw); draw();
 })();

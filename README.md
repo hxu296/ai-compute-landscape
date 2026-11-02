@@ -47,3 +47,6 @@ The method section at the bottom of the page lists what the data cannot tell you
 - **Everything else:** linked to its own source on the page.
 
 The figures were compiled from public filings, earnings calls, company pages and press. They are not investment advice.
+
+
+The November 2 [source audit](AUDIT.md) documents corrected units, unpriced relationships, benchmark dates and remaining coverage limits. Rental-rate changes use the same index series with exact calendar comparison endpoints.

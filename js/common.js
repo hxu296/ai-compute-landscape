@@ -31,7 +31,7 @@ function cell(r, kind) {
   if (!r) return `<span class="na">not disclosed</span>`;
   let v = kind === "usd" ? money(r.value) : num(r.value);
   if (r.range_low && r.range_high) v = `${num(r.range_low)}–${num(r.range_high)}`;
-  else if (r.confidence === "estimated" && kind !== "usd") v = `${num(r.value * 0.7)}–${num(r.value * 1.3)}`;
+  else if (r.confidence === "estimated") v = `≈${v}`;
   const extra = [r.stage === "mixed" ? "online+planned mixed" : "", r.target_status || "", r.power_basis && !["IT", "unknown"].includes(r.power_basis) ? r.power_basis : "",
                  r.scope && r.scope !== "company" && kind === "usd" ? r.scope.replace(/^(segment|company):/, "") : ""].filter(Boolean).join(", ");
   return `${v}${badge(r.confidence)} <span class="muted small">${ym(r.as_of)}${extra ? " · " + esc(extra) : ""}</span> ${src(r.source_url, "↗")}`;
@@ -48,3 +48,8 @@ function table(id, rows, cols) {
 }
 function svgPoint(svg, ev) { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
 const PROV = Object.fromEntries(NC.providers.map(p => [p.name, p]));
+function firmCompute(c) { return c.kind === "compute" && !c.excluded && c.value_usd > 0 && !/potential|not committed|optional|backstop|up to|terminable|cancell|90.day/i.test((c.structure || "") + " " + (c.note || "")); }
+function providerPrices(rows) {
+  // A provider gets one vote in a median. Its lowest posted region/config is explicit in the caption.
+  const by = new Map(); rows.forEach(p => { const k = `${p.provider}|${p.sku}|${p.basis}`; if (!by.has(k) || p.usd < by.get(k).usd) by.set(k, p); }); return [...by.values()];
+}

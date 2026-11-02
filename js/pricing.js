@@ -1,36 +1,43 @@
 // Pricing: dot plot of $/GPU-hour by chip (one dot per provider), index history, and deal $/kW-month.
 (function () {
   const GROUPS = [["Hyperscaler", "--s1"], ["Neocloud", "--s2"], ["Marketplace", "--s3"], ["China", "--s7"]];
-  const BASES = [["on-demand per GPU-hour", "On demand"], ["reserved 1yr", "1-year reserved"]];
-  const ORDER = ["GB300 NVL72", "GB200 NVL72", "B300", "B200", "H200", "H100", "H100 PCIe/NVL", "H20", "A100", "MI355X", "MI325X", "MI300X", "L40S", "RTX PRO 6000", "RTX 5090", "RTX 4090"];
+  const BASES = [["on-demand per GPU-hour", "On demand"], ["reserved 1yr", "1-year retail"], ["reserved 3yr", "3-year retail"], ["capacity block", "Capacity blocks"], ["starting from", "From / term unspecified"]];
+  const ORDER = ["GB300 NVL72", "GB200 NVL72", "B300", "B200", "H200", "H100", "H100 PCIe/NVL", "H20", "A100", "MI355X", "MI325X", "MI300X", "TPU v7", "TPU v6e", "TPU v5p", "TPU v5e", "Trainium3", "Trainium2", "Trainium1", "L40S", "RTX PRO 6000", "RTX 5090", "RTX 4090"];
+  const family = s => /^MI/.test(s) ? "AMD" : /^TPU/.test(s) ? "Google TPU" : /^Trainium/.test(s) ? "AWS Trainium" : "NVIDIA";
   let basis = "on-demand per GPU-hour";
   const ctl = $("#priceCtl");
-  BASES.forEach(([k, l]) => { const b = document.createElement("button"); b.textContent = l; b.dataset.k = k; b.onclick = () => { basis = k; draw(); }; ctl.appendChild(b); });
-  $("#priceLegend").innerHTML = GROUPS.map(([g, c]) => `<span><i style="background:var(${c})"></i>${g}</span>`).join("") + `<span>│ median ▏</span>`;
+  BASES.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{basis=k;draw();};ctl.appendChild(b);});
+  $("#priceGroup").onchange=$("#priceFamily").onchange=draw;
+  $("#benchmarks").innerHTML=NC.benchmarks.map(b=>`<div class="benchmark"><div class="kicker">${esc(b.name)}</div><strong>${b.range_low!=null?`$${b.range_low.toFixed(2)}–${b.range_high.toFixed(2)}`:b.usd==null?"No public fixing":`$${b.usd.toFixed(2)}`}</strong><p>${esc(b.sku)} · ${b.usd==null?"checked":"as of"} ${b.date}</p><p>${esc(b.terms)}</p>${src(b.source_url)}</div>`).join("");
+  $("#priceLegend").innerHTML = GROUPS.map(([g,c])=>`<span><i style="background:var(${c})"></i>${g}</span>`).join("")+`<span>│ median of shown providers</span>`;
+  const pct = v => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
+  table("#marketChanges", NC.market_checks, [{k:"name",h:"Benchmark"},{k:"terms",h:"Market / terms"},{k:"date",h:"Last observation"},{k:"usd",h:"USD / GPU-h",f:r=>`$${r.usd.toFixed(2)}`}, ...[7,30,90].map(n=>({k:`change${n}`,h:`${n}d change`,f:r=>{const c=r.changes[n];return `<span title="${esc(`${c.first_date}: $${c.first} → ${c.last_date}: $${c.last}`)}">${pct(c.percent)}</span>`;}})),{k:"source_url",h:"",f:r=>src(r.source_url)}]);
   function draw() {
-    ctl.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.k === basis));
-    const svg = $("#priceSvg"); svg.innerHTML = "";
-    const ps = NC.prices.filter(p => p.basis === basis && ORDER.includes(p.sku));
-    const skus = ORDER.filter(s => ps.some(p => p.sku === s));
-    const L = 130, R = 840, T = 16, rh = 26, max = Math.min(32, Math.max(...ps.map(p => p.usd)) * 1.05);
-    svg.setAttribute("viewBox", `0 0 900 ${T + skus.length * rh + 40}`);
-    const x = v => L + Math.min(v, max) / max * (R - L);
-    for (let v = 0; v <= max; v += max > 16 ? 4 : 2) { el("line", { x1: x(v), x2: x(v), y1: T - 4, y2: T + skus.length * rh, stroke: css("--grid") }, svg);
-      el("text", { x: x(v), y: T + skus.length * rh + 16, "text-anchor": "middle" }, svg).textContent = `$${v}`; }
-    el("text", { x: (L + R) / 2, y: T + skus.length * rh + 34, "text-anchor": "middle" }, svg).textContent = "$ per GPU-hour (latest published price since 2026-01)";
-    skus.forEach((s, i) => {
-      const y = T + i * rh + rh / 2, row = ps.filter(p => p.sku === s).sort((a, b) => a.usd - b.usd);
-      el("text", { x: L - 10, y: y + 4, "text-anchor": "end", class: "ink" }, svg).textContent = s;
-      el("line", { x1: L, x2: R, y1: y, y2: y, stroke: css("--grid"), "stroke-dasharray": "2 3" }, svg);
-      const med = row[Math.floor((row.length - 1) / 2)].usd * (row.length % 2 ? 1 : 0.5) + (row.length % 2 ? 0 : row[row.length / 2].usd * 0.5);
-      el("line", { x1: x(med), x2: x(med), y1: y - 9, y2: y + 9, stroke: css("--text-primary"), "stroke-width": 2 }, svg);
-      const seen = {};
-      row.forEach(p => { const k = Math.round(x(p.usd)); const dy = (seen[k] = (seen[k] || 0) + 1) - 1;
-        const c = el("circle", { cx: x(p.usd), cy: y + (dy % 3 - 1) * 5 * (dy ? 1 : 0), r: 5, fill: css((GROUPS.find(g => g[0] === p.group) || ["", "--text-muted"])[1]),
-          stroke: css("--surface-1"), "stroke-width": 2 }, svg);
-        hover(c, `<b>${esc(p.provider)}: ${esc(s)}</b>$${p.usd.toFixed(2)} per GPU-hour${badge(p.confidence)}<br>${esc(p.region || "")} · ${p.date}<br><span class="muted">${esc(p.note)}</span>`); });
-      el("text", { x: R + 4, y: y + 4, "font-size": 11 }, svg).textContent = `$${med.toFixed(2)}`;
+    ctl.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===basis));
+    const svg=$("#priceSvg");svg.innerHTML="";
+    const raw=NC.prices.filter(p=>ORDER.includes(p.sku) && (basis==="starting from"?p.is_floor:p.basis===basis&&!p.is_floor)
+      && ($("#priceGroup").value==="All"||p.group===$("#priceGroup").value) && ($("#priceFamily").value==="All"||family(p.sku)===$("#priceFamily").value));
+    const ps=providerPrices(raw),skus=ORDER.filter(s=>ps.some(p=>p.sku===s));
+    const L=150,R=825,T=16,rh=29,max=Math.max(4,...ps.map(p=>p.usd))*1.07;
+    svg.setAttribute("viewBox",`0 0 920 ${Math.max(100,T+skus.length*rh+45)}`);
+    const x=v=>L+v/max*(R-L);
+    if(!ps.length)el("text",{x:30,y:40},svg).textContent="No current public rate for these filters. An undisclosed price is not zero.";
+    for(let i=0;i<=5;i++){const v=max*i/5;el("line",{x1:x(v),x2:x(v),y1:T-4,y2:T+skus.length*rh,stroke:css("--grid")},svg);el("text",{x:x(v),y:T+skus.length*rh+17,"text-anchor":"middle"},svg).textContent=`$${v.toFixed(1)}`;}
+    el("text",{x:(L+R)/2,y:T+skus.length*rh+36,"text-anchor":"middle"},svg).textContent="USD / physical GPU or TPU/Trainium chip-hour · no throughput normalization";
+    skus.forEach((s,i)=>{
+      const y=T+i*rh+rh/2,row=ps.filter(p=>p.sku===s).sort((a,b)=>a.usd-b.usd);
+      el("text",{x:L-10,y:y+4,"text-anchor":"end",class:"ink"},svg).textContent=s.replace(" NVL72"," · GPU");
+      el("line",{x1:L,x2:R,y1:y,y2:y,stroke:css("--grid"),"stroke-dasharray":"2 3"},svg);
+      const med=(row[Math.floor((row.length-1)/2)].usd+row[Math.ceil((row.length-1)/2)].usd)/2;
+      el("line",{x1:x(med),x2:x(med),y1:y-9,y2:y+9,stroke:css("--text-primary"),"stroke-width":2},svg);
+      const seen={};row.forEach(p=>{const k=Math.round(x(p.usd)),dy=(seen[k]=(seen[k]||0)+1)-1;
+        const c=el("circle",{cx:x(p.usd),cy:y+(dy?((dy%3)-1)*5:0),r:5,fill:css((GROUPS.find(g=>g[0]===p.group)||["","--text-muted"])[1]),stroke:css("--surface-1"),"stroke-width":2},svg);
+        hover(c,`<b>${esc(p.provider)}: ${esc(s)}</b>${p.is_floor?"from ":""}$${p.usd.toFixed(2)} ${esc(p.unit)}${badge(p.confidence)}<br>${esc(p.configuration)} · ${esc(p.region||"")} · ${p.date}<br>${esc(p.basis)}<br><span class="muted">${esc(p.note)}</span><br>${src(p.source_url)}`);c.onclick=()=>open(p.source_url,"_blank");});
+      el("text",{x:R+8,y:y+4,"font-size":11},svg).textContent=`$${med.toFixed(2)} · n=${row.length}`;
     });
+    table("#priceTable",raw.sort((a,b)=>a.sku.localeCompare(b.sku)||a.usd-b.usd),[{k:"provider",h:"Provider"},{k:"sku",h:"Chip"},{k:"usd",h:"USD / accelerator-h",f:r=>`${r.is_floor?"from ":""}$${r.usd.toFixed(4)}`},{k:"basis",h:"Terms"},{k:"region",h:"Region"},{k:"configuration",h:"Configuration"},{k:"date",h:"Observed"},{k:"note",h:"Original unit / formula",f:r=>esc(r.method||r.note)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
+    $("#priceTake").innerHTML=`<span class="verdict">A retail reservation is not the market contract price</span>Azure’s East US H100 list reservation is $551,221 ÷ 8 GPUs ÷ 8,760 hours = <b>$7.87/GPU-hour</b> for one year. Its GB200 list VM is $108.16 ÷ 4 GPUs = <b>$27.04/GPU-hour</b>. CoreWeave lists GB200 at $42 ÷ 4 = <b>$10.50/GPU-hour</b>. These published full-instance rates include host resources and do not establish a negotiated market price. ${src("https://prices.azure.com/api/retail/prices?$filter=armSkuName%20eq%20%27Standard_ND96isr_H100_v5%27","Azure H100 API")} · ${src("https://www.coreweave.com/pricing","CoreWeave rate card")}`;
+    $("#priceBasisNote").textContent=`${ps.length} provider/chip quotes shown from ${raw.length} region/configuration rows. ${basis==="reserved 3yr"?"Three-year retail commitments are shown only where published; no market discount is inferred. ":""}${basis==="starting from"?"Minimum advertised prices: commitment and allocation may differ. ":""}Blackwell prices are per physical GPU in the specified NVL72 VM/tray, not per entire 72-GPU rack. No chart value is clipped.`;
   }
   function drawIdx() {
     const svg = $("#idxSvg"); svg.innerHTML = "";
