@@ -14,7 +14,7 @@
     subs.forEach(({ s, pts, mult }) => {
       const card = document.createElement("div"); card.className = "card";
       const fmt = v => metric === "mw_online" ? `${num(v)} MW` : money(v);
-      card.innerHTML = `<h4>${esc(s)}</h4><div class="mult">${fmt(pts[0][1])} (${ym(pts[0][0])}) → ${fmt(pts.at(-1)[1])} (${ym(pts.at(-1)[0])}) · <b>${mult.toFixed(1)}×</b></div>`;
+      card.innerHTML = `<h4>${esc(s)}<b class="x">${mult.toFixed(1)}×</b></h4><div class="mult">${fmt(pts[0][1])} <span class="muted nw">${ym(pts[0][0])}</span> → ${fmt(pts.at(-1)[1])} <span class="muted nw">${ym(pts.at(-1)[0])}</span></div>`;
       const svg = el("svg", { viewBox: "0 0 260 110" }); card.appendChild(svg); grid.appendChild(card);
       const t0 = Date.parse(pts[0][0]), t1 = Date.parse(pts.at(-1)[0]) || t0 + 1, vmax = Math.max(...pts.map(p => p[1]));
       const x = d => 8 + (Date.parse(d) - t0) / (t1 - t0 || 1) * 240, y = v => 100 - v / vmax * 88;

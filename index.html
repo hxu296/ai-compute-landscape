@@ -4,130 +4,178 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who supplies AI compute: neoclouds, hyperscalers and China (November 2026)</title>
+<meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Every number sourced.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top"><div class="in">
-  <b>AI compute landscape</b>
-  <nav>
-    <a href="#supply">Who supplies it</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Pricing</a>
-    <a href="#usage">Inference vs training</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Method</a>
-  </nav>
-  <span class="sp"></span>
-  <button id="theme" title="Switch light/dark">◐</button>
-</div></header>
-<main>
+<div class="tip" id="tip"></div>
+<header class="masthead">
+  <a class="brand" href="#top"><svg id="brandArt" viewBox="0 0 64 64" aria-hidden="true"></svg><span><b>AI Compute Landscape</b><small>An illustrated data guide</small></span></a>
+  <nav><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav>
+</header>
 
-<section id="intro">
-  <h1>Who supplies AI compute, at what price, and for what: November 2026</h1>
-  <p class="lead">GPU capacity now comes from three kinds of supplier: the hyperscalers (AWS, Microsoft, Google, Oracle, plus
-  Meta and xAI building for themselves), neoclouds that rent GPUs (CoreWeave, Nebius, Lambda, Crusoe and others), and power
-  hosts that build the halls and lease them to both. This page puts their fleets, contracts, prices and growth side by side.
-  Every number links to its source and carries a tag:
-  <span class="badge r">R</span> reported by the company or a filing, <span class="badge d">D</span> derived by a stated formula,
-  <span class="badge e">E</span> estimated from indirect evidence.</p>
-  <div class="tiles" id="tiles"></div>
-  <p class="note" id="asof"></p>
-</section>
-
-<section id="supply">
-  <h2>Who supplies it</h2>
-  <p class="lead">No hyperscaler discloses how many accelerators it owns, so the compute view uses Epoch AI's estimates. Neoclouds
-  and hosts disclose power far more often than GPUs, so the power view compares them in megawatts. Hosts carry MW only: the
-  GPUs inside belong to their tenants.</p>
-  <div class="card">
-    <div class="controls"><button id="supCompute" class="on">Compute (Epoch H100-equivalents)</button><button id="supPower">Power (MW)</button></div>
-    <svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg>
-    <div class="legend" id="supLegend"></div>
-    <p class="note" id="supNote"></p>
+<main id="top">
+<section class="hero">
+  <div>
+    <div class="kicker">AI infrastructure · November 2026</div>
+    <h1>Who supplies AI compute, at what price, and for what</h1>
+    <p class="dek">Three kinds of company now sell GPU capacity: the hyperscalers, the neoclouds that rent GPUs, and the power hosts that build the halls. This guide lines up their fleets, contracts, prices and growth, one question at a time.</p>
+    <div class="byline" id="byline"></div>
   </div>
+  <figure><svg id="heroArt" viewBox="0 0 400 300" role="img" aria-label="Sketch of a data hall fed by a power line"></svg></figure>
 </section>
 
-<section id="deals">
-  <h2>The big contracts</h2>
-  <p class="lead">Who has signed to buy capacity from whom. Band width is the disclosed contract value. Hover for terms, click a
-  buyer or supplier to see only its deals. Framework and equity deals (such as Stargate's $500B plan) are left out of the flows;
-  building leases (a host renting powered halls to a neocloud or hyperscaler) and chip purchases have their own views, because the
-  same capacity often appears in a lease and again in the compute deal built on it.</p>
-  <div class="card">
-    <div class="controls">
-      <label>Announced from <select id="dealFrom"><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option></select></label>
-      <label>Show <select id="dealKind"><option value="compute">compute services</option><option value="lease">building leases (no chips)</option><option value="hardware">hardware orders</option></select></label>
+<div class="strip"><div class="tiles" id="tiles"></div><p class="asof" id="asof"></p></div>
+
+<div class="prose" style="margin-top:44px">
+  <p class="lede">Most numbers in this business are announced rather than measured. A contract value is a ceiling, a GPU count is often worked out from megawatts, and a hyperscaler's fleet is somebody else's model. So every figure here carries its source and a tag saying how much to trust it.</p>
+  <div class="legend-box"><span class="h">How to read the tags</span>
+    <dl><dt><span class="badge r">R</span></dt><dd>Reported by the company or in a filing.</dd>
+      <dt><span class="badge d">D</span></dt><dd>Derived from reported numbers by a stated formula, such as value ÷ term ÷ GPUs.</dd>
+      <dt><span class="badge e">E</span></dt><dd>Estimated from indirect evidence, such as GPUs inferred from power. Shown as a range.</dd></dl></div>
+  <p>Hover over any mark for its terms and source. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column.</p>
+</div>
+
+<div class="part-title">Part I · Who has the compute</div>
+
+<section class="chapter" id="supply">
+  <div class="prose">
+    <div class="label"><span class="num">01</span>Fleets</div>
+    <h2>Google has the largest fleet, and most of it is its own chips</h2>
+    <p>No hyperscaler says how many accelerators it owns. The best public estimate is Epoch AI's model of chip deliveries, which converts every chip into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts rarely disclose GPU counts either, but they do disclose power, so the second view compares them in megawatts.</p>
+  </div>
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 1</span><h3 class="fig-title">Accelerator fleets by chip designer, and power by provider</h3></div>
+    <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button></span></div></div>
+    <div class="fig-body"><svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg></div>
+    <div class="legend" id="supLegend"></div>
+    <div class="takeaway" id="supTake"></div>
+    <p class="fig-caption" id="supNote"></p>
+  </div></div>
+</section>
+
+<section class="chapter" id="deals">
+  <div class="prose">
+    <div class="label"><span class="num">02</span>Contracts</div>
+    <h2>Two AI labs signed most of the compute contracts</h2>
+    <p>A compute contract is a promise to pay for capacity over several years. The flow below runs from buyer to supplier, and each band's width is the disclosed value. Framework deals such as Stargate's $500B plan are left out, because they commit no one to a price.</p>
+    <p>Building leases get their own view. A host that rents a powered hall to Fluidstack, which then sells the same capacity to Anthropic, would otherwise be counted twice.</p>
+  </div>
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 2</span><h3 class="fig-title">Who buys capacity from whom</h3></div>
+    <p class="fig-sub">Band width is the disclosed contract value. Buyers on the left, suppliers on the right; smaller parties are grouped as "Other".</p>
+    <div class="fig-controls">
+      <div class="ctl"><span class="ctl-label">Announced from</span><select id="dealFrom"><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option></select></div>
+      <div class="ctl"><span class="ctl-label">Show</span><select id="dealKind"><option value="compute">compute services</option><option value="lease">building leases (no chips)</option><option value="hardware">hardware orders</option></select></div>
       <span id="dealSel" class="muted small"></span><button id="dealReset">Clear selection</button>
     </div>
-    <svg id="sankey" class="sankey" viewBox="0 0 900 560" role="img" aria-label="Contracts from buyers to suppliers"></svg>
-    <p class="note">Implied prices: $/GPU-hour only when the deal gives a GPU count; otherwise an all-in $/kW-month from the MW
-    (comparable across chip generations) and, for GPU deals, an estimated $/GPU-hour range at pre-Rubin watts that is a floor for
-    2027+ deliveries. Leases of powered buildings are $/kW-month and do not include chips.</p>
+    <div class="fig-body"><svg id="sankey" class="sankey" viewBox="0 0 900 560" role="img" aria-label="Contracts from buyers to suppliers"></svg></div>
+    <div class="takeaway" id="dealTake"></div>
+    <details class="fig-notes"><summary>How implied prices are worked out</summary><div>
+      <p>$/GPU-hour is shown only when a deal gives a GPU count. Otherwise the page gives an all-in $/kW-month from the megawatts, which stays comparable across chip generations. For GPU deals it adds an estimated $/GPU-hour range at pre-Rubin power draw, which is a floor for 2027 and later deliveries. Leases of powered buildings are priced per kW-month and include no chips.</p></div></details>
+  </div></div>
+  <div class="fig" style="margin-top:-18px"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Table 1</span><h3 class="fig-title">Every deal in the current view</h3></div>
+    <div class="scroll"><table class="t" id="tDeals"></table></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="growth">
+  <div class="prose">
+    <div class="label"><span class="num">03</span>Growth</div>
+    <h2>Neoclouds are growing far faster than the clouds they compete with</h2>
+    <p>Each panel is one company on its own scale, so the shape matters more than the height. The number in each header is the growth multiple from its first data point to its latest. Revenue is the cloud or AI segment wherever a company reports one.</p>
   </div>
-  <div class="card scroll" style="margin-top:12px"><table class="t" id="tDeals"></table></div>
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 3</span><h3 class="fig-title">Growth since the first reported quarter</h3></div>
+    <div class="fig-controls"><div class="ctl"><span class="ctl-label">Metric</span><span class="seg" id="growthCtl"></span></div></div>
+    <div class="mini" id="growthGrid"></div>
+    <div class="takeaway" id="growthTake"></div>
+  </div></div>
 </section>
 
-<section id="growth">
-  <h2>Who is growing fastest</h2>
-  <p class="lead">Each panel is one company on its own scale, with the growth multiple since its first data point. Revenue is the
-  cloud or AI segment where the company reports one.</p>
-  <div class="controls" id="growthCtl"></div>
-  <div class="mini" id="growthGrid"></div>
-</section>
+<div class="part-title">Part II · What it costs and what it is for</div>
 
-<section id="pricing">
-  <h2>What capacity costs</h2>
-  <p class="lead">Published prices per GPU-hour, latest point per provider since January 2026. Each dot is one provider; hover for the
-  region, terms and source. Hyperscalers sit far to the right of neoclouds and marketplaces for the same chip.</p>
-  <div class="card">
-    <div class="controls" id="priceCtl"></div>
-    <svg id="priceSvg" viewBox="0 0 900 460" role="img" aria-label="Price per GPU-hour by chip"></svg>
+<section class="chapter" id="pricing">
+  <div class="prose">
+    <div class="label"><span class="num">04</span>Prices</div>
+    <h2>Hyperscalers list the same GPU at about twice the neocloud price</h2>
+    <p>These are published list prices per GPU-hour: the latest point per provider and chip since January 2026. Large buyers rarely pay list, so the next figures add the market indices that track actual rental quotes, and what the big contracts imply per kilowatt-month.</p>
+  </div>
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">List price per GPU-hour, one dot per provider</h3></div>
+    <p class="fig-sub">The tick on each row marks the median, and its value is printed at the right.</p>
+    <div class="fig-controls"><div class="ctl"><span class="ctl-label">Terms</span><span class="seg" id="priceCtl"></span></div></div>
+    <div class="fig-body"><svg id="priceSvg" viewBox="0 0 900 460" role="img" aria-label="Price per GPU-hour by chip"></svg></div>
     <div class="legend" id="priceLegend"></div>
-  </div>
-  <div class="grid2" style="margin-top:12px">
-    <div class="card"><h3>Market price indices</h3><svg id="idxSvg" viewBox="0 0 440 260" role="img" aria-label="Price index history"></svg><div class="legend" id="idxLegend"></div>
-      <p class="note">Indices of third-party rental quotes (Silicon Data, Ornn and others), separate from list prices.</p></div>
-    <div class="card"><h3>What the big deals imply, per kW-month</h3><svg id="kwSvg" viewBox="0 0 440 300" role="img" aria-label="Deal prices per kW-month"></svg>
+    <div class="takeaway" id="priceTake"></div>
+  </div></div>
+  <div class="fig"><div class="fig-frame"><div class="fig-grid">
+    <div><div class="fig-head"><span class="fig-no">Fig. 5</span></div><h4>Rental indices, which track quotes rather than list prices</h4>
+      <svg id="idxSvg" viewBox="0 0 440 260" role="img" aria-label="Price index history"></svg><div class="legend" id="idxLegend"></div>
+      <p class="fig-caption">Indices of third-party rental quotes from Silicon Data and Ornn, kept separate from list prices.</p></div>
+    <div><div class="fig-head"><span class="fig-no">Fig. 6</span></div><h4>What the big deals imply per kW-month</h4>
+      <svg id="kwSvg" viewBox="0 0 440 300" role="img" aria-label="Deal prices per kW-month"></svg>
       <div class="legend"><span><i style="background:var(--s2)"></i>All-in compute (chips included)</span><span><i style="background:var(--s3)"></i>Building lease (no chips)</span></div>
-      <p class="note">All-in compute deals include the chips; leases are for powered buildings only (tenant brings the GPUs).</p></div>
-  </div>
+      <p class="fig-caption" id="kwNote"></p></div>
+  </div></div></div>
 </section>
 
-<section id="usage">
-  <h2>Inference vs training</h2>
-  <p class="lead">Nobody measures this directly. What exists are company statements, analysts' estimates and spending breakdowns.
-  Each dot is one statement; hollow dots are derived or estimated, and an arrow marks a lower bound such as "more than 40%". The split differs by vantage point: a cloud's revenue, a lab's spend, the
-  whole market.</p>
-  <div class="grid2">
-    <div class="card"><h3>What share of compute serves inference</h3><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements"></svg>
-      <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span><i style="background:transparent;border:2px solid var(--text-secondary)"></i>Hollow: derived or estimated</span><span>→ lower bound</span></div></div>
-    <div class="card"><h3>Tokens served, the closest thing to an inference meter</h3><div id="tokens" class="small scroll" style="max-height:440px"></div></div>
+<section class="chapter" id="usage">
+  <div class="prose">
+    <div class="label"><span class="num">05</span>Inference vs training</div>
+    <h2>Clouds say inference is now most of their AI work; labs still spend most on training</h2>
+    <p>Nobody measures this split directly. What exists are statements: a cloud's share of AI revenue, a lab's spending breakdown, an analyst's forecast for the whole market. They answer different questions, so the figure keeps them apart. Token counts are the closest thing to a meter for inference.</p>
   </div>
+  <div class="fig"><div class="fig-frame"><div class="fig-grid">
+    <div><div class="fig-head"><span class="fig-no">Fig. 7</span></div><h4>Share of compute serving inference, by who is speaking</h4>
+      <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements"></svg>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div></div>
+    <div><div class="fig-head"><span class="fig-no">Table 2</span></div><h4>Tokens served</h4><div id="tokens" class="small scroll" style="max-height:460px"></div></div>
+  </div></div></div>
 </section>
 
-<section id="china">
-  <h2>China</h2>
-  <p class="lead">Chinese clouds disclose spending and revenue but almost no fleet counts. Epoch AI tracks China only as one
-  bucket; the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip.</p>
-  <div class="grid2">
-    <div class="card"><svg id="cnSvg" viewBox="0 0 440 300" role="img" aria-label="Accelerators in China by chip"></svg>
+<section class="chapter" id="china">
+  <div class="prose">
+    <div class="label"><span class="num">06</span>China</div>
+    <h2>China's fleet is mostly H20s and Huawei Ascend chips</h2>
+    <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company.</p>
+  </div>
+  <div class="fig"><div class="fig-frame"><div class="fig-grid">
+    <div><div class="fig-head"><span class="fig-no">Fig. 8</span></div><h4>Accelerators delivered to China, end-2025</h4>
+      <svg id="cnSvg" viewBox="0 0 440 300" role="img" aria-label="Accelerators in China by chip"></svg>
       <div class="legend"><span><i style="background:var(--s1)"></i>US chips (export versions)</span><span><i style="background:var(--s2)"></i>Chinese chips</span></div></div>
-    <div class="card" style="overflow:auto"><table class="t" id="tChina"></table></div>
+    <div><div class="fig-head"><span class="fig-no">Table 3</span></div><h4>What the Chinese clouds disclose</h4><div class="table-scroll"><table class="t" id="tChina"></table></div></div>
+  </div></div></div>
+</section>
+
+<div class="part-title">Part III · Reference</div>
+
+<section class="chapter" id="providers">
+  <div class="prose">
+    <div class="label"><span class="num">07</span>Providers</div>
+    <h2>Every company tracked, with its latest numbers</h2>
+    <p>Empty fields mean not disclosed, not zero. Hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
   </div>
+  <div class="fig"><div class="fig-controls"><div class="ctl"><span class="ctl-label">Group</span><span class="seg" id="provCtl"></span></div></div>
+    <div class="pcards" id="provCards"></div></div>
 </section>
 
-<section id="providers">
-  <h2>Providers</h2>
-  <p class="lead">Latest disclosed numbers for every company tracked. Empty fields mean not disclosed, not zero.</p>
-  <div class="controls" id="provCtl"></div>
-  <div class="pcards" id="provCards"></div>
-</section>
-
-<section id="method">
-  <h2>Method, sources and gaps</h2>
-  <div class="card small" id="methodBox"></div>
-  <details style="margin-top:10px"><summary>Known gaps (<span id="gapN"></span>)</summary><div class="card" style="overflow:auto"><table class="t" id="tGaps"></table></div></details>
+<section class="chapter" id="method">
+  <div class="prose">
+    <div class="label"><span class="num">08</span>Sources and method</div>
+    <h2>How the numbers were collected, and what they cannot tell you</h2>
+    <div class="method" id="methodBox"></div>
+    <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><div class="scroll"><table class="t" id="tGaps"></table></div></details>
+  </div>
 </section>
 </main>
-<div class="tip" id="tip"></div>
+<footer class="colophon">Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
+<button id="theme" hidden></button>
 <script src="data/nc.js"></script>
 <script src="js/common.js"></script>
+<script src="js/sketch.js"></script>
 <script src="js/supply.js"></script>
 <script src="js/deals.js"></script>
 <script src="js/growth.js"></script>

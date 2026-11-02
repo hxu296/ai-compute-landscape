@@ -8,14 +8,38 @@
   const ep = NC.providers.filter(p => p.epoch && p.epoch.length).map(p => [p.name, p.epoch.at(-1)[1]]).sort((a, b) => b[1] - a[1]);
   const cw = PROV["CoreWeave"].latest;
   $("#tiles").innerHTML = [
-    [money(committed), `disclosed value of ${cmp.length} firm compute-service contracts (leases, hardware orders, options, backstops and framework deals excluded)`],
-    [`${(ep[0][1] / 1e6).toFixed(1)}M`, `H100-equivalents at ${ep[0][0]}, the largest fleet (Epoch estimate, end-2025)`],
-    [cw.mw_online ? `${(cw.mw_online.value / 1000).toFixed(1)} GW` : "", `online at CoreWeave, the largest neocloud (${cw.mw_contracted ? (cw.mw_contracted.value / 1000).toFixed(1) + " GW contracted" : ""})`],
-    [med ? `$${med.toFixed(2)}` : "", `median on-demand H100 price per GPU-hour across ${h100.length} providers`],
-    ["55–67%", "of AI compute (Deloitte) or cloud AI spend (Gartner) expected to serve inference in 2026; see Inference vs training"],
-  ].map(([n, l]) => `<div class="card tile"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+    ["Committed", money(committed), `in ${cmp.length} firm compute contracts; leases, options and framework deals excluded`],
+    ["Largest fleet", `${(ep[0][1] / 1e6).toFixed(1)}M`, `H100-equivalents at ${ep[0][0]} (Epoch estimate, end-2025)`],
+    ["Largest neocloud", cw.mw_online ? `${(cw.mw_online.value / 1000).toFixed(1)} GW` : "", `online at CoreWeave, ${cw.mw_contracted ? (cw.mw_contracted.value / 1000).toFixed(1) + " GW contracted" : ""}`],
+    ["H100 list price", med ? `$${med.toFixed(2)}` : "", `median on-demand per GPU-hour across ${h100.length} providers`],
+    ["Inference", "55–67%", "of compute or cloud AI spend expected to serve inference in 2026 (Deloitte, Gartner)"],
+  ].map(([k, n, l]) => `<div class="tile"><div class="k">${k}</div><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+  $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} companies · data as of ${String(NC.built).slice(0, 10)}`;
+  // takeaways computed from the data, so they stay true when the data is rebuilt
+  (function takeaways() {
+    const ds = NC.contracts.filter(c => c.kind === "compute" && !c.excluded && c.value_usd && String(c.announced || "") >= "2025");
+    const tot = ds.reduce((a, c) => a + c.value_usd, 0), by = b => ds.filter(c => c.buyer === b).reduce((a, c) => a + c.value_usd, 0);
+    const oa = by("OpenAI"), an = by("Anthropic");
+    $("#dealTake").innerHTML = `<span class="verdict">${Math.round((oa + an) / tot * 100)}% of the value comes from two buyers</span>Since 2025, <b>OpenAI</b> signed ${money(oa)} and
+      <b>Anthropic</b> ${money(an)} of the ${money(tot)} in compute contracts with a disclosed value. Every hyperscaler and most neoclouds sell to one or both.`;
+    const rev = Object.entries(NC.growth).map(([s, m]) => { const p = (m.revenue_usd || []).filter(x => x[1] > 0); return p.length >= 3 ? [s, p.at(-1)[1] / p[0][1]] : null; }).filter(Boolean);
+    const g = n => (rev.find(r => r[0] === n) || [, 0])[1];
+    $("#growthTake").innerHTML = `<span class="verdict">The fastest growth is at the smallest base</span>Quarterly revenue grew <b>${g("Nebius").toFixed(0)}×</b> at Nebius and
+      <b>${g("CoreWeave").toFixed(0)}×</b> at CoreWeave from their first reported quarters, against ${g("AWS").toFixed(1)}× at AWS and ${g("Google Cloud").toFixed(1)}× at Google Cloud.
+      In dollars added per quarter, the hyperscalers still lead.`;
+    const md = (sku, grp) => { const v = NC.prices.filter(p => p.sku === sku && p.group === grp && p.basis === "on-demand per GPU-hour").map(p => p.usd).sort((a, b) => a - b);
+      return v.length ? (v.length % 2 ? v[(v.length - 1) / 2] : (v[v.length / 2 - 1] + v[v.length / 2]) / 2) : null; };
+    const rat = ["H100", "H200", "B200"].map(k => [k, md(k, "Hyperscaler"), md(k, "Neocloud")]).filter(r => r[1] && r[2]);
+    $("#priceTake").innerHTML = `<span class="verdict">The hyperscaler premium is ${Math.min(...rat.map(r => r[1] / r[2])).toFixed(1)}–${Math.max(...rat.map(r => r[1] / r[2])).toFixed(1)}×</span>` +
+      rat.map(([k, h, n]) => `${k}: <b>$${h.toFixed(2)}</b> at the median hyperscaler vs <b>$${n.toFixed(2)}</b> at the median neocloud`).join("; ") +
+      ". Hyperscaler list prices include the rest of the cloud, and big customers negotiate them down.";
+    const kw = NC.contracts.filter(c => !c.excluded), all = kw.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = kw.map(c => c.implied_usd_per_kw_month).filter(Boolean);
+    const mdn = v => { v = [...v].sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
+    $("#kwNote").innerHTML = `The median all-in compute deal works out to about $${Math.round(mdn(all)).toLocaleString()} per kW-month, against $${Math.round(mdn(ls))} for a lease of powered space:
+      the chips and their operation are most of the price.`;
+  })();
   const c = NC.counts;
-  $("#asof").innerHTML = `Data as of ${NC.built}: ${c.facts.toLocaleString()} facts, ${c.contracts} contracts, ${c.prices} price points; ${c.reported.toLocaleString()} reported,
+  $("#asof").innerHTML = `Built ${NC.built}: ${c.facts.toLocaleString()} facts, ${c.contracts} contracts, ${c.prices} price points; ${c.reported.toLocaleString()} reported,
     ${c.derived} derived, ${c.estimated} estimated; ${c.gaps} known gaps listed under Method.`;
   // China chips
   (function china() {

@@ -39,9 +39,11 @@
       hover(p, () => `<b>${esc(a.b)} → ${esc(a.s)}</b>${money(a.v)} across ${a.deals.length} deal${a.deals.length > 1 ? "s" : ""}<br>` +
         a.deals.slice(0, 6).map(c => `${String(c.announced || "").slice(0, 7)} · ${money(c.value_usd)}${c.term_years ? ` · ${c.term_years} yrs` : ""}${badge(c.confidence)} ${esc(priceTxt(c))}`).join("<br>"));
     });
+    const lastY = { buyer: -1e9, supplier: -1e9 };
     const node = (n, x, side, anchor, tx) => {
       const r = el("rect", { x, y: n.y, width: NW, height: n.h, rx: 3, class: "node", fill: side === "buyer" ? color.get(n.n) : css("--text-secondary") }, svg);
-      const t = el("text", { x: tx, y: n.y + n.h / 2 + 4, "text-anchor": anchor, class: "ink" }, svg); t.textContent = `${short(n.n)} ${money(n.v)}`;
+      const ly = Math.max(n.y + n.h / 2 + 4, lastY[side] + 13); lastY[side] = ly;
+      const t = el("text", { x: tx, y: ly, "text-anchor": anchor, class: "ink", "font-size": n.h < 10 ? 11 : 12 }, svg); t.textContent = `${short(n.n)} ${money(n.v)}`;
       r.onclick = t.onclick = () => { sel = sel && sel.name === n.n ? null : { side, name: n.n }; draw(); };
       hover(r, `<b>${esc(n.n)}</b>${money(n.v)} in this view · click to filter`);
     };

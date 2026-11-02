@@ -38,6 +38,7 @@ The method section at the bottom of the page lists what the data cannot tell you
 - `index.html`, `style.css`, `js/`: the page. It is plain JavaScript with no build step, and it also works opened from disk.
 - `data/nc.js`: the full dataset behind the page.
 - `ai-compute-landscape.html`: the same page as one self-contained file.
+- `fonts/`: Newsreader, Inter and JetBrains Mono, all under the SIL Open Font License.
 
 ## Credits
 
