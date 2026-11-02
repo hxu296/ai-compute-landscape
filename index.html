@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Compute Landscape: fleets, contracts, prices and inference</title>
+<title>Who powers AI? | AI Compute Landscape</title>
 <meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Source-linked facts, scope-aware comparisons and explicit uncertainty.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=0b4661d1120d">
+<link rel="stylesheet" href="style.css?v=4a8b3da34fa4">
 </head>
 <body>
 <div class="tip" id="tip"></div>
@@ -21,8 +21,8 @@
 <section class="hero">
   <div>
     <div class="kicker">AI infrastructure · a source-linked field guide</div>
-    <h1>Who supplies AI compute, at what price, and for what</h1>
-    <p class="dek">Three kinds of company now sell GPU capacity: the hyperscalers, the neoclouds that rent GPUs, and the power hosts that build the halls. This guide lines up their fleets, contracts, prices and growth, one question at a time.</p>
+    <h1>Who powers AI?</h1>
+    <p class="dek">Explore the companies behind AI: their chips, data centers, contracts and prices. Every figure links to its source.</p>
     <div class="byline" id="byline"></div>
   </div>
   <figure><svg id="heroArt" viewBox="0 0 400 300" role="img" aria-label="Sketch of a data hall fed by a power line"></svg></figure>
@@ -31,7 +31,7 @@
 
 <section class="chapter" id="landscape">
   <div class="fig" style="margin-top:0"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">The landscape</span><h2>Halls, clouds and their customers</h2></div>
+    <div class="fig-head"><span class="fig-no">The landscape</span><h2>How the companies connect</h2></div>
     <p class="fig-sub">Facility owners lease powered space to cloud operators. Clouds supply AI labs and other clouds. Follow the disclosed links to see who depends on whom.</p>
     <div class="fig-controls"><div class="ctl"><label for="flowFocus" class="ctl-label">Explore</label><select id="flowFocus"><option value="">All relationships</option></select></div><button id="flowMotion" aria-pressed="true">Pause motion</button><button id="flowReset">Clear selection</button></div>
     <p class="flow-mobile-hint">Swipe across the diagram to follow facilities → clouds → buyers, or choose a company above.</p><div class="flow-scroll"><svg id="flowSvg" role="img" aria-label="Public relationships between facility owners, clouds and AI buyers"></svg></div>
@@ -54,7 +54,7 @@
 <section class="chapter" id="supply">
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
-    <h2>Accelerator fleets and power capacity</h2>
+    <h2>Chips and power</h2>
     <p>No hyperscaler says how many accelerators it owns. The best public estimate is Epoch AI's model of chip deliveries, which converts every chip into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts rarely disclose GPU counts either, but they do disclose power, so the second view compares them in megawatts, including clearly labelled partial AI-site estimates for the hyperscalers.</p>
   </div>
   <div class="fig"><div class="fig-frame">
@@ -74,7 +74,7 @@
 <section class="chapter" id="deals">
   <div class="prose">
     <div class="label"><span class="num">02</span>Contracts</div>
-    <h2>Compute contracts and commercial relationships</h2>
+    <h2>Compute deals</h2>
     <p>A compute contract is a promise to pay for capacity over several years. The flow below runs from buyer to supplier, and the default view shows relationships even when prices are undisclosed. Switch to disclosed dollars to size the bands by value. Framework deals such as Stargate's $500B plan are left out, because they commit no one to a price.</p>
     <p>Building leases get their own view. A host that rents a powered hall to Fluidstack, which then sells the same capacity to Anthropic, would otherwise be counted twice.</p>
   </div>
@@ -101,7 +101,7 @@
 <section class="chapter" id="growth">
   <div class="prose">
     <div class="label"><span class="num">03</span>Growth</div>
-    <h2>Company growth on shared axes</h2>
+    <h2>Supplier growth</h2>
     <p>All selected companies share one set of axes. Absolute values show scale; Indexed compares growth from a Q2 2025 baseline. Revenue uses a cloud segment where available and otherwise the reported group; exact scope and dates appear below.</p>
   </div>
   <div class="fig"><div class="fig-frame">
@@ -121,7 +121,7 @@
 <section class="chapter" id="pricing">
   <div class="prose">
     <div class="label"><span class="num">04</span>Prices</div>
-    <h2>Rental prices and commitment terms</h2>
+    <h2>Compute prices</h2>
     <p>Compare market benchmarks first, then published provider rates by commitment term. A hyperscaler’s one-year retail reservation is not a negotiated neocloud contract. TPU and Trainium rates use physical chip-hours; price alone does not compare model throughput.</p>
   </div>
   <div class="fig"><div class="fig-frame">
@@ -162,31 +162,34 @@
 <section class="chapter" id="usage">
   <div class="prose">
     <div class="label"><span class="num">05</span>Inference</div>
-    <h2>Inference workloads and token demand</h2>
+    <h2>Inference and token use</h2>
     <p>Public disclosures describe inference through shares of spending or usage, and through tokens served. These views answer different questions: revenue, compute, spending and token counts are distinct measures. Each chart retains its sources, dates and scope.</p>
   </div>
   <div class="fig"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Inference shares of revenue, usage, spend or compute</h3></div>
-    <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="max-width:680px;display:block;margin:auto"></svg>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
-  </div></div>
-
-  <div id="tokens" class="inference-tokens">
-  <div class="prose"><h3>Tokens served</h3><p>Token disclosures track activity rather than installed hardware. Each point retains its original period, date, model coverage and reporting basis. Providers count different products and token types; these figures do not measure equal compute or form an additive market total.</p></div>
-  <div class="fig"><div class="fig-frame"><div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest disclosures by reporting period</h3></div>
-    <div class="fig-controls"><label class="ctl">Reporting period <select id="tokenPeriod"></select></label></div>
-    <svg id="tokenSvg" role="img" aria-label="Latest disclosed token activity in its native reporting period"></svg>
-    <p class="fig-caption">Bars show one latest dated disclosure per subject in the selected period; source-specific scope is in the pinned detail. The table retains all collected series, including differing scopes and older observations. A ≥ marker retains a lower bound; forecasts and unknown totals are excluded. Router and provider traffic can overlap.</p>
+    <div class="fig-grid inference-grid">
+      <div class="inference-shares">
+        <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Reported inference shares</h3></div>
+        <p class="fig-sub">Shares of revenue, usage, spending or compute retain their original basis.</p>
+        <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="width:100%;display:block"></svg>
+        <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
+      </div>
+      <div id="tokens" class="inference-tokens">
+        <div class="fig-head"><span class="fig-no">Token activity</span><h3>Reported token use</h3></div>
+        <div class="fig-controls"><label class="ctl">Reporting period <select id="tokenPeriod"></select></label></div>
+        <p class="fig-sub">Gold bars and D mark conversions. OpenRouter’s daily rate is its weekly total ÷ 7; OpenAI’s is its minute rate × 1,440.</p>
+        <svg id="tokenSvg" role="img" aria-label="Dated token activity with each company’s reporting scope"></svg>
+      </div>
+    </div>
+    <p class="fig-caption">Dates and scopes differ. Bars show one latest dated figure per subject in the selected period; the table retains every collected series. API-only, chatbot, single-cluster and company-consumption disclosures have different coverage. A ≥ marker retains a lower bound. Unavailable totals appear without a bar. Router and provider traffic can overlap, so these figures do not form a market total.</p>
     <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
-  </div>
 </section>
 
 <section class="chapter" id="china">
   <div class="prose">
     <div class="label"><span class="num">06</span>China</div>
-    <h2>China’s compute infrastructure</h2>
+    <h2>Compute in China</h2>
     <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company.</p>
   </div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
@@ -202,7 +205,7 @@
 <section class="chapter" id="providers">
   <div class="prose">
     <div class="label"><span class="num">07</span>Providers</div>
-    <h2>Provider reference</h2>
+    <h2>Company profiles</h2>
     <p>Empty fields mean not disclosed, not zero. Hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
   </div>
   <div class="fig"><div class="fig-controls"><div class="ctl"><span class="ctl-label">Group</span><span class="seg" id="provCtl"></span></div></div>
@@ -212,7 +215,7 @@
 <section class="chapter" id="method">
   <div class="prose">
     <div class="label"><span class="num">08</span>Sources and method</div>
-    <h2>Sources, definitions and evidence limits</h2>
+    <h2>Sources and methods</h2>
     <div class="method" id="methodBox"></div>
     <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
     <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
@@ -225,7 +228,7 @@
 <footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
-<script src="data/nc.js?v=a9c8cb66598a"></script>
+<script src="data/nc.js?v=261ad0b1c946"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -236,7 +239,7 @@
 <script src="js/growth.js?v=88d90c17b2bb"></script>
 <script src="js/pricing.js?v=b1e69146c7af"></script>
 <script src="js/usage.js?v=5cf52da7045f"></script>
-<script src="js/tokens.js?v=477b75a051d6"></script>
+<script src="js/tokens.js?v=d1d3debabfc7"></script>
 <script src="js/lists.js?v=6b9ec599d94c"></script>
 <script src="js/research.js?v=74b48893207f"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>

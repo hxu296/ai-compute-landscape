@@ -1,4 +1,4 @@
-// Token activity stays in its disclosed time basis; scopes are never summed.
+// Native disclosures and explicitly labeled arithmetic conversions; scopes are never summed.
 (function(){
   const periods=['day','minute','week','month','quarter','year','cumulative'];
   const period=r=>r.unit.match(/^tokens per (minute|day|week|month|quarter|year)/)?.[1]||(/cumulative|total tokens/i.test(r.unit)?'cumulative':null);
@@ -10,18 +10,25 @@
     const selected=$('#tokenPeriod').value,groups=new Map();
     records.filter(r=>period(r)===selected).forEach(r=>{const k=r.subject+' · '+r.unit;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);});
     const rows=[...groups].map(([key,rs])=>{rs.sort((a,b)=>a.as_of.localeCompare(b.as_of));return{key,first:rs[0],last:rs.at(-1)};}).sort((a,b)=>b.last.value-a.last.value);
+    const missing=(NC.token_coverage||[]).filter(r=>r.show_in_plot).map(r=>({key:r.subject+' · total unavailable',first:null,last:{...r,value:null,confidence:null,display_scope:'Comparable total unavailable'}}));
     const latest=new Map();
     rows.forEach(r=>{const old=latest.get(r.last.subject);if(!old||r.last.as_of>old.last.as_of)latest.set(r.last.subject,r);});
-    const plotted=[...latest.values()].sort((a,b)=>b.last.value-a.last.value);
-    const svg=$('#tokenSvg');svg.innerHTML='';const L=225,R=760,T=22,rh=38,max=Math.max(1,...plotted.map(r=>r.last.value));svg.setAttribute('viewBox',`0 0 920 ${T+rh*plotted.length+40}`);
+    const plotted=[...latest.values()].sort((a,b)=>b.last.value-a.last.value).concat(missing);
+    const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=22,rh=43,max=Math.max(1,...plotted.map(r=>r.last.value||0));svg.setAttribute('viewBox',`0 0 680 ${T+rh*plotted.length+40}`);
     const x=v=>L+(R-L)*v/max;
     for(let i=0;i<=4;i++){const v=max*i/4;el('line',{x1:x(v),x2:x(v),y1:T-5,y2:T+rh*plotted.length,stroke:css('--grid')},svg);el('text',{x:x(v),y:T+rh*plotted.length+20,'text-anchor':'middle'},svg).textContent=tok(v);}
-    plotted.forEach((r,i)=>{const y=T+i*rh,p=r.last;el('text',{x:L-10,y:y+17,'text-anchor':'end',class:'ink','font-size':11},svg).textContent=p.subject;
-      const bar=el('rect',{x:L,y:y+5,width:Math.max(2,x(p.value)-L),height:18,rx:3,fill:css(p.confidence==='derived'?'--s4':'--s1'),opacity:.72},svg);
-      el('text',{x:x(p.value)+7,y:y+18,'font-size':11},svg).textContent=qualifier(p)+tok(p.value)+' · '+p.as_of.slice(0,7);
+    plotted.forEach((r,i)=>{const y=T+i*rh,p=r.last;
+      el('text',{x:L-10,y:y+14,'text-anchor':'end',class:'ink token-company','font-size':14},svg).textContent=p.subject;
+      const scope=p.display_scope||p.unit?.match(/\((.*)\)/)?.[1]||'Source-specific scope';
+      const short=scope.length>36?scope.slice(0,34)+'…':scope;
+      el('text',{x:L-10,y:y+28,'text-anchor':'end',class:'token-scope','font-size':10,fill:css('--muted')},svg).textContent=short;
+      if(p.value==null){const label=el('text',{x:L+8,y:y+19,'font-size':11,fill:css('--muted')},svg);label.textContent='Total unavailable';hover(label,`<b>${esc(p.subject)}</b>${esc(p.note)}<br>${src(p.source_url,'Sources checked')}`);return;}
+
+      const bar=el('rect',{x:L,y:y+5,width:Math.max(2,x(p.value)-L),height:24,rx:3,fill:css(p.confidence==='derived'?'--s4':'--s1'),opacity:.72},svg);
+      el('text',{x:x(p.value)+7,y:y+18,class:'token-value','font-size':12},svg).textContent=qualifier(p)+tok(p.value)+(p.confidence==='derived'?' D':'')+' · '+p.as_of.slice(0,7);
       hover(bar,`<b>${esc(p.subject)}</b>${esc(qualifier(p))}${tok(p.value)} ${esc(p.unit)}${badge(p.confidence)}<br>Dated disclosure / observation: ${esc(p.as_of)}${p.as_of_basis?` (${esc(p.as_of_basis)})`:""}${p.source_date?` · published ${esc(p.source_date)}`:''}<br>${esc(p.note||'Source-specific scope; token accounting may differ.')}<br>${src(p.source_url)}`);
     });
-    table('#tokenTable',rows,[{k:'key',h:'Provider / exact series'},{k:'first',h:'First collected observation',f:r=>`${esc(qualifier(r.first))}${tok(r.first.value)} · ${esc(r.first.as_of)} ${src(r.first.source_url,'↗')}`},{k:'last',h:'Latest collected observation',f:r=>`${esc(qualifier(r.last))}${tok(r.last.value)}${badge(r.last.confidence)} · ${esc(r.last.as_of)} ${src(r.last.source_url,'↗')}`},{k:'scope',h:'Scope and limits',f:r=>esc(r.last.note||'The exact reporting basis is retained in the series label; token types are not standardized across providers.')}]);
+    table('#tokenTable',rows.concat(missing),[{k:'key',h:'Provider / exact series'},{k:'first',h:'First collected observation',f:r=>r.first?`${esc(qualifier(r.first))}${tok(r.first.value)} · ${esc(r.first.as_of)} ${src(r.first.source_url,'↗')}`:'Unavailable'},{k:'last',h:'Latest collected observation',f:r=>r.last.value==null?`Unavailable ${src(r.last.source_url,'sources checked')}`:`${esc(qualifier(r.last))}${tok(r.last.value)}${badge(r.last.confidence)} · ${esc(r.last.as_of)} ${src(r.last.source_url,'↗')}`},{k:'scope',h:'Scope and limits',f:r=>esc(r.last.note||'The exact reporting basis is retained in the series label; token types are not standardized across providers.')}]);
   }
   $('#tokenPeriod').onchange=draw;onTheme(draw);draw();
   $('#tokenCoverage').innerHTML='<p>Company totals, model-specific usage, router traffic and nationwide aggregates can overlap. The table preserves separate disclosures instead of inferring an undisclosed total. T = trillion, Q = quadrillion, B = billion, M = million.</p>'+(NC.token_coverage||[]).map(r=>`<p><b>${esc(r.subject)}:</b> ${esc(r.note)} ${r.source_url?src(r.source_url):''}</p>`).join('');

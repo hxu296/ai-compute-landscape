@@ -269,3 +269,19 @@ html{scroll-padding-top:74px}
 #tokens summary{font-size:13px;cursor:pointer}
 
 .inference-tokens{margin-top:44px;scroll-margin-top:74px}.inference-tokens .prose h3{font:500 30px/1.2 var(--serif);margin:0 0 14px}
+
+/* Shared inference row and shorter, clearer headings. */
+.hero h1{line-height:1.12;letter-spacing:0;text-wrap:balance;max-width:16ch}
+.chapter h2{line-height:1.2;letter-spacing:0;text-wrap:balance;margin-bottom:22px}
+.inference-grid .inference-tokens{margin:0;scroll-margin-top:74px}
+.inference-grid .fig-head{align-items:start;gap:8px}.inference-grid h3{font:500 23px/1.25 var(--serif);margin:0}
+.inference-grid .fig-sub{font-size:12px;line-height:1.6;margin:12px 0}
+.inference-grid .fig-controls{margin:12px 0}.inference-grid .legend{font-size:10px}
+.inference-grid .ctl{font-size:12px}
+
+#newsLead{line-height:1.35}.news-story h3{line-height:1.25;letter-spacing:0}
+
+#usage>.fig{max-width:1400px;width:calc(100% - 2 * var(--gutter));padding:0;box-sizing:border-box}
+.inference-shares,.inference-tokens{overflow-x:auto}
+#usage #infSvg{min-width:440px}#usage #tokenSvg{min-width:560px}
+#tokenSvg .token-company{font-size:14px}#tokenSvg .token-scope{font-size:10px}#tokenSvg .token-value{font-size:12px}

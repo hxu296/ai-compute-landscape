@@ -1,5 +1,11 @@
 [
   {
+    "subject": "Anthropic",
+    "show_in_plot": true,
+    "note": "Comparable absolute token total unavailable in the checked primary sources as of November 2, 2026. Economic Index samples, revenue and contract values do not establish company-wide token volume.",
+    "source_url": "https://www.anthropic.com/research/economic-index-june-2026-report"
+  },
+  {
     "subject": "Baseten",
     "note": "The plotted approximately 30T/day is a CEO disclosure in a Stanford recording published June 5. Its measurement date is unspecified; the upload date is identified in the row.",
     "source_url": "https://www.youtube.com/watch?v=Qh7Oxvo5sJI&t=2129s"
