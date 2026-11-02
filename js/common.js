@@ -32,12 +32,16 @@ function cell(r, kind) {
   let v = kind === "usd" ? money(r.value) : num(r.value);
   if (r.range_low && r.range_high) v = `${num(r.range_low)}–${num(r.range_high)}`;
   else if (r.confidence === "estimated") v = `≈${v}`;
+  if (r.value_relation) v = esc(r.value_relation) + " " + v;
   const extra = [r.stage === "mixed" ? "online+planned mixed" : "", r.target_status || "", r.power_basis && !["IT", "unknown"].includes(r.power_basis) ? r.power_basis : "",
                  r.scope && r.scope !== "company" && kind === "usd" ? r.scope.replace(/^(segment|company):/, "") : ""].filter(Boolean).join(", ");
-  return `${v}${badge(r.confidence)} <span class="muted small">${ym(r.as_of)}${extra ? " · " + esc(extra) : ""}</span> ${src(r.source_url, "↗")}`;
+  return `<span title="${esc([r.note,r.method,r.unit].filter(Boolean).join(" · "))}">${v}</span>${badge(r.confidence)} <span class="muted small">${ym(r.as_of)}${extra ? " · " + esc(extra) : ""}</span> ${src(r.source_url, "↗")}${conflictBadge(r.subject,r.metric)}`;
 }
 function table(id, rows, cols) {
   const t = $(id); if (!t) return; let key = null, dir = 1;
+  let download=t.previousElementSibling;
+  if(!download || download.dataset.exportFor !== id){download=document.createElement("button");download.type="button";download.className="table-download";download.dataset.exportFor=id;t.before(download);}
+  download.textContent=`Download shown rows (${rows.length})`;download.onclick=()=>downloadCsv(id.replace("#",""),rows);
   function render() {
     const rs = key ? [...rows].sort((a, b) => { const x = a[key] ?? "", y = b[key] ?? ""; return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y))) * dir; }) : rows;
     t.innerHTML = "<thead><tr>" + cols.map(c => `<th data-k="${c.k}">${c.h}${key === c.k ? (dir > 0 ? " ▲" : " ▼") : ""}</th>`).join("") + "</tr></thead><tbody>" +
@@ -48,8 +52,20 @@ function table(id, rows, cols) {
 }
 function svgPoint(svg, ev) { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
 const PROV = Object.fromEntries(NC.providers.map(p => [p.name, p]));
-function firmCompute(c) { return c.kind === "compute" && !c.excluded && c.value_usd > 0 && !/potential|not committed|optional|backstop|up to|terminable|cancell|90.day/i.test((c.structure || "") + " " + (c.note || "")); }
+function firmCompute(c) {
+  if (c.kind !== "compute" || c.excluded || !(c.value_usd > 0)) return false;
+  if (c.value_status) return c.value_status === "minimum";
+  const txt=((c.structure || "")+" "+(c.note || "")).replace(/noncancel(?:l)?able/gi, "binding");
+  return !/potential|not committed|optional|backstop|up to|terminable|cancell|90.day/i.test(txt);
+}
 function providerPrices(rows) {
   // A provider gets one vote in a median. Its lowest posted region/config is explicit in the caption.
   const by = new Map(); rows.forEach(p => { const k = `${p.provider}|${p.sku}|${p.basis}`; if (!by.has(k) || p.usd < by.get(k).usd) by.set(k, p); }); return [...by.values()];
+}
+
+function downloadCsv(name,rows){
+  const keys=[...new Set(rows.flatMap(r=>Object.keys(r)))];
+  const quote=v=>{if(v==null)return '""';if(typeof v==='object')v=JSON.stringify(v);v=String(v);if(/^[=+@-]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';};
+  const content=[keys,...rows.map(r=>keys.map(k=>r[k]))].map(row=>row.map(quote).join(',')).join('\r\n');
+  const url=URL.createObjectURL(new Blob([content],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download=name+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }

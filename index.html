@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who supplies AI compute: neoclouds, hyperscalers and China (November 2026)</title>
-<meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Every number sourced.">
+<meta name="description" content="Fleets, contracts, prices, growth and the inference/training split across hyperscalers, neoclouds, power hosts and Chinese clouds. Source-linked facts, scope-aware comparisons and explicit uncertainty.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -34,11 +34,17 @@
     <dl><dt><span class="badge r">R</span></dt><dd>Reported by a company, filing, or named press source; this tag is not independent verification.</dd>
       <dt><span class="badge d">D</span></dt><dd>Derived from reported numbers by a stated formula, such as value ÷ term ÷ GPUs.</dd>
       <dt><span class="badge e">E</span></dt><dd>Estimated by an analyst or inferred from indirect evidence. Source ranges are retained where available.</dd></dl></div>
-  <p>Hover over any mark for its terms and source. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column.</p>
+  <p>Hover over any mark for its terms and source. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column. A source-note marker opens the two dated claims: “source conflict” means unresolved disagreement, “different bases” means the definitions differ, and “later evidence” identifies dated updates. Source-date warnings remain separate from verified revisions.</p>
 </div>
 
 <div class="part-title">Part I · Who has the compute</div>
 
+<section class="chapter" id="updates">
+  <div class="wrap"><div class="label">Latest evidence · November 2</div><h2>What changed in the source record</h2>
+    <div class="evidence-grid" id="evidenceCards"></div>
+    <details><summary>Newly checked evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
+  </div>
+</section>
 <section class="chapter" id="supply">
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
@@ -139,6 +145,14 @@
   </div></div></div>
 </section>
 
+<section class="chapter" id="spot">
+  <div class="wrap"><div class="label">Price history · matched regional quotes</div><h2>A price drop depends on the window</h2>
+  <p class="lede">Nebius hourly posted spot quotes, October 26–November 2. These can be interrupted and are not executed trades or reserved contracts.</p>
+  <div class="fig-frame"><div class="seg controls" id="spotCtl"></div><svg id="spotSvg" role="img" aria-label="Hourly spot prices"></svg><div class="takeaway" id="spotTake"></div></div>
+  <div class="table-wrap"><table class="t" id="tSpot"></table></div>
+  <p class="small muted">First and last daily medians use 24 hourly observations each; the final endpoint is outside the last daily window. The line includes all 169 endpoints. Prices have no volume weighting or delivery guarantee.</p>
+  </div>
+</section>
 <section class="chapter" id="usage">
   <div class="prose">
     <div class="label"><span class="num">05</span>Inference vs training</div>
@@ -184,6 +198,9 @@
     <div class="label"><span class="num">08</span>Sources and method</div>
     <h2>How the numbers were collected, and what they cannot tell you</h2>
     <div class="method" id="methodBox"></div>
+    <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
+    <details class="fig-notes"><summary>Related surveys: where they are stronger and what this page adds</summary><p>Established surveys already cover this market. This comparison describes inspected public features; it is not a ranking of accuracy or a claim to be first.</p><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
+    <p class="download-links">Download the presentation data: <a href="data/providers.csv">providers CSV</a> · <a href="data/contracts.csv">contracts CSV</a> · <a href="data/prices.csv">prices CSV</a>. Source URLs, units and dates are retained.</p>
     <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><div class="scroll"><table class="t" id="tGaps"></table></div></details>
   </div>
 </section>
@@ -192,6 +209,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js"></script>
 <script src="js/common.js"></script>
+<script src="js/conflicts.js"></script>
 <script src="js/sketch.js"></script>
 <script src="js/supply.js"></script>
 <script src="js/deals.js"></script>
@@ -199,5 +217,6 @@
 <script src="js/pricing.js"></script>
 <script src="js/usage.js"></script>
 <script src="js/lists.js"></script>
+<script src="js/research.js"></script>
 </body>
 </html>

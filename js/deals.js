@@ -19,8 +19,8 @@
     if (view === "relations") { drawRelations(); table1(); return; }
     const svg = $("#sankey"); svg.innerHTML = "";
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    const ds = deals().filter(c => c.value_usd > 0 && (kind !== "compute" || firmCompute(c)));
-    $("#dealTake").innerHTML=`<span class="verdict">Only disclosed firm compute values enter the dollar total</span>The relationship view keeps unpriced TPU access and cancellable or scenario-dependent agreements visible. Dollar widths do not measure delivered capacity, annual spend, or customer revenue.`;
+    const ds = deals().filter(c => c.value_usd > 0 && (c.kind !== "compute" || firmCompute(c)));
+    $("#dealTake").innerHTML=`<span class="verdict">Disclosed values keep their contractual limits</span>The relationship view keeps unpriced TPU access and cancellable or scenario-dependent agreements visible. Widths show disclosed nominal amounts and spend floors, with conditional and cancellable agreements excluded from this view. They do not measure delivered capacity or annual spend; relationships can still overlap.`;
     const tot = (key) => { const m = new Map(); ds.forEach(c => m.set(c[key], (m.get(c[key]) || 0) + c.value_usd)); return [...m].sort((a, b) => b[1] - a[1]); };
     const topB = tot("buyer").slice(0, 7).map(x => x[0]), topS = tot("supplier").slice(0, 14).map(x => x[0]);
     const bk = c => topB.includes(c.buyer) ? c.buyer : "Other buyers", sk = c => topS.includes(c.supplier) ? c.supplier : "Other suppliers";
@@ -80,6 +80,7 @@
       t.style.cursor=circle.style.cursor="pointer"; t.onclick=circle.onclick=()=>{sel=sel?.side===side&&sel.name===n?null:{side,name:n};draw();};
     });
     nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
+    suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
     $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; equal-width lines, no implied dollar value`;
     $("#dealTake").innerHTML=`<span class="verdict">An undisclosed price still represents a real relationship</span>Google Cloud’s OpenAI and Anthropic links, AWS Trainium, and AMD supply agreements stay visible here. Dashed lines are hardware supply; solid lines are cloud or hosting relationships. Click any company for its terms and sources below.`;
   }
@@ -88,8 +89,8 @@
       .map(c => ({ ...c, price: priceTxt(c), cap: c.capacity_text || (c.capacity_accelerators ? `${c.capacity_relation || ""} ${num(c.capacity_accelerators)} ${c.accelerator_unit}` : c.capacity_gpus ? `${c.capacity_relation || ""} ${num(c.capacity_gpus)} GPUs` : c.capacity_mw ? `${c.capacity_mw_relation || ""} ${num(c.capacity_mw)} MW` : "not disclosed") }))
       .sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0));
     table("#tDeals", rows, [{ k: "buyer", h: "Buyer" }, { k: "supplier", h: "Supplier" }, { k: "announced", h: "Announced", f: r => `<span class="nw">${esc(String(r.announced || "").slice(0, 10))}</span>` },
-      { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : esc(r.value_text || "not disclosed")) + badge(r.confidence) }, { k: "term_years", h: "Years", f:r=>r.term_years || "not disclosed" }, { k: "cap", h: "Capacity" },
-      { k:"gpu_type", h:"Chip / system" }, { k: "price", h: "Implied price" }, { k: "structure", h: "Terms / evidence", f: r => `<span title="${esc(r.note || "")}">${esc(r.evidence || r.structure)}<br><span class="muted small">${esc(r.note || "")}</span></span>` }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
+      { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : esc(r.value_text || "not disclosed")) + badge(r.confidence) + conflictBadge(r.supplier,"value_usd",r) }, { k: "term_years", h: "Years", f:r=>r.term_years || "not disclosed" }, { k: "cap", h: "Capacity", f:r=>esc(r.cap)+conflictBadge(r.supplier,"capacity_gpus",r)+conflictBadge(r.supplier,"capacity_mw",r) },
+      { k:"gpu_type", h:"Chip / system" }, { k: "price", h: "Implied price" }, { k: "structure", h: "Terms / evidence", f: r => `<span title="${esc(r.note || "")}">${esc(r.evidence || r.structure)}${r.source_date?`<br><b class="small">Latest source ${esc(r.source_date)}</b>`:""}<br><span class="muted small">${esc(r.note || "")}</span></span>` }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
   }
   $("#dealFrom").onchange = e => { from = e.target.value; sel = null; draw(); };
   $("#dealKind").onchange = e => { kind = e.target.value; if(kind === "all")view="relations"; sel = null; draw(); };

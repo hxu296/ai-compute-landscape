@@ -8,7 +8,7 @@
   const ep = NC.providers.filter(p => p.epoch && p.epoch.length).map(p => [p.name, p.epoch.at(-1)[1]]).sort((a, b) => b[1] - a[1]);
   const cw = PROV["CoreWeave"].latest;
   $("#tiles").innerHTML = [
-    ["Disclosed deal values", money(committed), `sum of ${cmp.length} firm compute records; some values are spend floors, excludes unpriced deals`],
+    ["Compute relationships", String(new Set(NC.contracts.filter(c=>c.kind==="compute"&&!c.excluded).map(c=>c.buyer+"→"+c.supplier)).size), "priced and unpriced; nominal commitments can overlap"],
     ["Largest fleet", `${(ep[0][1] / 1e6).toFixed(1)}M`, `H100-equivalents at ${ep[0][0]} (Epoch estimate, end-2025)`],
     ["Largest neocloud", cw.mw_online ? `${(cw.mw_online.value / 1000).toFixed(1)} GW` : "", `online at CoreWeave, ${cw.mw_contracted ? (cw.mw_contracted.value / 1000).toFixed(1) + " GW contracted" : ""}`],
     ["H100 list price", med ? `$${med.toFixed(2)}` : "", `median on-demand per GPU-hour across ${h100.length} providers`],
@@ -52,10 +52,10 @@
     $("#provCards").innerHTML = ps.map(p => { const l = p.latest, host = p.group === "Host";
       const items = [!host && ["GPUs installed", cell(l.gpus_total, "gpus")], p.epoch && p.epoch.length && ["Epoch estimate", `${num(p.epoch.at(-1)[1])} H100e${badge("estimated")} <span class="muted small">${ym(p.epoch.at(-1)[0])}</span>`],
         ["MW online", cell(l.mw_online, "mw")], ["MW contracted", cell(l.mw_contracted, "mw")], l.mw_pipeline && ["MW pipeline", cell(l.mw_pipeline, "mw")],
-        p.mw_planned && p.mw_planned.length && ["MW planned", p.mw_planned.map(r => `${esc(r.site || "")} ${num(r.value)} <span class="muted small">${esc(r.target_status || r.target_date || "")}</span>`).join("<br>")],
+        p.mw_planned && p.mw_planned.length && ["MW planned", p.mw_planned.map(r => `${esc(r.site || r.scope || "")} ${cell(r,"mw")} <span class="muted small">target ${esc(r.target_status || r.target_date || "not dated")}</span>`).join("<br>")],
         ["Backlog", cell(l.backlog_usd, "usd")], ["Quarterly revenue (scope shown)", cell(l.revenue_usd, "usd")], ["Quarterly capex", cell(l.capex_usd, "usd")],
         l.valuation_usd && ["Valuation", cell(l.valuation_usd, "usd")], host && p.tenants.length && ["Tenants", esc(p.tenants.join(", "))]].filter(Boolean);
-      return `<div class="card pcard"><h3>${esc(p.name)} <span class="muted small">${p.group} · ${p.n_facts} facts</span></h3><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`; }).join("");
+      return `<div class="card pcard"><h3>${esc(p.name)}${conflictBadge(p.name,"mw_online")}${conflictBadge(p.name,"gpus_total")} <span class="muted small">${p.group} · ${p.n_facts} facts</span></h3><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`; }).join("");
   }
   cards();
   $("#methodBox").innerHTML = `<p><b>How numbers were collected.</b> Six research passes (hyperscalers, neoclouds and hosts, contracts, pricing, China,
@@ -63,14 +63,15 @@
     Epoch AI's public datasets. Each row keeps its source link. Three review rounds corrected labels (pipeline vs contracted,
     company vs segment, owned vs tenant GPUs), exchange rates and duplicates; corrections are kept apart from the raw research.</p>
     <p><b>Rules.</b> Hosts carry MW only; GPUs belong to their owners. Money uses the cloud segment where one is reported. Estimates from power use
-    1,400 W IT per Hopper GPU and 2,000 W per GB200/GB300 GPU (PUE 1.3 from gross) and are source ranges are retained where available, otherwise the estimate is marked approximately.
+    1,400 W IT per Hopper GPU and 2,000 W per GB200/GB300 GPU (PUE 1.3 from gross). Source ranges are retained where available; other estimates carry an approximation mark.
     H100-equivalents are a compute yardstick at dense peak, not delivered throughput. Prices are converted at the ECB rate on the source date.
     Figures that mix online and planned capacity are marked and never summed as contracted.</p>
     <p><b>What this cannot tell you.</b> Hyperscaler fleets are Epoch's model, not disclosures. Neocloud GPU counts are mostly inferred from power.
     Inference vs training is a set of statements, not a measurement. ByteDance's fleet is a weak bottom-up estimate.</p>
     <p><b>Credits.</b> Fleet estimates and lab spending breakdowns are from <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch AI</a>
     (CC BY 4.0). Price references link to Silicon Data, Ornn, SemiAnalysis and Compute Desk; missing current fixings stay missing. Source links are provenance, not a guarantee that every historical row has been independently re-read. The November 2 audit checked display logic and selected headline sources across all sections, with explicit limitations in the <a href="AUDIT.md">source audit</a>.
-    The audit corrected missing unpriced relationships, preserved TPU/Trainium units and deal bounds, retained price regions/configurations, and separated retail rates from market benchmarks. Exact source URLs and formulas appear beside the affected charts. No complete company-wide hyperscaler power total or current private contract fixing is inferred.</p><p>The public presentation dataset ships with the page as <a href="data/nc.js">data/nc.js</a>.</p>`;
+    The audit corrected missing unpriced relationships, preserved TPU/Trainium units and deal bounds, retained price regions/configurations, and separated retail rates from market benchmarks. Exact source URLs and formulas appear beside the affected charts. No complete company-wide hyperscaler power total or current private contract fixing is inferred.</p><p>Hover, focus or tap source-note badges to compare the dated claims and see the display decision. Red marks identify unresolved factual conflicts; neutral marks identify changed evidence or different definitions. The public presentation dataset ships with the page as <a href="data/nc.js">data/nc.js</a>.</p>`;
+  table("#tComparisons",NC.comparisons||[],[{k:"name",h:"Survey",f:r=>src(r.url,esc(r.name))},{k:"scope",h:"Focus"},{k:"strength",h:"Strength of the inspected source"},{k:"ours",h:"This page’s contribution and limit"}]);
   $("#gapN").textContent = NC.gaps.length;
   table("#tGaps", NC.gaps, [{ k: "subject", h: "Subject" }, { k: "metric", h: "Metric" }, { k: "why", h: "Why missing" }, { k: "best_lead", h: "Best lead" }]);
 })();

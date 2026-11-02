@@ -1,0 +1,76 @@
+[
+  {
+    "title": "October filings change the commitments",
+    "body": "Anthropic reports at least $110B to AWS and $44.9B to Microsoft, about $41.3B across Lambda agreements, and up to $120.5B to SpaceX with cancellation rights. These replace or aggregate older figures; they are not extra deals.",
+    "subject": "xAI / SpaceX",
+    "metric": "value_usd",
+    "match": {
+      "buyer": "Anthropic",
+      "supplier": "xAI / SpaceX",
+      "announced": "2026-05-06"
+    },
+    "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+    "date": "2026-10-26"
+  },
+  {
+    "title": "Google’s minimum is not a 5GW price",
+    "body": "The filing discloses a $114.5B minimum under an amended March agreement, additional conditional TPU payments and separate Broadcom leases. It does not map the minimum to the announced 5GW capacity. Their economic layers must stay separate.",
+    "subject": "Google Cloud",
+    "metric": "value_usd",
+    "match": {
+      "buyer": "Anthropic",
+      "supplier": "Google Cloud",
+      "announced": "2026-03"
+    },
+    "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+    "date": "2026-10-26"
+  },
+  {
+    "title": "SpaceX: installed power versus ambition",
+    "body": "Latest company reporting: 1.7GW installed nameplate at September 30, excluding facility overhead. Management’s end-2026 target is 2.5–3GW and end-2027 expectation about 13GW. Analyst forecasts and a hypothetical Microsoft contract remain scenarios.",
+    "subject": "xAI / SpaceX",
+    "metric": "mw_online",
+    "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
+    "date": "2026-10-22"
+  },
+  {
+    "title": "DayOne and QTS belong in the host layer",
+    "body": "DayOne’s 2.3GW bookings mix delivery stages; billings exceed 1GW. Johor’s live page gives conflicting operational numbers. QTS campus concepts and past delivery targets do not establish a company-wide online total.",
+    "subject": "DayOne",
+    "metric": "mw_online",
+    "url": "https://dayonedc.com/market/johor",
+    "date": "checked 2026-11-02"
+  },
+  {
+    "title": "Texas has a dated permit gate",
+    "body": "The September 21 state directive halted TCEQ data-center permits pending audits. Current project releases and supplier-specific delays remain unverified. Fort Worth is pursuing a moratorium process, with tentative future adoption; a tracker’s active-pause label conflicts with the city.",
+    "subject": "Texas policy",
+    "metric": "local_policy_exposure",
+    "url": "https://gov.texas.gov/news/post/governor-abbott-directs-tceq-to-halt-data-center-permits",
+    "date": "2026-09-21"
+  },
+  {
+    "title": "A GB200 shock is not established",
+    "body": "Compute Desk’s −22.6% GB200 headline is static and has no disclosed price-observation date. The dated daily index API has no GB200 series. Matched Nebius quotes below show regional spot volatility; August used-hardware weakness is a separate, lagged market.",
+    "subject": "Compute Desk GB200",
+    "metric": "rental_price",
+    "url": "https://www.compute-desk.com/",
+    "date": "checked 2026-11-02"
+  },
+  {
+    "title": "China: shipments are not owned fleets",
+    "body": "China Telecom reports 30 Ascend 910C supernodes at Shaoguan. Alibaba’s 560,000 cumulative Zhenwu shipments cover customers, while its 128-chip rack is a design. Neither discloses an installed Alibaba cloud fleet.",
+    "subject": "Alibaba Cloud",
+    "metric": "gpus_total",
+    "url": "https://www.alibabacloud.com/en/press-room/alibaba-announces-comprehensive-full-stack-ai",
+    "date": "2026-05-20"
+  },
+  {
+    "title": "Capacity forecasts have different boundaries",
+    "body": "The supplied datacenter analysis models 51.2GW of annual 2027 additions excluding China, while its 9.7GW late-2028 surplus includes China. Its lease totals and the SpaceX article’s ARR figures contain unresolved internal inconsistencies, disclosed in the source notes.",
+    "subject": "AI infrastructure market",
+    "metric": "lease_contract_value_usd",
+    "url": "https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration",
+    "date": "October 2026 source snapshot"
+  }
+]

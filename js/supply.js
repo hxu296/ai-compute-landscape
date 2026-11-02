@@ -39,6 +39,7 @@
       el("text", { x: x(v), y: T + rows.length * rh + 16, "text-anchor": "middle" }, svg).textContent = `${v / 1000} GW`; }
     rows.forEach((r, i) => {
       const y = T + i * rh;
+      markConflict(svg,r.name,"mw_online",L-193,y+15);
       el("text", { x: L - 10, y: y + 15, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
       const tipHtml = () => `<b>${esc(r.name)}</b> (${r.group})<br>Online: ${r.on ? cell(r.on, "mw") : "not disclosed"}<br>Contracted: ${r.ct ? cell(r.ct, "mw") : "not disclosed"}` +
         (r.partial ? `<br><b>Incomplete AI-site subtotal, ${r.on.n_sites} sites; not total fleet</b><br>${r.on.sites.map(s=>`${esc(s.site)}: ${num(s.value)} MW (${ym(s.as_of)})`).join("<br>")}` : "") + (r.pipe ? `<br>Pipeline (not contracted): ${cell(r.pipe, "mw")}` : "");
@@ -61,7 +62,7 @@
   function chipTable(){
     $("#chipCtl").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.textContent===chipFamily));
     const rows=NC.native_chips.filter(r=>chipFamily==="All"||family(r.gpu_type)===chipFamily).sort((a,b)=>family(a.gpu_type).localeCompare(family(b.gpu_type))||b.value-a.value);
-    table("#nativeChips",rows,[{k:"subject",h:"Provider / owner"},{k:"gpu_type",h:"Accelerator"},{k:"value",h:"Native count",f:r=>num(r.value)+badge(r.confidence)},{k:"as_of",h:"As of"},{k:"status",h:"Scope / status",f:r=>esc(r.note||r.status)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
+    table("#nativeChips",rows,[{k:"subject",h:"Provider / owner"},{k:"gpu_type",h:"Accelerator"},{k:"value",h:"Native count",f:r=>esc(r.value_relation||"")+" "+num(r.value)+badge(r.confidence)+conflictBadge(r.subject,"gpus_by_type")},{k:"as_of",h:"As of"},{k:"status",h:"Scope / status",f:r=>esc(r.note||r.status)},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
   }
   ["All","NVIDIA","AMD","Google TPU","AWS Trainium","Huawei"].forEach(n=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>{chipFamily=n;chipTable();};$("#chipCtl").appendChild(b);});chipTable();
 })();
