@@ -302,6 +302,8 @@ html{scroll-padding-top:74px}
 
 #usage>.fig{max-width:1400px;width:calc(100% - 2 * var(--gutter));padding:0;box-sizing:border-box}
 .inference-shares,.inference-tokens{overflow-x:auto}
+.chart-swipe-hint{display:none}
+@media(max-width:700px){.chart-swipe-hint{display:block;font-size:12px;color:var(--ink-2)}}
 #usage #infSvg{min-width:440px}#usage #tokenSvg{min-width:560px}
 #tokenSvg .token-company{font-size:14px}#tokenSvg .token-scope{font-size:10px}#tokenSvg .token-value{font-size:12px}
 .capacity{scroll-margin-top:76px}.capacity .fig-head{flex-wrap:wrap}.capacity .fig-head h3{font-size:30px}
@@ -482,12 +484,13 @@ html{scroll-padding-top:74px}
     <p>Public disclosures describe inference through shares of spending or usage, and through tokens served. These views answer different questions: revenue, compute, spending and token counts are distinct measures. Each chart retains its sources, dates and scope.</p>
   </div>
   <div class="fig"><div class="fig-frame">
+    <p class="chart-swipe-hint">Swipe horizontally within each chart to see its full axes.</p>
     <div class="fig-grid inference-grid">
       <div class="inference-shares">
         <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Reported inference shares</h3></div>
         <p class="fig-sub">Shares of revenue, usage, spending or compute retain their original basis.</p>
         <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="width:100%;display:block"></svg>
-        <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
+        <div class="legend"><span><i style="background:var(--s1)"></i>Suppliers</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
       </div>
       <div id="tokens" class="inference-tokens">
         <div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest reported token use</h3></div>
