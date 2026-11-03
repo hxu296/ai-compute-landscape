@@ -63,7 +63,7 @@
     const n=(v,d=1)=>v==null?'—':(+v).toFixed(d),pc=v=>v==null?'—':Math.round(v)+'%';
     $('#riskNote').innerHTML=`Ranked by exposure (six 1–3 factors: backlog cover, cost of debt, concentration, tenor, interest burden, unfinanced build), 1 = most exposed. Backlog grade A filed, B company-stated, C estimated. Latest filings before Q3 results (due Nov 4–12). Landlord rent runs 10–20 years and cloud backlog 2–7, so compare debt ÷ annual contracted revenue. Lambda, Crusoe and Fluidstack disclose too little to compare.`;
     table('#riskTable',R.rows,[
-      {k:'rank',h:'Rank'},
+      {k:'rank',h:'Rank',f:r=>`${r.rank}${r.funding_unknown?'<br><span class="small" title="Unfinanced build cost undisclosed; scored at the midpoint">funding unknown</span>':''}`},
       {k:'company',h:'Company',f:r=>`<b>${esc(r.company.replace(/ \(.*\)$/,''))}</b><br><span class="small">${esc(r.model.replace(/ \(.*\)$/,''))}</span>`},
       {k:'backlog_usd_b',h:'Backlog',f:r=>`$${n(r.backlog_usd_b)}B <span class="small">grade ${esc(r.backlog_grade)}</span>`},
       {k:'debt_principal_usd_b',h:'Debt',f:r=>`$${n(r.debt_principal_usd_b,2)}B`},
