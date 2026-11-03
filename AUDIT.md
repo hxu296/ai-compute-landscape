@@ -49,3 +49,5 @@ The opening map presents selected disclosed facility–cloud–buyer relationshi
 ## November 3 consistency review
 
 [The latest sanity review](research/SANITY-2026-11-03.md) records five newly retained material relationships, consistent revenue/backlog/power definitions, corrected building-lease economics, visible Ascend rates and live-derived price commentary. It also identifies the largest remaining coverage gaps: usable supply, comparable token demand, financing, physical bottlenecks and useful-work costs. Checks cover the presentation selections; historical source rows have not all been independently re-verified.
+
+[Token disclosure recheck, 3 November 2026](research/TOKEN-RECHECK-2026-11-03.md) covers all 17 plotted quantities, their conversions, exact coverage and source dates. Platform/API disclosures, limited coverage, historical observations and the national aggregate now have separate chart groups.

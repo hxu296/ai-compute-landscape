@@ -21,5 +21,15 @@
     }
     return [...groups.values()];
   }
-  return {daily,latestByScope};
+  function boundText(record){
+    const value=String(record.value_relation||'').trim();
+    if(/^(≥|>=|at least)/i.test(value))return '≥';
+    if(/^(>|more than|over)/i.test(value))return '>';
+    if(/^(≤|<=|at most|up to)/i.test(value))return '≤';
+    if(/^(<|less than|under)/i.test(value))return '<';
+    if(/^nearly/i.test(value))return 'nearly ';
+    if(/about|approx|≈/i.test(value))return '≈';
+    return value;
+  }
+  return {daily,latestByScope,boundText};
 });

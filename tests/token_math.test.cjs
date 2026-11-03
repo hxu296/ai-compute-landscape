@@ -23,3 +23,16 @@ test('snapshot has explicit dates, scopes, source links, no fabricated missing v
 test('invalid token quantities and ranges cannot enter the chart',()=>{
  assert.throws(()=>daily({period:'day',value:NaN}));assert.throws(()=>daily({period:'day',value:4,range_high:3}));assert.throws(()=>daily({period:'window',value:4}));assert.equal(daily({period:'cumulative',value:4}),null);
 });
+
+test('disclosure bounds preserve strict, inclusive and near-value meanings',()=>{
+ const {boundText}=require('../js/token_math.js');
+ for(const [value,expected] of [['>','>'],['more than','>'],['over','>'],['>=','≥'],['at least','≥'],['≥','≥'],['<','<'],['less than','<'],['up to','≤'],['≤','≤'],['nearly','nearly '],['approximately','≈']])assert.equal(boundText({value_relation:value}),expected);
+});
+test('older observations and limited coverage cannot be presented as platform totals',()=>{
+ const r=snapshot.records;
+ for(const d of r)assert(['platform','subset','historical','aggregate'].includes(d.comparison_group));
+ for(const d of r.filter(r=>r.status==='reported_historical'))assert.equal(d.comparison_group,'historical');
+ assert.equal(r.find(r=>r.scope_id==='china-national-current').comparison_group,'aggregate');
+ for(const id of ['deepseek-flash-cluster','openrouter-classified-top50','zai-ox-alpha-rollout'])assert.equal(r.find(r=>r.scope_id===id).comparison_group,'subset');
+ const ms=r.find(r=>r.scope_id==='microsoft-foundry-api-fy25-history');assert.equal(ms.observation_start,'2024-07-01');assert.equal(ms.observation_end,'2025-06-30');
+});

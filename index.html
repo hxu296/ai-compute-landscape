@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=e40de3fe67f4">
+<link rel="stylesheet" href="style.css?v=1de0f2afcf7b">
 </head>
 <body>
 <div class="tip" id="tip"></div>
@@ -178,14 +178,14 @@
       <div class="inference-shares">
         <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Reported inference shares</h3></div>
         <p class="fig-sub">Shares of revenue, usage, spending or compute retain their original basis.</p>
-        <svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="width:100%;display:block"></svg>
+        <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="width:100%;display:block"></svg></div>
         <div class="legend"><span><i style="background:var(--s1)"></i>Suppliers</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
       </div>
       <div id="tokens" class="inference-tokens">
         <div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest reported token use</h3></div>
         <div class="fig-controls"><label class="ctl">View <select id="tokenPeriod"></select></label></div>
-        <p class="fig-sub" id="tokenViewNote">Daily equivalents of the latest disclosures, with the native values and scope retained below.</p>
-        <svg id="tokenSvg" role="img" aria-label="Dated token activity with each company’s reporting scope"></svg>
+        <p class="fig-sub" id="tokenViewNote">Daily equivalents grouped by reporting scope and period, with native disclosures retained below.</p>
+        <div class="inference-chart-scroll"><svg id="tokenSvg" role="img" aria-label="Dated token activity grouped by coverage, including separate historical and national disclosures"></svg></div>
       </div>
     </div>
     <p class="fig-caption">Latest means the latest verified disclosure for that scope, rather than a forecast of today’s volume. Gold bars and D mark period conversions. Month-only rates use a stated 30-day convention; exact observed windows use their day count. API, company, rollout and single-cluster coverage remain distinct. Bounds and ranges survive conversion. Bar dates are marked obs (observation) or pub (publication where the measurement window is unspecified). Router, provider and national totals overlap.</p>
@@ -279,7 +279,7 @@
 <footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
-<script src="data/nc.js?v=ce8e386b41b4"></script>
+<script src="data/nc.js?v=10bc59c05a1e"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -291,8 +291,8 @@
 <script src="js/growth.js?v=d5afbb4ddebf"></script>
 <script src="js/pricing.js?v=f875c6e255d7"></script>
 <script src="js/usage.js?v=772852d7944c"></script>
-<script src="js/token_math.js?v=7e8697448be1"></script>
-<script src="js/tokens.js?v=21e3cc4c97c4"></script>
+<script src="js/token_math.js?v=6db1a97eee26"></script>
+<script src="js/tokens.js?v=4ae647b02e41"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/capacity.js?v=8d231a759b0e"></script>
 <script src="js/lists.js?v=0533ea891f4d"></script>

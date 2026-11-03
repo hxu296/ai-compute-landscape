@@ -1,6 +1,6 @@
 {
   "checked_at": "2026-11-03",
-  "method": "Latest verified disclosure per selected explicit scope; no traffic-growth extrapolation. Standard30-day month unless a calendar window is known. Native bounds/ranges and publication versus observation dates retained. Overlapping scopes are never summed.",
+  "method": "Latest verified disclosure per selected explicit scope; no traffic-growth extrapolation. Standard30-day month unless a calendar window is known. Native bounds/ranges and publication versus observation dates retained. Overlapping scopes are never summed. Chart groups distinguish platform/API disclosures, limited coverage, historical observations and national aggregates. These groups do not standardize token accounting.",
   "records": [
     {
       "scope_id": "google-all-surfaces",
@@ -14,7 +14,8 @@
       "source_url": "https://blog.google/innovation-and-ai/sundar-pichai-io-2026/",
       "confidence": "reported",
       "note": "Latest distinct numeric all-surfaces milestone located. Repeated in June investor presentation; no later all-surfaces total found. Not a named calendar-month total. No growth extrapolation. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "google-first-party-api",
@@ -28,7 +29,8 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
       "confidence": "reported",
       "note": "Current rate at October28 disclosure; quarter ended September30 is not the stated measurement date. Google Cloud and Google API rows are aliases/duplicates, not additive. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "baseten-platform",
@@ -47,7 +49,8 @@
       "original_source_url": "https://www.businesswire.com/news/home/20260925326384/en/",
       "source_notes": [
         "Original Business Wire URL was inaccessible through direct/browser fetch. Token range was verified in Source:Baseten syndicated release; Baseten blog verifies appointment/date only."
-      ]
+      ],
+      "comparison_group": "platform"
     },
     {
       "scope_id": "fireworks-platform",
@@ -61,7 +64,8 @@
       "source_url": "https://fireworks.ai/blog/fireworks-series-d-funding",
       "confidence": "reported",
       "note": "Over95% from customer-specialized models. July16 company press release repeats >40T/day; retain original milestone date, not a new measurement. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "together-api",
@@ -75,7 +79,8 @@
       "source_url": "https://www.together.ai/blog/provisioned-throughput",
       "confidence": "reported",
       "note": "Monthly run rate, no named calendar month. Repeated July23. Thirty-day convention is a derived rate equivalent, not measured daily usage. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "deepinfra-platform",
@@ -92,7 +97,8 @@
       "status": "reported",
       "source_notes": [
         "Same release: body22T/week, company boilerplate over22T/week; preserve both."
-      ]
+      ],
+      "comparison_group": "platform"
     },
     {
       "scope_id": "china-telecom-tokenhub",
@@ -106,7 +112,8 @@
       "source_url": "https://www.chinatelecom-h.com/en/ir/presentations/intpre260820.pdf",
       "confidence": "reported",
       "note": "Slide9/PDF page9: multi-chip multi-model token service platform. Do not add training-corpus totals or individual application token counts. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "openai-api",
@@ -120,7 +127,8 @@
       "source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
       "confidence": "reported",
       "note": "API-only. April8 reiterates same rate, not evidence of later growth; retain first disclosure and record reaffirmation. No all-product ChatGPT+API total located. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "platform"
     },
     {
       "scope_id": "deepseek-flash-cluster",
@@ -134,7 +142,8 @@
       "source_url": "https://github.com/deepseek-ai/DeepInfer/blob/774ce244b87cc0eb8d4b94ab9f5de2ab22049f01/doc/inference_deployment_qa.md",
       "confidence": "reported",
       "note": "English document commit date. Actual measurement/averaging day unknown; one cluster is not a company-wide total. KV-retention descriptions do not define accounting of this aggregate. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "status": "reported",
+      "comparison_group": "subset"
     },
     {
       "scope_id": "zai-issuer-consumption-history",
@@ -148,7 +157,8 @@
       "source_url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1230/2025123000018_c.pdf",
       "confidence": "reported",
       "note": "Prospectus printedp23/PDFp32. June2025 average4.6T/day stays history. Scope does not fully define API/apps/local deployments/training/cache. No newer absolute same-scope total established; do not multiply by40x growth reports. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported_historical"
+      "status": "reported_historical",
+      "comparison_group": "historical"
     },
     {
       "scope_id": "zai-ox-alpha-rollout",
@@ -163,7 +173,8 @@
       "confidence": "reported",
       "note": "Primary article read in browser; six-day rollout window exact dates unstated. New distinct scope, not a replacement for issuer-wide consumption. Overlaps router traffic; no summation with OpenRouter. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
       "status": "reported",
-      "window_days": 6
+      "window_days": 6,
+      "comparison_group": "subset"
     },
     {
       "scope_id": "kimi-mooncake-history",
@@ -177,7 +188,8 @@
       "source_url": "https://www.usenix.org/conference/fast25/presentation/qin",
       "confidence": "reported",
       "note": "FAST2025 paper, month-precision publication; presentationFebruary25. Measurement date unstated. Historical serving-platform rate, not all Moonshot products or external hosting. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported_historical"
+      "status": "reported_historical",
+      "comparison_group": "historical"
     },
     {
       "scope_id": "microsoft-foundry-api-fy25-history",
@@ -193,7 +205,11 @@
       "note": "Historical fiscal-year average, not a current run rate. FY27Q1 October28, FY26Q4 July29 and FY26 annual report supply no newer absolute served-token total. Customer counts/on-track thresholds/revenue/efficiency do not establish it. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
       "status": "reported_historical",
       "window_days": 365,
-      "window_start": "2024-07-01"
+      "window_start": "2024-07-01",
+      "comparison_group": "historical",
+      "observation_start": "2024-07-01",
+      "observation_end": "2025-06-30",
+      "native_period_label": "FY2025 (Jul 2024–Jun 2025)"
     },
     {
       "scope_id": "openrouter-platform-week",
@@ -206,8 +222,17 @@
       "source_date": "2026-09-22",
       "source_url": "https://openrouter.ai/data/newsletter/the-token-state-of-play",
       "confidence": "reported",
-      "note": "Latest clearly dated broad-platform absolute weekly total located. Daily average18.342857T, not a latest-day total. Later scoped figures do not replace this whole-platform series. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "reported"
+      "note": "Latest clearly dated broad-platform absolute weekly total located. Daily average18.342857T, not a latest-day total. Later scoped figures do not replace this whole-platform series. Input/output/reasoning/modality/cache definition not supplied for this aggregate. November2 ClickHouse customer case study separately reports >110T/week without identifying the measurement week or reseller boundary; retained as context, not a replacement observation.",
+      "status": "reported",
+      "comparison_group": "platform",
+      "supporting_disclosures": [
+        {
+          "source_date": "2026-11-02",
+          "source_url": "https://clickhouse.com/blog/openrouter-llm-routing-observability-clickhouse-cloud",
+          "claim": "Partner case study reports >110T tokens/week; observation week and reseller inclusion unspecified.",
+          "treatment": "Context only. Different or unspecified coverage does not replace the dated reseller-excluded September14 observation or establish a growth comparison."
+        }
+      ]
     },
     {
       "scope_id": "openrouter-classified-top50",
@@ -221,7 +246,8 @@
       "source_url": "https://openrouter.ai/blog/insights/open-weight-vs-closed-weight-models/",
       "confidence": "derived",
       "note": "83.5T open-weight+33.0T closed-weight. Excludes unclassified stealth models and other row. Article separately says stealth38.7T in latest week; do not call116.5T whole-platform total. Publication date verifiedOctober31, correcting an earlier October30 handoff. Provider-native tokenizer counts; cached prompt tokens count as volume. Tokenizers differ. Public Data API excludes private models/endpoints and ZDR; newsletter explicitly excludes resellers.",
-      "status": "derived_scoped"
+      "status": "derived_scoped",
+      "comparison_group": "subset"
     },
     {
       "scope_id": "china-national-current",
@@ -235,7 +261,8 @@
       "source_url": "https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html",
       "confidence": "reported",
       "note": "NDA-hosted expert article signed by Hu Jianbo, director of national data-development research institute; sourced to China Development and Reform newspaper. Attributed statistical assertion, raw meter/methodology/cache boundaries not supplied. Supersedes March>140T observation; never add to Chinese-company totals. Input/output/reasoning/modality/cache definition not supplied for this aggregate.",
-      "status": "attributed_primary_assertion"
+      "status": "attributed_primary_assertion",
+      "comparison_group": "aggregate"
     },
     {
       "scope_id": "bytedance-doubao-attributed",
@@ -252,7 +279,8 @@
       "note": "Latest dated attributed figure located; officialJune event page itself only shows120T in product copy. No dated first-party180T text/recording verified. Vendor-domain community/SEO articles are not first-party corporate assertions.",
       "source_notes": [
         "Official FORCE page gives an undated120T/day: https://www.volcengine.com/event/force-2606 . This is not treated as a verified contradiction."
-      ]
+      ],
+      "comparison_group": "platform"
     }
   ],
   "unavailable": [
@@ -301,5 +329,6 @@
       "source_url": "https://openrouter.ai/rankings?view=week",
       "note": "No complete absolute total for November2 is established by the public rankings page. Latest broad-platform observation remains the week of September14; the newer classified top50 subset is separate."
     }
-  ]
+  ],
+  "reviewed_at": "2026-11-03"
 }
