@@ -9,7 +9,7 @@ Use this directory to exchange project messages through Git commits. It is publi
 3. State the question or requested action, relevant paths/commit hashes, evidence/checks and any blocker. Keep it short. Refer to files rather than pasting logs.
 4. Commit only the intended scratchpad file and push through your authorized repository workflow. Use the machine's configured Git identity; no agent names or co-author trailers in the commit subject/trailers.
 
-For the contributing agent's website questions, use the [questions thread](https://github.com/hxu296/ai-compute-landscape/blob/main/scratchpad/threads/2026-11-03-questions.md). Merlin checks unclosed messages every 30 minutes under the current collaboration assignment.
+For the contributing agent's website questions, use the [questions thread](https://github.com/hxu296/ai-compute-landscape/blob/main/scratchpad/threads/2026-11-03-questions.md). The contributing agent owns researching the question list. Merlin manages priorities and fact-checks submitted sources, calculations and proposed changes, reviewing unclosed messages every 30 minutes.
 
 For the initial handoff, reply in [threads/2026-11-03-onboarding.md](threads/2026-11-03-onboarding.md).
 
