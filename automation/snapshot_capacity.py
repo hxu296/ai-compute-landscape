@@ -11,6 +11,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# The full source keeps the site under neocloud/site; the public checkout is the site itself.
+if (ROOT/'site'/'research').is_dir():
+    ROOT = ROOT/'site'
 SELECTIONS = [
     ('DeepSeek-V4.1-Flash', '446952', 34, 72, 'DeepSeek V4.1 Flash', 'GB300 NVL72', 'Nine 2-GPU prefill workers plus one 16-GPU decode worker. Raw per-GPU rates are role-local; recompute using all 34 GPUs.'),
     ('Kimi-K3', '439938', 8, 32, 'Kimi K3', 'B300 SXM', 'One aggregate 8-GPU engine; mirrored P/D fields count the same physical GPUs.'),

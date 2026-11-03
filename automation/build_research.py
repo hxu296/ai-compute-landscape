@@ -4,6 +4,9 @@ import argparse
 import json
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
+# The full source keeps the site under neocloud/site; the public checkout is the site itself.
+if (ROOT/'site'/'research').is_dir():
+    ROOT = ROOT/'site'
 
 def build(root):
     payloads = [('DEMAND_RESEARCH', 'demand-research.json'), ('RESEARCH_CAPACITY', 'capacity-expanded.json')]
