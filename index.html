@@ -59,7 +59,7 @@
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
     <h2>Chips and power</h2>
-    <p>No hyperscaler says how many accelerators it owns. The best public estimate is Epoch AI's model of chip deliveries, which converts every chip into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts rarely disclose GPU counts either, but they do disclose power, so the second view compares them in megawatts, including clearly labelled partial AI-site estimates for the hyperscalers.</p>
+    <p>Hyperscaler chip disclosures cover selected generations and deployments. Epoch AI models cumulative chip deliveries and converts them into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts also disclose power, so the second view compares them in megawatts, including clearly labelled partial AI-site observations where a company total is unavailable.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 1</span><h3 class="fig-title">Accelerator fleets by chip designer, and power by provider</h3></div>
@@ -111,7 +111,7 @@
   <div class="prose">
     <div class="label"><span class="num">03</span>Growth</div>
     <h2>Supplier growth</h2>
-    <p>All selected companies share one set of axes. Absolute values show scale; Indexed compares growth from a Q2 2025 baseline. Revenue uses a cloud segment where available and otherwise the reported group; exact scope and dates appear below.</p>
+    <p>All selected companies share one set of axes. Absolute values show scale; Indexed compares growth from a Q2 2025 baseline. Each revenue series keeps a fixed cloud, hosting or consolidated reporting scope; exact dates and definitions appear below.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 3</span><h3 class="fig-title">Growth on shared axes</h3></div>
@@ -119,7 +119,7 @@
     <div class="fig-controls"><span class="seg"><button id="growthAbs" class="on">Absolute</button><button id="growthIdx">Indexed · Q2 2025 = 100</button></span><button id="growthAll">Select all</button><button id="growthNone">Select none</button></div>
     <div id="growthCompanies" class="company-picks"></div>
     <svg id="growthSvg" viewBox="0 0 900 390" role="img" aria-label="Company growth lines on common dates and scale"></svg>
-    <div id="growthLegend" class="legend"></div>
+    <div id="growthLegend" class="legend"></div><p class="fig-caption" id="growthNote"></p>
     <details class="fig-notes"><summary>Dates, values and reporting scope</summary><div class="scroll"><table class="t" id="growthSummary"></table></div></details>
   </div></div>
 </section>
@@ -137,11 +137,11 @@
     <h3 class="fig-title">Market price movements</h3>
     <p class="fig-sub">Same-series changes from public benchmark data, calculated over calendar windows. Hover a change for its exact start and end dates. A rental index is not a GPU resale price.</p>
     <div class="scroll"><table class="t" id="marketChanges"></table></div>
-    <p class="fig-caption">H100 one-year rental eased about 3.1% over the last 30 days while B200/B300 one-year indices rose. SemiAnalysis’s B200 composite fell about 6.3% in the last week but remains higher over 30 and 90 days. These observations do not show a broad collapse across GPU markets.</p>
+    <p class="fig-caption" id="marketSummary"></p>
     <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">Published rates per physical accelerator-hour</h3></div>
     <p class="fig-sub">One dot per provider: its lowest published region/configuration quote for the selected terms. “From” rates stay separate. The table retains every region, configuration, billing formula and source.</p>
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Terms</span><span class="seg" id="priceCtl"></span></div></div>
-    <div class="fig-controls"><label>Providers <select id="priceGroup"><option>All</option><option>Neocloud</option><option>Hyperscaler</option><option>Marketplace</option><option>China</option></select></label><label>Silicon <select id="priceFamily"><option>All</option><option>NVIDIA</option><option>AMD</option><option>Google TPU</option><option>AWS Trainium</option></select></label></div>
+    <div class="fig-controls"><label>Providers <select id="priceGroup"><option>All</option><option>Neocloud</option><option>Hyperscaler</option><option>Marketplace</option><option>China</option><option>Other</option></select></label><label>Silicon <select id="priceFamily"><option>All</option><option>NVIDIA</option><option>AMD</option><option>Google TPU</option><option>AWS Trainium</option><option>Huawei Ascend</option></select></label></div>
     <div class="fig-body"><svg id="priceSvg" viewBox="0 0 900 460" role="img" aria-label="Price per GPU-hour by chip"></svg></div>
     <div class="legend" id="priceLegend"></div>
     <p class="fig-caption" id="priceBasisNote"></p>
@@ -271,31 +271,31 @@
     <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
     <details class="fig-notes"><summary>Related surveys: where they are stronger and what this page adds</summary><p>Established surveys already cover this market. This comparison describes inspected public features; it is not a ranking of accuracy or a claim to be first.</p><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
     <p class="download-links">Download the presentation data: <a href="data/providers.csv">providers CSV</a> · <a href="data/contracts.csv">contracts CSV</a> · <a href="data/prices.csv">prices CSV</a>. Source URLs, units and dates are retained.</p>
-    <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><div class="scroll"><table class="t" id="tGaps"></table></div></details>
+    <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><p><a href="research/SANITY-2026-11-03.md">Latest coverage and consistency review</a> · <a href="research/GAPS.md">Priority research gaps</a>. Remaining priorities include measured utilization, comparable token accounting, financing and cash flow, and HBM, networking and grid commissioning.</p><div class="scroll"><table class="t" id="tGaps"></table></div></details>
   </div>
 </section>
 </main>
 <footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
-<script src="data/nc.js?v=259e60b12fc3"></script>
+<script src="data/nc.js?v=ce8e386b41b4"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
 <script src="js/sketch.js?v=988580f7f567"></script>
 <script src="js/landscape.js?v=cf5a64e11cb0"></script>
-<script src="js/supply.js?v=a412324d92e5"></script>
+<script src="js/supply.js?v=b273ed1d775e"></script>
 <script src="js/chip_stacks.js?v=e47bb6932e2c"></script>
-<script src="js/deals.js?v=73774727906e"></script>
-<script src="js/growth.js?v=45084cb5a134"></script>
-<script src="js/pricing.js?v=db10456fce6c"></script>
-<script src="js/usage.js?v=5cf52da7045f"></script>
+<script src="js/deals.js?v=3b1a79614009"></script>
+<script src="js/growth.js?v=d5afbb4ddebf"></script>
+<script src="js/pricing.js?v=f875c6e255d7"></script>
+<script src="js/usage.js?v=ec0e5d517fdb"></script>
 <script src="js/token_math.js?v=7e8697448be1"></script>
 <script src="js/tokens.js?v=21e3cc4c97c4"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/capacity.js?v=8d231a759b0e"></script>
-<script src="js/lists.js?v=6b9ec599d94c"></script>
-<script src="js/research.js?v=8ca499a95b64"></script>
+<script src="js/lists.js?v=0533ea891f4d"></script>
+<script src="js/research.js?v=040ca697e2b7"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>
 </body>
 </html>

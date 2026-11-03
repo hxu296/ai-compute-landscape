@@ -4,9 +4,8 @@
   // takeaways computed from the data, so they stay true when the data is rebuilt
   (function takeaways() {
     const kw = NC.contracts.filter(c => !c.excluded), all = kw.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = kw.map(c => c.implied_usd_per_kw_month).filter(Boolean);
-    const mdn = v => { v = [...v].sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
-    $("#kwNote").innerHTML = `The median all-in compute deal works out to about $${Math.round(mdn(all)).toLocaleString()} per kW-month, against $${Math.round(mdn(ls))} for a lease of powered space:
-      the chips and their operation are most of the price.`;
+    const mdn = v => { v = [...v].sort((a, b) => a - b); return (v[Math.floor((v.length-1) / 2)]+v[Math.ceil((v.length-1) / 2)])/2; };
+    $("#kwNote").textContent = `Medians across available unit-price calculations: all-in compute $${Math.round(mdn(all)).toLocaleString()}/kW-month (n=${all.length}); powered-space leases $${Math.round(mdn(ls)).toLocaleString()}/kW-month (n=${ls.length}). Samples differ in geography, power basis, delivery date and contract terms.`;
   })();
   const c = NC.counts;
   $("#asof").innerHTML = `Built ${NC.built}: ${c.facts.toLocaleString()} facts, ${c.contracts} contracts, ${c.prices} price points; ${c.reported.toLocaleString()} reported,
@@ -21,7 +20,7 @@
         el("text", { x: L - 6, y: y + 18, "text-anchor": "end", class: "ink" }, svg).textContent = r.chip;
         const b = el("rect", { x: L, y: y + 6, width: Math.max(2, r.value / max * (R - L)), height: 18, rx: 4, fill: css(nv ? "--s1" : "--s2") }, svg);
         el("text", { x: L + r.value / max * (R - L) + 4, y: y + 19 }, svg).textContent = num(r.value);
-        hover(b, `<b>${esc(r.chip)}</b>${num(r.value)} units delivered to China by end-2025 (Epoch AI estimate, aggregate; not by company)`); });
+        hover(b, `<b>${esc(r.chip)}</b>${num(r.value)} units delivered to China by end-2025 (Epoch AI estimate, aggregate; not by company)<br>${src(r.source_url)}`); });
     };
     onTheme(draw); draw();
     const cn = NC.providers.filter(p => p.group === "China");
@@ -38,8 +37,8 @@
     const q=$("#providerSearch").value.toLowerCase();
     const ps = NC.providers.filter(p => (grp === "All" || p.group === grp) && (p.name+" "+p.group).toLowerCase().includes(q));
     $("#providerCount").textContent=`${ps.length} providers`;
-    $("#provCards").innerHTML = ps.map(p => { const l = p.latest, host = p.group === "Host";
-      const items = [!host && ["GPUs installed", cell(l.gpus_total, "gpus")], p.epoch && p.epoch.length && ["Epoch estimate", `${num(p.epoch.at(-1)[1])} H100e${badge("estimated")} <span class="muted small">${ym(p.epoch.at(-1)[0])}</span>`],
+    $("#provCards").innerHTML = ps.map(p => { const l = p.latest, host = p.group === "Host", epoch=(p.epoch||[]).findLast(r=>r[0]<='2025-12-31');
+      const items = [!host && ["GPUs installed", cell(l.gpus_total, "gpus")], epoch && ["Epoch estimate · common date", `${num(epoch[1])} H100e${badge("estimated")} <span class="muted small">${ym(epoch[0])}</span> ${src('https://epoch.ai/data/ai-chip-owners-documentation/methodology','↗')}`],
         ["MW online", cell(l.mw_online, "mw")], [p.name==="VNET"?"MW committed within in-service fleet":"MW contracted (source scope)", cell(l.mw_contracted, "mw")], l.mw_utilized && ["MW utilized",cell(l.mw_utilized,"mw")], l.mw_order_wins && ["New order wins (period flow)",cell(l.mw_order_wins,"mw")], l.mw_pipeline && ["MW pipeline", cell(l.mw_pipeline, "mw")],
         p.mw_planned && p.mw_planned.length && ["MW planned", p.mw_planned.map(r => `${esc(r.site || r.scope || "")} ${cell(r,"mw")} <span class="muted small">target ${esc(r.target_status || r.target_date || "not dated")}</span>`).join("<br>")],
         ["Backlog", cell(l.backlog_usd, "usd")], ["Quarterly revenue (scope shown)", cell(l.revenue_usd, "usd")], ["Quarterly capex", cell(l.capex_usd, "usd")],

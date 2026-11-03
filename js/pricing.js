@@ -2,8 +2,8 @@
 (function () {
   const GROUPS = [["Hyperscaler", "--s1"], ["Neocloud", "--s2"], ["Marketplace", "--s3"], ["China", "--s7"]];
   const BASES = [["on-demand per GPU-hour", "On demand"], ["reserved 1yr", "1-year retail"], ["reserved 3yr", "3-year retail"], ["capacity block", "Capacity blocks"], ["starting from", "From / term unspecified"]];
-  const ORDER = ["GB300 NVL72", "GB200 NVL72", "B300", "B200", "H200", "H100", "H100 PCIe/NVL", "H20", "A100", "MI355X", "MI325X", "MI300X", "TPU v7", "TPU v6e", "TPU v5p", "TPU v5e", "Trainium3", "Trainium2", "Trainium1", "L40S", "RTX PRO 6000", "RTX 5090", "RTX 4090"];
-  const family = s => /^MI/.test(s) ? "AMD" : /^TPU/.test(s) ? "Google TPU" : /^Trainium/.test(s) ? "AWS Trainium" : "NVIDIA";
+  const ORDER = ["GB300 NVL72", "GB200 NVL72", "B300", "B200", "H200", "H100", "H100 PCIe/NVL", "H20", "A100", "MI355X", "MI325X", "MI300X", "TPU v7", "TPU v6e", "TPU v5p", "TPU v5e", "Trainium3", "Trainium2", "Trainium1", "Ascend 910C", "Ascend 910B", "L40S", "L40", "RTX PRO 6000", "RTX 6000 Ada", "RTX A6000", "RTX 5090", "RTX 4090", "V100 (other)"];
+  const family = s => /^MI/.test(s) ? "AMD" : /^TPU/.test(s) ? "Google TPU" : /^Trainium/.test(s) ? "AWS Trainium" : /^Ascend/.test(s)?"Huawei Ascend":"NVIDIA";
   let basis = "on-demand per GPU-hour";
   const ctl = $("#priceCtl");
   BASES.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{basis=k;draw();};ctl.appendChild(b);});
@@ -12,6 +12,11 @@
   $("#priceLegend").innerHTML = GROUPS.map(([g,c])=>`<span><i style="background:var(${c})"></i>${g}</span>`).join("")+`<span>│ median of shown providers</span>`;
   const pct = v => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
   table("#marketChanges", NC.market_checks, [{k:"name",h:"Benchmark"},{k:"terms",h:"Market / terms"},{k:"date",h:"Last observation"},{k:"usd",h:"USD / GPU-h",f:r=>`$${r.usd.toFixed(2)}`}, ...[7,30,90].map(n=>({k:`change${n}`,h:`${n}d change`,f:r=>{const c=r.changes[n];if(!c)return "unavailable";return `<span title="${esc(`${c.first_date}: $${c.first} → ${c.last_date}: $${c.last}`)}">${pct(c.percent)}</span>`;}})),{k:"source_url",h:"",f:r=>src(r.source_url)}]);
+  // The daily feed can change independently of curated prose.
+  $("#marketSummary").textContent=NC.market_checks.filter(r=>['Compute Desk H100','SemiAnalysis B200'].includes(r.name)).map(r=>{
+    const changes=[7,30,90].filter(n=>r.changes[n]).map(n=>`${pct(r.changes[n].percent)} over ${n} days`).join(', ');
+    return `${r.name} as of ${r.date}: ${changes}.`;
+  }).join(' ');
   function draw() {
     ctl.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===basis));
     const svg=$("#priceSvg");svg.innerHTML="";
@@ -23,7 +28,7 @@
     const x=v=>L+v/max*(R-L);
     if(!ps.length)el("text",{x:30,y:40},svg).textContent="No current public rate for these filters. An undisclosed price is not zero.";
     for(let i=0;i<=5;i++){const v=max*i/5;el("line",{x1:x(v),x2:x(v),y1:T-4,y2:T+skus.length*rh,stroke:css("--grid")},svg);el("text",{x:x(v),y:T+skus.length*rh+17,"text-anchor":"middle"},svg).textContent=`$${v.toFixed(1)}`;}
-    el("text",{x:(L+R)/2,y:T+skus.length*rh+36,"text-anchor":"middle"},svg).textContent="USD / physical GPU or TPU/Trainium chip-hour · no throughput normalization";
+    el("text",{x:(L+R)/2,y:T+skus.length*rh+36,"text-anchor":"middle"},svg).textContent="USD / physical accelerator-hour · no throughput normalization";
     skus.forEach((s,i)=>{
       const y=T+i*rh+rh/2,row=ps.filter(p=>p.sku===s).sort((a,b)=>a.usd-b.usd);
       el("text",{x:L-10,y:y+4,"text-anchor":"end",class:"ink"},svg).textContent=s.replace(" NVL72"," · GPU");
@@ -48,7 +53,7 @@
     for (let v = 0; v <= vmax; v += 2) { el("line", { x1: 40, x2: 430, y1: y(v), y2: y(v), stroke: css("--grid") }, svg); el("text", { x: 34, y: y(v) + 4, "text-anchor": "end" }, svg).textContent = `$${v}`; }
     for (let yr = new Date(t0).getFullYear(); yr <= new Date(t1).getFullYear(); yr++) { const d = `${yr}-01-01`; if (Date.parse(d) >= t0) el("text", { x: x(d), y: 248, "text-anchor": "middle" }, svg).textContent = yr; }
     series.forEach(s => { el("path", { d: s.pts.map((p, i) => `${i ? "L" : "M"}${x(p[0])},${y(p[1])}`).join(""), fill: "none", stroke: css(s.c), "stroke-width": 2 }, svg);
-      s.pts.forEach(p => hover(el("circle", { cx: x(p[0]), cy: y(p[1]), r: 3.5, fill: css(s.c) }, svg), `<b>${esc(s.k)}</b>${p[0]}: $${p[1]}<br><span class="muted">${esc(p[3])}</span>`)); });
+      s.pts.forEach(p => hover(el("circle", { cx: x(p[0]), cy: y(p[1]), r: 3.5, fill: css(s.c) }, svg), `<b>${esc(s.k)}</b>${p[0]}: $${p[1]}<br><span class="muted">${esc(p[3])}</span><br>${src(p[2])}`)); });
     $("#idxLegend").innerHTML = series.map(s => `<span><i style="background:var(${s.c})"></i>${esc(s.k)}</span>`).join("");
   }
   function drawKw() {
@@ -63,7 +68,7 @@
       const b = el("rect", { x: L, y: y + 3, width: Math.max(2, (r.v / max) * (R - L)), height: 14, rx: 3, fill: css(r.lease ? "--s3" : "--s2") }, svg);
       el("text", { x: L + (r.v / max) * (R - L) + 4, y: y + 14, "font-size": 11 }, svg).textContent = `$${Math.round(r.v).toLocaleString()}`;
       hover(b, `<b>${esc(r.label)}</b>${r.lease ? "Lease (no chips)" : "All-in compute"}: $${Math.round(r.v).toLocaleString()} per kW-month${badge(r.c.confidence)}<br>` +
-        `${money(r.c.value_usd)} · ${r.c.term_years} yrs · ${num(r.c.capacity_mw)} MW` + (r.c.implied_usd_per_gpu_hour_est ? `<br>≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h (floor)` : "")); });
+        `${money(r.c.value_usd)} · ${r.c.term_years} yrs · ${num(r.c.capacity_mw)} MW` + (r.c.implied_usd_per_gpu_hour_est ? `<br>≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h (floor)` : "")+`<br>${src(r.c.source_url)}`); });
   }
   onTheme(() => { draw(); drawIdx(); drawKw(); }); draw(); drawIdx(); drawKw();
 })();

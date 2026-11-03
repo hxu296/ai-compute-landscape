@@ -40,7 +40,7 @@
     for(let v=0;v<=max;v++){el('line',{x1:58,x2:858,y1:y(v),y2:y(v),stroke:css('--grid')},svg);el('text',{x:48,y:y(v)+4,'text-anchor':'end'},svg).textContent='$'+v;}
     [0,2,4,6,7].forEach(i=>{const d=new Date(x0+i*864e5).toISOString();el('text',{x:x(d),y:263,'text-anchor':'middle'},svg).textContent=d.slice(5,10);});
     el('path',{d:pts.map((v,i)=>`${i?'L':'M'}${x(v.timestamp)},${y(v.usd)}`).join(''),fill:'none',stroke:css('--s1'),'stroke-width':2},svg);
-    pts.forEach(v=>hover(el('circle',{cx:x(v.timestamp),cy:y(v.usd),r:3,fill:css('--s1'),'fill-opacity':.25},svg),`<b>Nebius ${esc(p.gpu)} · ${esc(p.region)}</b>${esc(v.timestamp)}<br>$${v.usd.toFixed(3)}/GPU-hour · posted spot quote`));
+    pts.forEach(v=>hover(el('circle',{cx:x(v.timestamp),cy:y(v.usd),r:3,fill:css('--s1'),'fill-opacity':.25},svg),`<b>Nebius ${esc(p.gpu)} · ${esc(p.region)}</b>${esc(v.timestamp)}<br>$${v.usd.toFixed(3)}/GPU-hour · posted spot quote<br>${src(p.url)}`));
   }
   panels.forEach((p,i)=>{const b=document.createElement('button');b.textContent=`${p.gpu} · ${p.region}`;b.onclick=()=>{selected=i;draw();};$('#spotCtl').appendChild(b);});
   table('#tSpot',panels,[{k:'gpu',h:'Chip'},{k:'region',h:'Region'},{k:'start',h:'Start (UTC)'},{k:'end',h:'End (UTC)'},{k:'first_24h',h:'First day median',f:p=>'$'+p.first_24h.median.toFixed(2)},{k:'last_24h',h:'Last day median',f:p=>'$'+p.last_24h.median.toFixed(2)},{k:'sku',h:'Matched SKU'},{k:'url',h:'',f:p=>src(p.url)}]);

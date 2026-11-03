@@ -1,7 +1,7 @@
 // Contracts: buyer -> supplier flow (band width = disclosed value) and a table that follows the selection.
 (function () {
   let from = "2025", kind = "all", view = "relations", sel = null, minimum = 0;
-  const maxDeal=Math.max(...[...NC.contracts,...NC.hardware].map(c=>c.value_usd||0));
+  const maxDeal=Math.max(1,...[...NC.contracts,...NC.hardware].filter(c=>!c.excluded).map(c=>c.value_usd||0));
   const W = 900, H = 560, NW = 14, GAP = 8, LX = 170, RX = 900 - 250;
   const short = s => s.length > 24 ? s.slice(0, 23) + "…" : s;
   function priceTxt(c) {
