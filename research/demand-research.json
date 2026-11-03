@@ -660,6 +660,13 @@
       "compute_expense_run_rate_b": 25.1,
       "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
       "note": "$69.8B of commitments due in the 12 months after September 30; Q3 revenue $17.0B × 4; compute and infrastructure $18.808B over nine months annualized. Q3 operating loss $567M was driven by $5.0B of short-term compute costing significantly more than multi-year compute and $2.0B of non-cash donation-matching charges."
+    },
+    "hopper_2028": {
+      "successor_path_usd": 2.8,
+      "glut_path_usd": 1.7,
+      "now_usd": 3.35,
+      "source_url": "https://gpu-index.semianalysis.com/",
+      "note": "SemiAnalysis index, quarterly means. Successor arriving in a shortage: A100 −17% ($1.64 mid-2023 → $1.36 trough) and H100 −15% after B200 ($3.31 → $2.82). Supply catch-up: H100 −50% in 18 months ($6.57 Q4 2023 → $3.31 Q2 2025). Applied to today’s $3.35."
     }
   }
 }
