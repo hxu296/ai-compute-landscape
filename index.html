@@ -70,7 +70,7 @@
   </div></div>
   <div class="fig" id="native-accelerators"><div class="fig-frame"><h3 class="fig-title">Native accelerator counts: NVIDIA, AMD, TPU and Trainium</h3>
     <p class="fig-sub">Estimated delivered chips, stacked by owner. These are physical chip counts, not equal units of performance. Renting capacity does not transfer chip ownership.</p>
-    <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model" selected>Accelerator model</option></select></label></div>
+    <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl"><input type="checkbox" id="chipStackFuture" checked> Include announced future deliveries</label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model" selected>Accelerator model</option></select></label></div>
     <div class="native-stack-scroll"><svg id="chipStackSvg" role="img" aria-label="Native accelerator counts stacked by chip owner"></svg></div>
     <div class="legend" id="chipStackLegend"></div>
     <p class="fig-caption" id="chipStackNote"></p>
@@ -158,14 +158,6 @@
   </div></div></div>
 </section>
 
-<section class="chapter" id="spot">
-  <div class="wrap"><div class="label">Price history · matched regional quotes</div><h2>Spot prices over time</h2>
-  <p class="lede">Nebius hourly posted spot quotes, October 26–November 2. These can be interrupted and are not executed trades or reserved contracts.</p>
-  <div class="fig-frame"><div class="seg controls" id="spotCtl"></div><svg id="spotSvg" role="img" aria-label="Hourly spot prices"></svg></div>
-  <div class="table-wrap"><table class="t" id="tSpot"></table></div>
-  <p class="small muted">First and last daily medians use 24 hourly observations each; the final endpoint is outside the last daily window. The line includes all 169 endpoints. Prices have no volume weighting or delivery guarantee.</p>
-  </div>
-</section>
 <section class="chapter" id="usage">
   <div class="prose">
     <div class="label"><span class="num">05</span>Inference</div>
@@ -289,13 +281,13 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=1109859726b9"></script>
-<script src="data/research.js?v=2065dd2034f3"></script>
+<script src="data/research.js?v=128472951558"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
 <script src="js/sketch.js?v=988580f7f567"></script>
 <script src="js/landscape.js?v=cf5a64e11cb0"></script>
-<script src="js/supply.js?v=28de7be4073c"></script>
-<script src="js/chip_stacks.js?v=e47bb6932e2c"></script>
+<script src="js/supply.js?v=26d4f5a0be44"></script>
+<script src="js/chip_stacks.js?v=3cf1a45bcdf3"></script>
 <script src="js/deals.js?v=3b1a79614009"></script>
 <script src="js/growth.js?v=d5afbb4ddebf"></script>
 <script src="js/pricing.js?v=f875c6e255d7"></script>
@@ -307,7 +299,7 @@
 <script src="js/demand.js?v=389138daa4db"></script>
 <script src="js/capacity.js?v=e0b38cbd1c37"></script>
 <script src="js/lists.js?v=0533ea891f4d"></script>
-<script src="js/research.js?v=040ca697e2b7"></script>
+<script src="js/research.js?v=1894d1af937c"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>
 </body>
 </html>
