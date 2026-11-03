@@ -27,15 +27,21 @@ test('Flash GB300 includes prefill plus decode and reproduces the small-rack sce
  assert.equal(estimate(p,{...options,usableCapacity:.7},{gpus_per_rack:72}).racks,305);
  assert.notEqual(p.output_tps_per_allocated_gpu,p.raw_row.metrics.output_tput_per_gpu,'Role-local decode rate must not become an all-GPU denominator');
 });
-test('H100 mirrored TP/EP metadata is corrected from explicit job evidence',()=>{
- const p=capacity.points.find(p=>p.result_id==='440460');assert.equal(p.raw_row.num_decode_gpu,64);assert.equal(p.total_allocated_gpus,8);assert.match(p.count_evidence_url,/98411109797/);
- close(p.output_tps/8,p.raw_row.metrics.output_tput_per_gpu,1e-6);
- const r=estimate(p,{tokensPerDay:40e12,outputShare:.02,cacheHit:.98,usableCapacity:1,costPerGpuHour:0,powerKwPerGpu:0},{gpus_per_rack:32});assert.equal(r.groupsPerRack,4);assert.equal(r.racks,6284);
-});
-test('model identity, provenance and missing coverage survive the combined API family',()=>{
- const glm=capacity.points.find(p=>p.model==='GLM-5.3');assert.equal(glm.raw_model_key,'glm5.3');assert.match(glm.api_url,/model=GLM-5.2$/);
- assert.ok(capacity.unavailable.some(p=>p.model==='Qwen3.8-Max'));assert.ok(capacity.unavailable.some(p=>p.model==='DeepSeek-V4-Pro'&&p.hardware==='H100'));
- for(const p of capacity.points){assert.ok(p.run_url.startsWith('https://github.com/SemiAnalysisAI/InferenceX/'));assert.ok(p.interactivity_p90_tok_s_user>=95);assert.ok(p.total_allocated_gpus>0);close(p.input_tps/p.total_allocated_gpus,p.input_tps_per_allocated_gpu);}
+test('only NVL72 runs above 50 tok/s/user, one best run per model and rack type, with checked GPU counts',()=>{
+ const keys=new Set();
+ for(const p of capacity.points){
+  assert.ok(['gb200','gb300'].includes(p.hardware));assert.equal(p.gpus_per_rack,72);assert.ok(p.interactivity_p90_tok_s_user>50);assert.equal(p.raw_row.benchmark_type,'agentic_traces');
+  assert.ok(p.run_url.startsWith('https://github.com/SemiAnalysisAI/InferenceX/'));assert.match(p.physical_count_note,/^Job topology: /);
+  const m=p.raw_row.metrics,expected=p.raw_row.disagg?p.raw_row.num_prefill_gpu+p.raw_row.num_decode_gpu:m.total_tput_tps/m.tput_per_gpu;
+  close(p.total_allocated_gpus,expected,1e-6);close(p.input_tps/p.total_allocated_gpus,p.input_tps_per_allocated_gpu);
+  const key=p.model+'|'+p.hardware;assert.ok(!keys.has(key),key);keys.add(key);
+ }
+ // Pipeline parallelism is missing from the API's tensor-parallel field; the per-GPU rate gives the 16 physical GPUs.
+ const kimi=capacity.points.find(p=>p.result_id==='445854');assert.equal(kimi.raw_row.decode_tp,8);assert.equal(kimi.total_allocated_gpus,16);
+ assert.ok(!capacity.points.some(p=>p.raw_model_key==='glm5.3'));assert.ok(capacity.points.some(p=>p.raw_model_key==='glm5.2'));
+ assert.ok(capacity.unavailable.some(p=>p.model==='GLM-5.3'));assert.ok(capacity.unavailable.some(p=>p.model==='Qwen3.8-Flash-Next'&&/GB200/.test(p.hardware)));
+ const pro=capacity.points.find(p=>p.result_id==='444884');assert.equal(pro.total_allocated_gpus,28);
+ const r=estimate(pro,{tokensPerDay:500e12,outputShare:.02,cacheHit:.98,usableCapacity:.7,costPerGpuHour:0,powerKwPerGpu:0},{gpus_per_rack:72});assert.equal(r.groupsPerRack,2);assert.equal(r.limiting,'output');
 });
 test('browser snapshot matches research inputs and unknown provider totals have no numeric values',()=>{
  const fs=require('node:fs'),vm=require('node:vm'),context={window:{}};vm.runInNewContext(fs.readFileSync(require.resolve('../data/research.js'),'utf8'),context);

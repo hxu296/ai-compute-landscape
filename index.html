@@ -221,7 +221,7 @@
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
-    <p class="fig-sub">Compare measured DeepSeek, Kimi K3, GLM-5.3 and Qwen3.8-Flash-Next serving groups. NVL72 racks contain 72 GPUs; SXM rack packing is an explicit assumption. There is no verified, non-overlapping total for the entire inference market here. Choose a disclosed traffic boundary or enter an explicit market assumption.</p>
+    <p class="fig-sub">Compare measured DeepSeek V4-Pro, V4.1-Flash, GLM-5.2, Kimi K3 and Qwen3.8-Flash-Next serving groups on <b>GB200 and GB300 NVL72 racks only</b> (72 physical GPUs per rack). For each model and rack type, the run shown is the one with the highest output throughput per GPU at more than 50 tokens/s per user. There is no verified, non-overlapping total for the entire inference market here. Choose a disclosed traffic boundary or enter an explicit market assumption.</p>
     <div class="capacity-controls">
       <label>Traffic boundary<select id="capacityPreset"></select></label>
       <label>Logical tokens / day (trillions)<input id="capacityVolume" type="number" min="0.001" max="10000000" step="any" value="500"></label>
@@ -230,12 +230,12 @@
       <label>Usable reference capacity <output id="capacityUseValue"></output><input id="capacityUse" type="range" min="10" max="100" step="1" value="70"></label>
       <label>Operating point A<select id="capacityPro"></select></label>
       <label>Operating point B<select id="capacityFlash"></select></label>
-      <label>Assumed GPUs / SXM rack<input id="capacitySxmGpus" type="number" min="8" max="72" step="8" value="32"></label>
+
     </div>
     <p id="capacityBoundary" class="small"></p>
-    <p class="small">The new comparison retains explicit measured points above 95 tok/s/user, including H100. Qwen3.8-Flash-Next is a different model from Qwen3.8-Max; no raw Max benchmark was found. DeepSeek-V4-Pro has no matched H100 AgentX result in this retrieval, so no H100 conversion is inferred. This is a configuration comparison, not a ranking at equal quality.</p>
+    <p class="small">Models without a GB200/GB300 NVL72 run are not shown: GLM-5.3 has runs only on VR200, B300 and MI355X, so its predecessor GLM-5.2 appears instead, and Qwen3.8-Flash-Next has no GB200 run. Qwen3.8-Flash-Next is a different model from Qwen3.8-Max. Physical GPUs per group are checked against each run's job topology. This is a configuration comparison, not a ranking at equal quality.</p>
     <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
-    <p id="capacityError" role="alert" hidden>Enter a positive traffic volume, an SXM rack count of 8–72 GPUs in multiples of 8, and nonnegative finite cost and power assumptions.</p>
+    <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
       <p class="capacity-summary" id="capacitySummary" aria-live="polite"></p>
       <div id="capacityBars" aria-label="Conditional rack comparison"></div>
@@ -250,15 +250,14 @@
           <label>All-in power (kW / GPU)<input id="capacityPower" type="number" min="0" step="0.01" value="1.87"></label>
         </div>
         <p class="small">Defaults: <a href="https://inferencex.semianalysis.com/chips/gb200-nvl72" target="_blank" rel="noopener">SemiAnalysis’s public GB200 specifications and ownership model</a>, retrieved November 2, 2026. Annual cost = all physical GPUs × hourly ownership cost × 8,760. Power includes the source’s host, networking and cooling allowance; no extra PUE multiplier is applied. Neither figure is a purchase quote.</p>
-        <p class="small">The ownership inputs below apply only to the earlier GB200 reference configurations. Costs and facility power for the new hardware scenarios are not estimated.</p>
+        <p class="small">The ownership inputs below apply only to the GB200 runs. GB300 costs and facility power are not estimated.</p>
         <div class="table-wrap"><table class="t" id="capacityOwnership"></table></div>
         <div id="capacityPacking" class="small"></div>
         <p class="small"><b>Method:</b> group equivalents = max(input tokens/day ÷ 86,400 ÷ group input TPS, output tokens/day ÷ 86,400 ÷ group output TPS) ÷ usable capacity. Round up to groups, then to whole racks. This is a fixed-rate extrapolation from coding-trace replay. A different input/output mix, context length, cache distribution or serving stack can change the attainable rates. Full-rack packing was not measured.</p>
         <div id="capacityProfiles" class="small"></div>
-        <p class="small"><b>Benchmark scope:</b> AgentX variable-length coding traces, prefix caching and speculative decoding. The Flash configurations use different engines and cache setups; this is a configuration comparison, not a controlled model-only comparison. The vLLM Flash run also uses synthetic speculative acceptance. Input throughput counts reused context as well as fresh input.</p>
+        <p class="small"><b>Benchmark scope:</b> AgentX variable-length coding traces, prefix caching and speculative decoding. Runs use different engines, parallel layouts and cache setups; this is a configuration comparison, not a controlled model-only comparison. Input throughput counts reused context as well as fresh input.</p>
         <p class="small"><b>Why not use the headline?</b> The run pages’ 100-token/s figures interpolate total logical throughput. They are not output throughput. Pro’s overview also applies a decode-share factor after the raw producer has already divided by all allocated GPUs. This calculator uses the raw absolute input and output rates and explicit physical groups instead. <a href="https://github.com/SemiAnalysisAI/InferenceX/blob/bde2579a49696924c7783519224fbe49e2c678b7/inferencex-e2e/infx/results/agentic/__init__.py#L236" target="_blank" rel="noopener">Producer</a> · <a href="https://github.com/SemiAnalysisAI/InferenceX-app/blob/f5d2bd4a6b6be1c9438c576afd23d274019a200a/packages/app/src/lib/overview/overview-data.ts#L708" target="_blank" rel="noopener">Overview transformation</a>.</p>
-        <p class="small"><b>Unresolved source metadata:</b> Pro’s API labels precision “fp4”; inspected worker logs name <code>deepseek_v4_fp8</code> with bfloat16 dtype. The API’s October 14 date also differs from the September run timestamps. These fields do not establish uniform arithmetic precision or an exact measurement date. The selected older GB200 values are preserved in the <a href="research/capacity.json">original snapshot</a>; new configurations, full raw rows, response hashes and the H100 count correction are in the <a href="research/capacity-expanded.json">expanded snapshot</a>.</p>
-        <p class="small">The earlier 40T/day example can be reproduced with 2% output, 100% usable capacity and Pro result 444911: 244 racks. Its 60 allocated GPUs per rack include both prefill and decode; only 36 are decode GPUs. This configuration reaches 95.8, rather than 100, tokens/s/user at P90 latency.</p>
+        <p class="small"><b>Source metadata:</b> API precision labels are reported as given and do not establish uniform arithmetic precision. The selected runs, full raw rows, job topologies and response hashes are in the <a href="research/capacity-expanded.json">expanded snapshot</a>; the earlier GB200 selections remain in the <a href="research/capacity.json">original snapshot</a>.</p>
         <p class="small">The historical Fireworks Pro 0813 serverless tariff is not used as current revenue: <a href="https://fireworks.ai/models/deepseek-ai/deepseek-v4-pro-0813" target="_blank" rel="noopener">Fireworks says that endpoint was retired from serverless</a>. Current GPU ownership cost and hypothetical API billing are different quantities.</p>
         <button type="button" id="capacityCopy" class="ctl">Copy scenario as JSON</button>
         <textarea id="capacityScenario" hidden readonly aria-label="Scenario JSON"></textarea>
