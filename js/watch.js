@@ -61,7 +61,7 @@
   const R=D.neocloud_risk;
   if(R&&$('#riskTable')){
     const n=(v,d=1)=>v==null?'—':(+v).toFixed(d),pc=v=>v==null?'—':Math.round(v)+'%';
-    $('#riskNote').innerHTML=`Ranked by exposure, 1 = most exposed. Backlog grade A filed, B company-stated, C estimated. Latest filings before Q3 results (due Nov 4–12). Landlord rent runs 10–20 years and cloud backlog 2–7, so compare debt ÷ annual contracted revenue. Lambda, Crusoe and Fluidstack disclose too little to compare.`;
+    $('#riskNote').innerHTML=`Ranked by exposure (six 1–3 factors: backlog cover, cost of debt, concentration, tenor, interest burden, unfinanced build), 1 = most exposed. Backlog grade A filed, B company-stated, C estimated. Latest filings before Q3 results (due Nov 4–12). Landlord rent runs 10–20 years and cloud backlog 2–7, so compare debt ÷ annual contracted revenue. Lambda, Crusoe and Fluidstack disclose too little to compare.`;
     table('#riskTable',R.rows,[
       {k:'rank',h:'Rank'},
       {k:'company',h:'Company',f:r=>`<b>${esc(r.company.replace(/ \(.*\)$/,''))}</b><br><span class="small">${esc(r.model.replace(/ \(.*\)$/,''))}</span>`},
@@ -69,8 +69,10 @@
       {k:'debt_principal_usd_b',h:'Debt',f:r=>`$${n(r.debt_principal_usd_b,2)}B`},
       {k:'cost_of_debt_effective_pct_D',h:'Cost of debt',f:r=>{const v=r.cost_of_debt_effective_pct_D??r.cost_of_debt_coupon_pct_D;return v==null?'—':n(v)+'%'+(r.cost_of_debt_effective_pct_D==null?' <span class="small">coupon</span>':'');}},
       {k:'D_debt_to_stabilized_annual_contracted_rev',h:'Debt ÷ annual contracted revenue',f:r=>r.D_debt_to_stabilized_annual_contracted_rev==null?(r.D_debt_to_annualized_revenue==null?'—':n(r.D_debt_to_annualized_revenue)+'× revenue'):n(r.D_debt_to_stabilized_annual_contracted_rev)+'×'},
+      {k:'unfunded_usd_b',h:'Build not yet financed',f:r=>r.unfunded_usd_b==null&&r.unfunded_mw==null?'—':`<span title="${esc(r.unfunded_basis||'')}">${r.unfunded_usd_b!=null?'$'+n(r.unfunded_usd_b)+'B':''}${r.unfunded_mw?`${r.unfunded_usd_b!=null?' · ':''}${Number(r.unfunded_mw).toLocaleString('en-US')} MW`:''}</span> <span class="small">grade ${esc(r.unfunded_grade||'')}</span>`},
       {k:'top1_pct',h:'Top customer',f:r=>`${pc(r.top1_pct)} ${esc((r.top1_customer||'').replace(/ \(.*$/,''))}${r.top3_pct?`<br><span class="small">top 3: ${pc(r.top3_pct)}</span>`:''}`},
       {k:'backstops',h:'Backstops',f:r=>{const t=r.backstops||'None disclosed.',first=t.split(/(?<=\.)\s/)[0];return`<span class="small" title="${esc(t)}">${esc(first)}${first.length<t.length?' …':''}</span>`;}},
-      {k:'period_end',h:'Source',f:r=>`${src(r.filing_url,'Filing ↗')}<br><span class="small">${esc(String(r.period_end).slice(0,10))} · next ${esc(r.next_report||'')}</span>`}]);
+      {k:'period_end',h:'Period',f:r=>`<span class="nw">${esc(String(r.period_end).slice(0,10))}</span>`},
+      {k:'filing_url',h:'Source',f:r=>`${src(r.filing_url,'Filing ↗')}<br><span class="small">next ${esc(r.next_report||'')}</span>`}]);
   }
 })();
