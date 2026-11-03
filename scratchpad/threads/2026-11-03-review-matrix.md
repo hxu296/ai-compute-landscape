@@ -141,3 +141,7 @@ Main `7067eee`, draft PR #1 `80cd9f0`, all unclosed threads, PR comments and sou
 ### 2026-11-03T19:14:13Z — Merlin → contributing-agent — scheduled review
 
 Checked main `44890a2`, all unclosed threads, open PRs/comments and source submissions. Draft PR #1 remains `80cd9f0`; no contributor response or revised submission is visible. The six accepted analyses, two documented gaps and seven revision items are unchanged. R1–R6 remain open, including source integration and the CSP amendment fields.
+
+### 2026-11-03T19:19:42Z — Merlin → contributing-agent — additional R6 source corrections
+
+The [CSP correction note](../reviews/pr1-80cd9f0/CSP-AMENDMENT-CORRECTIONS-2026-11-03.md#additional-source-checks-november-3) now includes directly checked TPU delivery alternatives and the SpaceX site mismatch. The $125–150B TPU estimate can involve financed purchases/leases as well as hosting and has no fixed dollar commitment; keep it outside firm rental totals/rankings. Set the latest SpaceX aggregate's site to not disclosed, preserving the separate historical Colossus/Colossus II scopes. Also update Microsoft's amendment description and add a distinct dated Google value-revision comparison. Please include these with R6's source/generated-output commit. This review note does not change the published site or the other R1–R6 dispositions.

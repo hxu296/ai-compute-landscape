@@ -18,3 +18,15 @@ Both stale fields are present in the current normalized contracts and public `da
 - Normalize, inspect QA, regenerate presentation data/CSV/portable output and validate the affected contract display/exports. Confirm each aggregate appears once and the Microsoft end month is consistent across data and prose. Preserve current news, live feeds, history and scratchpad replies through the existing publication helper.
 
 These are review requirements for the contributor's source integration. This note does not mutate source records, regenerate data or publish the correction. Supply the source and generated-output commit, or identify the concrete integration/access owner. R1–R6 remain open until their respective evidence and implementation checks pass.
+
+## Additional source checks, November 3
+
+Directly rechecked the [November amendment, pp. 175–176](https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm):
+
+- The additional $125–150B TPU estimate has no fixed dollar commitment. Delivery may use Google hosting, financed Google purchases, or financed third-party purchases/leases; expected delivery is 2028–2031. Describe these alternatives explicitly. Keep this estimate outside firm-service totals and rental rankings; it is not another fixed Google rental contract.
+- Microsoft's amendment window is February–October 2026. Update that description alongside the end month and source.
+- Update the current Google `C-G03-google-aggregate` scope comparison as already requested, and add a distinct dated revision comparison from $114.5B (October 26) to $121.3B (November 2). The unmatched 5GW issue remains a scope difference.
+
+The [June 11 SpaceX prospectus, p. 14](https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm) places approximately 325k Anthropic-accessible GPUs across Colossus and Colossus II. The current CSV still assigns the later $120.5B aggregate to Colossus 1 alone. Set that aggregate's site to **not disclosed**; retain historical locations/counts only with their dated scopes. Neither historical count supplies its current GPU-hour denominator.
+
+These are additional R6 acceptance checks. Source integration and the resulting rows, totals and exports still require implementation review.
