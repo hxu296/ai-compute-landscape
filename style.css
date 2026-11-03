@@ -279,6 +279,8 @@ html{scroll-padding-top:74px}
 
 #usage>.fig{max-width:1400px;width:calc(100% - 2 * var(--gutter));padding:0;box-sizing:border-box}
 .inference-shares,.inference-tokens{overflow-x:auto}
+.chart-swipe-hint{display:none}
+@media(max-width:700px){.chart-swipe-hint{display:block;font-size:12px;color:var(--ink-2)}}
 #usage #infSvg{min-width:440px}#usage #tokenSvg{min-width:560px}
 #tokenSvg .token-company{font-size:14px}#tokenSvg .token-scope{font-size:10px}#tokenSvg .token-value{font-size:12px}
 .capacity{scroll-margin-top:76px}.capacity .fig-head{flex-wrap:wrap}.capacity .fig-head h3{font-size:30px}

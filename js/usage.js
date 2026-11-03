@@ -24,8 +24,9 @@
       if (r.head) { el("text", { x: 4, y: r.y + 13, "font-size": 11, "font-weight": 600, class: "ink" }, svg).textContent = r.head; return; }
       const p = r.p, cy = r.y + 9, col = css(VANT[vant(p.subject)][1]), lb = /lower bound|more than|well over|in excess|>\s?50/i.test(p.note);
       const who = /^market/.test(p.subject) ? `${PUB(p.source_url) || "Market"}${/IaaS/.test(p.subject) ? " (cloud AI spend)" : ""}` : p.subject;
+      const chartWho = /^market/.test(p.subject) && /IaaS/.test(p.subject) ? `${PUB(p.source_url) || "Market"} (IaaS)` : who;
       const forecast=p.as_of>NC.built.slice(0,10);
-      el("text", { x: L - 8, y: cy + 4, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = `${who} · ${p.as_of.slice(0, 4)}${forecast?' forecast':''}`;
+      el("text", { x: L - 8, y: cy + 4, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = `${chartWho} · ${p.as_of.slice(0, 4)}${forecast?' forecast':''}`;
       el("line", { x1: L, x2: R, y1: cy, y2: cy, stroke: css("--grid"), "stroke-dasharray": "2 3" }, svg);
       if (lb) el("path", { d: `M${x(p.value)},${cy} L${x(p.value) + 22},${cy} M${x(p.value) + 17},${cy - 4} L${x(p.value) + 22},${cy} L${x(p.value) + 17},${cy + 4}`, stroke: col, "stroke-width": 2, fill: "none" }, svg);
       const filled = p.confidence === "reported";
