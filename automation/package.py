@@ -14,10 +14,16 @@ def package(root,out):
     html=(root/'index.html').read_text()
     # Strip old content hashes before calculating the new release.
     html=re.sub(r'((?:src|href)="[^"?]+)\?v=[a-f0-9]+"',r'\1"',html)
+    digests=[]
     def version(m):
-        path=m.group(2);digest=hashlib.sha256((root/path).read_bytes()).hexdigest()[:12]
+        path=m.group(2);digest=hashlib.sha256((root/path).read_bytes()).hexdigest()[:12];digests.append(digest)
         return m.group(1)+'="'+path+'?v='+digest+'"'
-    (out/'index.html').write_text(re.sub(r'(src|href)="((?:js/|data/)[^"?]+\.js|style\.css)"',version,html))
+    versioned=re.sub(r'(src|href)="((?:js/|data/)[^"?]+\.js|style\.css)"',version,html)
+    # One id per release: a page whose cached HTML predates the deployed assets reloads once (see the head script).
+    build=hashlib.sha256(''.join(digests).encode()).hexdigest()[:12]
+    versioned=re.sub(r'<meta name="build" content="[^"]*">','<meta name="build" content="'+build+'">',versioned)
+    (out/'index.html').write_text(versioned)
+    (out/'version.json').write_text('{"build":"'+build+'"}\n')
     fonts=(root/'fonts/fonts.css').read_text()
     fonts=re.sub(r'url\(([\w-]+\.woff2)\)',lambda m:'url(data:font/woff2;base64,'+base64.b64encode((root/'fonts'/m.group(1)).read_bytes()).decode()+')',fonts)
     css=(root/'style.css').read_text().replace('@import url("fonts/fonts.css");',fonts)

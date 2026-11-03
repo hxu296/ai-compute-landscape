@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="build" content="">
+<script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
 <meta name="description" content="Explore AI chip ownership, cloud deals, GPU prices and reported token demand, with sources and an interactive DeepSeek capacity calculator.">
@@ -33,6 +35,14 @@
 </section>
 
 
+<section class="chapter" id="watch">
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Watch</span><h3 class="fig-title">Is compute running ahead of demand?</h3></div>
+    <p class="fig-sub" id="watchAsOf"></p>
+    <div class="table-wrap"><table class="t" id="watchTable"></table></div>
+  </div></div>
+</section>
+
 <section class="chapter" id="landscape">
   <div class="fig" style="margin-top:0"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">The landscape</span><h2>How the companies connect</h2></div>
@@ -63,7 +73,7 @@
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 1</span><h3 class="fig-title">Accelerator fleets by chip designer, and power by provider</h3></div>
-    <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button><button id="supGpus">Power-implied GPUs · E</button></span></div><div class="ctl" id="supDesignerCtl"><label for="supDesigner" class="ctl-label">Chip designer</label><select id="supDesigner"><option value="All">All designers</option><option value="Nvidia">NVIDIA</option><option value="AMD">AMD Instinct</option><option value="Google">Google TPU</option><option value="Amazon">AWS Trainium</option></select></div></div>
+    <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button><button id="supGpus">Power-implied H100e · E</button></span></div><div class="ctl" id="supDesignerCtl"><label for="supDesigner" class="ctl-label">Chip designer</label><select id="supDesigner"><option value="All">All designers</option><option value="Nvidia">NVIDIA</option><option value="AMD">AMD Instinct</option><option value="Google">Google TPU</option><option value="Amazon">AWS Trainium</option></select></div></div>
     <div class="fig-body"><svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg></div>
     <div class="legend" id="supLegend"></div>
     <p class="fig-caption" id="supNote"></p>
@@ -102,7 +112,8 @@
       <p>$/GPU-hour is shown only when a deal gives a GPU count. Otherwise the page gives an all-in $/kW-month from the megawatts, which stays comparable across chip generations. For GPU deals it adds an estimated $/GPU-hour range at pre-Rubin power draw, which is a floor for 2027 and later deliveries. Leases of powered buildings are priced per kW-month and include no chips.</p></div></details>
   </div></div>
   <div class="fig" style="margin-top:-18px"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Table 1</span><h3 class="fig-title">Every deal in the current view</h3></div>
+    <div class="fig-head"><span class="fig-no">Table 1</span><h3 class="fig-title">Largest deals in the current view</h3></div>
+    <div class="table-tools"><label class="provider-search">Search deals <input type="search" id="dealSearch" placeholder="Buyer, supplier, chip…"></label><button type="button" id="dealShowAll" class="ctl">Show all deals</button><output id="dealCount" class="small"></output></div>
     <div class="scroll"><table class="t" id="tDeals"></table></div>
   </div></div>
 </section>
@@ -191,6 +202,18 @@
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
     <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to November 3 on the company’s own trend · line = range. Estimates (E), not disclosures. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
     <details class="fig-notes"><summary>Components, trends and sources</summary><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
+  </div></div>
+  <div class="fig demand-review" id="buildout"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Build-out</span><h3 class="fig-title">Compute being built vs compute needed, ex-China</h3></div>
+    <p class="fig-sub">Bars: GB300 NVL72 rack-equivalents (182 H100e each) owned by covered companies at end-2025 plus additions at Epoch-tracked sites. Marker: racks needed for ex-China tokens at the chosen growth, derate and serving share. The verdict turns on the derate: how far real fleets run below benchmark efficiency, including utilization (70% usable alone is 1.4×).</p>
+    <div class="research-controls">
+      <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
+      <label>Real-world derate vs benchmark <output id="buildDerateValue"></output><input id="buildDerate" type="range" min="1" max="8" step="0.5" value="3"></label>
+      <label>Serving share of compute<select id="buildShare"><option value="0.26">0.26</option><option value="0.30" selected>0.30</option><option value="0.36">0.36</option></select></label>
+    </div>
+    <div id="buildoutBars" role="img" aria-label="Compute built vs needed by year"></div>
+    <p class="small" id="buildoutNote"></p>
+    <p class="small">Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
@@ -295,8 +318,8 @@
 <script src="js/token_math.js?v=6db1a97eee26"></script>
 <script src="js/tokens.js?v=4ae647b02e41"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
-<script src="js/demand_math.js"></script>
 <script src="js/demand.js"></script>
+<script src="js/watch.js"></script>
 <script src="js/capacity.js?v=8d231a759b0e"></script>
 <script src="js/lists.js?v=0533ea891f4d"></script>
 <script src="js/research.js?v=040ca697e2b7"></script>

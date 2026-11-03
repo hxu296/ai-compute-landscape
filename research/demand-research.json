@@ -652,5 +652,14 @@
       "note": "Ohio AMD cluster; MI355X-class assumed.",
       "source_url": "https://en.wikipedia.org/wiki/Vultr"
     }
-  ]
+  ],
+  "watch": {
+    "anthropic_12m": {
+      "due_12m_b": 69.8,
+      "revenue_run_rate_b": 68.0,
+      "compute_expense_run_rate_b": 25.1,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+      "note": "$69.8B of commitments due in the 12 months after September 30; Q3 revenue $17.0B × 4; compute and infrastructure $18.808B over nine months annualized. Q3 operating loss $567M was driven by $5.0B of short-term compute costing significantly more than multi-year compute and $2.0B of non-cash donation-matching charges."
+    }
+  }
 }

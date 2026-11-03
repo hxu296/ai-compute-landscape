@@ -43,7 +43,9 @@
         p.mw_planned && p.mw_planned.length && ["MW planned", p.mw_planned.map(r => `${esc(r.site || r.scope || "")} ${cell(r,"mw")} <span class="muted small">target ${esc(r.target_status || r.target_date || "not dated")}</span>`).join("<br>")],
         ["Backlog", cell(l.backlog_usd, "usd")], ["Quarterly revenue (scope shown)", cell(l.revenue_usd, "usd")], ["Quarterly capex", cell(l.capex_usd, "usd")],
         l.valuation_usd && ["Valuation", cell(l.valuation_usd, "usd")], host && p.tenants.length && ["Tenants", esc(p.tenants.join(", "))]].filter(Boolean);
-      return `<div class="card pcard"><h3>${esc(p.name)}${conflictBadge(p.name,"mw_online")}${conflictBadge(p.name,"gpus_total")} <span class="muted small">${p.group} · ${p.n_facts} facts</span></h3><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`; }).join("");
+      // Flag profiles whose newest dated observation is more than six months before the build date.
+      const newest=Object.values(l||{}).filter(v=>v&&v.as_of).map(v=>String(v.as_of)).sort().at(-1),cutoff=new Date(Date.parse(String(NC.built).slice(0,10))-182*864e5).toISOString().slice(0,7),stale=newest&&newest.slice(0,7)<cutoff;
+      return `<div class="card pcard${stale?' stale':''}"><h3>${esc(p.name)}${conflictBadge(p.name,"mw_online")}${conflictBadge(p.name,"gpus_total")} <span class="muted small">${p.group} · ${p.n_facts} facts</span>${stale?` <span class="stale-flag" title="Newest dated observation is more than six months old">latest data ${esc(newest.slice(0,7))}</span>`:''}</h3><dl>${items.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>`; }).join("");
   }
   $("#providerSearch").oninput=cards;cards();
   $("#methodBox").innerHTML = `<p><b>Sources and definitions.</b> SEC filings, earnings releases and calls, company pages and price APIs, named press reports and Epoch AI's public datasets provide the evidence. Each row keeps its source. Pipeline, contracted and online power are separate measures; company and segment revenue retain their scope. Hosts and tenants can refer to the same buildings, and dated observations are not additive.</p>
