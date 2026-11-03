@@ -32,7 +32,7 @@
       $('#buildoutBars').innerHTML=BuildoutMath.YEARS.map(y=>{const lo=Math.min(...need.map(x=>x.n[y])),hi=Math.max(...need.map(x=>x.n[y])),mid=need[1].n[y],use=mid/S[y].racks;
         const w=v=>Math.min(100,100*v/max).toFixed(2)+'%';
         return`<div class="build-row"><b>${y==='2025'?'End-2025':'End-'+y}</b><div class="build-track"><span class="build-supply" style="width:${w(S[y].racks)}"></span><i class="build-range" style="left:${w(lo)};width:calc(${w(hi)} - ${w(lo)})"></i><i class="build-need" style="left:${w(mid)}"></i></div><strong>${k(S[y].racks)} built · ${k(mid)} needed<br><span class="small">V4-Pro-like use ${pct(use)} (range ${pct(lo/S[y].racks)}–${pct(hi/S[y].racks)}) E</span></strong></div>`;}).join('');
-      $('#buildoutNote').textContent=`Ex-China tokens ≈${(exChina/1e12).toFixed(0)}T/day on Nov 3, grown at ${(g*100).toFixed(0)}%/month. Needed = tokens ÷ measured GB300 rack throughput × ${d.toFixed(1)}× real-world derate ÷ ${s} serving share. Marker: V4-Pro-like mix; line: Flash-like to Kimi-like.`;};
+      $('#buildoutNote').textContent=`Needed = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens × ${(g*100).toFixed(0)}%/mo growth ÷ GB300 rack throughput × ${d.toFixed(1)}× derate ÷ ${s} serving share. Marker V4-Pro-like; line Flash- to Kimi-like.`;};
     for(const id of ['buildGrowth','buildDerate','buildShare','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
   }
   // Watch table
@@ -56,5 +56,21 @@
     ].filter(Boolean).sort((x,y)=>(x.hz==='Now'?0:1)-(y.hz==='Now'?0:1));
     table('#watchTable',rows,[{k:'hz',h:'Horizon',f:r=>`<b>${esc(r.hz)}</b>`},{k:'m',h:'Measure',f:r=>`<a href="${r.href}">${esc(r.m)}</a>`},{k:'v',h:'Latest',f:r=>esc(r.v)},{k:'c30',h:'30 days',f:r=>esc(r.c30)},{k:'c90',h:'90 days',f:r=>esc(r.c90)},{k:'src',h:'Basis',f:r=>`<span class="small">${esc(r.src)}</span>`}]);
     $('#watchAsOf').textContent=`As of ${String(NC.built).slice(0,10)} (prices ${String(window.LIVE?.checked_at||'').slice(0,10)}). E = estimate.`;
+  }
+  // Neocloud and landlord risk: filed backlog, debt, cost of debt and customer concentration.
+  const R=D.neocloud_risk;
+  if(R&&$('#riskTable')){
+    const n=(v,d=1)=>v==null?'—':(+v).toFixed(d),pc=v=>v==null?'—':Math.round(v)+'%';
+    $('#riskNote').innerHTML=`Ranked by exposure, 1 = most exposed. Backlog grade A filed, B company-stated, C estimated. Latest filings before Q3 results (due Nov 4–12). Landlord rent runs 10–20 years and cloud backlog 2–7, so compare debt ÷ annual contracted revenue. Lambda, Crusoe and Fluidstack disclose too little to compare.`;
+    table('#riskTable',R.rows,[
+      {k:'rank',h:'Rank'},
+      {k:'company',h:'Company',f:r=>`<b>${esc(r.company.replace(/ \(.*\)$/,''))}</b><br><span class="small">${esc(r.model.replace(/ \(.*\)$/,''))}</span>`},
+      {k:'backlog_usd_b',h:'Backlog',f:r=>`$${n(r.backlog_usd_b)}B <span class="small">grade ${esc(r.backlog_grade)}</span>`},
+      {k:'debt_principal_usd_b',h:'Debt',f:r=>`$${n(r.debt_principal_usd_b,2)}B`},
+      {k:'cost_of_debt_effective_pct_D',h:'Cost of debt',f:r=>{const v=r.cost_of_debt_effective_pct_D??r.cost_of_debt_coupon_pct_D;return v==null?'—':n(v)+'%'+(r.cost_of_debt_effective_pct_D==null?' <span class="small">coupon</span>':'');}},
+      {k:'D_debt_to_stabilized_annual_contracted_rev',h:'Debt ÷ annual contracted revenue',f:r=>r.D_debt_to_stabilized_annual_contracted_rev==null?(r.D_debt_to_annualized_revenue==null?'—':n(r.D_debt_to_annualized_revenue)+'× revenue'):n(r.D_debt_to_stabilized_annual_contracted_rev)+'×'},
+      {k:'top1_pct',h:'Top customer',f:r=>`${pc(r.top1_pct)} ${esc((r.top1_customer||'').replace(/ \(.*$/,''))}${r.top3_pct?`<br><span class="small">top 3: ${pc(r.top3_pct)}</span>`:''}`},
+      {k:'backstops',h:'Backstops',f:r=>{const t=r.backstops||'None disclosed.',first=t.split(/(?<=\.)\s/)[0];return`<span class="small" title="${esc(t)}">${esc(first)}${first.length<t.length?' …':''}</span>`;}},
+      {k:'period_end',h:'Source',f:r=>`${src(r.filing_url,'Filing ↗')}<br><span class="small">${esc(String(r.period_end).slice(0,10))} · next ${esc(r.next_report||'')}</span>`}]);
   }
 })();

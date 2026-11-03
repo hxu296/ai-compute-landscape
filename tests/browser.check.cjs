@@ -17,6 +17,7 @@ const file=path.resolve(process.argv[2]||'index.html'),exe=process.env.CHROME_PA
     await expect('native accelerator bars','#chipStackSvg rect',5);
     await expect('deal rows','#tDeals tbody tr',10);
     await expect('provider cards','#provCards .pcard',20);
+    await expect('risk table rows','#riskTable tbody tr',8);
     if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))failures.push(`${width}px: page overflows horizontally`);
     await page.close();
   }

@@ -9,7 +9,7 @@ if (ROOT/'site'/'research').is_dir():
     ROOT = ROOT/'site'
 
 # The page reads only these parts; the full snapshots stay in research/ for review and tests.
-KEEP = {'DEMAND_RESEARCH': ('schema_version', 'reviewed_at', 'report_url', 'global_estimate', 'token_estimates', 'unavailable_tokens', 'supplemental_tokens', 'future_accelerators', 'watch'),
+KEEP = {'DEMAND_RESEARCH': ('schema_version', 'reviewed_at', 'report_url', 'global_estimate', 'token_estimates', 'unavailable_tokens', 'supplemental_tokens', 'future_accelerators', 'watch', 'neocloud_risk'),
         'RESEARCH_CAPACITY': ('schema_version', 'retrieved_utc', 'method', 'api_contract_url', 'unavailable', 'points')}
 
 def slim(name, data):
