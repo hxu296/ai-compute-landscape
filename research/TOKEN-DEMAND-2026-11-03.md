@@ -1,0 +1,156 @@
+# Token demand, training and financing — 3 November 2026
+
+This review answers the demand questions behind the site update. R denotes a reported claim; D is arithmetic; E is an assumption-dependent estimate. A missing disclosure remains unavailable. The reviewed date does not make an older observation current. The accompanying site keeps scenarios apart from observed token disclosures.
+
+## 1. Anthropic: what can be extrapolated from the S-1?
+
+The [October 26 S-1](https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm) reports approximately $13.1B of consumption revenue in H1 2026. The **[November 2 amendment](https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm)** updates this to $26.3B for January–September. Neither establishes an absolute serving-token total. Subscription tokens, model mix, cache charges and realized prices remain unresolved.
+
+A useful sensitivity calculation is `consumption revenue / observed days / assumed realized dollars per million logical tokens × 1,000,000`. The rounded difference, $13.2B over Q3's 92 days, implies approximately **143.5T, 71.7T or 23.9T logical tokens/day** at assumed realized prices of **$1, $2 or $6/Mtok**, respectively. These prices are illustrative blended realizations, not measured company tariffs or confidence bounds. This estimates consumption-billed traffic, including first-party uses, and excludes subscription-included traffic.
+
+H1's corresponding $2 scenario is 36.2T/day; its rise to Q3's 71.7T depends on holding the assumed realized price constant. It is not measured token growth. A November scenario additionally requires an explicit growth assumption after September 30; zero growth carries the Q3 average forward, without claiming a November measurement. The UI exposes these assumptions rather than adding an invented Anthropic bar to reported totals.
+
+## 2. Do cloud token flows validate the lab estimates?
+
+[Amazon's October 29 results](https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/) report **nearly 17× year-over-year Bedrock token volume**, without an absolute denominator or model split. This supports rapid growth, but cannot validate an Anthropic/OpenAI absolute total. Multiplying another cloud's tokens by 17 is invalid.
+
+Anthropic's November amendment says CSP marketplaces account for **44% of January–September revenue**; the original H1 figure was 48%. These are revenue shares, not token shares. Marketplace customers are included in Anthropic's revenue, so adding cloud and lab traffic can count the same inference twice. Google first-party API traffic and all-surface traffic also overlap; Microsoft's FY2025 >500T Foundry figure is an annual historical total. Their definitions cannot reconcile a common November global meter. See the [prior token review](TOKEN-RECHECK-2026-11-03.md) for the exact disclosures.
+
+## 3. Grok token usage
+
+No company-wide served-token count was found in the reviewed [SpaceX September 30 filing](https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm) or [Grok 4.5 announcement](https://x.ai/news/grok-4-5). Grok is xAI/SpaceX's model; **Groq is a separate inference company**. Users, subscription revenue, training tokens and rate limits cannot establish serving volume.
+
+[tokensperday.com's estimate](https://tokensperday.com/estimates/) puts xAI at 0.1–7.5T/day around a 0.9T midpoint, driven by assumed messages and tokens/message. This is that site's model, not a company disclosure, and is too uncertain and stale to relabel as November observed traffic. Router-specific Grok tokens would be a lower-coverage observation and would overlap the serving provider.
+
+## 4. Do neoclouds sell tokens themselves?
+
+Yes. A GPU rental cloud can also operate a managed token API. **[Nebius Token Factory](https://nebius.com/blog/posts/nebius-and-eigen-ai-partner-to-accelerate-frontier-open-source-ai-inference)** explicitly offers per-token model access. **[CoreWeave](https://coreweave.com/blog/coreweaves-innovation-velocity-drives-mlperf-6-0-leadership)** describes serverless pay-per-token inference. Their reviewed product material does not establish platform-wide realized daily token totals. Therefore their chart entries say unavailable, rather than estimating tokens from rented GPUs or revenue.
+
+Specialist inference hosts already have dated observations: Fireworks **>40T/day** ([July 15](https://fireworks.ai/blog/fireworks-series-d-funding)), Together **>400T/month**, or >13.33T/day on the site's 30-day convention ([July 8](https://www.together.ai/blog/provisioned-throughput)), DeepInfra **22T/week**, or 3.143T/day ([September 29 company release](https://www.globenewswire.com/news-release/2026/09/29/3370896/0/en/deepinfra-surpasses-100m-arr-triples-token-volume.html)), and Baseten **40–50T/day** ([September 25 company-issued release](https://www.streetinsider.com/Business%2BWire/Baseten%2BNames%2BSheila%2BVashee%2BChief%2BMarketing%2BOfficer/27106238.html)). These appear individually; the disclosures do not establish disjoint traffic.
+
+## 5. OpenRouter versus a provider API key
+
+One request routed through OpenRouter to Fireworks, Together, DeepInfra, Nebius or another host can appear in both the router's and host's meters. **Do not sum them.** Using a direct provider key sends a request directly to that provider; it does not create an OpenRouter request. OpenRouter's [bring-your-own-key mode](https://openrouter.ai/docs/guides/overview/auth/byok) routes through OpenRouter using an upstream account, so a provider bill does not make the two traffic meters independent.
+
+A deduplicated union would require provider/router intersection volumes for the same time window, model, tokenizer, input/output/cache policy and privacy exclusions. Those intersections are not supplied by the cited platform totals. Excluding router traffic avoids an obvious duplication, but does not prove that all remaining host, lab and national rows are mutually exclusive. Show separate layers, not a global sum.
+
+## 6. Growth and November 2026 token scenarios
+
+There is enough evidence to display **dated growth**, but not to nowcast every company from measurements alone:
+
+| Provider / meter | Supported growth evidence | November treatment |
+|---|---|---|
+| Bedrock | Nearly 17× year-over-year, October 29 R | No absolute baseline; no absolute nowcast. |
+| Together APIs | 30B to >400T/month in nine months, July 8 R | Disclosed milestone ratio >13,333×; no precise starting day or forward growth rate inferred. |
+| DeepInfra | Company says more than tripled since May; 22T/week September 29 R | Preserve statement; no exact CAGR from rounded/qualified values. |
+| MiniMax | July tokens 20× January level, August results R | Absolute level undisclosed; index growth only. |
+| Baseten | Approximately 30T/day June recording; 40–50T/day September release | Dates and range retained; not precise measured monthly growth. |
+| Applied Compute | >1T inference tokens/day November 2 R; >1,700 training runs since July is a different measure | No matched earlier token baseline; use only an explicit growth scenario. |
+| Fireworks | >40T/day July 15 R | A lower-bound disclosure is not an exact level or a measured growth rate. |
+| Google APIs | Nearly 32B/minute October 28 R | Keep API meter separate from all surfaces and internal coding. |
+| OpenAI APIs | >15B/minute March 31 R | Old API floor; no ChatGPT or November total inferred. |
+| OpenRouter | Dated broad-platform and later top-50 subset | Different scopes cannot be joined into a growth line. |
+
+[MiniMax source](https://www.minimax.io/news/minimax-announces-first-half-2026-financial-results-1787744160), [Together source](https://www.together.ai/blog/provisioned-throughput), [OpenAI source](https://openai.com/index/accelerating-the-next-phase-ai/). Other rows link to sources above or the prior review.
+
+The new scenario view applies a user-entered monthly growth assumption to each dated daily-equivalent anchor through November 3: `anchor × (1 + monthly growth)^(days since reference / 30.4375)`. When a measurement window is unspecified, the publication date is only a scenario reference, explicitly marked. Future values do not inherit the source's strict lower bound. Zero growth means holding the anchor constant, not confirming today's traffic. Unavailable levels remain unavailable; historical, cluster and national totals stay outside this platform scenario chart. No cross-company total is calculated.
+
+## 7. Inference racks: DeepSeek, Kimi K3, GLM-5.3 and Qwen3.8
+
+The existing DeepSeek arithmetic remains reproducible. New **raw [InferenceX API](https://inferencex.semianalysis.com/api)** snapshots add Kimi K3, GLM-5.3 and Qwen3.8-Flash-Next configurations; their group input/output rates, actual GPU counts, precision, speed, run URLs and API dates are retained in [capacity-expanded.json](capacity-expanded.json).
+
+The API accepts `GLM-5.2` for its combined GLM5.2/GLM5.3 family. Only rows whose **raw model key is `glm5.3`** are labeled GLM-5.3. **Qwen3.8-Max has no supported raw benchmark in the retrieved model catalog. Flash-Next is a distinct, smaller model and is not evidence of Max-quality performance.** A serving benchmark also does not prove equal task quality among Kimi, GLM and DeepSeek.
+
+A measured Qwen3.8-Flash-Next H100 run is included. The API's P/D counts say 64 each, while the absolute/per-GPU rates imply **8 physical GPUs**. The [actual c8 job](https://github.com/SemiAnalysisAI/InferenceX/actions/runs/33039903416/job/98411109797) lists H100 devices 0–7, one node and TP8/EP8 on the same ranks. The snapshot therefore uses 8, records the original fields, and documents the correction. TP and EP must not be multiplied here. A default **32-GPU H100/SXM rack is an editable packing assumption** (four eight-GPU servers), unlike a physical GB200 NVL72 rack. Network, cooling and floor-density feasibility are not established by this packing arithmetic.
+
+There is no matched H100 DeepSeek-V4-Pro AgentX observation in this retrieval. Its H100 value stays unavailable; no peak-FLOP multiplier converts GB200 racks into H100 racks. The H100 Qwen row is explicitly another model. Prefix reuse, speculative decoding, varying contexts and output quality remain material limits. The comparison scales whole measured groups using the larger input/output requirement; it is not a workload simulator or a measured facility.
+
+## 8. Lab runways and a possible GPU price collapse
+
+| Entity | Reviewed liquidity / financing evidence | Defensible conclusion |
+|---|---|---|
+| Anthropic | November amendment: **$131.845B** cash/equivalents/short investments at September 30; **+$6.569B** operating cash flow over nine months; equipment purchases and lease prepayments are separate. | An accounting net loss is not cash burn. A fixed-burn runway is a stress scenario, not a measured exhaustion date. At assumed $5B/$10B monthly net outflow, this pool would last about 26.4/13.2 months before reserves, commitments and financing changes. |
+| OpenAI | March 31 company announcement: **$122B committed capital** and an undrawn credit facility. | Fundraising is not a dated unrestricted cash balance; no audited comparable burn/November runway established here. |
+| xAI / SpaceX | September filing: **$51.294B cash + $38.561B short-term marketable securities**, consolidated across SpaceX businesses. SI capex is separately reported. | Group liquidity cannot be divided by a guessed Grok-only burn. Transfers, commitments and other businesses matter. |
+| MiniMax | June 30 broad **$1.3228B cash balance** includes restricted cash and investments; H1 adjusted net loss **$293M**. | The roughly 27-month cash/annualized-adjusted-loss ratio is only a loose proxy. Neither numerator nor denominator equals unrestricted cash / cash burn; no runway headline uses it. |
+| Z.ai | [Issuer's August 31 interim announcement](https://cdn.financialreports.eu/financialreports/media/filings/50642/2026/RNS/50642_rns_2026-08-31_dccaa9af-2a08-44d5-84e0-53f7f75c190d.pdf) gives RMB3.994B cash, RMB0.506B short-term investments at June 30; July placement net proceeds approximately **HK$31.375B** are a later event. | A June-only liquidity ratio misses the later financing. Do not mix currencies or add proceeds without subsequent spending and restrictions. |
+| Moonshot / DeepSeek and other private labs | No comparable current unrestricted cash/burn pair verified in this review. | Current runway and owned card totals remain unavailable. Valuation, funding announcements and model size do not fill them. |
+
+Sources: Anthropic November amendment; [OpenAI financing](https://openai.com/index/accelerating-the-next-phase-ai/); [SpaceX filing](https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm); [MiniMax results](https://www.minimax.io/news/minimax-announces-first-half-2026-financial-results-1787744160). The issuer-authored Z.ai PDF is hosted by a filing archive; the [searchable reproduction](https://financialfilings.com/filings/knowledge-atlas-technology-joint-stock-company-limited/interim-quarterly-report/2026/59393106/) preserves the issuer's wording.
+
+**Economic inference:** frontier training cutbacks could depress marginal GPU rents if released compatible capacity exceeds incremental inference and other training demand. A pause need not immediately free racks: take-or-pay commitments, cancellation conditions, repayment obligations, networking, location, precision and migration costs govern when capacity reaches the market. An old Hopper spot quote, a Blackwell reservation and a powered-hall lease are different markets. The statement “training stops, therefore prices collapse” is a conditional risk, not an established forecast. Monitor actual idle capacity, contract renewals/defaults, cash payments, new deployments and same-SKU rental transactions.
+
+The same November filing helps distinguish research demand from serving costs. Note 8 reports January–September cost of revenue of $4.812B and R&D of $19.240B; the by-nature statement reports compute/infrastructure of $18.808B. These classifications overlap: R&D includes staff and internal usage as well as model development, while cost of revenue is mainly serving compute plus overhead. They are neither additive compute costs nor GPU-hour shares. Anthropic describes reallocating a common compute pool, which weakens a mechanical assumption that one finished training run immediately becomes idle market supply.
+
+## 9. How many chips trained each lab's largest models?
+
+Public evidence rarely establishes the largest-ever run, and a lab's rented access is not ownership. The site therefore distinguishes **run**, **cluster access**, **company delivery estimate** and **future commitment**:
+
+| Lab / disclosed example | What is actually known | What remains missing |
+|---|---|---|
+| Anthropic / Rainier | AWS describes [500,000+ Trainium2 chips in operational Rainier](https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Fourth-Quarter-Results/), used for Claude training. | Trainium is not a GPU; no proof all chips train one named latest model simultaneously, or are Anthropic-owned. |
+| xAI / Grok 4; Grok 4.5 | [Grok 4](https://x.ai/news/grok-4) describes RL using the 200,000-GPU Colossus cluster. [Grok 4.5](https://x.ai/news/grok-4-5) says tens of thousands of GB300 GPUs. | Precise concurrent counts, full phase allocation and current total available to Grok remain unspecified. |
+| DeepSeek / V3 historical | [Technical report](https://arxiv.org/html/2412.19437v2) describes 2,048 H800s and 2.788M GPU-hours for full training. | Not a V4/V4.1 run count or the lab's present inventory. |
+| Z.ai / inference cluster | August interim announcement reports >100,000 domestic chips for inference (R). | Not necessarily GPU cards, ownership, or the largest training run; model-level allocation is unspecified. |
+| OpenAI, Kimi K3, GLM-5.3, Qwen3.8-Max | The reviewed announcements and model material do not establish a comparable exact current largest-run chip count. | Do not infer a count from parameter size, power commitments, benchmark hardware, or a smaller historical run. |
+
+Kimi's recommendation to serve K3 on 64+ accelerator supernodes is **inference deployment advice**, not its training cluster count. GLM-5.3's added post-training is not evidence that training demand ended. Cloud-owned deliveries already appear in the site's fleet chapter; attributing those same chips to model labs as owners would duplicate them.
+
+## 10. The Dax, Chon Tang and James Rothmann counterargument
+
+The corrected sources are [Dax, October 27](https://x.com/thdxr/status/2115165365630026178), [Chon Tang, October 27](https://x.com/chontang/status/2115201354293801111), and [James Rothmann, October 28](https://x.com/JamesRothmann/status/2115382434397085959). X blocked direct retrieval; the original author posts and replies were read through [Dax's mirror](https://teapawt.net/thdxr/status/2115165365630026178), [Tang's mirror](https://teapawt.net/chontang/status/2115201354293801111), and a public FxTwitter transcription for Rothmann. This is attributed social evidence, not independently measured infrastructure.
+
+| Claim | What survives scrutiny | Limit |
+|---|---|---|
+| Dax: roughly one GB300 rack could serve OpenRouter's prior-day DeepSeek traffic; rack value $6–7M | His related [October 25 operational post](https://x.com/thdxr/status/2114176734056857916) reports 6.77T logical tokens/day on GB300 NVL72, P50 TTFT 1.16s and P50 speed 143 tok/s, with a faulty tray harming P95. | A real operator's report is useful evidence of efficient serving. It does not establish a common model/cache mix, successful-request goodput or universal latency target. Dax explicitly says he does not know worldwide DeepSeek demand. |
+| Tang: OpenRouter DeepSeek needs 5–10 racks; 10× traffic still only 50–100 | A reasonable capacity stress test for a specified router slice. | His roughly 30% token share and 90k future NVIDIA racks are claims in the post, not verified inputs here. Token share is not compute share; shipment flow is not available stock. |
+| Rothmann: all global inference on Flash would need 200 racks; an assumed 15× Opus factor implies 3,000 | The order of magnitude is possible under a deliberately favorable replacement-model scenario. | No common global token meter or auditable Opus multiplier is supplied. All applications cannot be assumed to accept Flash's quality, modalities, context, reliability and latency. |
+| Related [Chaofan Shou post](https://x.com/shoucccc/status/2115253960907133280): ~1.8T/day on 64 B300 + 64 M890P, against OpenRouter's claimed 5.2T prior day | An additional operator claim, covering five models according to his reply. | The two volumes are attributed claims with unspecified accounting; neither establishes today's whole-platform total. Do not add the hardware populations or traffic to another provider's total. |
+
+The updated InferenceX check makes the counterargument concrete. Flash GB300 result **446952** reports a **34-GPU group: 9 × 2 prefill + 16 decode**, 36.94M logical input TPS and 271,394.6 output TPS, with host-DRAM KV offload. At an assumed **500T/day, 2% output**, two whole groups per 72-GPU rack imply **214 racks at 100% reference capacity, or 305 at 70%**. These are derived packing scenarios, not observed global demand. The snapshot preserves run provenance and cache behavior; role-specific per-GPU rates must not be treated as already divided by all 34 GPUs.
+
+This is much closer to the 200-rack thought experiment than a peak-FLOP extrapolation, and should not be dismissed by merely asserting invisible enterprise demand. It still cannot prove global overcapacity: actual model/quality mix, uncached prefill, request peaks, failures, reserved headroom and current usable supply remain unknown. Conversely, optimistic infrastructure forecasts cannot treat repeated cached logical tokens as new expensive work or assume every future app exists today.
+
+At fixed workload and quality, if demand grows by G and useful throughput per GPU improves by E, required GPUs scale approximately G/E. The new sensitivity controls expose that relationship. Lower cost can expand demand, but the rebound is not a guaranteed law; financing and price-collapse conclusions require measured workloads, cash flows and market-clearing capacity. The originally referenced Zenodo paper is outside the corrected source scope and is not used in this analysis.
+
+## 11. Cross-check against tokensperday.com
+
+The [methodology](https://tokensperday.com/methodology/) separates supply, application-demand and router ledgers, uses monthly/30.44 and annual/365.25 conversions, and curates overlap fields. Its [estimate table](https://tokensperday.com/estimates/) is dated July 16 and mixes disclosed anchors with financial, user and hardware assumptions; its animated counter is modeled, not metered.
+
+Its [evidence ledger](https://tokensperday.com/data/) includes secondhand sources and approximate dates. The Google 3.2Q/month conversion of 105.13T/day differs mechanically from this site's 106.67T/day using 30 days; this is a convention difference. Its 140T/day China, 30T/day Fireworks and 2T/day Together anchors are older than this site's retained later disclosures. Microsoft's historical fiscal-year total is not a December/current daily observation. Its Anthropic 13.7–69.4T/day and xAI ranges are estimates, not independent validation of a new November estimate. Separate ledgers are useful; they do not prove remaining cross-border/provider overlap is fully netted. Do not transplant its global headline into this chart.
+
+## 12. Applied Compute and application-specific training
+
+The company and the broader activity are separate interpretations; both are covered pending scope confirmation.
+
+**Applied Compute (company):** Its [November 2 update](https://www.appliedcompute.com/company/100m-run-rate-fundraise) reports >1,700 training runs since July, >1T inference tokens/day and 40% of customers using both services. Run count is not GPU-hours or a recurring-demand retention series. Its [August 28 Kimi K3 account](https://www.appliedcompute.com/research/frontier-scale-rl-with-kimi-k3) describes memory pressure, low-precision rollout alignment, weight-transfer correctness and checkpoint I/O. The company says streaming reduced GPUs per training replica by about 40%; a 28TB checkpoint previously took 75–90 minutes to save. These are workload-specific engineering bottlenecks, not a current fleet-shortage census. [Modal’s May 20 customer account](https://modal.com/blog/applied-compute-reinforcement-learning) identifies sandbox startup, environment fidelity and parallel grading as constraints on keeping rollout GPUs busy. Modal is the supplier, so this is attributed customer evidence, not an independent utilization study.
+
+Continual improvement can create repeated post-training demand as production traces and tasks change. The [AC2 launch, August 25](https://www.appliedcompute.com/platform/introducing-ac2), describes that mechanism. Its realized persistence, training GPU-hours and capacity backlog remain unreported here; efficiency improvements and better base models can reduce compute per job. The new >1T/day disclosure is added to the token chart as its own scope, without summing it with upstream hosts or routers.
+
+**Application-oriented training generally:**
+
+There is concrete activity beyond one-off frontier pretraining. Fireworks' [August 31 Training API disclosure](https://fireworks.ai/blog/training-api-general-availability) describes custom RL and fine-tuning, including legal, clinical and developer workloads, and reports experience operating RL across **>10,000 GPUs**. Nebius' [Q3 release notes](https://nebius.com/release-notes/posts/q3-2026) add workload-specific speculative-model training. These are vendor claims and product evidence, not a market-size or utilization census.
+
+Training throughput can bottleneck on **rollout generation**, environment/tool execution, reward quality, evaluation, weight transfers, numerical alignment, network bandwidth and data/engineering readiness. Buying more GPU-hours fixes only some of these. Applied specialization and repeated retraining can create recurring demand as models and production data change. Some fine-tuning jobs are small or intermittent; LoRA, distillation and better base models can reduce their compute requirement. The sign and persistence of the aggregate effect remain unmeasured. Training and inference are also coupled in RL, so treating all generated tokens as end-user inference overstates the separation.
+
+## 13. Are China's tokens mostly video or text?
+
+**No defensible national modality split was established.** The [NDA-hosted June >500T/day claim](https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html) does not publish text/video counts or a tokenizer/meter methodology. Video generation can be compute-intensive and may be billed in seconds or model-specific units, rather than comparable LLM tokens. Text prompts for video, video-understanding input tokens and generated visual latents are different quantities.
+
+A large visual-token count is neither a percentage of national text traffic nor a proportional GPU-load share. The site retains modality as unknown for aggregates; it does not label China “mostly video” or “mostly text” based on unsupported broker decomposition.
+
+## 14. What do Chinese companies use for internal development?
+
+| Company | Verified evidence | Interpretation |
+|---|---|---|
+| Tencent | [Hy3 announcement, July 6](https://www.tencent.com/zh-hk/tencent-hunyuan-officially-releases-hy3-advancing-agent-capabilities-and-deeper-product-integration/); [Hy4 preview, August 28](https://www.tencent.com/zh-cn/tencent-releases-and-open-sources-tencent-hy4-preview/) and [CodeBuddy model-selection docs](https://cloud.tencent.com/document/product/1749/123665). | Hunyuan models are integrated into CodeBuddy/WorkBuddy; domestic tooling also supports DeepSeek. Integration/availability is not a measured internal per-model usage share. |
+| Baidu | [Comate team's June 26 account](https://cloud.baidu.com/article/7749387) describes an internal AgentShield development workflow; [security documentation](https://cloud.baidu.com/doc/COMATE/s/Lm839z700) lists hosted ERNIE and DeepSeek models. | A named internal deployment and a multi-model tool, without a company-wide per-model split. |
+| Moonshot | [Kimi K3 technical blog](https://www.kimi.com/en/blog/kimi-k3) says an early K3 handled most late-development kernel-optimization work. | A direct dogfooding disclosure for a specific task, not every developer's default model. |
+| Alibaba | [Qoder's company-issued launch](https://www.accessnewswire.com/newsroom/en/business-and-professional-services/alibaba-launches-a-large-model-trained-inside-a-coding-platform-1132940) identifies Qwen-Coder-Qoder. | Product/model relationship is verified. [Reuters reported July 3](https://www.investing.com/news/stock-market-news/alibaba-to-ban-claude-code-in-workplace-over-alleged-backdoor-risks-source-says-4775035) that employees were directed to Qoder. That does not identify internal model shares or an exclusive Qwen backend. |
+| ByteDance and remaining firms | No independently verified internal per-model allocation in the sources retained here. | Product branding, model availability and press reports do not establish an internal utilization census. |
+
+Exact model choices can vary by region, team, policy and task; the site makes these evidence levels explicit.
+
+## Integration status
+
+This public-checkout proposal adds separate research snapshots and UI code; it does not hand-edit `data/nc.js`, the raw-source projection, or the portable bundle. The full source checkout was requested so these additions can be mirrored under `neocloud/site/` and included by its release builder. See [SOURCE-INTEGRATION.md](SOURCE-INTEGRATION.md) for exact files and curation changes. Live feeds, history and the daily editorial archive remain independent.

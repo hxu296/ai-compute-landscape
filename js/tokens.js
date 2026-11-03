@@ -2,7 +2,9 @@
 (function(){
   const periods=['day','minute','week','month','quarter','year','cumulative'];
   const period=r=>r.unit.match(/^tokens per (minute|day|week|month|quarter|year)/)?.[1]||(/cumulative|total tokens/i.test(r.unit)?'cumulative':null);
-  const canonical=NC.tokens.filter(r=>r.value>0&&/^tokens/.test(r.unit)&&period(r)).map(r=>/^(Google|Google Cloud)$/.test(r.subject)&&period(r)==='minute'?{...r,subject:'Google Cloud',unit:'tokens per minute (first-party model APIs)'}:r);
+  const supplemental=window.DEMAND_RESEARCH?.supplemental_tokens||[];
+  const supplementalNative=supplemental.map(r=>({...r,unit:'tokens per '+r.period,as_of:r.observation_date||r.source_date,as_of_basis:r.observation_date?'observation':'publication; measurement day unspecified'}));
+  const canonical=[...NC.tokens,...supplementalNative].filter(r=>r.value>0&&/^tokens/.test(r.unit)&&period(r)).map(r=>/^(Google|Google Cloud)$/.test(r.subject)&&period(r)==='minute'?{...r,subject:'Google Cloud',unit:'tokens per minute (first-party model APIs)'}:r);
   const seenApi=new Set(),records=canonical.filter(r=>{if(r.subject!=='Google Cloud'||period(r)!=='minute')return true;const key=r.value+'|'+r.as_of.slice(0,7);if(seenApi.has(key))return false;seenApi.add(key);return true;});
   const tok=v=>{const u=[[1e15,'Q'],[1e12,'T'],[1e9,'B'],[1e6,'M']].find(([n])=>v>=n);return u?`${+(v/u[0]).toPrecision(4)}${u[1]}`:num(v);};
   const rangeText=r=>tok(r.value)+(r.range_high!=null?'–'+tok(r.range_high):'');
@@ -19,7 +21,7 @@
     const selected=$('#tokenPeriod').value,groups=new Map();
     records.filter(r=>period(r)===selected).forEach(r=>{const k=r.subject+' · '+r.unit;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);});
     const rows=[...groups].map(([key,rs])=>{rs.sort((a,b)=>a.as_of.localeCompare(b.as_of));return{key,first:rs[0],last:rs.at(-1)};}).sort((a,b)=>b.last.value-a.last.value);
-    const missing=(NC.token_coverage||[]).filter(r=>r.show_in_plot).map(r=>({key:r.subject+' · total unavailable',first:null,last:{...r,value:null,confidence:null,display_scope:'Comparable total unavailable'}}));
+    const missing=[...(NC.token_coverage||[]),...(window.DEMAND_RESEARCH?.unavailable_tokens||[])].filter(r=>r.show_in_plot).map(r=>({key:r.subject+' · total unavailable',first:null,last:{...r,value:null,confidence:null,display_scope:'Comparable total unavailable'}}));
     const plotted=rows.concat(missing);
     const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=22,rh=43,max=Math.max(1,...plotted.map(r=>r.last.value||0));svg.setAttribute('viewBox',`0 0 680 ${T+rh*plotted.length+40}`);
     const x=v=>L+(R-L)*v/max;
@@ -40,9 +42,9 @@
   function native(r){return relation(r)+tok(r.value)+(r.range_high!=null?'–'+tok(r.range_high):'')+' / '+(r.native_period_label||(r.window_days?r.window_days+' days':r.period));}
   const contextSources=r=>(r.supporting_disclosures||[]).map(s=>`${esc(s.source_date)}: ${esc(s.claim)} ${esc(s.treatment)} ${src(s.source_url,'Related source ↗')}`).join('<br>');
   function drawLatest(){
-    const snapshot=NC.token_snapshot,rows=TokenMath.latestByScope(snapshot.records).map(r=>({...r,comparison_group:['platform','subset','historical','aggregate'].includes(r.comparison_group)?r.comparison_group:r.status==='reported_historical'?'historical':'platform',daily:TokenMath.daily(r),daily_value:TokenMath.daily(r)?.value})).filter(r=>r.daily).sort((a,b)=>b.daily.value-a.daily.value);
+    const snapshot=NC.token_snapshot,rows=TokenMath.latestByScope([...snapshot.records,...supplemental]).map(r=>({...r,comparison_group:['platform','subset','historical','aggregate'].includes(r.comparison_group)?r.comparison_group:r.status==='reported_historical'?'historical':'platform',daily:TokenMath.daily(r),daily_value:TokenMath.daily(r)?.value})).filter(r=>r.daily).sort((a,b)=>b.daily.value-a.daily.value);
     const groups=[['platform','Platform and API disclosures'],['subset','Limited coverage'],['historical','Historical observations'],['aggregate','National aggregate'],['unavailable','Comparable total unavailable']];
-    const missing=(snapshot.unavailable||[]).filter(r=>r.show_in_plot).map(r=>({...r,daily:null,comparison_group:'unavailable'})),all=groups.flatMap(([key])=>rows.filter(r=>r.comparison_group===key).concat(missing.filter(r=>r.comparison_group===key)));
+    const missing=[...(snapshot.unavailable||[]),...(window.DEMAND_RESEARCH?.unavailable_tokens||[])].filter(r=>r.show_in_plot).map(r=>({...r,daily:null,comparison_group:'unavailable'})),all=groups.flatMap(([key])=>rows.filter(r=>r.comparison_group===key).concat(missing.filter(r=>r.comparison_group===key)));
     $('#tokenViewNote').textContent=`Evidence checked ${snapshot.reviewed_at||snapshot.checked_at}. Daily equivalents grouped by coverage. Dates differ; historical figures and narrower subsets are separate. D = converted period. Groups share one scale and are not additive.`;
     const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=28,rh=47,gh=28,used=groups.filter(([key])=>all.some(r=>r.comparison_group===key)),end=T+rh*all.length+gh*used.length,max=Math.max(1,...rows.map(r=>r.daily.high||r.daily.value));svg.setAttribute('viewBox',`0 0 680 ${end+40}`);const x=v=>L+(R-L)*v/max;
     el('text',{x:L,y:12,'font-size':11},svg).textContent='Daily equivalent · tokens/day';
