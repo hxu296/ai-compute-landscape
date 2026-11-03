@@ -31,8 +31,9 @@
     table('#tConflicts',rs,[{k:'subject',h:'Subject',f:r=>esc(r.subject||r.subjects?.join(', '))},{k:'classification',h:'Kind',f:r=>esc(conflictLabel(r))},{k:'explanation',h:'What differs'},{k:'treatment',h:'Display decision'},{k:'sources',h:'Both sources',f:r=>`<button type="button" class="source-note ${r.classification==='real_conflict'?'disputed':'context'}" data-conflict="${esc(r.id)}">Compare ${r.sources?.length||0} sources</button>`}]);
   }
   [['All','All'],['real_conflict','Conflicts'],['revision','Later evidence / source dates'],['scope_difference','Different bases']].forEach(([k,l])=>{const b=document.createElement('button');b.textContent=l;b.dataset.k=k;b.onclick=()=>{category=k;ledger();};$('#conflictCtl').appendChild(b);});ledger();
-  let selected=0;const panels=NC.spot_panels||[];
+  let selected=0;const panels=$('#spotSvg')?NC.spot_panels||[]:[];
   function draw(){
+    if(!$('#spotSvg'))return;
     $('#spotCtl').querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===selected));
     const p=panels[selected];if(!p)return;const svg=$('#spotSvg');svg.innerHTML='';svg.setAttribute('viewBox','0 0 900 290');
     const pts=p.points,x0=Date.parse(p.start),x1=Date.parse(p.end),max=Math.ceil(Math.max(...pts.map(v=>v.usd)));
@@ -43,6 +44,6 @@
     pts.forEach(v=>hover(el('circle',{cx:x(v.timestamp),cy:y(v.usd),r:3,fill:css('--s1'),'fill-opacity':.25},svg),`<b>Nebius ${esc(p.gpu)} · ${esc(p.region)}</b>${esc(v.timestamp)}<br>$${v.usd.toFixed(3)}/GPU-hour · posted spot quote<br>${src(p.url)}`));
   }
   panels.forEach((p,i)=>{const b=document.createElement('button');b.textContent=`${p.gpu} · ${p.region}`;b.onclick=()=>{selected=i;draw();};$('#spotCtl').appendChild(b);});
-  table('#tSpot',panels,[{k:'gpu',h:'Chip'},{k:'region',h:'Region'},{k:'start',h:'Start (UTC)'},{k:'end',h:'End (UTC)'},{k:'first_24h',h:'First day median',f:p=>'$'+p.first_24h.median.toFixed(2)},{k:'last_24h',h:'Last day median',f:p=>'$'+p.last_24h.median.toFixed(2)},{k:'sku',h:'Matched SKU'},{k:'url',h:'',f:p=>src(p.url)}]);
+  if($('#tSpot'))table('#tSpot',panels,[{k:'gpu',h:'Chip'},{k:'region',h:'Region'},{k:'start',h:'Start (UTC)'},{k:'end',h:'End (UTC)'},{k:'first_24h',h:'First day median',f:p=>'$'+p.first_24h.median.toFixed(2)},{k:'last_24h',h:'Last day median',f:p=>'$'+p.last_24h.median.toFixed(2)},{k:'sku',h:'Matched SKU'},{k:'url',h:'',f:p=>src(p.url)}]);
   onTheme(draw);draw();
 })();

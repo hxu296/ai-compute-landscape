@@ -366,6 +366,15 @@
       "show_in_plot": true,
       "note": "Grok is distinct from Groq. No company-wide served-token count is disclosed. Bounded estimate (E, not plotted as a disclosure): company-wide text ≈0.8 / 3.5 / 15T/day; OpenRouter floor ≈74B/day (D). See research/GROK-CHINA-TOKENS-2026-11-03.md.",
       "checked_at": "2026-11-03"
+    },
+    {
+      "subject": "OpenAI · all products (projection)",
+      "scope_id": "estimate-openai-all",
+      "display_scope": "API + ChatGPT/Codex, November 3",
+      "source_url": "https://openai.com/devday/2025/",
+      "source_date": null,
+      "show_in_plot": true,
+      "note": "Projection, not a disclosure."
     }
   ],
   "supplemental_tokens": [
@@ -543,6 +552,105 @@
       "high": 2500000000000.0,
       "basis": "Managed-inference ARR target above $250M at exit 2026 ÷ assumed $0.3–0.6 per million open-model tokens; floor ≈0.22T/day routed through a public router (October 3–9)",
       "source_url": "https://futurumgroup.com/insights/coreweave-q2-fy-2026-ai-demand-drives-pricing-and-capacity-growth/"
+    },
+    "OpenAI · all products (projection)": {
+      "central": 106800000000000.0,
+      "low": 31600000000000.0,
+      "high": 183600000000000.0,
+      "basis": "API: 15B tokens/min (March 31) projected at its own trend from 6B/min (October 6, 2025), +17.2% a month, to ≈67T/day; ChatGPT and Codex ≈40T/day (10–100T) from 2.5B prompts/day (July 2025) with assumed context and reasoning tokens. OpenAI has not said whether its tokens/min counts cached input; Anthropic’s estimate includes ~80% cache reads, so the like-for-like gap may be smaller.",
+      "source_url": "https://openai.com/devday/2025/"
     }
-  }
+  },
+  "future_accelerators": [
+    {
+      "owner": "xAI / SpaceX",
+      "gpu_type": "B300",
+      "count": 220000,
+      "status": "planned",
+      "expected": "after June 2026",
+      "category": "R",
+      "note": "Next Colossus II phase: “at least 220,000 additional GB300 processors and over 400 additional megawatts” (S-1). Added after Epoch’s Q1 2026 snapshot.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm"
+    },
+    {
+      "owner": "Nscale",
+      "gpu_type": "B300",
+      "count": 191600,
+      "status": "contracted",
+      "expected": "2026",
+      "category": "R",
+      "note": "Microsoft program of ~200,000 GB300: Texas 104k, Narvik 52k (Aker-Nscale JV), Loughton 23k, Sines 12.6k.",
+      "source_url": "https://www.nscale.com/press-releases/nscale-microsoft-2025"
+    },
+    {
+      "owner": "Nebius",
+      "gpu_type": "B300",
+      "count": 100000,
+      "status": "contracted",
+      "expected": "tranches through 2026",
+      "category": "R",
+      "note": "Microsoft contract; >100k GB300 is press-reported, the $17.4B base value is in the 6-K.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465925088312/tm2525580d1_6k.htm"
+    },
+    {
+      "owner": "IREN",
+      "gpu_type": "B300",
+      "count": 50000,
+      "status": "ordered",
+      "expected": "H2 2026",
+      "category": "R",
+      "note": "“Over 50,000” NVIDIA B300 under purchase agreements.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1878848/000114036126007905/ny20064909x3_ex99-1.htm"
+    },
+    {
+      "owner": "ByteDance / Volcano Engine",
+      "gpu_type": "B200",
+      "count": 36000,
+      "status": "planned",
+      "expected": "2026",
+      "category": "R",
+      "note": "~500 Blackwell systems with Aolani Cloud in Malaysia; secondary citation, not independently verified.",
+      "source_url": "https://en.wikipedia.org/wiki/ByteDance"
+    },
+    {
+      "owner": "Lambda",
+      "gpu_type": "NVIDIA (model not specified)",
+      "count": 30000,
+      "status": "financed",
+      "expected": "2026–2027",
+      "category": "R",
+      "note": "$1.008B term loan to buy “more than 30,000 Nvidia GPUs” (press).",
+      "source_url": "https://www.theinformation.com/briefings/lambda-secures-1-billion-gpu-loan"
+    },
+    {
+      "owner": "Firmus",
+      "gpu_type": "B300",
+      "count": 18400,
+      "status": "contracted",
+      "expected": "2026",
+      "category": "R",
+      "note": "~18,400 GB300 for an unnamed platform at the Melbourne AI Factory.",
+      "source_url": "https://w.media/firmus-secures-multi-billion-dollar-ai-contract-for-melbourne/"
+    },
+    {
+      "owner": "TensorWave",
+      "gpu_type": "AMD (model not specified)",
+      "count": 85000,
+      "status": "planned",
+      "expected": "not stated",
+      "category": "E",
+      "note": "Planned capacity at Fermi Matador; release says “tens of thousands” of AMD Instinct GPUs.",
+      "source_url": "https://www.newschannel10.com/2026/08/10/fermi-america-announces-65-billion-contract-with-tensorwave/"
+    },
+    {
+      "owner": "Vultr",
+      "gpu_type": "MI355X",
+      "count": 25000,
+      "status": "planned",
+      "expected": "2026",
+      "category": "E",
+      "note": "Ohio AMD cluster; MI355X-class assumed.",
+      "source_url": "https://en.wikipedia.org/wiki/Vultr"
+    }
+  ]
 }

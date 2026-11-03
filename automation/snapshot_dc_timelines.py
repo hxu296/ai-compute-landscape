@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Summarize Epoch AI data-center timelines by provider and year from an explicitly downloaded data_centers.zip.
+
+No network access. Usage: python automation/snapshot_dc_timelines.py --zip PATH --retrieved-utc ISO_TIMESTAMP
+"""
+import argparse, csv, hashlib, io, json, re, zipfile
+from collections import defaultdict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+# The full source keeps the site under neocloud/site; the public checkout is the site itself.
+if (ROOT/'site'/'research').is_dir():
+    ROOT = ROOT/'site'
+SOURCE = 'https://epoch.ai/data/data_centers/data_centers.zip'
+# Epoch owner -> this site's provider name. Sites without an owner are matched by name prefix.
+OWNERS = {'Oracle': 'Oracle OCI', 'Meta': 'Meta (own use)', 'Google': 'Google Cloud', 'Microsoft': 'Microsoft Azure', 'Amazon': 'AWS',
+          'SpaceXAI': 'xAI / SpaceX', 'CoreWeave': 'CoreWeave', 'Nscale': 'Nscale', 'ByteDance': 'ByteDance / Volcano Engine', 'Huawei': 'Huawei Cloud',
+          'Cipher Mining': 'Cipher Mining', 'Nebius': 'Nebius', 'Firmus': 'Firmus', 'Alibaba': 'Alibaba Cloud',
+          'Softbank': 'SoftBank (Stargate)', 'G42': 'G42 (Stargate UAE)', 'AI XPV Platform': 'AI XPV · Lake Mariner', 'Mistral AI': 'Mistral AI', 'Core42': 'Core42'}
+PREFIXES = {'DayOne': 'DayOne', 'QTS': 'QTS'}
+YEARS = [('2025', '2025-12-31'), ('2026', '2026-12-31'), ('2027', '2027-12-31'), ('2028', '2028-12-31'), ('final', '9999-12-31')]
+clean = lambda s: re.sub(r'\s*#\w+', '', s or '').strip()
+
+def level(series, day):
+    value = (0.0, 0.0)
+    for date, h100e, mw in sorted(series):
+        if date <= day:
+            value = (h100e, mw)
+    return value
+
+def build(zip_path, retrieved_utc):
+    raw = Path(zip_path).read_bytes()
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    read = lambda name: list(csv.DictReader(io.TextIOWrapper(z.open(name), encoding='utf-8')))
+    centers = {r['Name']: r for r in read('data_centers.csv')}
+    series = defaultdict(list)
+    for r in read('data_center_timelines.csv'):
+        try:
+            series[r['Data center']].append((r['Date'][:10], float(r['H100 equivalents'] or 0), float(r['Power (MW)'] or 0)))
+        except ValueError:
+            continue
+    providers = defaultdict(lambda: dict(h100e={y: 0.0 for y, _ in YEARS}, mw={y: 0.0 for y, _ in YEARS}, sites=[]))
+    for name, s in series.items():
+        owner = clean(centers.get(name, {}).get('Owner'))
+        provider = OWNERS.get(owner) or next((v for k, v in PREFIXES.items() if name.startswith(k)), None)
+        if not provider:
+            continue
+        site = dict(name=name, h100e={}, mw={})
+        for y, day in YEARS:
+            h, mw = level(s, day)
+            providers[provider]['h100e'][y] += h; providers[provider]['mw'][y] += mw
+            site['h100e'][y] = round(h); site['mw'][y] = round(mw, 1)
+        providers[provider]['sites'].append(site)
+    for p in providers.values():
+        p['h100e'] = {k: round(v) for k, v in p['h100e'].items()}; p['mw'] = {k: round(v, 1) for k, v in p['mw'].items()}
+        p['sites'].sort(key=lambda s: -s['h100e']['final'])
+    return dict(schema_version=1, source_url=SOURCE, retrieved_utc=retrieved_utc, response_sha256=hashlib.sha256(raw).hexdigest(),
+                years=[y for y, _ in YEARS], method='Epoch AI frontier data-center timelines: level at each year end from the latest dated observation or projection on or before that date; "final" is the last projected level (to 2030). Covers tracked frontier sites only, not whole fleets. Power is Epoch facility power (MW).',
+                providers=dict(sorted(providers.items(), key=lambda kv: -kv[1]['h100e']['final'])))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--zip', required=True)
+    parser.add_argument('--retrieved-utc', required=True)
+    args = parser.parse_args()
+    (ROOT/'research/dc-timelines.json').write_text(json.dumps(build(args.zip, args.retrieved_utc), ensure_ascii=False, indent=2)+'\n')
+    print('Wrote research/dc-timelines.json')
