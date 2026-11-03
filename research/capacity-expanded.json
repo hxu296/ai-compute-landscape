@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "retrieved_utc": "2026-11-03T23:16:18+00:00",
+  "retrieved_utc": "2026-11-03T23:18:53+00:00",
   "method": "One run per model: across GB200 and GB300 NVL72, the AgentX run with the highest output tokens/s per physical GPU above 50 tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.",
   "api_contract_url": "https://inferencex.semianalysis.com/api",
   "query_manifest": {
