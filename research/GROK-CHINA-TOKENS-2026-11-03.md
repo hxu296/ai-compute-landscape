@@ -14,7 +14,7 @@ No repository was edited. Downloaded pages were saved to /tmp/q03dl and /tmp/q03
 - **Consumer Grok text (E), covering grok.com, apps, X, Grok Bot, Tesla and Telegram:** **0.4 / 2 / 10 T/day**.
 - **Company-wide Grok text inference (E):** **0.8 / 3.5 / 15 T/day**. This is API plus consumer. The two scopes don't overlap, so they can be added. It excludes Imagine image/video generation, training and synthetic data, and internal X ranking workloads.
 - **Imagine generation volume (R):** about 2B videos and 10B images per month in Q1 2026. These are not LLM tokens and are kept separate. If they were counted with ByteDance's video-token formula, they would equal **~4–12 T/day "video tokens"** (E). That would be larger than all Grok text, so it must never be added to the text figures.
-- **Cross-check:** tokensperday.com estimates xAI at 0.1–7.5T/day (~0.9T midpoint, July 2026). Our central company-wide figure is ~3.5T in Nov 2026. The difference comes from Grok Bot's Sept–Oct ramp and 4.6/4.7 agentic usage.
+- **Cross-check:** tokensperday.com estimates xAI at 0.1–7.5T/day (~0.9T midpoint, July 2026). Our central company-wide figure is ~3.5T in Nov 2026. Most of the difference comes from our assumed chat volumes; Grok Bot's Sept–Oct ramp adds about 0.9T/day centrally. Low and high company totals add low-to-low and high-to-high, so they are bounds, not a likely range.
 
 ### Reported inputs (R)
 | # | Item | Value | Source, date, quote/paraphrase |
@@ -74,7 +74,7 @@ No repository was edited. Downloaded pages were saved to /tmp/q03dl and /tmp/q03
 ### Bottom line
 - **No official modality split exists.** The NDA (National Data Administration) figure (>500T/day, June 2026), CAICT (~175T/day "core", June 2026), Volcano Engine (Doubao 180T/day, June 2026) and IDC 2025 give no text/video breakdown.
 - **Video tokens are countable.** Volcano Engine bills Seedance video as (input + output seconds) × width × height × fps / 1024. At 720p/24fps that is **~21,600 tokens per second of video**, or ~1 RMB/s at the 46 RMB/M list price.
-- **Estimate (E):** video generation is about **0.3% / 1.6% / 8%** (low / central / high) of China's ~500T/day, which is **~1.7 / 8 / 40 T/day**. Within Doubao specifically, it is **~0.7% / 3.5% / 19%** of 180T.
+- **Estimate (E):** video generation is about **0.3% / 1.6% / 8%** (low / central / high) of China's ~500T/day, which is **~1.7 / 8 / 40 T/day**. Within Doubao specifically, it is **~0.7% / 3.4% / 19%** of 180T.
 - **Answer:** China's tokens are **mostly text-output LLM and agent tokens**, including multimodal *understanding* inputs. I have high confidence that video generation is under 25% of the national figure, and moderate confidence that it is under 5%.
 - **Contrary claims:** Two secondary claims point the other way and are flagged below. One says ">50% of Doubao tokens from Seedance+Seedream" (unverified). The other says "multimodal has replaced pure text as the main token consumer" (qualitative, and it includes understanding inputs).
 
@@ -111,13 +111,14 @@ No repository was edited. Downloaded pages were saved to /tmp/q03dl and /tmp/q03
 - **Rules of thumb:** 1 minute of 720p video ≈ **1.3M tokens**. A 15 s clip ≈ 0.31–0.32M tokens.
 - **Cost per video token:** list price 46 RMB/M × (1 − 70% gross margin, C14) ≈ **13.8 RMB cost per M video tokens**. That is roughly 10–50x a text token's price.
 - **Kling revenue:** 8.5亿 / 91 days ≈ **934万 RMB/day** (Q2 2026).
-- **The >50% claim implies:** ≥90T video+image tokens/day. At 13.8 RMB/M that would cost ≈ 12.4亿 RMB/day, or **~4,500亿 RMB/year**. That is more than 2x ByteDance's entire reported 2026 capex (C18).
+- **The >50% claim implies (volume check):** ≥90T video+image tokens/day ÷ 21,600 tokens per 720p second ≈ 4.2B seconds/day ≈ **0.8B five-second clips/day**, about 4 per Doubao app DAU (>2亿, C15) and >10× xAI Imagine's ≈67M videos/day (C19). This is the main reason to doubt the claim.
+- **Cost check (weaker, price-dependent):** at the Seedance 2.0 rate with a rumoured 70% margin (13.8 RMB/M) it would cost ~4,500亿 RMB/year, but at the 1.0-pro-fast list price (4.2 RMB/M) with the same margin (≈1.26 RMB/M cost) about 410亿 RMB/year, within ByteDance's capex (C18). Cost alone does not rule it out.
 
 ### Estimates (E)
 1. **Paid Seedance API.** Assume revenue of 4亿 / 7亿 / 10亿 RMB per month. The top of that range matches the rumor that Tan Dai called too high. Assume an effective price of 46 / 35 / 20 RMB per M tokens (list price, fast/mini variants, discounts). Result: **0.29 / 0.67 / 1.67 T/day**.
 2. **ByteDance consumer and internal video generation** (Doubao app, 即梦, 剪映/CapCut, Douyin). There is no disclosure. Using the xAI analog of ~67M videos/day (C19), assume 20 / 60 / 150M videos/day × 5 / 6 / 10 s × 10,044 / 15,000 / 21,600 tokens/s. Result: **1.0 / 5.4 / 32 T/day**.
    - Cost check at 13.8 RMB/M: the central case costs ~300亿 RMB/year, which is plausible. The high case costs ~1,700亿/year, close to ByteDance's whole capex, so it works as a ceiling.
-3. **Doubao video total** (1 + 2): **~1.3 / 6 / 34 T/day**, which is **0.7% / 3.5% / 19%** of 180T.
+3. **Doubao video total** (1 + 2): **~1.3 / 6 / 34 T/day**, which is **0.7% / 3.4% / 19%** of 180T.
 4. **Kling.** 934万 RMB/day ÷ 1.3 / 0.5 / 0.2 RMB per second → × 21,600 / 21,600 / 48,600 tokens/s. Result: **0.16 / 0.4 / 2.3 T/day** equivalent from paid usage. Allowing for free-tier usage gives **~0.15 / 0.8 / 2.5**.
 5. **Others** (MiniMax Hailuo, Alibaba Wan, Shengshu Vidu, Tencent Hunyuan): **0.2 / 1 / 4 T/day** (E, by analogy to Kling's scale). No disclosures.
 6. **China video-generation total:** **~1.7 / 8 / 40 T/day**.
