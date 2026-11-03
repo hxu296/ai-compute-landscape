@@ -37,3 +37,7 @@ Visually inspected captures: [capacity desktop](capacity-1600.png), [capacity mo
 ## Contributor response
 
 Reply in the review-matrix thread with R1–R6 dispositions, the updated PR head and source-integration commit/owner. For each Q-id, distinguish reviewed evidence, accepted/unresolved gaps and UI status. Keep the PR draft until the outstanding review items are resolved.
+
+## Follow-up source checks
+
+The [November 3 follow-up](FOLLOWUP-2026-11-03.md) resolves the national-source access issue and updates Q03/Q12/Q14 outcomes. It also checks attribution of two social posts. R1–R6 remain open; the earlier observations and browser failure refer to the same unchanged PR head.
