@@ -23,6 +23,14 @@ MODELS = [
     ('Qwen3.8-Flash-Next', 'Qwen3.8-Flash-Next', {'qwen3.8next'}),
 ]
 HARDWARE = {'gb200': 'GB200 NVL72', 'gb300': 'GB300 NVL72'}
+# Architecture notes from each model's published Hugging Face config.json (estimates of active FFN parameters, not profiles).
+ARCH = {
+    'DeepSeek-V4-Pro': '61 layers; 6 of 384 routed experts + 1 shared (≈28B active FFN parameters of ≈1.55T). KV is compressed 4× or 128× along the sequence and each token attends to its top 1,024 entries plus a 128-token window, so decode cost barely grows with context.',
+    'DeepSeek-V4.1-Flash': '40 layers; 6 of 384 experts + 1 shared (≈10B active FFN parameters of ≈0.54T) with the same compressed, sparse attention as V4-Pro: the cheapest model per token here.',
+    'GLM-5.2': '78 layers; 8 of 256 experts + 1 shared (≈25B active of ≈0.72T). Sparse attention reads the top 2,048 positions, but full MLA KV is stored for every layer, so long contexts use more memory per sequence than DeepSeek.',
+    'Kimi K3': 'Why so many racks: ≈4.5× DeepSeek V4-Pro’s compute per token and far more KV traffic. 93 layers activate 16 of 896 experts (3,584 wide) + 2 shared, ≈128B active FFN parameters of ≈6.3T. Its hybrid “Kimi Linear” attention keeps 24 full-attention MLA layers, which read the whole ~136k-token context every decode step (≈1.9GB per sequence at fp8, vs ≈0.2GB for V4-Pro’s sparse attention). Fewer sequences fit per GPU (≈6 vs ≈41 at ~55 tok/s/user), and speed falls below 50 tok/s/user beyond 240 concurrent requests.',
+    'Qwen3.8-Flash-Next': '48 layers; 10 of 512 small experts + 1 shared (≈2.6B active), linear attention in 3 of every 4 layers. A small model; its best NVL72 run is a single GPU at 16 concurrent requests, so this row reflects that run’s limits more than the architecture.',
+}
 MIN_TOK_S_USER = 50
 # Physical topology of each selected run, read from its InferenceX Actions job name.
 TOPOLOGY = {
@@ -96,7 +104,7 @@ def build(cache, retrieved_utc):
                      run_url=row['run_url'], api_url=manifests[query]['api_url'],
                      mean_input_tokens=m.get('mean_input_tokens'), mean_output_tokens_actual=m.get('mean_output_tokens_actual'),
                      gpu_cache_hit_rate=m.get('server_gpu_cache_hit_rate'), external_cache_hit_rate=m.get('server_external_cache_hit_rate'),
-                     offload_mode=row.get('offload_mode'), kv_offloading=m.get('kv_offloading'), physical_count_note='Job topology: '+TOPOLOGY[result_id]+'.', raw_row=row))
+                     offload_mode=row.get('offload_mode'), kv_offloading=m.get('kv_offloading'), physical_count_note='Job topology: '+TOPOLOGY[result_id]+'.', architecture_note=ARCH.get(label), raw_row=row))
     return dict(schema_version=1, retrieved_utc=retrieved.astimezone(dt.timezone.utc).isoformat(),
                 method=f'One run per model: across GB200 and GB300 NVL72, the AgentX run with the highest output tokens/s per physical GPU above {MIN_TOK_S_USER} tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.',
                 api_contract_url='https://inferencex.semianalysis.com/api', query_manifest=manifests,
