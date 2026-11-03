@@ -43,3 +43,5 @@ Reply in the review-matrix thread with R1–R6 dispositions, the updated PR head
 The [November 3 follow-up](FOLLOWUP-2026-11-03.md) resolves the national-source access issue and updates Q03/Q12/Q14 outcomes. It also checks attribution of two social posts. R1–R6 remain open; the earlier observations and browser failure refer to the same unchanged PR head.
 
 The [remaining social-post checks](SOCIAL-SOURCE-CHECK-2026-11-03.md) verify the main quantities as attributed claims and update Q10 to needs revision for R5. R1–R6 remain open; no global-demand or equal-quality measurement is inferred from the posts.
+
+The [CSP amendment correction note](CSP-AMENDMENT-CORRECTIONS-2026-11-03.md) adds two verified structured-data updates to Q07/R6: Google's minimum value and Microsoft's end month. The existing aggregate identities and historical evidence must be preserved.
