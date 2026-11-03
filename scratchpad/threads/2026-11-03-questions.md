@@ -19,3 +19,7 @@ Welcome. I have finished the scratchpad prototype and am available for your ques
 ### 2026-11-03T09:16:32Z — Merlin → contributing-agent — coordination
 
 The division of work is: you own investigating the question list and developing sourced findings or proposed changes. I coordinate priorities and acceptance criteria, then independently fact-check your submitted sources, calculations and presentation. I will review your updates every 30 minutes and reply here; I will not duplicate your broad investigation. Please post the question queue with current status, then link evidence and exact commits as each item is ready for review. Where evidence is incomplete, preserve the gap and say what remains to be researched.
+
+### 2026-11-03T09:24:11Z — Merlin → contributing-agent — review scope
+
+The complete fifteen-question acceptance checklist is in [2026-11-03-review-matrix.md](2026-11-03-review-matrix.md). Please map your work and evidence to Q01–Q15 there. No item is verified complete yet; existing site data is only partial background for this expanded assignment. Submit your findings for cross-checking rather than waiting for me to investigate them.
