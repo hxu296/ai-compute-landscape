@@ -2,26 +2,27 @@
 (function(){
   const legacy=NC.capacity,expanded=window.RESEARCH_CAPACITY;
   if(!legacy||!expanded)return;
-  const old=legacy.points.map(p=>({...p,hardware_label:'GB200 NVL72',gpus_per_rack:72,physical_count_note:p.role_note||p.cache_note||'Physical allocated count retained from the audited snapshot.'}));
-  const points=[...expanded.points,...old],byId=new Map(points.map(p=>[p.result_id,p]));
+  // Only measured GB200/GB300 NVL72 runs; each is the highest output-throughput run per GPU above the speed floor.
+  const points=expanded.points,byId=new Map(points.map(p=>[p.result_id,p]));
   const fmt=n=>Math.round(n).toLocaleString('en-US'),tri=n=>(n/1e12).toLocaleString('en-US',{maximumFractionDigits:3})+'T';
-  const mainIds=[...expanded.points.map(p=>p.result_id),legacy.default_points.pro,legacy.default_points.flash];
+  const mainIds=points.map(p=>p.result_id);
   const label=p=>`${p.model.replace('DeepSeek-','')} · ${p.hardware_label} · ${p.interactivity_p90_tok_s_user.toFixed(1)} tok/s/user`;
   for(const id of ['capacityPro','capacityFlash']){
     for(const p of points){const option=document.createElement('option');option.value=p.result_id;option.textContent=label(p);$('#'+id).appendChild(option);}
   }
-  $('#capacityPro').value='446952';$('#capacityFlash').value='446062';
+  const pick=(model,hardware)=>points.find(p=>p.model===model&&p.hardware===hardware)?.result_id;
+  $('#capacityPro').value=pick('DeepSeek-V4-Pro','gb300')||points[0].result_id;$('#capacityFlash').value=pick('DeepSeek-V4.1-Flash','gb300')||points[0].result_id;
   legacy.presets.forEach((p,i)=>{const option=document.createElement('option');option.value=i;option.textContent=p.label;$('#capacityPreset').appendChild(option);});
   function draw(){
-    const volume=$('#capacityVolume').valueAsNumber,q=$('#capacityOutput').valueAsNumber/100,h=$('#capacityCache').valueAsNumber/100,u=$('#capacityUse').valueAsNumber/100,sxm=$('#capacitySxmGpus').valueAsNumber;
+    const volume=$('#capacityVolume').valueAsNumber,q=$('#capacityOutput').valueAsNumber/100,h=$('#capacityCache').valueAsNumber/100,u=$('#capacityUse').valueAsNumber/100;
     const cost=$('#capacityCost').valueAsNumber,power=$('#capacityPower').valueAsNumber;
-    const valid=Number.isFinite(volume)&&volume>0&&volume<=1e7&&Number.isInteger(sxm)&&sxm>=8&&sxm<=72&&sxm%8===0&&Number.isFinite(cost)&&cost>=0&&Number.isFinite(power)&&power>=0;
+    const valid=Number.isFinite(volume)&&volume>0&&volume<=1e7&&Number.isFinite(cost)&&cost>=0&&Number.isFinite(power)&&power>=0;
     $('#capacityError').hidden=valid;$('#capacityCopy').disabled=!valid;$('#capacityResults').hidden=!valid;
     if(!valid){$('#capacityPacking').textContent='';$('#capacityProfiles').textContent='';$('#capacityScenario').value='';return;}
     $('#capacityOutputValue').textContent=(q*100).toFixed(1)+'%';$('#capacityCacheValue').textContent=(h*100).toFixed(1)+'%';$('#capacityUseValue').textContent=fmt(u*100)+'%';
     const options={tokensPerDay:volume*1e12,outputShare:q,cacheHit:h,usableCapacity:u};
     const calculate=p=>{
-      const rackGpus=p.hardware==='gb200'||p.hardware==='gb300'?72:sxm;
+      const rackGpus=72;
       if(p.total_allocated_gpus>rackGpus)return{p,r:null,rackGpus};
       const r=CapacityMath.estimate(p,{...options,costPerGpuHour:p.hardware==='gb200'?cost:0,powerKwPerGpu:p.hardware==='gb200'?power:0},{gpus_per_rack:rackGpus});
       if(p.hardware!=='gb200'){r.annualCost=null;r.powerMw=null;}
@@ -30,22 +31,22 @@
     const rows=[$('#capacityPro').value,$('#capacityFlash').value].map(id=>calculate(byId.get(id))),all=mainIds.map(id=>calculate(byId.get(id)));
     const max=Math.max(1,...rows.map(({r})=>r?.racks||0));
     $('#capacityBars').innerHTML=rows.map(({p,r},i)=>`<div class="capacity-bar-row"><b>${esc(p.model.replace('DeepSeek-',''))}<br><span class="small">${esc(p.hardware_label)}</span></b><div class="capacity-bar-track"><div class="capacity-bar-fill" style="width:${100*(r?.racks||0)/max}%;background:var(--s${i?3:1})"></div></div><strong>${r?fmt(r.racks)+' racks':'Group does not fit'}</strong></div>`).join('');
-    $('#capacitySummary').textContent=`At ${tri(options.tokensPerDay)} logical tokens/day, ${(q*100).toFixed(1)}% output and ${fmt(u*100)}% reference capacity. NVL72 uses 72 GPUs/rack; SXM rows assume ${sxm} GPUs/rack. These are conditional model/hardware scenarios, not equal-quality alternatives or measured facilities.`;
+    $('#capacitySummary').textContent=`At ${tri(options.tokensPerDay)} logical tokens/day, ${(q*100).toFixed(1)}% output and ${fmt(u*100)}% reference capacity. Every rack is a physical 72-GPU NVL72. These are conditional model/hardware scenarios, not equal-quality alternatives or measured facilities.`;
     const comparisons=[...all];for(const row of rows)if(!comparisons.some(x=>x.p.result_id===row.p.result_id))comparisons.push(row);
-    const exportRows=comparisons.map(({p,r,rackGpus})=>({model:p.model,hardware:p.hardware_label,result_id:p.result_id,source_url:p.run_url,date_api:p.date_api,p90_tok_s_user:p.interactivity_p90_tok_s_user,physical_gpus_per_group:p.total_allocated_gpus,input_tps:p.input_tps,output_tps:p.output_tps,gpus_per_rack:rackGpus,rack_basis:/NVL72/.test(p.hardware_label)?'physical NVL72 count':'user-assumed SXM packing',rack_estimate:r?.racks??null,physical_gpu_estimate:r?.physicalGpus??null,limiting:r?.limiting??'Group larger than rack; increase assumed rack size',...options}));
+    const exportRows=comparisons.map(({p,r,rackGpus})=>({model:p.model,hardware:p.hardware_label,result_id:p.result_id,source_url:p.run_url,date_api:p.date_api,p90_tok_s_user:p.interactivity_p90_tok_s_user,physical_gpus_per_group:p.total_allocated_gpus,input_tps:p.input_tps,output_tps:p.output_tps,gpus_per_rack:rackGpus,rack_basis:'physical NVL72 count',rack_estimate:r?.racks??null,physical_gpu_estimate:r?.physicalGpus??null,limiting:r?.limiting??'Group larger than rack; increase assumed rack size',...options}));
     table('#capacityComparison',exportRows,[{k:'model',h:'Model / hardware',f:r=>`<b>${esc(r.model)}</b><br>${esc(r.hardware)}<br>${src(r.source_url,'Result '+r.result_id+' ↗')}`},{k:'p90_tok_s_user',h:'Measured operating point',f:r=>`${r.p90_tok_s_user.toFixed(1)} tok/s/user<br>${r.physical_gpus_per_group} GPUs/group<br><span class="small">API date ${esc(r.date_api)}</span>`},{k:'rack_estimate',h:'Scenario racks',f:r=>r.rack_estimate==null?'Group does not fit':`<b>${fmt(r.rack_estimate)}</b><br>${r.gpus_per_rack} GPUs/rack<br><span class="small">${esc(r.rack_basis)}</span>`},{k:'physical_gpu_estimate',h:'Physical GPUs',f:r=>r.physical_gpu_estimate==null?'Unavailable':fmt(r.physical_gpu_estimate)},{k:'limiting',h:'Scale set by',f:r=>esc(r.limiting)}]);
     $('#capacityPacking').innerHTML=rows.map(({p,r,rackGpus})=>`<p><b>${esc(p.model)} · ${esc(p.hardware_label)}:</b> ${r?`${r.groupsPerRack} × ${p.total_allocated_gpus}-GPU groups per rack; ${r.packedGpusPerRack} allocated + ${r.spareGpusPerRack} spare slots. Group rates: ${fmt(p.input_tps)} logical input and ${fmt(p.output_tps)} output tokens/s. Continuous equivalent: ${r.continuousRackEquivalents.toFixed(1)} racks.`:`The ${p.total_allocated_gpus}-GPU group does not fit the assumed ${rackGpus}-GPU rack.`} ${esc(p.physical_count_note)} ${p.count_evidence_url?src(p.count_evidence_url,'Count evidence ↗'):''}</p>`).join('');
     const mix=rows.find(x=>x.r)?.r;
     $('#capacityMix').innerHTML=mix?`<div class="capacity-mix-bar" aria-label="Logical token composition"><span style="width:${100*(1-q)*h}%;background:var(--s4)"></span><span style="width:${100*(1-q)*(1-h)}%;background:var(--s1)"></span><span style="width:${100*q}%;background:var(--s3)"></span></div><div class="legend"><span><i style="background:var(--s4)"></i>${tri(mix.cachedInput)} cached input/day</span><span><i style="background:var(--s1)"></i>${tri(mix.freshInput)} fresh input/day</span><span><i style="background:var(--s3)"></i>${tri(mix.output)} output/day</span></div>`:'';
     const pct=v=>v==null?'not supplied':(v*100).toFixed(1)+'%';
     $('#capacityProfiles').innerHTML=rows.map(({p})=>`<p><b>${esc(p.model)} ${p.result_id}:</b> ${esc(p.framework)} · source precision ${esc(p.precision)} · concurrency ${fmt(p.concurrency)}. Mean logical input ${fmt(p.mean_input_tokens)}; mean output ${fmt(p.mean_output_tokens_actual)} tokens. Reported GPU cache ${pct(p.gpu_cache_hit_rate)}; external cache ${pct(p.external_cache_hit_rate)} (not additive). KV offload: ${esc(p.kv_offloading)}. ${src(p.api_url||legacy.api_urls[p.model],'Raw API ↗')}</p>`).join('');
-    const ownershipRows=[legacy.default_points.pro,legacy.default_points.flash].map(id=>{const {p,r}=calculate(byId.get(id));return{model:p.model,racks:r.racks,physical_gpus:r.physicalGpus,annual_cost_usd:r.annualCost,power_mw:r.powerMw,source_url:p.run_url,cost_per_gpu_hour:cost,power_kw_per_gpu:power};});
+    const ownershipRows=['DeepSeek-V4-Pro','DeepSeek-V4.1-Flash'].map(model=>pick(model,'gb200')).filter(Boolean).map(id=>{const {p,r}=calculate(byId.get(id));return{model:p.model,racks:r.racks,physical_gpus:r.physicalGpus,annual_cost_usd:r.annualCost,power_mw:r.powerMw,source_url:p.run_url,cost_per_gpu_hour:cost,power_kw_per_gpu:power};});
     table('#capacityOwnership',ownershipRows,[{k:'model',h:'GB200 reference'},{k:'racks',h:'Racks',f:r=>fmt(r.racks)},{k:'annual_cost_usd',h:'Annual ownership scenario',f:r=>'$'+(r.annual_cost_usd/1e9).toFixed(2)+'B'},{k:'power_mw',h:'All-in power scenario',f:r=>r.power_mw.toFixed(1)+' MW'}]);
-    $('#capacityScenario').value=JSON.stringify({assumptions:options,sxmGpusPerRack:sxm,results:exportRows,gb200OnlyOwnershipResults:ownershipRows,gb200OnlyOwnershipAssumptions:{costPerGpuHour:cost,powerKwPerGpu:power},method:expanded.method},null,2);
+    $('#capacityScenario').value=JSON.stringify({assumptions:options,results:exportRows,gb200OnlyOwnershipResults:ownershipRows,gb200OnlyOwnershipAssumptions:{costPerGpuHour:cost,powerKwPerGpu:power},method:expanded.method},null,2);
   }
   $('#capacityPreset').onchange=()=>{const p=legacy.presets[+$('#capacityPreset').value];if(p.value!=null)$('#capacityVolume').value=p.value;$('#capacityBoundary').innerHTML=esc(p.note)+(p.source_url?' '+src(p.source_url,'Dated disclosure ↗'):'');draw();};
   $('#capacityVolume').addEventListener('input',()=>{$('#capacityPreset').value=legacy.presets.length-1;$('#capacityBoundary').textContent=legacy.presets.at(-1).note;draw();});
-  for(const id of ['capacityOutput','capacityCache','capacityUse','capacityCost','capacityPower','capacityPro','capacityFlash','capacitySxmGpus'])$('#'+id).addEventListener('input',draw);
+  for(const id of ['capacityOutput','capacityCache','capacityUse','capacityCost','capacityPower','capacityPro','capacityFlash'])$('#'+id).addEventListener('input',draw);
   $('#capacityCopy').onclick=async()=>{try{await navigator.clipboard.writeText($('#capacityScenario').value);$('#capacityCopy').textContent='Copied';}catch{$('#capacityScenario').hidden=false;$('#capacityScenario').select();$('#capacityCopy').textContent='Select and copy the scenario below';}};
   $('#capacityPreset').onchange();
 })();
