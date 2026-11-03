@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def package(root,out):
     if out.exists():shutil.rmtree(out)
     out.mkdir(parents=True)
-    for name in ['index.html','style.css','AUDIT.md','README.md','.nojekyll']:
+    for name in ['index.html','style.css','AUDIT.md','README.md','AGENTS.md','ONBOARDING.md','.nojekyll']:
         if (root/name).exists():shutil.copy2(root/name,out/name)
     for name in ['js','data','fonts','research']:shutil.copytree(root/name,out/name)
     (out/'automation').mkdir()

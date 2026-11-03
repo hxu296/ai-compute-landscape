@@ -4,6 +4,8 @@ An interactive page on who supplies AI compute: hyperscalers (AWS, Microsoft Azu
 
 **Live page:** https://hxu296.github.io/ai-compute-landscape/
 
+**New maintainer or agent?** Start with [ONBOARDING.md](ONBOARDING.md) for setup, source curation, verification, publication and a ready-to-copy starter prompt. [AGENTS.md](AGENTS.md) is the short entry point.
+
 It covers:
 
 - fleet sizes, by chip designer;
@@ -39,7 +41,7 @@ The inference calculator uses raw SemiAnalysis InferenceX serving-group rates, n
 
 ## Files
 
-- `index.html`, `style.css`, `js/`: the page. It is plain JavaScript with no build step, and it also works opened from disk.
+- `index.html`, `style.css`, `js/`: the page. It is plain JavaScript and can be viewed without transpilation, including from disk. Dataset generation and release packaging are described in the onboarding guide.
 - `data/nc.js`: the presentation dataset behind the page.
 - `data/{providers,contracts,prices}.csv`: sourced exports; each table can also download its shown rows.
 - `research/`: comparison with existing surveys, evidence updates and remaining gaps.
