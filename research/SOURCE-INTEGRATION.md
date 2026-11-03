@@ -1,5 +1,7 @@
 # Full-source integration for the demand review
 
+**Status, November 3: integrated.** The UI, research snapshots, `build_research.py`/`snapshot_capacity.py`, tests and README text are mirrored into the full source and shipped by its bundle. The November 2 S-1/A contract corrections are applied through source overrides without rewriting raw rows. The original handoff below is retained for reference.
+
 This is a public-checkout proposal based on `ab04651`. The complete research checkout was not available during implementation. The existing generated `data/nc.js`, CSV exports and portable root HTML were not hand-edited. Merge this change into the full source before the next curated release so the feature is not overwritten.
 
 ## Changes to carry into the source

@@ -18,9 +18,17 @@ Anthropic's November amendment says CSP marketplaces account for **44% of Januar
 
 ## 3. Grok token usage
 
-No company-wide served-token count was found in the reviewed [SpaceX September 30 filing](https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm) or [Grok 4.5 announcement](https://x.ai/news/grok-4-5). Grok is xAI/SpaceX's model; **Groq is a separate inference company**. Users, subscription revenue, training tokens and rate limits cannot establish serving volume.
+**Answer: no primary absolute disclosure exists; the bounded estimate is about 0.8 / 3.5 / 15T text tokens/day (low / central / high, E) company-wide in November.** xAI, SpaceX and Musk have published no tokens/day figure. The reviewed sources are the [SpaceX September 30 filing](https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm), the S-1, the Q3 call and the [Grok 4.5 announcement](https://x.ai/news/grok-4-5). Grok is xAI/SpaceX's model; **Groq is a separate inference company**.
 
-[tokensperday.com's estimate](https://tokensperday.com/estimates/) puts xAI at 0.1–7.5T/day around a 0.9T midpoint, driven by assumed messages and tokens/message. This is that site's model, not a company disclosure, and is too uncertain and stale to relabel as November observed traffic. Router-specific Grok tokens would be a lower-coverage observation and would overlap the serving provider.
+| Scope | Value | Basis |
+|---|---|---|
+| OpenRouter, all xAI models | ≈521B tokens in the week from October 27, or **≈74B/day (D)**, about 0.27% of OpenRouter traffic | Router floor only. It overlaps xAI's own API meter and must not be added to it. |
+| xAI API, all channels | **0.4 / 1.5 / 5T/day (E)** | Two methods: the router share of API traffic, and API revenue ÷ blended price (Grok 4.7: $2 input, $6 output, $0.50 cache read per million). Bedrock, Azure and Google host Grok without published volumes. |
+| Consumer text (grok.com, apps, X, Grok Bot) | **0.4 / 2 / 10T/day (E)** | 117M Grok MAU and 1.9M SuperGrok subscribers (S-1, March 31), Grok Bot 800k paid weekly users (October 20 call), × assumed messages and tokens per message. |
+| Company-wide text inference | **0.8 / 3.5 / 15T/day (E)** | API + consumer, which are disjoint scopes. Excludes training, synthetic data and internal X ranking. |
+| Imagine image/video | ≈2B videos and 10B images per month in Q1 (R) | Not LLM tokens. At ByteDance's video-token rate this would be ~4–12T/day of “video tokens” (E); it is shown separately and never added to text. |
+
+[tokensperday.com](https://tokensperday.com/estimates/) puts xAI at 0.1–7.5T/day (~0.9T midpoint, July). The higher November central value reflects the September–October Grok Bot and agentic ramp. Inputs, sources and arithmetic are in [GROK-CHINA-TOKENS-2026-11-03.md](GROK-CHINA-TOKENS-2026-11-03.md). The site keeps Grok out of the reported-token chart because none of these values is a disclosure.
 
 ## 4. Do neoclouds sell tokens themselves?
 
@@ -69,6 +77,10 @@ There is no matched H100 DeepSeek-V4-Pro AgentX observation in this retrieval. I
 
 ## 8. Lab runways and a possible GPU price collapse
 
+**Answer.** A 15-lab census with owned, rented and committed counts is in [LAB-CENSUS-2026-11-03.md](LAB-CENSUS-2026-11-03.md) (cutoff November 3). The binding constraint on the frontier labs is commitments, not cash on hand. Anthropic holds $131.845B of liquidity and had +$6.569B operating cash flow over nine months. Against that, the [S-1/A](https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm) reports **≈$895.4B of aggregate committed spend**, substantially all compute and infrastructure: ≈$447.5B before 2031 and ≈$69.8B due within 12 months. Its capacity is rented or committed rather than owned. xAI owns its fleet (Colossus ≈100k H100 first cluster; Colossus II 110k GB200 + 110k GB300) but rents much of it out: one SI customer was 34.5% of SpaceX's Q3 revenue.
+
+**Training-pause effect, conditional.** E: about 65–75% of Anthropic's compute spend is research, training or internal use rather than customer serving. Because pools are fungible and commitments are take-or-pay, a pause first re-routes compute to inference. Only capacity that is actually sublet reaches the market. The 2026 evidence runs against a collapse so far: every rental index rose from December 2025 to November (H100 $2.96 on Silicon Data, November 3; $3.38 on Ornn, November 2; B200 $6.54–9.41). The largest released capacity came from a frontier lab, xAI (Colossus 1 to Anthropic; GB300 to Reflection at ≈$150M/month), and was absorbed at rising prices. The pattern of neolabs subleasing exists (SF Compute's origin and resale market, Poolside's ended CoreWeave contract, Mistral capacity shared with Microsoft, founder anecdotes), but no sourced 2025–2026 resale was found for Inflection, Adept, Reka, SSI, Thinking Machines or similar labs. The oversupply episode in the indices ran from mid-2024 to late 2025.
+
 | Entity | Reviewed liquidity / financing evidence | Defensible conclusion |
 |---|---|---|
 | Anthropic | November amendment: **$131.845B** cash/equivalents/short investments at September 30; **+$6.569B** operating cash flow over nine months; equipment purchases and lease prepayments are separate. | An accounting net loss is not cash burn. A fixed-burn runway is a stress scenario, not a measured exhaustion date. At assumed $5B/$10B monthly net outflow, this pool would last about 26.4/13.2 months before reserves, commitments and financing changes. |
@@ -85,6 +97,14 @@ Sources: Anthropic November amendment; [OpenAI financing](https://openai.com/ind
 The same November filing helps distinguish research demand from serving costs. Note 8 reports January–September cost of revenue of $4.812B and R&D of $19.240B; the by-nature statement reports compute/infrastructure of $18.808B. These classifications overlap: R&D includes staff and internal usage as well as model development, while cost of revenue is mainly serving compute plus overhead. They are neither additive compute costs nor GPU-hour shares. Anthropic describes reallocating a common compute pool, which weakens a mechanical assumption that one finished training run immediately becomes idle market supply.
 
 ## 9. How many chips trained each lab's largest models?
+
+**Answer.** “Largest” means the highest reported or Epoch-estimated training FLOP released by November 3, otherwise the latest flagship. Of the 15 labs, four frontier runs have a disclosed physical count:
+- [Microsoft MAI-Base-2](https://microsoft.ai/pdf/Frontier-Pre-training-at-Microsoft-AI.pdf?v=2): **16k GB200 for 38 days** (August–September 2026).
+- [Mistral Large 4](https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B/blob/main/assets/technical_report.pdf): **3,840 GB200 for 45 days, ≈4.15M GPU-hours**.
+- OpenAI GPT-6 Astra: **>100k Grace Blackwell at Abilene**, a press-relayed lower bound with undisclosed duration.
+- DeepSeek-V3: 2,048 H800 and 2.788M GPU-hours (historical).
+
+Partial counts are Llama 4 Behemoth on 32K H100, Grok 4 RL on the 200k-GPU Colossus (a cluster figure, not a run) and MiniMax M1 RL on 512 H800 for three weeks. Run counts are undisclosed for Anthropic Opus 5.5, Gemini 4 Carbon (TPUs), Meta Muse, Grok 4.7/5, Kimi K3, GLM-5.x, Qwen3.8, Seed 2.1, Hunyuan Hy3/Hy4 and Nova 2. Epoch FLOP estimates, labeled E, are given where they exist. Fleet, rental and commitment counts are never substituted for run counts. The table below keeps the earlier examples.
 
 Public evidence rarely establishes the largest-ever run, and a lab's rented access is not ownership. The site therefore distinguishes **run**, **cluster access**, **company delivery estimate** and **future commitment**:
 
@@ -147,9 +167,10 @@ Training throughput can bottleneck on **rollout generation**, environment/tool e
 
 ## 13. Are China's tokens mostly video or text?
 
-**No defensible national modality split was established.** The [NDA-hosted June >500T/day claim](https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html) does not publish text/video counts or a tokenizer/meter methodology. Video generation can be compute-intensive and may be billed in seconds or model-specific units, rather than comparable LLM tokens. Text prompts for video, video-understanding input tokens and generated visual latents are different quantities.
+**Answer: mostly text and agent tokens. Video generation is an estimated 0.3% / 1.6% / 8% of the ~500T/day national figure (≈1.7 / 8 / 40T/day, E).** The confidence that video generation is under 25% of the national figure is high, and that it is under 5% is moderate. No official modality split exists: the [NDA-hosted June >500T/day claim](https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html), the CAICT-attributed ~175T/day core measure and Volcano Engine's 180T/day Doubao figure publish no text/video counts or tokenizer methodology.
 
-A large visual-token count is neither a percentage of national text traffic nor a proportional GPU-load share. The site retains modality as unknown for aggregates; it does not label China “mostly video” or “mostly text” based on unsupported broker decomposition.
+Video tokens are countable. Volcano Engine bills Seedance as (input + output video seconds) × width × height × fps ÷ 1024. D: that is ≈21,600 tokens per second of 720p/24fps video, or ≈1.3M tokens per minute (≈1 RMB per second at the 46 RMB/M list price). The estimate combines paid Seedance API volume, consumer generation and Kling's reported revenue; within Doubao it is 0.7% / 3.5% / 19%. Two contrary claims are weaker than they look. A secondary report that over half of Doubao tokens come from Seedance and Seedream could not be traced to an original; at list-price economics it would imply video-generation cost above ByteDance's reported 2026 capex. The claim that multimodal “replaced pure text as the main token consumer” is qualitative and includes image/video *understanding* inputs. Video can dominate revenue per request while remaining a small share of token count. The largest unknowns are free consumer video volume and whether the national totals count video tokens at all. Details are in [GROK-CHINA-TOKENS-2026-11-03.md](GROK-CHINA-TOKENS-2026-11-03.md).
+
 
 ## 14. What do Chinese companies use for internal development?
 
@@ -167,4 +188,4 @@ Exact model choices can vary by region, team, policy and task; the site makes th
 
 ## Integration status
 
-This public-checkout proposal adds separate research snapshots and UI code; it does not hand-edit `data/nc.js`, the raw-source projection, or the portable bundle. The full source checkout was requested so these additions can be mirrored under `neocloud/site/` and included by its release builder. See [SOURCE-INTEGRATION.md](SOURCE-INTEGRATION.md) for exact files and curation changes. Live feeds, history and the daily editorial archive remain independent.
+Integrated into the full source and published through the curated release helper. Scenarios and estimates remain outside the reported-token snapshot; `data/nc.js`'s raw-source rows are not hand-edited. The November 2 S-1/A contract values are applied as source overrides. Live feeds, history, the editorial archive and scratchpad replies are preserved by the publisher.

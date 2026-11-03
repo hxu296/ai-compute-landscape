@@ -114,7 +114,7 @@
     {
       "subject": "xAI / Grok",
       "claim": "Comparable token total unavailable",
-      "note": "Grok is distinct from Groq. Reviewed filing and model announcement disclose no company-wide served-token count.",
+      "note": "Grok is distinct from Groq. No company-wide served-token count is disclosed. Bounded estimate (E, not plotted as a disclosure): company-wide text ≈0.8 / 3.5 / 15T/day; OpenRouter floor ≈74B/day (D). See research/GROK-CHINA-TOKENS-2026-11-03.md.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
       "source_date": null,
       "evidence_category": "R",
@@ -178,6 +178,14 @@
       "source_url": "research/TOKEN-DEMAND-2026-11-03.md",
       "source_date": "2026-11-03",
       "evidence_category": "R"
+    },
+    {
+      "subject": "Anthropic · commitments",
+      "claim": "≈$895.4B aggregate committed spend; ≈$69.8B due within 12 months",
+      "note": "S-1/A: substantially all compute and infrastructure; ≈$447.5B expected before 2031. Compare with $131.845B liquidity and positive operating cash flow. Commitments, not a burn rate.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+      "source_date": "2026-11-02",
+      "evidence_category": "R"
     }
   ],
   "training": [
@@ -227,6 +235,22 @@
       "note": "No counts inferred from model parameters, serving benchmarks, cloud owner deliveries or future commitments.",
       "source_url": "research/TOKEN-DEMAND-2026-11-03.md",
       "source_date": "2026-11-03",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Microsoft AI / MAI-Base-2",
+      "claim": "16k GB200 GPUs for 38 days (August–September 2026)",
+      "note": "Reported training run in Microsoft AI's pre-training report; average MFU 21%, goodput 89%. A run count, not MAI's fleet.",
+      "source_url": "https://microsoft.ai/pdf/Frontier-Pre-training-at-Microsoft-AI.pdf?v=2",
+      "source_date": "2026-10-15",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Mistral / Large 4",
+      "claim": "3,840 GB200 GPUs for 45 days, about 4.15M GPU-hours",
+      "note": "Reported pretraining run in a Mistral data center near Paris (technical report). A run count, not Mistral Compute's total fleet.",
+      "source_url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B/blob/main/assets/technical_report.pdf",
+      "source_date": "2026-10-06",
       "evidence_category": "R"
     }
   ],
@@ -340,7 +364,7 @@
       "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
       "source_date": null,
       "show_in_plot": true,
-      "note": "Grok is distinct from Groq. Reviewed filing and model announcement disclose no company-wide served-token count.",
+      "note": "Grok is distinct from Groq. No company-wide served-token count is disclosed. Bounded estimate (E, not plotted as a disclosure): company-wide text ≈0.8 / 3.5 / 15T/day; OpenRouter floor ≈74B/day (D). See research/GROK-CHINA-TOKENS-2026-11-03.md.",
       "checked_at": "2026-11-03"
     }
   ],
