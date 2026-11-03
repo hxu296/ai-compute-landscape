@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="bc30bd1ef087">
+<meta name="build" content="4619922d2ef3">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -213,7 +213,7 @@
     </div>
     <div id="buildoutBars" role="img" aria-label="Compute built vs needed by year"></div>
     <p class="small" id="buildoutNote"></p>
-    <p class="small">Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
+    <p class="small">Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Racks are counted by GPUs (needed GPUs ÷ 72) to compare with supply; the capacity calculator below counts whole racks, which leaves GPUs unused when a serving group does not divide 72 (about 1.3× more racks for V4-Pro, 1.8× for Kimi). Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
@@ -319,7 +319,7 @@
 <script src="js/tokens.js?v=3e3acdcc7500"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=389138daa4db"></script>
-<script src="js/watch.js?v=46d198634cce"></script>
+<script src="js/watch.js?v=df169ff4ee96"></script>
 <script src="js/capacity.js?v=e0b38cbd1c37"></script>
 <script src="js/lists.js?v=50311a88dd8f"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
