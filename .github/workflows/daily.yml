@@ -38,6 +38,10 @@ jobs:
       - name: Refresh dated public feeds
         if: github.event_name != 'push'
         run: python automation/refresh.py
+      - name: Refresh research inputs (benchmark selection, data-center timelines)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python automation/refresh_research.py
       - name: Validate editorial input and cached feeds
         if: github.event_name == 'push'
         run: python automation/refresh.py --offline
@@ -52,9 +56,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/live.json data/live.js data/history
+          git add data/live.json data/live.js data/history research/capacity-expanded.json research/dc-timelines.json data/research.js
           if ! git diff --cached --quiet; then
-            git commit -m 'Refresh dated public benchmark observations'
+            git commit -m 'Refresh dated public benchmark and research observations'
             git push origin HEAD:main
           fi
       - uses: actions/configure-pages@v5
