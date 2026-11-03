@@ -16,7 +16,7 @@ def stage(build,checkout):
     subprocess.run(['git','-C',str(checkout),'pull','--ff-only'],check=True)
     with tempfile.TemporaryDirectory() as temp:
         keep=Path(temp)
-        for name in ['data/live.json','data/live.js','data/history','research/daily.json']:
+        for name in ['data/live.json','data/live.js','data/history','research/daily.json','scratchpad/threads']:
             p=checkout/name;q=keep/name
             if p.is_dir():shutil.copytree(p,q)
             elif p.exists():q.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,q)
@@ -24,7 +24,7 @@ def stage(build,checkout):
             q=checkout/p.name
             if p.is_dir():shutil.copytree(p,q,dirs_exist_ok=True)
             else:shutil.copy2(p,q)
-        for name in ['data/live.json','data/live.js','data/history']:
+        for name in ['data/live.json','data/live.js','data/history','scratchpad/threads']:
             p=keep/name;q=checkout/name
             if p.is_dir():shutil.copytree(p,q,dirs_exist_ok=True)
             elif p.exists():shutil.copy2(p,q)

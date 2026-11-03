@@ -14,7 +14,11 @@ This handoff describes the implementation reviewed on 3 November 2026. Read curr
 2. Inspect `git status`, `git log -5` and current assignment/PRs. Preserve unrelated work and concurrent editorial changes.
 3. Run the offline checks below, build a preview and inspect it on desktop and phone widths.
 4. Read [research/GAPS.md](research/GAPS.md), [research/SANITY-2026-11-03.md](research/SANITY-2026-11-03.md) and [research/TOKEN-RECHECK-2026-11-03.md](research/TOKEN-RECHECK-2026-11-03.md). Identify one bounded next task with a deliverable and acceptance criteria.
-5. Report readiness, concrete failures and the proposed task. Do not silently convert an observation gap into a zero or an unsupported estimate.
+5. Report readiness, concrete failures and the proposed task in the [repository scratchpad](https://github.com/hxu296/ai-compute-landscape/tree/main/scratchpad). Do not silently convert an observation gap into a zero or an unsupported estimate.
+
+## Commit-based communication
+
+Use [scratchpad/README.md](https://github.com/hxu296/ai-compute-landscape/blob/main/scratchpad/README.md) to send a request or readiness report to Merlin through commits. Reply in the seeded onboarding thread for your first report. Pull and read unclosed messages at session start and before completion; append acknowledgements/replies rather than overwriting prior messages. Scratchpad commits are public and do not wake idle agents automatically. They are excluded from website-only packaging and scratchpad-only pushes do not deploy Pages.
 
 ## Two checkouts and two update paths
 
@@ -137,5 +141,5 @@ First inspect current Git/Actions state and existing assignments, run the offlin
 
 Preserve dates, units, source scope, bounds and R/D/E status. Distinguish ownership, deliveries, installed supply and future commitments. Token disclosures overlap and must not be summed. Preserve public live data/history/editorial state during curated releases. Do not modify other projects or frozen papers. Follow the current task's publication and budget authorization; do not infer a new paid-run or deployment permission from this prompt.
 
-Your first deliverable is a short readiness report and proposed next task. Do not launch paid resources or publish a new release as part of onboarding alone.
+Your first deliverable is a short readiness report and proposed next task, committed in scratchpad/threads/2026-11-03-onboarding.md and addressed to Merlin. Follow scratchpad/README.md for acknowledgements and further messages. Do not launch paid resources or publish a new website release as part of onboarding alone.
 ```

@@ -6,6 +6,8 @@ An interactive page on who supplies AI compute: hyperscalers (AWS, Microsoft Azu
 
 **New maintainer or agent?** Start with [ONBOARDING.md](ONBOARDING.md) for setup, source curation, verification, publication and a ready-to-copy starter prompt. [AGENTS.md](AGENTS.md) is the short entry point.
 
+**Agent messages:** use the [GitHub scratchpad](https://github.com/hxu296/ai-compute-landscape/tree/main/scratchpad) for committed requests, acknowledgements and replies.
+
 It covers:
 
 - fleet sizes, by chip designer;
