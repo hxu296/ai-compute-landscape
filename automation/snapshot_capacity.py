@@ -73,11 +73,15 @@ def build(cache, retrieved_utc):
         raw_bytes = path.read_bytes()
         rows = json.loads(raw_bytes)
         manifests[query] = dict(api_url='https://inferencex.semianalysis.com/api/v1/benchmarks?model='+query, response_rows=len(rows), response_sha256=hashlib.sha256(raw_bytes).hexdigest())
-        for hardware, hardware_label in HARDWARE.items():
-            best = select(rows, keys, hardware)
-            if best is None:
-                unavailable.append(dict(model=label, hardware=hardware_label, reason=f'No AgentX run above {MIN_TOK_S_USER} tokens/s/user that fits one rack in the retrieved response.'))
-                continue
+        # One run per model: the highest output throughput per GPU across GB200 and GB300 NVL72.
+        options = [(hw, select(rows, keys, hw)) for hw in HARDWARE]
+        options = [(hw, b) for hw, b in options if b]
+        if not options:
+            unavailable.append(dict(model=label, hardware='GB200/GB300 NVL72', reason=f'No AgentX run above {MIN_TOK_S_USER} tokens/s/user that fits one rack in the retrieved response.'))
+            continue
+        hardware, best = max(options, key=lambda o: o[1][0])
+        hardware_label = HARDWARE[hardware]
+        if True:
             _, row, gpus = best
             result_id = str(row['id'])
             if result_id not in TOPOLOGY:
@@ -94,7 +98,7 @@ def build(cache, retrieved_utc):
                      gpu_cache_hit_rate=m.get('server_gpu_cache_hit_rate'), external_cache_hit_rate=m.get('server_external_cache_hit_rate'),
                      offload_mode=row.get('offload_mode'), kv_offloading=m.get('kv_offloading'), physical_count_note='Job topology: '+TOPOLOGY[result_id]+'.', raw_row=row))
     return dict(schema_version=1, retrieved_utc=retrieved.astimezone(dt.timezone.utc).isoformat(),
-                method=f'For each model and NVL72 rack type, the AgentX run with the highest output tokens/s per physical GPU above {MIN_TOK_S_USER} tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.',
+                method=f'One run per model: across GB200 and GB300 NVL72, the AgentX run with the highest output tokens/s per physical GPU above {MIN_TOK_S_USER} tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.',
                 api_contract_url='https://inferencex.semianalysis.com/api', query_manifest=manifests,
                 unavailable=unavailable+[dict(model='GLM-5.3', hardware='GB200/GB300 NVL72', reason='Retrieved runs cover VR200, B300 and MI355X only; GLM-5.2 is shown instead.')],
                 points=points)

@@ -4,7 +4,7 @@ This maps the fifteen-question checklist to concrete answers, evidence and imple
 
 | ID | Concrete answer | Where |
 |---|---|---|
-| Q01 | Q3 consumption revenue ≈$13.2B over 92 days implies **≈143.5 / 71.7 / 23.9T logical tokens/day** at assumed $1 / $2 / $6 per million (E). Consumption-billed traffic only; no reported token count exists. | §1; Revenue-based token scenarios |
+| Q01 | **≈179T logical tokens/day in Q3 (110–240T), ≈268T/day projected to November 3 (E).** Q3 consumption revenue ($13.2B over 92 days) ÷ $0.80/Mtok, the OpenRouter-measured Claude mix (80% cache reads, 2% output) at list prices. Consumption-billed traffic only. | §1; token chart estimate |
 | Q02 | 44% of $33.2B January–September revenue, recognized gross, is **≈$14.6B through CSP marketplaces (D)**, or ≈26.8 / 8.9T/day at $2 / $6 (E). This is a component of Q01, not an addition. Cloud meters include other vendors and do not isolate Anthropic, so only a containment check is possible. | §2; Token accounting |
 | Q03 | No primary disclosure. OpenRouter floor **≈74B/day (D)**; xAI API 0.4 / 1.5 / 5T; consumer text 0.4 / 2 / 10T; **company-wide text 0.8 / 3.5 / 15T/day (E; low/high are bounds)**. Imagine video and image output is kept separate. | §3; companion note |
 | Q04 | Yes: Nebius Token Factory and CoreWeave sell per-token APIs without published volumes. Specialist hosts: Fireworks >40T/day, Baseten 40–50T/day, Together >13.3T/day, DeepInfra 3.1T/day, and Applied Compute >1T/day added. Each is shown separately; missing counts stay missing. | §4, §12; token charts |
@@ -16,9 +16,11 @@ This maps the fifteen-question checklist to concrete answers, evidence and imple
 | Q10 | NVL72-only selector, best output-per-GPU run above 50 tok/s/user per model and rack type. At 500T/day, 2% output and 70%: Flash GB300 305 racks, V4-Pro GB300 2,528, Qwen3.8-Flash-Next GB300 3,282, GLM-5.2 GB300 6,015, Kimi K3 GB300 23,275. GLM-5.3 has no NVL72 run and Qwen3.8-Max no benchmark. Equal quality is not established. | §7; capacity selectors |
 | Q11 | tokensperday is a modeled counter over disclosed anchors. Google conversion differences are ÷30.44 vs ÷30. Older anchors (China 140T, Fireworks 30T, Together 2T) are superseded by later disclosures. Its headline is not adopted. | §11 |
 | Q12 | Both readings are covered. Applied Compute: >1,700 runs since July, >1T inference tokens/day. Bottlenecks are rollout, environment, weight transfer and checkpoint I/O, not raw GPU count. Recurring post-training demand is real, but its durability is unmeasured. | §12 |
-| Q13 | Dated growth table plus November scenarios with an editable monthly rate. Each anchor is scaled from its own date; an anchor dated after the target is shown as unavailable for that target (November 1 fixed). No totals. | §6; November scenarios |
+| Q13 | **November 3 global estimate ≈1.67Q logical tokens/day (0.92–2.28Q, E)**: 8 non-overlapping components, each projected on its own dated trend (China 931T, Anthropic 268T, Google 203T, hosts 109T, OpenAI API 67T, ChatGPT/Codex 40T, other 50T, xAI 3.5T). Shown as a dashboard; the capacity calculator defaults to it. | §6; projection dashboard |
 | Q14 | Mostly text and agent tokens. Video generation is **≈0.3% / 1.6% / 8% of ~500T/day (E)**. Seedance bills ≈21,600 tokens per 720p second. A >50% video claim is untraced and fails a volume check (≈0.8B five-second clips a day, ~4 per Doubao user). | §13; companion note |
 | Q15 | Tencent Hy4 optimized its own training, data, evaluation and kernels (+31.8% inference throughput), and was blind-tested internally against GLM 5.3 and Kimi K3. Z.ai says daily coding, defect fixing and tests are largely done by its own models. Moonshot used K3 for kernel optimization; Baidu uses Comate (ERNIE/DeepSeek); Alibaba directed staff to Qoder. No company-wide usage shares are disclosed. | §14; China table |
+
+Site scope (November 3): answers that are anecdotes or prose (Q05, Q07–Q09, Q12, Q14 detail, Q15) live in these notes and the discussion thread rather than on the page. The page keeps data views: the token chart with estimates for undisclosed totals, the November projection, the NVL72 capacity calculator, and a one-line China modality estimate.
 
 ## Implementation and validation
 
