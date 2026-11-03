@@ -193,22 +193,49 @@
     <details id="tokenReconciliation"><summary>Why Google’s daily and monthly figures differ</summary><p class="small">Google’s May 2026 figure of over 3.2 quadrillion tokens/month covers its surfaces broadly (over 106.7T/day using a 30-day month). The October disclosure of nearly 32B/minute covers first-party model APIs (nearly 46.08T/day as a rate equivalent). The old 3T/day series covers internal developer tools. These are overlapping scopes from different dates; none should be substituted for another. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">May disclosure</a> · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">October disclosure</a> · <a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank" rel="noopener">Internal-tools disclosure</a>.</p></details>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
+  <div class="fig demand-review" id="token-accounting"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Accounting</span><h3 class="fig-title">Who counts the same token?</h3></div>
+    <p class="fig-sub">A request can pass from an app through OpenRouter to an inference host serving a lab’s model. Several companies can report that same traffic. Separate disclosures preserve the evidence; adding the layers invents demand.</p>
+    <ol class="token-chain" aria-label="Example of overlapping traffic"><li>Application</li><li>OpenRouter</li><li>Inference host</li><li>Model</li></ol>
+    <p class="small">Buying directly from Fireworks or another host bypasses the router. Bring-your-own-key requests through OpenRouter still traverse both meters. No matched provider/router intersections are available to net a global total.</p>
+    <div class="table-wrap"><table class="t" id="demandCoverage"></table></div>
+    <details class="fig-notes"><summary>Cross-check with tokensperday.com</summary><p>The site’s July estimate separates supply, apps and routers and models undisclosed traffic using financial, user and hardware assumptions. Its counter is modeled. Its China, Fireworks and Together anchors predate the later disclosures shown here. Google’s 3.2Q/month becomes 105.13T/day with its 30.44-day convention, versus 106.67T with this site’s 30-day convention. Neither is a measured current day. <a href="https://tokensperday.com/methodology/" target="_blank" rel="noopener">Method</a> · <a href="https://tokensperday.com/data/" target="_blank" rel="noopener">Ledger</a> · <a href="research/TOKEN-DEMAND-2026-11-03.md">Full cross-check</a>.</p></details>
+  </div></div>
+  <div class="fig demand-review" id="demand-scenarios"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Growth</span><h3 class="fig-title">Dated growth and November scenarios</h3></div>
+    <p class="fig-sub">Growth disclosures can be informative without establishing an absolute level. Bedrock’s nearly 17× annual token growth and MiniMax’s 20× January-to-July increase do not supply a daily token baseline.</p>
+    <details class="fig-notes" open><summary>Reported growth, with its original scope</summary><div class="table-wrap"><table class="t" id="demandGrowth"></table></div></details>
+    <details class="fig-notes"><summary>Explore November traffic assumptions</summary>
+      <div class="research-controls"><label>Scenario date<input id="tokenScenarioDate" type="date" min="2026-11-01" max="2026-11-03" value="2026-11-03"></label><label>Assumed monthly growth (%)<input id="tokenScenarioGrowth" type="number" min="-99" max="1000" step="1" value="0"></label></div>
+      <p class="small" id="tokenScenarioNote" aria-live="polite"></p>
+      <div id="tokenScenarioBars" role="img" aria-label="Separate platform token scenarios; no additive total"></div>
+      <div class="table-wrap"><table class="t" id="tokenScenarioTable"></table></div>
+      <p class="small">Each anchor × (1 + assumed monthly growth)<sup>days / 30.4375</sup>. Unknown levels stay unavailable. Publication dates are scenario references where measurement windows are unspecified. Historical, cluster and national totals are excluded from this view. Source bounds do not become guaranteed future bounds.</p>
+    </details>
+    <h4>Anthropic from consumption revenue</h4>
+    <p class="small">The November 2 S-1 amendment reports $26.3B consumption revenue over January–September; the earlier filing reports $13.1B for January–June. Their rounded difference is approximately $13.2B for Q3. Tokens require an assumed realized price. Subscriptions are excluded; the estimate includes consumption-billed first-party uses.</p>
+    <div class="research-controls"><label>Revenue window<select id="anthropicPeriod"></select></label><label>Assumed realized $ / million tokens<input id="anthropicPrice" type="number" min="0.01" step="0.1" value="2"></label><label>Assumed monthly growth to November (%)<input id="anthropicGrowth" type="number" min="-99" max="1000" value="0"></label></div>
+    <p id="anthropicResult" class="scenario-result" aria-live="polite"></p><p id="anthropicBasis" class="small"></p>
+    <div class="table-wrap"><table class="t" id="anthropicSensitivity"></table></div>
+    <p class="small">E marks an estimate, not a disclosed token total or a confidence interval. Price sensitivity includes model mix, cached inputs, output prices and discounts; the filing does not identify that blend. These estimates are kept out of the reported-use chart.</p>
+  </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on DeepSeek</h3></div>
-    <p class="fig-sub">Compare V4 Pro and V4.1 Flash on 72-GPU <b>GB200 NVL72</b> racks. There is no verified, non-overlapping total for the entire inference market here. Choose a disclosed traffic boundary or enter an explicit market assumption.</p>
+    <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
+    <p class="fig-sub">Compare measured DeepSeek, Kimi K3, GLM-5.3 and Qwen3.8-Flash-Next serving groups. NVL72 racks contain 72 GPUs; SXM rack packing is an explicit assumption. There is no verified, non-overlapping total for the entire inference market here. Choose a disclosed traffic boundary or enter an explicit market assumption.</p>
     <div class="capacity-controls">
       <label>Traffic boundary<select id="capacityPreset"></select></label>
       <label>Logical tokens / day (trillions)<input id="capacityVolume" type="number" min="0.001" max="10000000" step="any" value="500"></label>
       <label>Output share <output id="capacityOutputValue"></output><input id="capacityOutput" type="range" min="0" max="100" step="0.1" value="2"></label>
       <label>Input cache hits <output id="capacityCacheValue"></output><input id="capacityCache" type="range" min="0" max="100" step="0.1" value="98"></label>
       <label>Usable reference capacity <output id="capacityUseValue"></output><input id="capacityUse" type="range" min="10" max="100" step="1" value="70"></label>
-      <label>Pro operating point<select id="capacityPro"></select></label>
-      <label>Flash operating point<select id="capacityFlash"></select></label>
+      <label>Operating point A<select id="capacityPro"></select></label>
+      <label>Operating point B<select id="capacityFlash"></select></label>
+      <label>Assumed GPUs / SXM rack<input id="capacitySxmGpus" type="number" min="8" max="72" step="8" value="32"></label>
     </div>
     <p id="capacityBoundary" class="small"></p>
-    <p class="small">Defaults maximize output throughput per packed rack among the audited GB200 coding-trace configurations delivering at least 95 tokens/s/user: Pro at 95.8 and Flash at 112.7. Alternative operating points remain selectable.</p>
+    <p class="small">The new comparison retains explicit measured points above 95 tok/s/user, including H100. Qwen3.8-Flash-Next is a different model from Qwen3.8-Max; no raw Max benchmark was found. DeepSeek-V4-Pro has no matched H100 AgentX result in this retrieval, so no H100 conversion is inferred. This is a configuration comparison, not a ranking at equal quality.</p>
     <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
-    <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
+    <p id="capacityError" role="alert" hidden>Enter a positive traffic volume, an SXM rack count of 8–72 GPUs in multiples of 8, and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
       <p class="capacity-summary" id="capacitySummary" aria-live="polite"></p>
       <div id="capacityBars" aria-label="Conditional rack comparison"></div>
@@ -223,17 +250,45 @@
           <label>All-in power (kW / GPU)<input id="capacityPower" type="number" min="0" step="0.01" value="1.87"></label>
         </div>
         <p class="small">Defaults: <a href="https://inferencex.semianalysis.com/chips/gb200-nvl72" target="_blank" rel="noopener">SemiAnalysis’s public GB200 specifications and ownership model</a>, retrieved November 2, 2026. Annual cost = all physical GPUs × hourly ownership cost × 8,760. Power includes the source’s host, networking and cooling allowance; no extra PUE multiplier is applied. Neither figure is a purchase quote.</p>
+        <p class="small">The ownership inputs below apply only to the earlier GB200 reference configurations. Costs and facility power for the new hardware scenarios are not estimated.</p>
+        <div class="table-wrap"><table class="t" id="capacityOwnership"></table></div>
         <div id="capacityPacking" class="small"></div>
         <p class="small"><b>Method:</b> group equivalents = max(input tokens/day ÷ 86,400 ÷ group input TPS, output tokens/day ÷ 86,400 ÷ group output TPS) ÷ usable capacity. Round up to groups, then to whole racks. This is a fixed-rate extrapolation from coding-trace replay. A different input/output mix, context length, cache distribution or serving stack can change the attainable rates. Full-rack packing was not measured.</p>
         <div id="capacityProfiles" class="small"></div>
         <p class="small"><b>Benchmark scope:</b> AgentX variable-length coding traces, prefix caching and speculative decoding. The Flash configurations use different engines and cache setups; this is a configuration comparison, not a controlled model-only comparison. The vLLM Flash run also uses synthetic speculative acceptance. Input throughput counts reused context as well as fresh input.</p>
         <p class="small"><b>Why not use the headline?</b> The run pages’ 100-token/s figures interpolate total logical throughput. They are not output throughput. Pro’s overview also applies a decode-share factor after the raw producer has already divided by all allocated GPUs. This calculator uses the raw absolute input and output rates and explicit physical groups instead. <a href="https://github.com/SemiAnalysisAI/InferenceX/blob/bde2579a49696924c7783519224fbe49e2c678b7/inferencex-e2e/infx/results/agentic/__init__.py#L236" target="_blank" rel="noopener">Producer</a> · <a href="https://github.com/SemiAnalysisAI/InferenceX-app/blob/f5d2bd4a6b6be1c9438c576afd23d274019a200a/packages/app/src/lib/overview/overview-data.ts#L708" target="_blank" rel="noopener">Overview transformation</a>.</p>
-        <p class="small"><b>Unresolved source metadata:</b> Pro’s API labels precision “fp4”; inspected worker logs name <code>deepseek_v4_fp8</code> with bfloat16 dtype. The API’s October 14 date also differs from the September run timestamps. These fields do not establish uniform arithmetic precision or an exact measurement date. The selected raw values and source URLs are preserved in the <a href="research/capacity.json">benchmark snapshot</a>.</p>
+        <p class="small"><b>Unresolved source metadata:</b> Pro’s API labels precision “fp4”; inspected worker logs name <code>deepseek_v4_fp8</code> with bfloat16 dtype. The API’s October 14 date also differs from the September run timestamps. These fields do not establish uniform arithmetic precision or an exact measurement date. The selected older GB200 values are preserved in the <a href="research/capacity.json">original snapshot</a>; new configurations, full raw rows, response hashes and the H100 count correction are in the <a href="research/capacity-expanded.json">expanded snapshot</a>.</p>
         <p class="small">The earlier 40T/day example can be reproduced with 2% output, 100% usable capacity and Pro result 444911: 244 racks. Its 60 allocated GPUs per rack include both prefill and decode; only 36 are decode GPUs. This configuration reaches 95.8, rather than 100, tokens/s/user at P90 latency.</p>
         <p class="small">The historical Fireworks Pro 0813 serverless tariff is not used as current revenue: <a href="https://fireworks.ai/models/deepseek-ai/deepseek-v4-pro-0813" target="_blank" rel="noopener">Fireworks says that endpoint was retired from serverless</a>. Current GPU ownership cost and hypothetical API billing are different quantities.</p>
         <button type="button" id="capacityCopy" class="ctl">Copy scenario as JSON</button>
         <textarea id="capacityScenario" hidden readonly aria-label="Scenario JSON"></textarea>
       </details>
+  </div></div>
+  <div class="fig demand-review" id="training-demand"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Demand</span><h3 class="fig-title">Efficiency, training and financing</h3></div>
+    <p class="fig-sub">Efficient open-model inference can need far fewer racks than a raw token headline suggests. Whether this creates surplus supply also depends on demand, task quality, training, delivery schedules and financing.</p>
+    <details class="fig-notes" open><summary>The small-rack counterargument</summary>
+      <div class="table-wrap"><table class="t" id="inferenceDebate"></table></div>
+      <p class="small">These are attributed social posts, read through public transcriptions because direct X retrieval was blocked. The expanded raw Flash/GB300 benchmark above gives <b>214 racks at 100% reference capacity or 305 at 70%</b> for an assumed 500T/day with 2% output. This supports the scale of the thought experiment under those assumptions. It does not establish a measured global total or equal-quality replacement for every task. <a href="research/TOKEN-DEMAND-2026-11-03.md">Claims, replies and arithmetic</a>.</p>
+      <div class="research-controls"><label>Assumed demand multiple<input id="demandMultiple" type="number" min="0" step="0.5" value="10"></label><label>Assumed useful throughput / GPU multiple<input id="efficiencyMultiple" type="number" min="0.01" step="0.5" value="10"></label></div>
+      <p id="efficiencyResult" class="scenario-result" aria-live="polite"></p>
+    </details>
+    <h4>Applied Compute’s training loop</h4>
+    <p class="small">Applied Compute reports more than 1,700 training runs since July and more than 1T inference tokens/day in its <a href="https://www.appliedcompute.com/company/100m-run-rate-fundraise" target="_blank" rel="noopener">November 2 update</a>. These are separate activity measures, with no disclosed GPU-hours or repeat-customer retention series. Its <a href="https://www.appliedcompute.com/research/frontier-scale-rl-with-kimi-k3" target="_blank" rel="noopener">August 28 Kimi K3 engineering account</a> identifies memory, rollout precision, weight synchronization and checkpoint I/O constraints; optimizations reportedly cut GPUs per training replica by about 40%. <a href="https://modal.com/blog/applied-compute-reinforcement-learning" target="_blank" rel="noopener">Modal’s May 20 customer account</a> describes environment startup and parallel grading as ways CPU work can leave GPUs idle. These show engineering bottlenecks, not proof of a current industry-wide GPU shortage.</p>
+    <h4>Where training demand can persist</h4>
+    <p class="small">Post-training couples rollout generation, weight updates and evaluation. Applied systems can repeatedly retrain as production data, rewards and base models change. Reward quality, environment speed, numerical alignment, networking and deployment can bottleneck the loop; more GPU-hours solve only some of these. LoRA and better base models can also shrink individual jobs. Recurring demand is plausible, but its aggregate size and duration are not established.</p>
+    <p class="small"><a href="https://fireworks.ai/blog/training-api-general-availability" target="_blank" rel="noopener">Fireworks’ August 31 account</a> describes specialized training and experience running RL across more than 10,000 GPUs. <a href="https://nebius.com/release-notes/posts/q3-2026" target="_blank" rel="noopener">Nebius’ Q3 notes</a> add workload-specific speculative-model training. Product and vendor evidence does not measure market-wide utilization.</p>
+    <details class="fig-notes"><summary>What Anthropic’s filing says about compute allocation</summary><p>For January–September 2026, the November amendment reports $18.808B compute and infrastructure expense. Note 8 separately reports $4.812B cost of revenue and $19.240B R&amp;D. Cost of revenue is mainly customer-serving compute plus some staff/overhead; R&amp;D includes model development, research, internal use, personnel and overhead. These are overlapping accounting classifications, not quantities to add or GPU-hour shares. Anthropic describes dynamically allocating a common compute pool. Neither “all R&amp;D is pretraining” nor “stopping training immediately releases its entire fleet” follows. <a href="https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm" target="_blank" rel="noopener">November S-1 amendment, Note 8 and compute discussion</a>.</p></details>
+    <details class="fig-notes" open><summary>Lab liquidity and runway limits</summary>
+      <div class="table-wrap"><table class="t" id="labLiquidity"></table></div>
+      <h4>Anthropic liquidity stress scenario</h4>
+      <div class="research-controls"><label>Assumed net monthly cash outflow ($B)<input id="runwayBurn" type="number" min="0.01" step="0.5" value="5"></label><label>Assumed reserved liquidity ($B)<input id="runwayReserve" type="number" min="0" max="131.845" step="1" value="10"></label></div>
+      <p class="scenario-result" id="runwayResult" aria-live="polite"></p>
+      <p class="small">This uses a dated gross liquidity pool and user assumptions. It does not model future revenue, commitments, additional restrictions, financing or the maturity and terms of obligations. Reported positive operating cash flow is not a promise of future self-funding.</p>
+    </details>
+    <details class="fig-notes"><summary>Training runs, cluster access and owned chips</summary><p>Access to a cluster is different from a simultaneous model run, owned chips, delivered chips or future commitments. The largest current run is often undisclosed; historical examples remain labeled.</p><div class="table-wrap"><table class="t" id="trainingCounts"></table></div></details>
+    <p class="small">Training cutbacks could weaken marginal rents if released, compatible capacity exceeds incremental demand. Contract cancellation rights, repayments, power, rack readiness and migrations determine when that capacity becomes sellable. Track idle capacity and same-SKU realized prices rather than treating a spot quote or a forecast as a market-wide collapse.</p>
+    <p><a href="research/TOKEN-DEMAND-2026-11-03.md">Read the full sourced review →</a></p>
   </div></div>
 </section>
 
@@ -249,6 +304,14 @@
       <div class="legend"><span><i style="background:var(--s1)"></i>US chips (export versions)</span><span><i style="background:var(--s2)"></i>Chinese chips</span></div></div>
     <div><div class="fig-head"><span class="fig-no">Table 3</span></div><h4>What the Chinese clouds disclose</h4><div class="table-scroll"><table class="t" id="tChina"></table></div></div>
   </div></div></div>
+  <div class="fig demand-review" id="china-workloads"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Workloads</span><h3 class="fig-title">Modalities and internal development</h3></div>
+    <p class="fig-sub">China’s national token claim does not publish a text/video split or a common tokenizer methodology. No reliable majority by modality is established. Video-generation seconds, visual latents, video-understanding inputs and text tokens are not interchangeable units of compute.</p>
+    <p class="small">The <a href="https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html" target="_blank" rel="noopener">NDA-hosted June &gt;500T/day assertion</a> is retained as attributed evidence. Its missing modality split stays unknown; a national total is not added to company totals.</p>
+    <h4>Models used in development tools</h4>
+    <p class="small">Named internal use and official model integrations are distinct from company-wide default models or measured usage shares. Regional offerings and teams can differ.</p>
+    <div class="table-wrap"><table class="t" id="chinaDevelopment"></table></div>
+  </div></div>
 </section>
 
 <div class="part-title">Part III · Reference</div>
@@ -281,6 +344,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=10bc59c05a1e"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
+<script src="data/research.js"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
 <script src="js/sketch.js?v=988580f7f567"></script>
@@ -294,6 +358,8 @@
 <script src="js/token_math.js?v=6db1a97eee26"></script>
 <script src="js/tokens.js?v=4ae647b02e41"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
+<script src="js/demand_math.js"></script>
+<script src="js/demand.js"></script>
 <script src="js/capacity.js?v=8d231a759b0e"></script>
 <script src="js/lists.js?v=0533ea891f4d"></script>
 <script src="js/research.js?v=040ca697e2b7"></script>

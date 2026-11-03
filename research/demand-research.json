@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-11-03",
+  "report_url": "research/TOKEN-DEMAND-2026-11-03.md",
+  "anthropic": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+    "source_date": "2026-11-02",
+    "periods": [
+      {
+        "id": "q3",
+        "label": "Q3 2026 · rounded difference",
+        "consumption_revenue_usd": 13200000000.0,
+        "days": 92,
+        "reference_date": "2026-09-30",
+        "note": "D: $26.3B January–September minus $13.1B January–June; both source figures rounded.",
+        "source_urls": [
+          "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+          "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm"
+        ]
+      },
+      {
+        "id": "ytd",
+        "label": "Jan–Sep 2026",
+        "consumption_revenue_usd": 26300000000.0,
+        "days": 273,
+        "reference_date": "2026-09-30",
+        "note": "R: consumption-billed revenue; excludes subscription-included traffic.",
+        "source_urls": [
+          "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm"
+        ]
+      },
+      {
+        "id": "h1",
+        "label": "Jan–Jun 2026",
+        "consumption_revenue_usd": 13100000000.0,
+        "days": 181,
+        "reference_date": "2026-06-30",
+        "note": "R: earlier H1 disclosure; historical average.",
+        "source_urls": [
+          "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm"
+        ]
+      }
+    ],
+    "note": "Realized price per million logical tokens is assumed, including mix, cache charges and discounts. The result estimates consumption-billed traffic, not all Anthropic traffic. It is not a measured token total."
+  },
+  "growth": [
+    {
+      "subject": "Amazon Bedrock",
+      "claim": "Nearly 17× year-over-year token volume",
+      "note": "October disclosure supplies no absolute baseline or model split; absolute November traffic remains unavailable.",
+      "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+      "source_date": "2026-10-29",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Together APIs",
+      "claim": "30B → >400T tokens/month over nine months",
+      "note": "Ratio of disclosed milestones >13,333×; exact starting day and future growth are not supplied.",
+      "source_url": "https://www.together.ai/blog/provisioned-throughput",
+      "source_date": "2026-07-08",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "DeepInfra",
+      "claim": "Company reports more than tripling since May",
+      "note": "22T/week disclosed September 29. Preserve the statement rather than fitting a precise CAGR to rounded observations.",
+      "source_url": "https://www.globenewswire.com/news-release/2026/09/29/3370896/0/en/deepinfra-surpasses-100m-arr-triples-token-volume.html",
+      "source_date": "2026-09-29",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "MiniMax",
+      "claim": "July token consumption 20× January",
+      "note": "Relative growth only; an absolute level is not disclosed.",
+      "source_url": "https://www.minimax.io/news/minimax-announces-first-half-2026-financial-results-1787744160",
+      "source_date": "2026-08-26",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Z.ai MaaS",
+      "claim": "Token invocation volume >40× start of 2026",
+      "note": "As of August 31. Different scope/date from the 2025 issuer total; do not multiply that old total by 40.",
+      "source_url": "https://cdn.financialreports.eu/financialreports/media/filings/50642/2026/RNS/50642_rns_2026-08-31_dccaa9af-2a08-44d5-84e0-53f7f75c190d.pdf",
+      "source_date": "2026-08-31",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Applied Compute",
+      "claim": ">1T inference tokens/day; >1,700 training runs since July",
+      "note": "November 2 company disclosure. No earlier matching daily-token level or training GPU-hour total; do not fit a token-growth rate from revenue run rate.",
+      "source_url": "https://www.appliedcompute.com/company/100m-run-rate-fundraise",
+      "source_date": "2026-11-02",
+      "evidence_category": "R"
+    }
+  ],
+  "coverage": [
+    {
+      "subject": "CoreWeave",
+      "claim": "Managed pay-per-token inference exists",
+      "note": "No platform-wide realized token total located in reviewed product disclosures. Routed tokens overlap OpenRouter.",
+      "source_url": "https://coreweave.com/blog/coreweaves-innovation-velocity-drives-mlperf-6-0-leadership",
+      "source_date": null,
+      "evidence_category": "R",
+      "checked_at": "2026-11-03"
+    },
+    {
+      "subject": "Nebius Token Factory",
+      "claim": "Managed per-token model access exists",
+      "note": "No absolute platform-wide token total located. GPU rentals and customers running their own inference are separate from Token Factory.",
+      "source_url": "https://nebius.com/blog/posts/nebius-and-eigen-ai-partner-to-accelerate-frontier-open-source-ai-inference",
+      "source_date": "2026-03-17",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "xAI / Grok",
+      "claim": "Comparable token total unavailable",
+      "note": "Grok is distinct from Groq. Reviewed filing and model announcement disclose no company-wide served-token count.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
+      "source_date": null,
+      "evidence_category": "R",
+      "checked_at": "2026-11-03"
+    },
+    {
+      "subject": "OpenRouter + provider",
+      "claim": "One routed request can enter both meters",
+      "note": "Direct requests bypass OpenRouter; BYOK still routes through it. Netting requires matched intersection volumes, which are not supplied.",
+      "source_url": "https://openrouter.ai/docs/guides/overview/auth/byok",
+      "source_date": "2026-11-03",
+      "evidence_category": "R"
+    }
+  ],
+  "labs": [
+    {
+      "subject": "Anthropic",
+      "claim": "$131.845B cash, equivalents and short-term investments · Sep 30",
+      "note": "Jan–Sep operating cash flow +$6.569B. Positive historical operating flow is not a permanent runway; future commitments, restrictions and equipment payments matter.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+      "source_date": "2026-11-02",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "OpenAI",
+      "claim": "$122B committed capital · Mar 31 announcement",
+      "note": "Committed funding is not a dated unrestricted cash balance. Comparable current net cash/burn pair unavailable.",
+      "source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
+      "source_date": "2026-03-31",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "xAI / SpaceX",
+      "claim": "$51.294B cash + $38.561B short-term securities · Sep 30",
+      "note": "Consolidated group, not Grok-only liquidity. SI segment includes other products and infrastructure; no separate Grok cash runway.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
+      "source_date": null,
+      "evidence_category": "R",
+      "checked_at": "2026-11-03"
+    },
+    {
+      "subject": "MiniMax",
+      "claim": "$1.3228B broad cash balance · Jun 30",
+      "note": "Includes restricted cash and investments. H1 adjusted loss $293M is not cash burn; a cash/loss ratio is not a reliable runway.",
+      "source_url": "https://www.minimax.io/news/minimax-announces-first-half-2026-financial-results-1787744160",
+      "source_date": "2026-08-26",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Z.ai",
+      "claim": "RMB3.994B cash + RMB0.506B short investments · Jun 30",
+      "note": "July placement net HK$31.375B is a later event. No currency mixing or June-only exhaustion forecast.",
+      "source_url": "https://cdn.financialreports.eu/financialreports/media/filings/50642/2026/RNS/50642_rns_2026-08-31_dccaa9af-2a08-44d5-84e0-53f7f75c190d.pdf",
+      "source_date": "2026-08-31",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Moonshot / DeepSeek",
+      "claim": "Comparable current liquidity/burn pair unavailable",
+      "note": "Funding announcements, parameter counts and leased power do not establish current runway or owned GPU inventory.",
+      "source_url": "research/TOKEN-DEMAND-2026-11-03.md",
+      "source_date": "2026-11-03",
+      "evidence_category": "R"
+    }
+  ],
+  "training": [
+    {
+      "subject": "Anthropic / Rainier",
+      "claim": "500,000+ Trainium2 chips · operational cluster",
+      "note": "AWS says used to train Claude. Cluster access, not a count assigned simultaneously to one latest model or Anthropic-owned GPUs.",
+      "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Fourth-Quarter-Results/",
+      "source_date": "2026-02-05",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "xAI / Grok 4.5",
+      "claim": "Tens of thousands of GB300 GPUs",
+      "note": "Reported training scale; exact simultaneous count and phase allocation not disclosed.",
+      "source_url": "https://x.ai/news/grok-4-5",
+      "source_date": "2026-07-16",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "xAI / Grok 4",
+      "claim": "200,000-GPU Colossus cluster for RL",
+      "note": "Historical cluster-level description; not evidence that all chips continuously train one job.",
+      "source_url": "https://x.ai/news/grok-4",
+      "source_date": "2025-07-09",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "DeepSeek / V3 historical",
+      "claim": "2,048 H800s; 2.788M full-training GPU-hours",
+      "note": "Historical example. Not the V4/V4.1 count, current inventory or total research cost.",
+      "source_url": "https://arxiv.org/html/2412.19437v2",
+      "source_date": "2025-02-18",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Z.ai / inference",
+      "claim": ">100,000 domestic chips for inference",
+      "note": "Reported in August interim results. Chip type, ownership and model-level assignment are not established; not a training-run count.",
+      "source_url": "https://cdn.financialreports.eu/financialreports/media/filings/50642/2026/RNS/50642_rns_2026-08-31_dccaa9af-2a08-44d5-84e0-53f7f75c190d.pdf",
+      "source_date": "2026-08-31",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "OpenAI / Kimi K3 / GLM-5.3 / Qwen3.8-Max",
+      "claim": "Exact largest-run chip counts unavailable in reviewed material",
+      "note": "No counts inferred from model parameters, serving benchmarks, cloud owner deliveries or future commitments.",
+      "source_url": "research/TOKEN-DEMAND-2026-11-03.md",
+      "source_date": "2026-11-03",
+      "evidence_category": "R"
+    }
+  ],
+  "china_development": [
+    {
+      "subject": "Tencent",
+      "claim": "Hunyuan Hy3/Hy4 in CodeBuddy and WorkBuddy",
+      "note": "Official integration evidence; CodeBuddy also offers DeepSeek. Does not establish an exclusive internal model or per-model usage shares.",
+      "source_url": "https://www.tencent.com/zh-cn/tencent-releases-and-open-sources-tencent-hy4-preview/",
+      "source_date": "2026-08-28",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Baidu",
+      "claim": "Comate used in internal AgentShield development",
+      "note": "Comate documentation lists ERNIE and DeepSeek among hosted models; no company-wide allocation disclosed.",
+      "source_url": "https://cloud.baidu.com/article/7749387",
+      "source_date": "2026-06-26",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Moonshot",
+      "claim": "Early Kimi K3 used for late-development kernel optimization",
+      "note": "Task-specific internal use disclosed by the model team; not a company-wide developer default.",
+      "source_url": "https://www.kimi.com/en/blog/kimi-k3",
+      "source_date": "2026-07-16",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Alibaba",
+      "claim": "Qoder for internal development · attributed reporting",
+      "note": "Reuters reported July 3 that staff were directed to Qoder. The company-issued Qwen-Coder-Qoder launch identifies one model; Qoder’s internal model shares or exclusive backend are not established.",
+      "source_url": "https://www.investing.com/news/stock-market-news/alibaba-to-ban-claude-code-in-workplace-over-alleged-backdoor-risks-source-says-4775035",
+      "source_date": "2026-07-03",
+      "evidence_category": "R"
+    }
+  ],
+  "s1_compute": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+    "period": "Jan–Sep 2026",
+    "compute_infrastructure_usd": 18808000000.0,
+    "cost_of_revenue_usd": 4812000000.0,
+    "research_development_usd": 19240000000.0,
+    "note": "Note 8: cost of revenue is mostly customer-serving compute plus some staff/overhead; R&D includes model development, research, internal usage, staff and overhead. These dollar captions are not GPU-hour shares. The company describes a dynamically allocated compute pool."
+  },
+  "threads": [
+    {
+      "subject": "Dax",
+      "claim": "Roughly one GB300 rack for prior-day OpenRouter DeepSeek traffic",
+      "note": "Attributed operator claim. Related operational post reports 6.77T/day, P50 TTFT 1.16s and P50 speed 143 tok/s, with poor P95 from a faulty tray. Global demand and matched cache/mix are unknown.",
+      "source_url": "https://x.com/thdxr/status/2115165365630026178",
+      "source_date": "2026-10-27",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Chon Tang",
+      "claim": "5–10 racks; at 10× traffic, 50–100",
+      "note": "Attributed extrapolation for a router slice. Token share is not compute share, and next-year shipments are a flow, not idle stock.",
+      "source_url": "https://x.com/chontang/status/2115201354293801111",
+      "source_date": "2026-10-27",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "James Rothmann",
+      "claim": "200 racks if all inference used Flash; assumed 15× for Opus",
+      "note": "Thought experiment. No audited global token meter or measured Opus throughput multiplier supplied. The 214-rack Flash scenario is compatible with this scale under explicit assumptions.",
+      "source_url": "https://x.com/JamesRothmann/status/2115382434397085959",
+      "source_date": "2026-10-28",
+      "evidence_category": "R"
+    }
+  ],
+  "unavailable_tokens": [
+    {
+      "subject": "CoreWeave",
+      "scope_id": "review-missing-coreweave",
+      "display_scope": "Platform total not established",
+      "source_url": "https://coreweave.com/blog/coreweaves-innovation-velocity-drives-mlperf-6-0-leadership",
+      "source_date": "2026-11-03",
+      "show_in_plot": true,
+      "note": "No platform-wide realized token total located in reviewed product disclosures. Routed tokens overlap OpenRouter."
+    },
+    {
+      "subject": "Nebius Token Factory",
+      "scope_id": "review-missing-nebius",
+      "display_scope": "Platform total not established",
+      "source_url": "https://nebius.com/blog/posts/nebius-and-eigen-ai-partner-to-accelerate-frontier-open-source-ai-inference",
+      "source_date": "2026-03-17",
+      "show_in_plot": true,
+      "note": "No absolute platform-wide token total located. GPU rentals and customers running their own inference are separate from Token Factory."
+    },
+    {
+      "subject": "xAI / Grok",
+      "scope_id": "review-missing-xai",
+      "display_scope": "Platform total not established",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm",
+      "source_date": null,
+      "show_in_plot": true,
+      "note": "Grok is distinct from Groq. Reviewed filing and model announcement disclose no company-wide served-token count.",
+      "checked_at": "2026-11-03"
+    }
+  ],
+  "supplemental_tokens": [
+    {
+      "scope_id": "applied-compute-inference",
+      "subject": "Applied Compute",
+      "display_scope": "AC Inference",
+      "value": 1000000000000.0,
+      "period": "day",
+      "value_relation": ">",
+      "observation_date": null,
+      "source_date": "2026-11-02",
+      "source_url": "https://www.appliedcompute.com/company/100m-run-rate-fundraise",
+      "confidence": "reported",
+      "status": "reported",
+      "comparison_group": "platform",
+      "note": "Company reports more than 1T served tokens/day. Training runs are a separate metric; input/output/cache/modalities and route intersections are unspecified. Publication date is not an invented measurement day. Do not add to other host/router totals."
+    }
+  ]
+}
