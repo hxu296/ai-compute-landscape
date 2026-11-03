@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Applied Compute appears once; no scenario total enters reported view",
+    "pass": true
+  },
+  {
+    "name": "Default GB300 Flash 305 racks and legacy ownership 4357/907 retained",
+    "pass": true
+  },
+  {
+    "name": "November 3 scenario populated",
+    "pass": true
+  },
+  {
+    "name": "Allowed November 1 date retains eligible earlier anchors",
+    "pass": false,
+    "error": "Choose November 1–3, 2026 and monthly growth between −99% and 1,000%."
+  },
+  {
+    "name": "Anthropic price sensitivity and invalid input",
+    "pass": true
+  },
+  {
+    "name": "H100 result has 8-GPU groups and reproduces 6284 racks",
+    "pass": true
+  },
+  {
+    "name": "No page overflow 1600",
+    "pass": true
+  },
+  {
+    "name": "Token SVG labels fit 1600",
+    "pass": true
+  },
+  {
+    "name": "No page overflow 1100",
+    "pass": true
+  },
+  {
+    "name": "Token SVG labels fit 1100",
+    "pass": true
+  },
+  {
+    "name": "No page overflow 390",
+    "pass": true
+  },
+  {
+    "name": "Token SVG labels fit 390",
+    "pass": true
+  },
+  {
+    "name": "No JavaScript page errors",
+    "pass": true,
+    "errors": []
+  }
+]
