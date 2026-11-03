@@ -145,7 +145,7 @@ Index levels differ by method (transacted vs. posted vs. contract). Compare tren
   - Z.ai: RMB4.5B plus HK$31.4B placement.
   - Hyperscaler parents (Alphabet, Meta, Microsoft, Amazon): all have negative or near-zero FCF at current capex.
 - **Chips:** owned, rented and committed counts per lab are in §2. Physical counts are R where filed (xAI S-1, Anthropic, Mistral); otherwise they are Epoch H100e estimates labeled E.
-- **Training-pause effect:** conditional. Per Anthropic's filing, about 64–69% of a frontier lab's compute spend is non-serving, or ≈74% counting the free tier (E). But pools are fungible and contracts are take-or-pay, so a pause mainly (i) re-routes compute to inference and (ii) withdraws short-term demand (about $5B/quarter at Anthropic). Only sublet capacity reaches the market, and 2026 sublets were absorbed while prices rose (H100 $2.96–3.38, B200 $6.54–9.41 on 2026-11-02/03). **No price collapse follows from fleet totals.**
+- **Training-pause effect:** conditional. We estimate from Anthropic's filing that about 64–69% of its compute spend is non-serving, or ≈74% counting the free tier (E; Anthropic's numbers only, not other labs). But pools are fungible and contracts are take-or-pay, so a pause mainly (i) re-routes compute to inference and (ii) withdraws short-term demand (about $5B/quarter at Anthropic). Only sublet capacity reaches the market, and 2026 sublets were absorbed while prices rose (H100 $2.96–3.38, B200 $6.54–9.41 on 2026-11-02/03). **No price collapse follows from fleet totals.**
 
 **Q08.**
 - **Definition:** "largest" = highest reported or Epoch-estimated training FLOP by 2026-11-03, otherwise the latest flagship.
