@@ -61,7 +61,7 @@ Everything else is a cluster figure (Grok 4's "200k-GPU Colossus", Prometheus "h
 ### 3.1 Inputs on the training vs. inference split
 
 - **Anthropic, R (S-1/A, 2026-11-02, Note 8):** 9M-2026 cost of revenue was $4.812B, "substantially all" of it compute for customer-serving workloads. R&D was $19.240B, covering compute for model development, research and internal use, plus personnel. Total compute was $18.808B.
-  - **E:** customer-serving compute ≈ ≤26% of compute spend. Research, training and internal use (plus free-tier compute booked in S&M) ≈ 65–75%. Method: $18.8B − $4.8B, less an assumed $1–2B of S&M free-tier compute. Note that RL rollouts count as training but behave like inference.
+  - **E:** customer-serving compute ≈ ≤26% of compute spend. Research, training and internal use ≈ 64–69% if free-tier compute counts as serving, or ≈74% if it counts as non-serving. Method: $18.8B − $4.8B, less an assumed $1–2B of S&M free-tier compute. Note that RL rollouts count as training but behave like inference.
   - The pool is "fungible by design … directed to wherever it is expected to be most productive". A pause therefore re-routes capacity to inference first.
   - Commitments "must be satisfied regardless of our revenue or utilization" (S-1/A).
 - **Meta, E (Epoch):** MSL holds about 52% of Meta's operational fleet; the rest runs recommenders.
@@ -89,7 +89,7 @@ Each scenario reads "if X, then the channel and size are…". None of them is a 
 | S1 | One frontier lab pauses *pretraining* but keeps RL and inference | Fungible pool is re-routed to serving. Nothing is released to market, and take-or-pay commitments continue. | Anthropic's ≥$313.8B non-cancelable purchase commitments (R) | ≈ none |
 | S2 | The lab also stops buying short-term or spot compute | Marginal demand is withdrawn from neocloud and short-term markets | About $5B/quarter at Anthropic in Q3 2026 (R), ≈ 760k H100e-quarters (E) | Downward pressure on the short-term tier only |
 | S3 | The lab sublets committed capacity | Supply is added through leases or marketplaces. Precedent: xAI leased all of Colossus 1 (>220k GPUs) to Anthropic within weeks, and GB300 to Reflection. SF Compute resells lab overhang. | Leases at $1.25–3.1B/month (R) | 2026 supply was absorbed while indices rose, so there is no evidence it lowered prices |
-| S4 | Industry-wide training pause | Up to about 65–75% of a lab's compute spend becomes "non-serving" (Anthropic E). Most is tied to long contracts, and the release depends on contract cancellability (Anthropic: $213.8B contingent or terminable; SpaceXAI leases on 90 days' notice). | Fleet totals (Epoch H100e) are **not** the released quantity | The upper bound is large. The actual price effect depends on inference demand growth: Google's API tokens rose 4× YoY to about 32B tokens/min (Alphabet Q3 8-K). |
+| S4 | Industry-wide training pause | Up to about 64–74% of a lab's compute spend becomes "non-serving" (Anthropic E). Most is tied to long contracts, and the release depends on contract cancellability (Anthropic: $213.8B contingent or terminable; SpaceXAI leases on 90 days' notice). | Fleet totals (Epoch H100e) are **not** the released quantity | The upper bound is large. The actual price effect depends on inference demand growth: Google's API tokens rose 4× YoY to about 32B tokens/min (Alphabet Q3 8-K). |
 
 **Rule applied:** fleet totals (millions of H100e) do not imply a price collapse. Only capacity that is both *released* (cancellable or sublettable) and *not re-routed to inference* reaches the rental market.
 
@@ -131,7 +131,7 @@ No sourced 2025–2026 resale, sublease or exit was found for Inflection, Adept,
 
 Index levels differ by method (transacted vs. posted vs. contract). Compare trends within one index, not levels across indices.
 
-**Read-across:** the oversupply episode ran from mid-2024 to late 2025. Every index rose from December 2025 to November 2026. In 2026 the largest released capacity came from a *frontier* lab (xAI), not a failed neolab, and it was absorbed at rising prices.
+**Read-across:** the oversupply episode ran from mid-2024 to late 2025. Every index rose from December 2025 to November 2026, but the latest readings are mixed: Compute Desk's one-year H100 index fell 6.7% over 30 days to $2.80 (November 2), while SemiAnalysis' H100 spot-contract composite rose 3.3% to $3.41, and its B200 composite rose 6.8% over 30 days but fell 4.1% in the last week (November 3). In 2026 the largest released capacity came from a *frontier* lab (xAI), not a failed neolab, and it was absorbed at rising prices.
 
 ## 5. Concise answers
 
@@ -145,7 +145,7 @@ Index levels differ by method (transacted vs. posted vs. contract). Compare tren
   - Z.ai: RMB4.5B plus HK$31.4B placement.
   - Hyperscaler parents (Alphabet, Meta, Microsoft, Amazon): all have negative or near-zero FCF at current capex.
 - **Chips:** owned, rented and committed counts per lab are in §2. Physical counts are R where filed (xAI S-1, Anthropic, Mistral); otherwise they are Epoch H100e estimates labeled E.
-- **Training-pause effect:** conditional. Per Anthropic's filing, about 65–75% of a frontier lab's compute spend is non-serving (E). But pools are fungible and contracts are take-or-pay, so a pause mainly (i) re-routes compute to inference and (ii) withdraws short-term demand (about $5B/quarter at Anthropic). Only sublet capacity reaches the market, and 2026 sublets were absorbed while prices rose (H100 $2.96–3.38, B200 $6.54–9.41 on 2026-11-02/03). **No price collapse follows from fleet totals.**
+- **Training-pause effect:** conditional. Per Anthropic's filing, about 64–69% of a frontier lab's compute spend is non-serving, or ≈74% counting the free tier (E). But pools are fungible and contracts are take-or-pay, so a pause mainly (i) re-routes compute to inference and (ii) withdraws short-term demand (about $5B/quarter at Anthropic). Only sublet capacity reaches the market, and 2026 sublets were absorbed while prices rose (H100 $2.96–3.38, B200 $6.54–9.41 on 2026-11-02/03). **No price collapse follows from fleet totals.**
 
 **Q08.**
 - **Definition:** "largest" = highest reported or Epoch-estimated training FLOP by 2026-11-03, otherwise the latest flagship.
