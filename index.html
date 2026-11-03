@@ -117,6 +117,11 @@
     <div class="table-tools"><label class="provider-search">Search deals <input type="search" id="dealSearch" placeholder="Buyer, supplier, chip…"></label><button type="button" id="dealShowAll" class="ctl">Show all deals</button><output id="dealCount" class="small"></output></div>
     <div class="scroll"><table class="t" id="tDeals"></table></div>
   </div></div>
+  <div class="fig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Table 2</span><h3 class="fig-title">Who holds the risk: backlog, debt and buyer concentration</h3></div>
+    <p class="fig-sub" id="riskNote"></p>
+    <div class="scroll"><table class="t" id="riskTable"></table></div>
+  </div></div>
 </section>
 
 <section class="chapter" id="growth">
@@ -192,7 +197,8 @@
         <div class="inference-chart-scroll"><svg id="tokenSvg" role="img" aria-label="Dated token activity grouped by coverage, including separate historical and national disclosures"></svg></div>
       </div>
     </div>
-    <p class="fig-caption">Latest means the latest verified disclosure for that scope, rather than a forecast of today’s volume. Gold bars and D mark period conversions. Month-only rates use a stated 30-day convention; exact observed windows use their day count. API, company, rollout and single-cluster coverage remain distinct. Bounds and ranges survive conversion. Bar dates are marked obs (observation) or pub (publication where the measurement window is unspecified). Router, provider and national totals overlap.</p>
+    <p class="fig-caption">Latest verified disclosure per scope, not today’s volume. Gold bars (D) are period conversions; obs = observed date, pub = publication date. Scopes overlap.</p>
+    <details class="fig-notes"><summary>Conversion rules</summary><p class="small">Month-only rates use a stated 30-day convention; exact observed windows use their day count. API, company, rollout and single-cluster coverage remain distinct. Bounds and ranges survive conversion. Router, provider and national totals overlap.</p></details>
     <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
     <details id="tokenReconciliation"><summary>Why Google’s daily and monthly figures differ</summary><p class="small">Google’s May 2026 figure of over 3.2 quadrillion tokens/month covers its surfaces broadly (over 106.7T/day using a 30-day month). The October disclosure of nearly 32B/minute covers first-party model APIs (nearly 46.08T/day as a rate equivalent). The old 3T/day series covers internal developer tools. These are overlapping scopes from different dates; none should be substituted for another. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">May disclosure</a> · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">October disclosure</a> · <a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank" rel="noopener">Internal-tools disclosure</a>.</p></details>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
@@ -202,11 +208,11 @@
     <p class="fig-sub" id="projectionHeadline"></p>
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
     <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to November 3 on the company’s own trend · line = range. Estimates (E), not disclosures. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
-    <details class="fig-notes"><summary>Components, trends and sources</summary><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
+    <details class="fig-notes"><summary>Components, trends, spend and sources</summary><p class="small" id="spendNote"></p><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
   </div></div>
   <div class="fig demand-review" id="buildout"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Build-out</span><h3 class="fig-title">Compute being built vs compute needed, ex-China</h3></div>
-    <p class="fig-sub">Bars: GB300 NVL72 rack-equivalents (182 H100e each) owned by covered companies at end-2025 plus additions at Epoch-tracked sites. Marker: racks needed for ex-China tokens at the chosen growth, derate and serving share. The verdict turns on the derate: how far real fleets run below benchmark efficiency, including utilization (70% usable alone is 1.4×).</p>
+    <p class="fig-sub">Bars: compute built (GB300 NVL72 rack-equivalents). Marker: compute needed for ex-China tokens. The answer turns on the derate, how far real fleets run below benchmark.</p>
     <div class="research-controls">
       <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
       <label>Real-world derate vs benchmark <output id="buildDerateValue"></output><input id="buildDerate" type="range" min="1" max="8" step="0.5" value="3"></label>
@@ -215,7 +221,9 @@
     </div>
     <div id="buildoutBars" role="img" aria-label="Compute built vs needed by year"></div>
     <p class="small" id="buildoutNote"></p>
-    <p class="small">Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Racks are counted by GPUs (needed GPUs ÷ 72) to compare with supply; the capacity calculator below counts whole racks, which leaves GPUs unused when a serving group does not divide 72 (about 1.3× more racks for V4-Pro, 1.8× for Kimi). 2028 additions are mostly Rubin, which Epoch counts at 8.84 H100e by 8-bit FLOPs; decode is bandwidth-bound and Rubin has about 4–6.6× H100’s bandwidth, so the bandwidth options count the Rubin part 1.3–2× lower. Rubin is about 76% of the H100e in Epoch’s 2028-dated chip entries (ex-China), so 2028 additions scale by 0.82 or 0.62; GB300 and other chips keep their FLOP count. Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
+    <details class="fig-notes"><summary>Method and limits</summary>
+      <p class="small">One rack-equivalent = 182 H100e (72 × 2.53 B300). Supply: covered owners’ end-2025 deliveries plus additions at Epoch-tracked sites. Derate includes utilization (70% usable alone is 1.4×). Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Racks are counted by GPUs (needed GPUs ÷ 72) to compare with supply; the capacity calculator below counts whole racks, which leaves GPUs unused when a serving group does not divide 72 (about 1.3× more racks for V4-Pro, 1.8× for Kimi). 2028 additions are mostly Rubin, which Epoch counts at 8.84 H100e by 8-bit FLOPs; decode is bandwidth-bound and Rubin has about 4–6.6× H100’s bandwidth, so the bandwidth options count the Rubin part 1.3–2× lower. Rubin is about 76% of the H100e in Epoch’s 2028-dated chip entries (ex-China), so 2028 additions scale by 0.82 or 0.62; GB300 and other chips keep their FLOP count. Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
+    </details>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
@@ -230,7 +238,7 @@
     </div>
     <p id="capacityBoundary" class="small"></p>
     <p class="small">GLM-5.3 has no NVL72 run, so GLM-5.2 is shown. Physical GPUs per group are checked against each run’s job topology. A configuration comparison, not an equal-quality ranking.</p>
-    <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
+    <p class="small">Usable capacity reserves headroom for downtime and peaks (not a measured utilization). Speeds are 1 ÷ P90 inter-token latency.</p>
     <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
       <p class="capacity-summary" id="capacitySummary" aria-live="polite"></p>
@@ -238,7 +246,7 @@
       <div class="table-wrap"><table class="t" id="capacityComparison"></table></div>
       <h4>Tokens are not all the same work</h4>
       <div id="capacityMix"></div>
-      <p class="small">Cache hits apply only to input tokens. This control changes the token composition above; <b>it does not change the rack estimate</b>. The runs do not isolate uncached prefill capacity, so they cannot calibrate a cache-hit-to-rack curve. Rack estimates retain the chosen benchmark’s context and cache behavior.</p>
+      <p class="small">Cache hits change the token mix above, <b>not the rack estimate</b>: the benchmarks do not isolate uncached prefill, so racks keep each run’s own cache behavior.</p>
     </div>
       <details><summary>Assumptions, packing and source checks</summary>
         <div class="capacity-controls capacity-costs">
