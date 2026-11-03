@@ -596,10 +596,12 @@ html{scroll-padding-top:74px}
   <div class="prose">
     <div class="label"><span class="num">07</span>Providers</div>
     <h2>Company profiles</h2>
-    <p>Empty fields mean not disclosed, not zero. Hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
+    <p>One card per company, collapsed by default because the charts above already carry the main figures. Empty fields mean not disclosed, not zero; hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
   </div>
+  <details class="fig-notes provider-profiles" id="providerProfiles"><summary>Show all provider profiles: fleets, power, contracts and prices for each company, with sources</summary>
   <div class="fig"><div class="fig-controls"><div class="ctl"><span class="ctl-label">Group</span><span class="seg" id="provCtl"></span></div></div>
     <label class="provider-search">Find a provider <input type="search" id="providerSearch" placeholder="Name or group…"><output id="providerCount"></output></label><div class="pcards" id="provCards"></div></div>
+  </details>
 </section>
 
 <section class="chapter" id="method">
