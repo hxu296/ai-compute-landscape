@@ -24,3 +24,11 @@ test('reserving capacity increases rack requirement; invalid inputs cannot produ
  assert.ok(calc('444914',{usableCapacity:.7}).racks>calc('444914').racks);
  for(const change of [{outputShare:1.1},{cacheHit:-.1},{usableCapacity:0},{tokensPerDay:NaN}])assert.throws(()=>calc('444914',change));
 });
+test('defaults maximize packed-rack output among audited configs at the stated speed floor',()=>{
+ const policy=data.selection_policy;assert.equal(policy.minimum_p90_tok_s_user,95);
+ for(const [model,key] of [['DeepSeek-V4-Pro','pro'],['DeepSeek-V4.1-Flash','flash']]){
+  const ranked=policy.candidates.filter(p=>p.model===model&&p.p90_tok_s_user>=policy.minimum_p90_tok_s_user).sort((a,b)=>b.whole_group_output_tps_per_rack-a.whole_group_output_tps_per_rack);
+  assert.equal(data.default_points[key],ranked[0].result_id);
+ }
+ assert.equal(data.default_points.pro,'444911');assert.equal(data.default_points.flash,'446626');
+});

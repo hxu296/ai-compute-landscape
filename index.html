@@ -181,14 +181,15 @@
         <div class="legend"><span><i style="background:var(--s1)"></i>Clouds</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
       </div>
       <div id="tokens" class="inference-tokens">
-        <div class="fig-head"><span class="fig-no">Token activity</span><h3>Reported token use</h3></div>
-        <div class="fig-controls"><label class="ctl">Reporting period <select id="tokenPeriod"></select></label></div>
-        <p class="fig-sub">Gold bars and D mark conversions. OpenRouter’s daily rate is its weekly total ÷ 7; OpenAI’s is its minute rate × 1,440.</p>
+        <div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest reported token use</h3></div>
+        <div class="fig-controls"><label class="ctl">View <select id="tokenPeriod"></select></label></div>
+        <p class="fig-sub" id="tokenViewNote">Daily equivalents of the latest disclosures, with the native values and scope retained below.</p>
         <svg id="tokenSvg" role="img" aria-label="Dated token activity with each company’s reporting scope"></svg>
       </div>
     </div>
-    <p class="fig-caption">Dates and scopes differ. Bars show one latest dated figure per subject in the selected period; the table retains every collected series. API-only, chatbot, single-cluster and company-consumption disclosures have different coverage. A ≥ marker retains a lower bound. Unavailable totals appear without a bar. Router and provider traffic can overlap, so these figures do not form a market total.</p>
+    <p class="fig-caption">Latest means the latest verified disclosure for that scope, rather than a forecast of today’s volume. Gold bars and D mark period conversions. Month-only rates use a stated 30-day convention; exact observed windows use their day count. API, company, rollout and single-cluster coverage remain distinct. Bounds and ranges survive conversion. Bar dates are marked obs (observation) or pub (publication where the measurement window is unspecified). Router, provider and national totals overlap.</p>
     <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
+    <details id="tokenReconciliation"><summary>Why Google’s daily and monthly figures differ</summary><p class="small">Google’s May 2026 figure of over 3.2 quadrillion tokens/month covers its surfaces broadly (over 106.7T/day using a 30-day month). The October disclosure of nearly 32B/minute covers first-party model APIs (nearly 46.08T/day as a rate equivalent). The old 3T/day series covers internal developer tools. These are overlapping scopes from different dates; none should be substituted for another. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">May disclosure</a> · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">October disclosure</a> · <a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank" rel="noopener">Internal-tools disclosure</a>.</p></details>
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
@@ -204,6 +205,7 @@
       <label>Flash operating point<select id="capacityFlash"></select></label>
     </div>
     <p id="capacityBoundary" class="small"></p>
+    <p class="small">Defaults maximize output throughput per packed rack among the audited GB200 coding-trace configurations delivering at least 95 tokens/s/user: Pro at 95.8 and Flash at 112.7. Alternative operating points remain selectable.</p>
     <p class="small">“Usable capacity” reserves room for downtime, peaks and other losses relative to the benchmark. At 70%, 30% is reserved; it is not a measured GPU utilization rate. Per-user speeds below are reciprocals of P90 response inter-token latency.</p>
     <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
@@ -276,7 +278,7 @@
 <footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
-<script src="data/nc.js?v=5214e183e486"></script>
+<script src="data/nc.js?v=259e60b12fc3"></script>
 <script src="data/live.js?v=829cf3056d40"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -288,11 +290,12 @@
 <script src="js/growth.js?v=45084cb5a134"></script>
 <script src="js/pricing.js?v=db10456fce6c"></script>
 <script src="js/usage.js?v=5cf52da7045f"></script>
-<script src="js/tokens.js?v=d1d3debabfc7"></script>
+<script src="js/token_math.js?v=7e8697448be1"></script>
+<script src="js/tokens.js?v=21e3cc4c97c4"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
-<script src="js/capacity.js?v=993949799618"></script>
+<script src="js/capacity.js?v=8d231a759b0e"></script>
 <script src="js/lists.js?v=6b9ec599d94c"></script>
-<script src="js/research.js?v=3616e35d5999"></script>
+<script src="js/research.js?v=8ca499a95b64"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>
 </body>
 </html>

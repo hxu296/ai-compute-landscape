@@ -14,7 +14,7 @@
     Object.entries(configs).filter(([key])=>byId.get(key).model.endsWith(i?'Flash':'Pro')).forEach(([key,label])=>{
       const o=document.createElement('option');o.value=key;o.textContent=label;$('#'+id).appendChild(o);
     });
-    $('#'+id).value=i?'446626':'444914';
+    $('#'+id).value=i?data.default_points.flash:data.default_points.pro;
   });
   data.presets.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.label;$('#capacityPreset').appendChild(o);});
   function draw(){

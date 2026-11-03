@@ -2,16 +2,36 @@
   {
     "subject": "Anthropic",
     "show_in_plot": true,
-    "note": "Comparable absolute token total unavailable in the checked primary sources as of November 2, 2026. Economic Index samples, revenue and contract values do not establish company-wide token volume.",
-    "source_url": "https://www.anthropic.com/research/economic-index-june-2026-report"
+    "note": "No absolute daily/weekly/monthly total established. S-1, economic-index samples, internal activity and revenue do not provide company-wide tokens. Router-hosted Claude remains a different scope.",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm"
+  },
+  {
+    "subject": "Groq",
+    "show_in_plot": false,
+    "note": "October15 primary post reaffirms qualitative trillions/week, no numeric value or valid daily-equivalent floor. Do not turn plural into2T.",
+    "source_url": "https://groq.com/blog/meta-s-muse-spark-open-release-is-now-in-limited-preview-on-groqcloud"
+  },
+  {
+    "subject": "Cerebras",
+    "show_in_plot": false,
+    "note": "August12 Q2 results and October22 architecture post disclose revenue, capacity and speed, no comparable realized volume.",
+    "source_url": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-systems-fast-inference-cloud-business-nearly-quadruples"
+  },
+  {
+    "subject": "SambaNova",
+    "show_in_plot": false,
+    "note": "Account quotas and SambaStack throughput/capacity are not actual platform totals. No comparable absolute found.",
+    "source_url": "https://sambanova.ai/products/sambastack"
+  },
+  {
+    "subject": "OpenRouter",
+    "show_in_plot": false,
+    "note": "No complete absolute total for November2 is established by public rankings; the dated broad-platform series and newer classified top50 subset retain separate scopes.",
+    "source_url": "https://openrouter.ai/rankings?view=week"
   },
   {
     "subject": "Baseten",
-    "note": "The plotted approximately 30T/day is a CEO disclosure in a Stanford recording published June 5. Its measurement date is unspecified; the upload date is identified in the row.",
-    "source_url": "https://www.youtube.com/watch?v=Qh7Oxvo5sJI&t=2129s"
-  },
-  {
-    "subject": "Groq, Cerebras and SambaNova",
-    "note": "No comparable dated platform-wide token total is established in this collection. Hardware throughput benchmarks and API prices do not measure tokens actually served."
+    "note": "Latest company-issued release reports40–50T/day on September25. The old~30T/day recording is retained in native-period history.",
+    "source_url": "https://www.streetinsider.com/Business%2BWire/Baseten%2BNames%2BSheila%2BVashee%2BChief%2BMarketing%2BOfficer/27106238.html"
   }
 ]

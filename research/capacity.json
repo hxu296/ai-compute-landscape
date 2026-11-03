@@ -358,5 +358,322 @@
       "value": null,
       "note": "Custom assumed logical token demand, expressed in the benchmark token basis. No market total is inferred from the provider disclosures."
     }
-  ]
+  ],
+  "default_points": {
+    "pro": "444911",
+    "flash": "446626"
+  },
+  "selection_policy": {
+    "checked_utc": "2026-11-03T03:01:00Z",
+    "hardware": "gb200",
+    "benchmark_type": "agentic_traces",
+    "minimum_p90_tok_s_user": 95,
+    "objective": "maximum output TPS per hypothetical whole-group-packed 72-GPU rack; quality and CPU/DRAM costs are not controlled",
+    "candidates": [
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444579",
+        "gpus_per_group": 48,
+        "p90_tok_s_user": 120.48192771084337,
+        "group_output_tps": 9546.46168,
+        "whole_group_output_tps_per_rack": 9546.46168
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444582",
+        "gpus_per_group": 8,
+        "p90_tok_s_user": 287.35632183908046,
+        "group_output_tps": 145.79018,
+        "whole_group_output_tps_per_rack": 1312.11162
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444578",
+        "gpus_per_group": 8,
+        "p90_tok_s_user": 239.8081534772182,
+        "group_output_tps": 218.85114,
+        "whole_group_output_tps_per_rack": 1969.6602599999999
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444584",
+        "gpus_per_group": 24,
+        "p90_tok_s_user": 151.05740181268882,
+        "group_output_tps": 3023.59966,
+        "whole_group_output_tps_per_rack": 9070.79898
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444580",
+        "gpus_per_group": 24,
+        "p90_tok_s_user": 137.5515818431912,
+        "group_output_tps": 5126.9082,
+        "whole_group_output_tps_per_rack": 15380.7246
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444585",
+        "gpus_per_group": 64,
+        "p90_tok_s_user": 77.57951900698215,
+        "group_output_tps": 25285.08899,
+        "whole_group_output_tps_per_rack": 25285.08899
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444581",
+        "gpus_per_group": 64,
+        "p90_tok_s_user": 65.44502617801047,
+        "group_output_tps": 30897.26351,
+        "whole_group_output_tps_per_rack": 30897.26351
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444583",
+        "gpus_per_group": 64,
+        "p90_tok_s_user": 55.46311702717693,
+        "group_output_tps": 35145.32187,
+        "whole_group_output_tps_per_rack": 35145.32187
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444916",
+        "gpus_per_group": 16,
+        "p90_tok_s_user": 141.04372355430183,
+        "group_output_tps": 1198.24914,
+        "whole_group_output_tps_per_rack": 4792.99656
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444907",
+        "gpus_per_group": 16,
+        "p90_tok_s_user": 119.18951132300357,
+        "group_output_tps": 2780.64983,
+        "whole_group_output_tps_per_rack": 11122.59932
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444914",
+        "gpus_per_group": 16,
+        "p90_tok_s_user": 104.60251046025104,
+        "group_output_tps": 4950.88918,
+        "whole_group_output_tps_per_rack": 19803.55672
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444909",
+        "gpus_per_group": 16,
+        "p90_tok_s_user": 87.10801393728222,
+        "group_output_tps": 8872.00915,
+        "whole_group_output_tps_per_rack": 35488.0366
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444912",
+        "gpus_per_group": 16,
+        "p90_tok_s_user": 80.51529790660226,
+        "group_output_tps": 12777.43293,
+        "whole_group_output_tps_per_rack": 51109.73172
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444908",
+        "gpus_per_group": 28,
+        "p90_tok_s_user": 93.89671361502347,
+        "group_output_tps": 17959.48043,
+        "whole_group_output_tps_per_rack": 35918.96086
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444913",
+        "gpus_per_group": 8,
+        "p90_tok_s_user": 255.7544757033248,
+        "group_output_tps": 126.68983,
+        "whole_group_output_tps_per_rack": 1140.20847
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444917",
+        "gpus_per_group": 8,
+        "p90_tok_s_user": 178.89087656529517,
+        "group_output_tps": 206.54751,
+        "whole_group_output_tps_per_rack": 1858.9275899999998
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444910",
+        "gpus_per_group": 8,
+        "p90_tok_s_user": 125.47051442910916,
+        "group_output_tps": 362.85746,
+        "whole_group_output_tps_per_rack": 3265.71714
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444911",
+        "gpus_per_group": 20,
+        "p90_tok_s_user": 95.78544061302682,
+        "group_output_tps": 12650.99349,
+        "whole_group_output_tps_per_rack": 37952.98047
+      },
+      {
+        "model": "DeepSeek-V4-Pro",
+        "result_id": "444915",
+        "gpus_per_group": 24,
+        "p90_tok_s_user": 90.90909090909092,
+        "group_output_tps": 13608.56008,
+        "whole_group_output_tps_per_rack": 40825.68024
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444216",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 515.4639175257731,
+        "group_output_tps": 182.34189,
+        "whole_group_output_tps_per_rack": 3282.15402
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444213",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 485.43689320388347,
+        "group_output_tps": 268.43728,
+        "whole_group_output_tps_per_rack": 4831.87104
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444211",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 377.35849056603774,
+        "group_output_tps": 458.12775,
+        "whole_group_output_tps_per_rack": 8246.2995
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444209",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 218.3406113537118,
+        "group_output_tps": 1472.0713,
+        "whole_group_output_tps_per_rack": 26497.2834
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446624",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 409.8360655737705,
+        "group_output_tps": 715.13905,
+        "whole_group_output_tps_per_rack": 12872.5029
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446625",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 578.0346820809249,
+        "group_output_tps": 174.14901,
+        "whole_group_output_tps_per_rack": 3134.6821800000002
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446628",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 502.51256281407035,
+        "group_output_tps": 269.73299,
+        "whole_group_output_tps_per_rack": 4855.1938199999995
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446630",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 444.44444444444446,
+        "group_output_tps": 455.53173,
+        "whole_group_output_tps_per_rack": 8199.57114
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446627",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 337.83783783783787,
+        "group_output_tps": 1324.01501,
+        "whole_group_output_tps_per_rack": 23832.27018
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444215",
+        "gpus_per_group": 2,
+        "p90_tok_s_user": 194.9317738791423,
+        "group_output_tps": 434.8839,
+        "whole_group_output_tps_per_rack": 15655.820399999999
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444208",
+        "gpus_per_group": 2,
+        "p90_tok_s_user": 155.7632398753894,
+        "group_output_tps": 689.28302,
+        "whole_group_output_tps_per_rack": 24814.18872
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444214",
+        "gpus_per_group": 2,
+        "p90_tok_s_user": 120.19230769230771,
+        "group_output_tps": 1329.17874,
+        "whole_group_output_tps_per_rack": 47850.43464
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444212",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 132.4503311258278,
+        "group_output_tps": 3245.09845,
+        "whole_group_output_tps_per_rack": 58411.7721
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "444210",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 85.6898029134533,
+        "group_output_tps": 5500.14558,
+        "whole_group_output_tps_per_rack": 99002.62044
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446629",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 242.71844660194174,
+        "group_output_tps": 3365.42461,
+        "whole_group_output_tps_per_rack": 60577.642980000004
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446631",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 206.18556701030928,
+        "group_output_tps": 4687.1011,
+        "whole_group_output_tps_per_rack": 84367.8198
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446622",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 185.87360594795538,
+        "group_output_tps": 5910.44209,
+        "whole_group_output_tps_per_rack": 106387.95761999999
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446623",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 164.4736842105263,
+        "group_output_tps": 7040.07709,
+        "whole_group_output_tps_per_rack": 126721.38762
+      },
+      {
+        "model": "DeepSeek-V4.1-Flash",
+        "result_id": "446626",
+        "gpus_per_group": 4,
+        "p90_tok_s_user": 112.73957158962797,
+        "group_output_tps": 10134.58102,
+        "whole_group_output_tps_per_rack": 182422.45836
+      }
+    ]
+  }
 }
