@@ -240,6 +240,14 @@
       "evidence_category": "R"
     },
     {
+      "subject": "Tencent",
+      "claim": "Hy4 preview used in its own R&D: training methods, data strategy, evaluation, operator optimization; inference-system tuning +31.8% end-to-end throughput",
+      "note": "Company-stated self-development use (Hy4 announcement). The same page reports an internal blind test by 163 Tencent experts on 203 engineering tasks: Hy4 preview 2.99/4 vs GLM 5.3 2.92 and Kimi K3 2.94. Task-scoped; no organization-wide usage share or exact production version.",
+      "source_url": "https://www.tencent.com/zh-cn/tencent-releases-and-open-sources-tencent-hy4-preview/",
+      "source_date": "2026-08-28",
+      "evidence_category": "R"
+    },
+    {
       "subject": "Baidu",
       "claim": "Comate used in internal AgentShield development",
       "note": "Comate documentation lists ERNIE and DeepSeek among hosted models; no company-wide allocation disclosed.",
@@ -261,6 +269,14 @@
       "note": "Reuters reported July 3 that staff were directed to Qoder. The company-issued Qwen-Coder-Qoder launch identifies one model; Qoder’s internal model shares or exclusive backend are not established.",
       "source_url": "https://www.investing.com/news/stock-market-news/alibaba-to-ban-claude-code-in-workplace-over-alleged-backdoor-risks-source-says-4775035",
       "source_date": "2026-07-03",
+      "evidence_category": "R"
+    },
+    {
+      "subject": "Z.ai (Zhipu)",
+      "claim": "Daily R&D code generation, defect fixing and test writing 'largely completed autonomously by AI' on self-developed models/agents; GLM-5.3-powered infra agent optimized the GLM-5.3-Flash inference engine",
+      "note": "Issuer interim announcement (Aug 31, Human Resources and Business Review sections). Self-reported and task-scoped; no per-model share, exact internal model version or share of engineering work is quantified.",
+      "source_url": "https://cdn.financialreports.eu/financialreports/media/filings/50642/2026/RNS/50642_rns_2026-08-31_dccaa9af-2a08-44d5-84e0-53f7f75c190d.pdf",
+      "source_date": "2026-08-31",
       "evidence_category": "R"
     }
   ],

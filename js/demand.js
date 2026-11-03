@@ -22,15 +22,16 @@
     const anchors=TokenMath.latestByScope([...NC.token_snapshot.records,...(data.supplemental_tokens||[])]).filter(r=>r.comparison_group==='platform');
     try{
       if(target<'2026-11-01'||target>'2026-11-03')throw new Error('Use the reviewed November window');
-      const rows=anchors.map(r=>{
+      const items=anchors.map(r=>{
         const d=TokenMath.daily(r),reference=/^\d{4}-\d{2}-\d{2}$/.test(r.observation_date||'')?r.observation_date:r.source_date;
-        const projected=DemandMath.extrapolate(d.value,reference,target,growth),high=d.high==null?null:DemandMath.extrapolate(d.high,reference,target,growth).value;
-        return{subject:r.subject,scope:r.display_scope,anchor_daily:d.value,anchor_high:d.high,anchor_bound:TokenMath.boundText(r),reference,reference_basis:r.observation_date?'disclosed observation':'publication used only as scenario reference',days:projected.days,scenario_daily:projected.value,scenario_high:high,target_date:target,assumed_monthly_growth:growth,evidence_category:'E',source_url:r.source_url,note:r.note};
-      }).sort((a,b)=>b.scenario_daily-a.scenario_daily);
-      $('#tokenScenarioNote').textContent=`E: disclosed anchors scaled to ${target} at an assumed ${fmt(growth*100)}% per month. Zero holds each anchor constant. Bars are scenarios, not measured November usage or new lower bounds. Dates, scopes and token accounting differ; no total is calculated.`;
+        return{subject:r.subject,scope:r.display_scope,anchor_daily:d.value,anchor_high:d.high,anchor_bound:TokenMath.boundText(r),reference,reference_basis:r.observation_date?'disclosed observation':'publication used only as scenario reference',target_date:target,assumed_monthly_growth:growth,evidence_category:'E',source_url:r.source_url,note:r.note};
+      });
+      const {rows,later}=DemandMath.projectAnchors(items,target,growth);
+      later.forEach(r=>{r.unavailable=`Anchor dated ${r.reference} is after the selected ${target} target.`;});
+      $('#tokenScenarioNote').textContent=`E: disclosed anchors scaled to ${target} at an assumed ${fmt(growth*100)}% per month. Zero holds each anchor constant. Bars are scenarios, not measured November usage or new lower bounds. Dates, scopes and token accounting differ; no total is calculated.`+(later.length?` Not scaled for this date: ${later.map(r=>r.subject).join(', ')} (anchor dated after the target).`:'');
       const max=Math.max(...rows.map(r=>r.scenario_high||r.scenario_daily),1);
       $('#tokenScenarioBars').innerHTML=rows.map(r=>`<div class="demand-bar-row"><div><b>${esc(r.subject)}</b><br><span class="small">${esc(r.scope)}</span></div><div class="demand-bar-track"><span style="width:${100*r.scenario_daily/max}%"></span></div><strong>≈${tri(r.scenario_daily)}${r.scenario_high!=null?'–'+tri(r.scenario_high):''} E</strong></div>`).join('');
-      table('#tokenScenarioTable',rows,[{k:'subject',h:'Company / exact scope',f:r=>`<b>${esc(r.subject)}</b><br>${esc(r.scope)}`},{k:'anchor_daily',h:'Dated daily equivalent',f:r=>`${esc(r.anchor_bound)}${tri(r.anchor_daily)}${r.anchor_high!=null?'–'+tri(r.anchor_high):''}<br>${esc(r.reference)} · ${r.days} days to target<br><span class="small">${esc(r.reference_basis)}</span>`},{k:'scenario_daily',h:'November scenario',f:r=>`≈${tri(r.scenario_daily)}${r.scenario_high!=null?'–'+tri(r.scenario_high):''}/day E`},{k:'note',h:'Source / scope',f:r=>esc(r.note)+' '+src(r.source_url,'Source ↗')}]);
+      table('#tokenScenarioTable',[...rows,...later],[{k:'subject',h:'Company / exact scope',f:r=>`<b>${esc(r.subject)}</b><br>${esc(r.scope)}`},{k:'anchor_daily',h:'Dated daily equivalent',f:r=>`${esc(r.anchor_bound)}${tri(r.anchor_daily)}${r.anchor_high!=null?'–'+tri(r.anchor_high):''}<br>${esc(r.reference)}${r.days==null?'':' · '+r.days+' days to target'}<br><span class="small">${esc(r.reference_basis)}</span>`},{k:'scenario_daily',h:'November scenario',f:r=>r.scenario_daily==null?esc(r.unavailable):`≈${tri(r.scenario_daily)}${r.scenario_high!=null?'–'+tri(r.scenario_high):''}/day E`},{k:'note',h:'Source / scope',f:r=>esc(r.note)+' '+src(r.source_url,'Source ↗')}]);
     }catch(error){$('#tokenScenarioNote').textContent='Choose November 1–3, 2026 and monthly growth between −99% and 1,000%.';$('#tokenScenarioBars').textContent='Scenario unavailable.';table('#tokenScenarioTable',[],[{k:'subject',h:'No valid scenario'}]);}
   }
   for(const id of ['tokenScenarioGrowth','tokenScenarioDate'])$('#'+id).addEventListener('input',drawScenarios);drawScenarios();

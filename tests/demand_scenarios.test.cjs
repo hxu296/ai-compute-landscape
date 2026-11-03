@@ -45,3 +45,12 @@ test('browser snapshot matches research inputs and unknown provider totals have 
  const applied=research.supplemental_tokens.find(r=>r.scope_id==='applied-compute-inference');
  assert.equal(applied.value,1e12);assert.equal(applied.value_relation,'>');assert.equal(applied.period,'day');assert.equal(applied.source_date,'2026-11-02');assert.equal(applied.observation_date,null);
 });
+test('a later anchor is unavailable for an earlier target without clearing other scenarios',()=>{
+ const items=[{subject:'Early',anchor_daily:40e12,anchor_high:null,reference:'2026-07-15'},{subject:'Applied Compute',anchor_daily:1e12,anchor_high:null,reference:'2026-11-02'},{subject:'Range',anchor_daily:40e12,anchor_high:50e12,reference:'2026-09-25'}];
+ const nov1=math.projectAnchors(items,'2026-11-01',0);
+ assert.deepEqual(nov1.rows.map(r=>r.subject),['Early','Range']);assert.deepEqual(nov1.later.map(r=>r.subject),['Applied Compute']);
+ assert.equal(nov1.rows[1].scenario_high,50e12);assert.equal(nov1.later[0].scenario_daily,null);
+ for(const target of ['2026-11-02','2026-11-03']){const r=math.projectAnchors(items,target,0);assert.equal(r.rows.length,3);assert.equal(r.later.length,0);assert.equal(r.rows.find(x=>x.subject==='Applied Compute').scenario_daily,1e12);}
+ close(math.projectAnchors(items,'2026-11-03',.1).rows.find(x=>x.subject==='Early').scenario_daily,40e12*1.1**(111/30.4375));
+ assert.throws(()=>math.projectAnchors(items,'2026-11',0));assert.throws(()=>math.projectAnchors(items,'2026-11-03',-1));
+});
