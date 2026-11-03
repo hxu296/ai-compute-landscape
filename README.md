@@ -39,7 +39,7 @@ The rules used throughout:
 
 The method section at the bottom of the page lists what the data cannot tell you, with a [prioritized evidence queue](research/GAPS.md).
 
-The inference calculator uses raw SemiAnalysis InferenceX serving-group rates, not the interpolated total-token headline. Its default 500T/day traffic is an **assumption**, not an observed market total. Cached input, output and fresh input are distinct. Cache composition does not recalibrate rack demand because isolated uncached-prefill capacity is unavailable. All 72 physical GPUs per rack incur the displayed cost and power allowance. Selected benchmark records and exact API URLs are in [research/capacity.json](research/capacity.json); run arithmetic and dataset checks with `node --test tests/*.test.cjs`.
+The inference calculator uses raw SemiAnalysis InferenceX serving-group rates, not the interpolated total-token headline. Its default 500T/day traffic is an **assumption**, not an observed market total. Cached input, output and fresh input are distinct. Cache composition does not recalibrate rack demand because isolated uncached-prefill capacity is unavailable. Physical NVL72 racks contain 72 GPUs, while SXM rack density is a user assumption; whole-rack counts include spare slots. Ownership cost and power allowances apply only to the retained GB200 examples. Selected benchmark records and exact API URLs are in [research/capacity.json](research/capacity.json) and [research/capacity-expanded.json](research/capacity-expanded.json); run arithmetic and dataset checks with `node --test tests/*.test.cjs`.
 
 ## Files
 
@@ -70,3 +70,15 @@ The [daily ETL design](automation/DESIGN.md) documents source coverage, validati
 The news banner opens the full searchable archive, supports multiple stories per day, and separates explained impact ratings from confidence in the evidence. The Inference section combines workload shares and token activity, retaining native reporting periods and source-specific scope. Click chart marks to pin details and open their source links; Escape or an outside click dismisses them.
 
 The token view defaults to latest disclosures by explicit scope, normalized to daily equivalents. Native values, ranges, publication dates and observation windows remain visible; a standard30-day month is stated when the source gives no calendar window. This is unit normalization, not a forecast of present traffic. Google’s all-surfaces and first-party API meters remain separate. The reviewed snapshot is [research/token-latest.json](research/token-latest.json); native-period history is retained in the selector. News impact uses verbal labels in the interface while stable numeric scores remain in the source schema.
+
+## Demand review and local scenarios
+
+The [November 3 demand review](research/TOKEN-DEMAND-2026-11-03.md) covers token overlap, explicit Anthropic revenue sensitivities, training and financing evidence, and the small-rack counterargument. It adds independent review snapshots rather than hand-editing the curated `nc.js` projection. When changing these snapshots, regenerate the browser data before packaging:
+
+```sh
+python3 automation/build_research.py
+node --test tests/*.test.cjs
+python3 automation/package.py
+```
+
+`python3 automation/snapshot_capacity.py --cache PATH --retrieved-utc ISO_TIMESTAMP` rebuilds the expanded snapshot from explicitly downloaded InferenceX response files. It does not fetch feeds or modify the editorial archive. The [review index](research/REVIEW-INDEX-2026-11-03.md) maps all fifteen questions to evidence and remaining gaps. See [source integration](research/SOURCE-INTEGRATION.md) for the full-research-checkout handoff.
