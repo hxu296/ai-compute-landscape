@@ -2,6 +2,53 @@
   "schema_version": 2,
   "items": [
     {
+      "id": "digitalocean-q3-inference-growth-20261103",
+      "date": "2026-11-03",
+      "title": "DigitalOcean reports roughly 10× quarterly inference-token growth and $376M AI customer ARR",
+      "summary": "DigitalOcean’s November 3 results report $321 million of revenue for the quarter ended September 30, up 40% year over year, and $376 million of AI Customer ARR, up 288%. That ARR annualizes the quarter’s revenue from customers using AI/ML offerings and includes their other cloud services; it is not inference-only revenue. Management says Inference Engine token volume grew roughly tenfold from the prior quarter, without disclosing an absolute count. It also says 20 incremental megawatts have been secured for 2028. The results support accelerating demand at this provider, while the token ratio supplies no platform-wide daily total and the future megawatts are not operating capacity.",
+      "sources": [
+        {
+          "title": "DigitalOcean announces third-quarter 2026 financial results; metric definitions included",
+          "url": "https://investors.digitalocean.com/news/news-details/2026/DigitalOcean-Announces-Third-Quarter-2026-Financial-Results/default.aspx",
+          "date": "2026-11-03"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 3,
+      "impact_reason": "Rapid inference growth and a larger AI customer cohort are a substantial cloud-segment development. Unspecified absolute token volume and future capacity limit conclusions about global supply.",
+      "confidence": "High for the company-reported results and metric definitions; the approximate token-growth ratio is management-reported.",
+      "event_date": "2026-11-03",
+      "event_date_scope": "Results announcement; financial measurements cover the quarter ended September 30, 2026.",
+      "future_target": "20 incremental MW secured for 2028; service-start timing and comparable IT-load basis are not disclosed."
+    },
+    {
+      "id": "openai-grid-protectors-program-20261103",
+      "date": "2026-11-03",
+      "title": "OpenAI launches grid-flexibility program, building on Georgia’s up-to-1GW agreement",
+      "summary": "OpenAI announced Grid Protectors on November 2 to negotiate demand-reduction arrangements for future compute campuses. Its pilot is the planned Effingham County, Georgia campus, whose agreement includes up to 1,000MW of flexible demand response once operating. Georgia Power disclosed that commitment on July 22 under a 25-year agreement for a facility expected to need approximately 3,200MW. The new announcement extends that model into a national program; it does not announce a new 1GW block of generation or an operating campus. Local response amounts, speed and duration will vary, and further commitments remain to be finalized. Grid flexibility could affect how large AI loads secure utility service, but delivered curtailment has not been established.",
+      "sources": [
+        {
+          "title": "OpenAI introduces the Grid Protectors Program",
+          "url": "https://openai.com/index/grid-protectors-program/",
+          "date": "2026-11-02"
+        },
+        {
+          "title": "Georgia Power to serve OpenAI project in Effingham County",
+          "url": "https://www.georgiapower.com/news-hub/press-releases/georgia-power-to-serve-openai-project-in-effingham-county.html",
+          "date": "2026-07-22"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 3,
+      "impact_reason": "An up-to-1GW flexibility agreement is a substantial regional grid-integration commitment and a proposed model for other campuses. The campus and wider rollout remain prospective.",
+      "confidence": "High for the announced program and agreement terms, corroborated by the utility; actual operating performance remains unmeasured.",
+      "event_date": "2026-11-02",
+      "event_date_scope": "National program announcement; the Georgia agreement was already publicly disclosed July 22. Editorial review dated November 3.",
+      "future_target": "Effingham pilot once the planned campus operates; this announcement gives no operating date."
+    },
+    {
       "id": "marvell-lumentum-merger-announcement-20261102",
       "date": "2026-11-02",
       "title": "Marvell proposes $115B Lumentum acquisition to combine chip and optical connectivity",
@@ -30,9 +77,19 @@
     {
       "id": "oracle-preliminary-stock-and-notes-offerings-20261102",
       "date": "2026-11-02",
-      "title": "Oracle files for $10B stock sale and separate $10B debt offering",
-      "summary": "Oracle filed preliminary prospectus supplements dated November 2 for $10 billion of common stock and a separate $10 billion senior-notes offering. The proposed financing is material to a cloud supplier expanding its infrastructure, but the filings allow broad corporate uses, including capital spending, debt repayment, acquisitions and shareholder distributions. Neither offering depends on the other closing, and pricing and several terms remain blank in the preliminary documents. The combined $20 billion is proposed gross financing, not completed fundraising, a dedicated AI construction budget or delivered data-center capacity.",
+      "title": "Oracle prices $10B stock sale and $10B notes; closing expected November 4",
+      "summary": "Oracle’s November 2 pricing release sets 86,206,897 common shares at $116 each, approximately $10 billion gross, alongside $10 billion of senior notes. The five debt tranches carry coupons from 7.000% to 8.650% and mature between 2029 and 2046. Both offerings are expected to close November 4, subject to customary conditions, and neither closing depends on the other. Pricing replaces the preliminary terms reported here earlier. The financing is material to a major cloud supplier, but proceeds have broad corporate uses; this does not establish completed fundraising, an AI-specific construction budget or delivered capacity.",
       "sources": [
+        {
+          "title": "Oracle pricing announcement (company-issued release via PR Newswire)",
+          "url": "https://www.prnewswire.com/news-releases/oracle-announces-pricing-of-20-billion-of-common-stock-and-senior-notes-302927244.html",
+          "date": "2026-11-02"
+        },
+        {
+          "title": "Oracle final senior-notes pricing term sheet, Form FWP",
+          "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526443918/d87441dfwp.htm",
+          "date": "2026-11-02"
+        },
         {
           "title": "Oracle preliminary common-stock prospectus supplement, Form 424B5",
           "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526442729/d181425d424b5.htm",
@@ -47,28 +104,36 @@
       "status": "reviewed",
       "kind": "news",
       "impact_score": 4,
-      "impact_reason": "A proposed $20B capital raise by a major cloud infrastructure supplier is a significant financing development. Infrastructure allocation and completion remain uncertain, so no capacity conversion is justified.",
-      "confidence": "High for proposed amounts, independent closing conditions and permitted uses, verified directly in both SEC prospectus supplements. No confidence claim about final pricing, completion or AI-specific allocation.",
+      "impact_reason": "A $20B financing priced by a major cloud supplier materially changes its funding terms. Closing and the infrastructure allocation remain unresolved.",
+      "confidence": "High for company-announced pricing and SEC-filed note terms; completion and any AI-specific allocation remain unverified.",
       "event_date": "2026-11-02",
-      "event_date_scope": "Preliminary prospectus filings; no completed issuance or allocation to particular sites established.",
-      "future_target": null
+      "event_date_scope": "Pricing announcement dated November 2 in the issuer release (posted 22:09 ET, November 3 UTC); replaces preliminary terms under the same story ID.",
+      "future_target": "November 4, 2026 expected closing, subject to customary conditions"
     },
     {
       "date": "2026-11-02",
       "title": "Anthropic’s compute commitments carry different risks",
-      "summary": "Anthropic’s October 26 S-1 shows why headline compute commitments need their contract terms. It describes minimum spending of $110 billion with AWS from May 2026 through April 2036 and $44.9 billion with Microsoft from November 2026 through May 2033, with specified breach and delivery exceptions. Its SpaceX arrangements have a nominal aggregate of up to $120.5 billion through 2029, but either party can cancel on 90 days’ notice after initial noncancelable periods ending in January and March 2027. The guaranteed SpaceX minimum is not separately quantified. These agreements create different revenue certainty for suppliers; their announced totals do not establish delivered capacity, and amendments must not be counted again as new deals.",
+      "summary": "Anthropic’s November 2 amended S-1 describes minimum spending of $110 billion with AWS from May 2026 through April 2036 and $44.9 billion with Microsoft from November 2026 through June 2033, subject to specified exceptions. The Microsoft end date updates the earlier filing’s May 2033 date. SpaceX arrangements total up to $120.5 billion through 2029, but either party can cancel on 90 days’ notice after initial noncancelable periods ending in January and March 2027. Across purchase commitments and leases entered into as of and after September 30, Anthropic reports approximately $895.4 billion, largely for compute and infrastructure; $213.8 billion involves exercisable termination rights or conditions before commencement. These overlapping totals are not new deals to add together, supplier-recognized revenue or delivered capacity.",
       "sources": [
         {
           "title": "Anthropic Form S-1, Infrastructure Service Arrangements, pages 171–172",
           "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
           "date": "2026-10-26"
+        },
+        {
+          "title": "Anthropic amended Form S-1, Contractual Obligations and Infrastructure Service Arrangements, pages 173–176",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+          "date": "2026-11-02"
         }
       ],
       "status": "reviewed",
       "kind": "analysis",
       "id": "anthropic-contract-risks-20261102",
       "impact_score": 4,
-      "impact_reason": "Material commitments across several major compute suppliers; cancellation rights affect revenue certainty without establishing delivered capacity."
+      "impact_reason": "Material commitments across several major compute suppliers; cancellation rights affect revenue certainty without establishing delivered capacity.",
+      "confidence": "High for the filed amounts and contract qualifications; future payments depend on the disclosed terms.",
+      "event_date": "2026-11-02",
+      "event_date_scope": "Amended filing date; the commitments span earlier agreements and amendments. Updated in place to retain the original analysis ID and archive date."
     },
     {
       "id": "lg-cns-jakarta-completion-20261102",
