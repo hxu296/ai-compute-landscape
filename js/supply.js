@@ -55,8 +55,8 @@
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; if(mode==="compute")drawCompute(svg);else drawPower(svg,mode==="gpus");
     $("#supDesignerCtl").hidden=mode!=="compute";
-    $("#supCompute").classList.toggle("on", mode === "compute"); $("#supPower").classList.toggle("on", mode === "power"); $("#supGpus").classList.toggle("on", mode === "gpus"); }
-  $("#supCompute").onclick = () => { mode = "compute"; draw(); }; $("#supPower").onclick = () => { mode = "power"; draw(); }; $("#supGpus").onclick = () => { mode = "gpus"; draw(); };
+    $("#supCompute").classList.toggle("on", mode === "compute"); $("#supPower").classList.toggle("on", mode === "power"); $("#supGpus")?.classList.toggle("on", mode === "gpus"); }
+  $("#supCompute").onclick = () => { mode = "compute"; draw(); }; $("#supPower").onclick = () => { mode = "power"; draw(); }; const gpuBtn=$("#supGpus");if(gpuBtn)gpuBtn.onclick = () => { mode = "gpus"; draw(); };
   $("#supDesigner").onchange=()=>{designer=$("#supDesigner").value;draw();};
   onTheme(draw); draw();
   const family = c => /^(MI|Instinct MI)/.test(c) ? "AMD" : /^TPU/.test(c) ? "Google TPU" : /^Trainium/.test(c) ? "AWS Trainium" : /^Ascend/.test(c) ? "Huawei" : "NVIDIA";
