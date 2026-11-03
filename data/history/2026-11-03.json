@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-03T13:49:25.856001+00:00",
+  "checked_at": "2026-11-03T20:06:31.512967+00:00",
   "sources": {
     "compute_desk": {
       "state": "ok",
-      "checked_at": "2026-11-03T13:49:25.856001+00:00",
-      "last_success": "2026-11-03T13:49:25.856001+00:00",
+      "checked_at": "2026-11-03T20:06:31.512967+00:00",
+      "last_success": "2026-11-03T20:06:31.512967+00:00",
       "max_age_days": 1,
       "sha256": "c55f5bd1bf0ad6c7a21cd20db22cbd8417e5e04085ec336172d7e826dcb92a17",
       "url": "https://data-api.compute-index.com/public/indices"
     },
     "semianalysis": {
       "state": "ok",
-      "checked_at": "2026-11-03T13:49:25.856001+00:00",
-      "last_success": "2026-11-03T13:49:25.856001+00:00",
+      "checked_at": "2026-11-03T20:06:31.512967+00:00",
+      "last_success": "2026-11-03T20:06:31.512967+00:00",
       "max_age_days": 0,
       "sha256": "ce4667f24878749e145ce5b2017572cd38547193e4a37c291e836b2540c1c7ea",
       "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -245,20 +245,24 @@
     }
   ],
   "headline": {
-    "id": "brief-2026-11-03",
+    "id": "digitalocean-q3-inference-growth-20261103",
     "date": "2026-11-03",
-    "impact_score": 1,
-    "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-    "title": "Daily market brief: SemiAnalysis H100 at $3.41",
-    "summary": "The latest observation is dated 2026-11-03 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+    "title": "DigitalOcean reports roughly 10× quarterly inference-token growth and $376M AI customer ARR",
+    "summary": "DigitalOcean’s November 3 results report $321 million of revenue for the quarter ended September 30, up 40% year over year, and $376 million of AI Customer ARR, up 288%. That ARR annualizes the quarter’s revenue from customers using AI/ML offerings and includes their other cloud services; it is not inference-only revenue. Management says Inference Engine token volume grew roughly tenfold from the prior quarter, without disclosing an absolute count. It also says 20 incremental megawatts have been secured for 2028. The results support accelerating demand at this provider, while the token ratio supplies no platform-wide daily total and the future megawatts are not operating capacity.",
     "sources": [
       {
-        "title": "SemiAnalysis H100",
-        "url": "https://gpu-index.semianalysis.com/",
+        "title": "DigitalOcean announces third-quarter 2026 financial results; metric definitions included",
+        "url": "https://investors.digitalocean.com/news/news-details/2026/DigitalOcean-Announces-Third-Quarter-2026-Financial-Results/default.aspx",
         "date": "2026-11-03"
       }
     ],
-    "status": "automated",
-    "kind": "market_brief"
+    "status": "reviewed",
+    "kind": "news",
+    "impact_score": 3,
+    "impact_reason": "Rapid inference growth and a larger AI customer cohort are a substantial cloud-segment development. Unspecified absolute token volume and future capacity limit conclusions about global supply.",
+    "confidence": "High for the company-reported results and metric definitions; the approximate token-growth ratio is management-reported.",
+    "event_date": "2026-11-03",
+    "event_date_scope": "Results announcement; financial measurements cover the quarter ended September 30, 2026.",
+    "future_target": "20 incremental MW secured for 2028; service-start timing and comparable IT-load basis are not disclosed."
   }
 }
