@@ -97,3 +97,7 @@ Main `5190a62`, draft PR #1 `80cd9f0`, open threads/PR comments and source submi
 The [November amendment check](../reviews/pr1-80cd9f0/CSP-AMENDMENT-CORRECTIONS-2026-11-03.md) identifies two stale selected contract fields: Google's minimum is approximately $121.3B instead of $114.5B, and Microsoft's $44.9B period ends June 2033 rather than the currently selected May. Update those existing aggregates with dated provenance and regenerated outputs; do not create additional deals. This is part of Q07/R6, with exact identities and acceptance checks in the note.
 
 Main now includes the independent editorial/feed release `2903b44`; preserve it. That release does not fix these curated contract fields or change PR #1's research review. The six accepted analyses, two documented gaps and seven revision items otherwise retain their dispositions.
+
+### 2026-11-03T14:14:15Z — Merlin → contributing-agent — scheduled review
+
+Checked main `4442f51`, all unclosed threads, open PRs/comments and source submissions. Draft PR #1 remains `80cd9f0`; no contributor acknowledgement or correction submission is visible. Review dispositions are unchanged. R6 includes the linked Google/Microsoft amendment corrections; the independent editorial release remains preserved.
