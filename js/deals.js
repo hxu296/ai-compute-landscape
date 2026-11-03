@@ -87,10 +87,14 @@
     suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
     $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; width follows disclosed nominal value`;
   }
+  let showAllDeals=false;
   function table1() {
-    const rows = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
+    const all = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
       .map(c => ({ ...c, price: priceTxt(c), cap: c.capacity_text || (c.capacity_accelerators ? `${c.capacity_relation || ""} ${num(c.capacity_accelerators)} ${c.accelerator_unit}` : c.capacity_gpus ? `${c.capacity_relation || ""} ${num(c.capacity_gpus)} GPUs` : c.capacity_mw ? `${c.capacity_mw_relation || ""} ${num(c.capacity_mw)} MW` : "not disclosed") }))
       .sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0));
+    // Top 20 by disclosed value unless searching or expanded.
+    const q=($("#dealSearch")?.value||"").trim().toLowerCase(),matched=q?all.filter(c=>[c.buyer,c.supplier,c.gpu_type,c.site,c.structure].join(" ").toLowerCase().includes(q)):all,rows=q||showAllDeals?matched:matched.slice(0,20);
+    if($("#dealCount"))$("#dealCount").textContent=`${rows.length} of ${all.length} deals shown`;if($("#dealShowAll")){$("#dealShowAll").textContent=showAllDeals?"Show top 20":"Show all deals";$("#dealShowAll").hidden=!!q||all.length<=20;}
     table("#tDeals", rows, [{ k: "buyer", h: "Buyer" }, { k: "supplier", h: "Supplier" }, { k: "announced", h: "Announced", f: r => `<span class="nw">${esc(String(r.announced || "").slice(0, 10))}</span>` },
       { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : esc(r.value_text || "not disclosed")) + badge(r.confidence) + conflictBadge(r.supplier,"value_usd",r) }, { k: "term_years", h: "Years", f:r=>r.term_years || "not disclosed" }, { k: "cap", h: "Capacity", f:r=>esc(r.cap)+conflictBadge(r.supplier,"capacity_gpus",r)+conflictBadge(r.supplier,"capacity_mw",r) },
       { k:"gpu_type", h:"Chip / system" }, { k: "price", h: "Implied price" }, { k: "structure", h: "Terms / evidence", f: r => `<span title="${esc(r.note || "")}">${esc(r.evidence || r.structure)}${r.source_date?`<br><b class="small">Latest source ${esc(r.source_date)}</b>`:""}<br><span class="muted small">${esc(r.note || "")}</span></span>` }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
@@ -98,6 +102,8 @@
   $("#dealFrom").onchange = e => { from = e.target.value; sel = null; draw(); };
   $("#dealKind").onchange = e => { kind = e.target.value; if(kind === "all")view="relations"; sel = null; draw(); };
   $("#dealReset").onclick = () => { sel = null; draw(); };
+  if($("#dealSearch"))$("#dealSearch").oninput=()=>table1();
+  if($("#dealShowAll"))$("#dealShowAll").onclick=()=>{showAllDeals=!showAllDeals;table1();};
   $("#dealRelations").onclick=()=>{view="relations";draw();};
   $("#dealDollars").onclick=()=>{view="dollars";if(kind==="all"){kind="compute";$("#dealKind").value=kind;}sel=null;draw();};
   $("#dealMin").oninput=e=>{minimum=maxDeal*(Number(e.target.value)/100)**2;$("#dealMinLabel").textContent=minimum?money(minimum)+" and above":"All values";if(minimum>0)$("#dealUnpriced").checked=false;sel=null;draw();};

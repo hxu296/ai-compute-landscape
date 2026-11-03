@@ -43,6 +43,10 @@ jobs:
         run: python automation/refresh.py --offline
       - name: Build public release
         run: python automation/package.py
+      - name: Check the built page in Chrome
+        run: |
+          npm install --no-save --no-package-lock playwright-core@1.47.2
+          CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)" node tests/browser.check.cjs _site/index.html
       - name: Retain normalized daily observations
         if: github.event_name != 'push'
         run: |
