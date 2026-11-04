@@ -48,6 +48,18 @@ STATE_OVERRIDES = {
 }
 clean = lambda s: re.sub(r'\s*#\w+', '', s or '').strip()
 
+def steps(series):
+    """Compact dated facility-MW series: [[date, MW], ...] at each change, so level(series, d) == level(steps, d) after rounding."""
+    out, prev = [], 0.0
+    by_date = {}
+    for date, v in sorted(series):
+        by_date[date] = v  # same rule as level(): the last of a date's sorted values wins
+    for date in sorted(by_date):
+        v = round(by_date[date], 1)
+        if v != prev:
+            out.append([date, v]); prev = v
+    return out
+
 def level(series, day):
     """Latest observation on or before day (as in snapshot_dc_timelines.level); 0 before the first observation."""
     value = 0.0
@@ -108,7 +120,7 @@ def build(zip_path, retrieved_utc):
                     address=' '.join(r['Address'].split()) or None,
                     mw={y: round(level(mw[name], d), 1) for y, d in days},
                     h100e={y: round(level(h100e[name], d)) for y, d in days},
-                    observations=len(mw[name]))
+                    observations=len(mw[name]), series=steps(mw[name]))
         sites.append(site)
         if state is None:
             unlocated.append(name)
@@ -126,7 +138,8 @@ def build(zip_path, retrieved_utc):
         st['mw'] = {k: round(v, 1) for k, v in st['mw'].items()}
     return dict(schema_version=1, source_url=SOURCE, dataset_url='https://epoch.ai/data/ai-data-centers', license='CC BY 4.0 (Epoch AI)',
                 retrieved_utc=retrieved_utc, now_date=now, response_sha256=hashlib.sha256(raw).hexdigest(),
-                years=[y for y, _ in YEARS] + ['now'], unit='MW facility power (Epoch "Power (MW)"); H100 equivalents as published by Epoch',
+                years=[y for y, _ in YEARS] + ['now'], series_start=min((p[0] for s in sites for p in s['series']), default=None),
+                series_end=max((d for n in mw for d, _ in mw[n]), default=None), unit='MW facility power (Epoch "Power (MW)"); H100 equivalents as published by Epoch',
                 method='Epoch AI frontier data-center tracker, US sites (Country = United States). Each value is the latest dated observation '
                        'or Epoch projection on or before the date: year end for 2025-2028, the retrieval date for "now"; "final" is the last projected level (to 2030). '
                        'A site before its first observation counts 0 MW; a blank cell is skipped, not read as zero. State is parsed from the Address '
@@ -134,6 +147,7 @@ def build(zip_path, retrieved_utc):
                        'Epoch "Selected Sources" text names the state (state_basis "source text") or the site name does unambiguously ("site name"); '
                        'the supporting text is kept in state_evidence. Sites with no supported state keep state null and are listed in "unlocated". '
                        'Power is Epoch facility power ("Power (MW)" in data_center_timelines.csv); the "Current power (MW)" column of data_centers.csv is IT power and is not used. '
+                       'Each site also carries "series": its facility MW at every dated change (latest observation on or before a date gives the level); dates after the retrieval date are Epoch projections. '
                        'Covers tracked frontier campuses only, not every data center. Planned levels are Epoch projections and can slip.',
                 us_sites=len(sites), unlocated=len(unlocated), unlocated_sites=unlocated, state_overrides=overridden,
                 states=dict(sorted(states.items(), key=lambda kv: (kv[0] == 'unlocated', -kv[1]['mw']['2028'], kv[0]))),

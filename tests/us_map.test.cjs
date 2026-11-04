@@ -22,10 +22,30 @@ test('per-state totals equal the sum of their sites',()=>{
  assert.deepEqual([...by.keys()].sort(),Object.keys(D.states).sort());
  for(const [k,sites] of by){const st=D.states[k];assert.equal(st.sites,sites.length,k+' site count');
   for(const y of KEYS){close(st.mw[y],sites.reduce((a,s)=>a+s.mw[y],0),`${k} MW ${y}`);assert.equal(st.h100e[y],sites.reduce((a,s)=>a+s.h100e[y],0),`${k} H100e ${y}`);}}
- // The page sums sites itself; its view values must match the snapshot's state totals.
- for(const [view,V] of Object.entries(M.VIEWS)){const m=M.model(D,view);let sum=0;
-  for(const [k,r] of m.states){const st=D.states[k||'unlocated'];close(r.value,V.get(st.mw),`${view} ${k}`);close(r.now,st.mw.now,`${view} ${k} now`);close(r.y2028,st.mw['2028'],`${view} ${k} 2028`);sum+=r.value;}
-  close(sum,D.sites.reduce((a,s)=>a+V.get(s.mw),0),view+' national');}
+ // The page sums each site's dated series itself; at every year end and the retrieval date it must match the snapshot.
+ const DAYS={'2025':'2025-12-31','2026':'2026-12-31','2027':'2027-12-31','2028':'2028-12-31',final:'9999-12-31',now:D.now_date};
+ for(const [y,day] of Object.entries(DAYS)){const m=M.modelAt(D,day);
+  for(const [k,r] of m.states){close(r.value,D.states[k||'unlocated'].mw[y],`${y} ${k}`);close(r.y2028,D.states[k||'unlocated'].mw['2028'],`${y} ${k} 2028`);}
+  close(m.total,D.sites.reduce((a,s)=>a+s.mw[y],0),y+' national');
+  close(m.cities.reduce((a,c)=>a+c.value,0)+m.unlocated.value,m.total,y+' cities + unlocated = national');}
+});
+
+test('each site series reproduces its year-end and current values, and is a compact dated step list',()=>{
+ const DAYS={'2025':'2025-12-31','2026':'2026-12-31','2027':'2027-12-31','2028':'2028-12-31',final:'9999-12-31',now:D.now_date};
+ for(const s of D.sites){
+  assert.ok(Array.isArray(s.series),s.name);let prev='',pv=0;
+  for(const [d,v] of s.series){assert.match(d,/^\d{4}-\d{2}-\d{2}$/);assert.ok(d>prev,s.name+' dates must increase');assert.ok(v!==pv,s.name+' repeats a value');assert.ok(v>=0);prev=d;pv=v;}
+  for(const [y,day] of Object.entries(DAYS))close(M.levelAt(s.series,day),s.mw[y],`${s.name} ${y}`);}
+ assert.ok(D.series_start<=D.now_date&&D.series_end>D.now_date);
+});
+
+test('slider months run monthly from 2024 to the last projection and include the retrieval date',()=>{
+ const ms=M.months(D);assert.equal(ms[0],'2024-01-31');assert.ok(ms.at(-1).slice(0,7)===D.series_end.slice(0,7)&&ms.at(-1)<='2030-12-31');
+ assert.ok(ms.includes(D.now_date));for(let i=1;i<ms.length;i++)assert.ok(ms[i]>ms[i-1]);
+ assert.ok(ms.length>=60&&ms.length<=84,String(ms.length));
+ // No site is lost at any frame: located columns + unlocated sites always equal the US total.
+ for(const d of ms){const m=M.modelAt(D,d);assert.equal([...m.states.values()].reduce((a,r)=>a+r.sites.length,0),D.sites.length);
+  assert.equal(m.cities.reduce((a,c)=>a+c.sites.length,0)+m.unlocated.sites.length,D.sites.length,d);}
 });
 
 test('no US site is lost: unlocated sites stay listed with state null',()=>{
@@ -34,7 +54,7 @@ test('no US site is lost: unlocated sites stay listed with state null',()=>{
  assert.equal(D.unlocated,nulls.length);assert.deepEqual([...D.unlocated_sites].sort(),[...nulls].sort());
  assert.equal(D.states.unlocated?.sites||0,nulls.length);
  assert.equal(Object.values(D.states).reduce((a,s)=>a+s.sites,0),D.sites.length);
- const m=M.model(D,'now');assert.equal([...m.states.values()].reduce((a,r)=>a+r.sites.length,0),D.sites.length);assert.equal(m.unlocated.sites.length,nulls.length);
+ const m=M.modelAt(D,D.now_date);assert.equal([...m.states.values()].reduce((a,r)=>a+r.sites.length,0),D.sites.length);assert.equal(m.unlocated.sites.length,nulls.length);
 });
 
 test('overridden sites carry their basis and evidence and count exactly once',()=>{
@@ -46,7 +66,7 @@ test('overridden sites carry their basis and evidence and count exactly once',()
   else {assert.ok(['site name','source text'].includes(s.state_basis),s.name+': '+s.state_basis);assert.match(s.state_evidence,/^(Name|Selected Sources): ".+"$/,s.name);assert.ok(!D.unlocated_sites.includes(s.name),s.name+' both overridden and unlocated');}
  }
  // Every site lands in exactly one state bucket of the page model, overrides included.
- const seen=new Map();for(const [,r] of M.model(D,'total2028').states)for(const s of r.sites)seen.set(s.name,(seen.get(s.name)||0)+1);
+ const seen=new Map();for(const [,r] of M.modelAt(D,'2028-12-31').states)for(const s of r.sites)seen.set(s.name,(seen.get(s.name)||0)+1);
  assert.equal(seen.size,D.sites.length);for(const [n,c] of seen)assert.equal(c,1,n+' counted '+c+' times');
  for(const s of over)assert.ok(D.states[s.state].sites>=1&&D.states[s.state].sites===D.sites.filter(x=>x.state===s.state).length,s.name);
 });
@@ -76,11 +96,14 @@ test('geometry covers 50 states and DC with SVG paths in the fitted frame; large
  assert.equal(Object.keys(G).length,51);assert.equal(META.width,960);assert.ok(META.height>500&&META.height<=620);
  for(const [k,g] of Object.entries(G)){assert.match(k,/^[A-Z]{2}$/);assert.match(g.d,/^M[\d.,-]+/);assert.ok(g.c[0]>=0&&g.c[0]<=META.width&&g.c[1]>=0&&g.c[1]<=META.height,k);}
  assert.ok(fs.statSync(path.join(root,'data/us_states.js')).size<150*1024);
- for(const view of Object.keys(M.VIEWS)){const top=M.model(D,view).cities.filter(c=>c.value>0).sort((a,b)=>b.value-a.value).slice(0,10);
-  for(const c of top)assert.ok(CITY[c.city],`${view}: no marker position for ${c.city}`);}
+ // Every column has a position: a Census city point when Epoch names the city, otherwise the state's centre.
+ for(const d of M.months(D))for(const c of M.modelAt(D,d).cities){assert.ok(G[c.state],c.key);if(c.city&&!CITY[c.city])assert.ok(['Toney, AL'].includes(c.city),`${d}: no point for ${c.city}`);}
  for(const [k,[x,y]] of Object.entries(CITY))assert.ok(x>=0&&x<=META.width&&y>=0&&y<=META.height,k);
 });
 
-test('class breaks rise and stay below the maximum',()=>{
- for(const max of [0.5,5,732,2384.8,7234.3]){const b=M.breaks(max);for(let i=0;i<b.length;i++){assert.ok(b[i]>0&&b[i]<max);if(i)assert.ok(b[i]>b[i-1]);}assert.ok(b.length<=4);}
+test('at most eight state colours, assigned once by end-2028 MW and never by the slider',()=>{
+ const c=M.colourStates(D);assert.ok(c.size<=8&&c.size>0);assert.equal(new Set(c.values()).size,c.size);
+ const tot=new Map();for(const s of D.sites)if(s.state)tot.set(s.state,(tot.get(s.state)||0)+s.mw['2028']);
+ const min=Math.min(...[...c.keys()].map(k=>tot.get(k)));for(const [k,v] of tot)if(!c.has(k))assert.ok(v<=min,k+' outranks a coloured state');
+ assert.deepEqual([...M.colourStates(D)],[...c]);
 });

@@ -718,8 +718,14 @@
       "company_gw": 13,
       "under_construction_gw": 3.6,
       "date": "2026-11-03",
-      "note": "SemiAnalysis (Nov 3, 2026): 3.6 GW under construction; SpaceX revised its 2027 estimate up to ~13 GW (from 10 GW). Epoch-tracked xAI/SpaceX sites reach 2.5 GW facility power by end-2027.",
-      "source_url": "https://newsletter.semianalysis.com/p/elon-is-doing-it-again-spacex-will"
+      "note": "CEO on the Q3 2026 call (Oct 20): \"an incremental 10 gigawatts… in 2027… So 13 total\" (cumulative nameplate compute, ≈IT power; spoken target, grade B). Filed nameplate 1.7 GW at Sep 30 2026 (10-Q, A); CFO: nearly 2.2 GW by end-October, 2.5–3 GW at year-end 2026. Epoch tracks three SpaceX sites (Colossus 1, Colossus 2 Tulane Rd, QTS Atlanta) and none of Macroharder, Minihard, Gun Range, Spam, Starbase or TeraFab; its facility-power PUE is ≈1.25–1.35. SemiAnalysis (Nov 3) reports 3.6 GW under construction (analyst estimate).",
+      "source_url": "https://www.fool.com/earnings/call-transcripts/2026/10/20/spacex-spcx-q3-2026-earnings-call-transcript/",
+      "basis": "nameplate (≈IT power: GPUs × all-in GPU power, excluding cooling and facility overhead)",
+      "facility_factor": 1.3,
+      "filed_gw": 1.7,
+      "filed_date": "2026-09-30",
+      "cfo_ye2026_gw": "2.5–3",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm"
     }
   },
   "neocloud_risk": {
@@ -1286,7 +1292,7 @@
         "basis": "market estimate, compute",
         "inference": 0.5,
         "grade": "E",
-        "note": "Industry-wide, including hosts and enterprises.",
+        "note": "Industry-wide, including hosts and enterprises. Deloitte also forecast 67% for 2026 (made November 2025); 2023 was 33%.",
         "source_url": "https://www.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions/2026/compute-power-ai.html"
       },
       {

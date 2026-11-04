@@ -46,17 +46,29 @@ def build(zip_path, retrieved_utc):
         if not provider:
             continue
         site = dict(name=name, h100e={}, mw={})
-        for y, day in YEARS:
+        for y, day in YEARS + [('now', retrieved_utc[:10])]:
             h, mw = level(s, day)
-            providers[provider]['h100e'][y] += h; providers[provider]['mw'][y] += mw
+            providers[provider]['h100e'][y] = providers[provider]['h100e'].get(y, 0.0) + h; providers[provider]['mw'][y] = providers[provider]['mw'].get(y, 0.0) + mw
             site['h100e'][y] = round(h); site['mw'][y] = round(mw, 1)
         providers[provider]['sites'].append(site)
+    # Users: the labs Epoch lists as using each site, sharing a multi-user site equally (Epoch gives no split).
+    users = defaultdict(lambda: dict(mw=defaultdict(float), h100e=defaultdict(float), sites=[]))
+    for name, s in series.items():
+        names = [clean(u) for u in (centers.get(name, {}).get('Users') or '').split(',') if clean(u)] or ['Undisclosed user']
+        for u in names:
+            for y, day in YEARS + [('now', retrieved_utc[:10])]:
+                h, mw = level(s, day)
+                users[u]['mw'][y] += mw / len(names); users[u]['h100e'][y] += h / len(names)
+            users[u]['sites'].append(dict(name=name, shared_with=len(names) - 1, mw_final=round(level(s, '9999-12-31')[1], 1)))
+    by_user = {u: dict(mw={k: round(v, 1) for k, v in d['mw'].items()}, h100e={k: round(v) for k, v in d['h100e'].items()}, sites=sorted(d['sites'], key=lambda x: -x['mw_final'])) for u, d in users.items()}
     for p in providers.values():
         p['h100e'] = {k: round(v) for k, v in p['h100e'].items()}; p['mw'] = {k: round(v, 1) for k, v in p['mw'].items()}
         p['sites'].sort(key=lambda s: -s['h100e']['final'])
     return dict(schema_version=1, source_url=SOURCE, retrieved_utc=retrieved_utc, response_sha256=hashlib.sha256(raw).hexdigest(),
-                years=[y for y, _ in YEARS], method='Epoch AI frontier data-center timelines: level at each year end from the latest dated observation or projection on or before that date; "final" is the last projected level (to 2030). Covers tracked frontier sites only, not whole fleets. Power is Epoch facility power (MW).',
-                providers=dict(sorted(providers.items(), key=lambda kv: -kv[1]['h100e']['final'])))
+                years=[y for y, _ in YEARS], method='Epoch AI frontier data-center timelines: level at each year end from the latest dated observation or projection on or before that date; "now" is the level on the retrieval date; "final" is the last projected level (to 2030). Covers tracked frontier sites only, not whole fleets. Power is Epoch facility power (MW).',
+                providers=dict(sorted(providers.items(), key=lambda kv: -kv[1]['h100e']['final'])),
+                users_method='All tracked sites (including owners not mapped to a provider above), credited to the labs Epoch lists as users; a site with several users is split equally, a site without listed users is "Undisclosed user".',
+                by_user=dict(sorted(by_user.items(), key=lambda kv: -kv[1]['mw']['final'])))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

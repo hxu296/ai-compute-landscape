@@ -24,19 +24,42 @@
   const perRack=model=>{const p=CAP.points.find(p=>p.model===model);if(!p)return null;const T=1e15,r=CapacityMath.estimate(p,{tokensPerDay:T,outputShare:.02,cacheHit:.98,usableCapacity:1,costPerGpuHour:0,powerKwPerGpu:0},{gpus_per_rack:72});return T/r.continuousRackEquivalents;};
   const mixes=[['DeepSeek-V4.1-Flash','Flash-like'],['DeepSeek-V4-Pro','V4-Pro-like'],['Kimi K3','Kimi-like']].map(([m,l])=>({m,l,rate:perRack(m)})).filter(x=>x.rate);
   let S=BuildoutMath.supply(NC.providers,TL);const S0=S,k=n=>Math.round(n/1000).toLocaleString('en-US')+'k',pct=v=>(v*100).toFixed(v<.1?1:0)+'%',M=n=>(n/1e6).toFixed(1)+'M';
-  // Build-out: share of built compute that serving the counted tokens needs, against labs' serving share of compute spend.
-  const BAND=[.26,.36];
-  if($('#buildoutBars')){
+  // Build-out: inference demand (today's tokens on a tunable growth rate) against the compute being built (Epoch, fixed), monthly to end-2028.
+  const BAND=[.26,.36],MID=.30;
+  if($('#buildoutSvg')){
+    const day=s=>Date.parse(s+'T00:00:00Z'),MON=30.4375*864e5,t0=day(est.as_of),ends=BuildoutMath.YEARS.map(y=>[day(y+'-12-31'),y]);
+    const fmt=t=>new Date(t).toLocaleDateString('en-US',{month:'short',year:'numeric',timeZone:'UTC'});
     const draw=()=>{const g=$('#buildGrowth').valueAsNumber/100,d=$('#buildDerate').valueAsNumber;S=BuildoutMath.supply(NC.providers,TL,+($('#buildRubin')?.value||1));
       $('#buildGrowthValue').textContent=(g*100).toFixed(0)+'%/mo';$('#buildDerateValue').textContent=d.toFixed(1)+'×';
-      const need=mixes.map(x=>({...x,n:BuildoutMath.needed(exChina,x.rate,g,d,1,est.as_of)})),share=y=>need[1].n[y]/S[y].racks;
-      const w=v=>(100*Math.min(1,v)).toFixed(2)+'%';
-      $('#buildoutBars').innerHTML=BuildoutMath.YEARS.map(y=>{const lo=Math.min(...need.map(x=>x.n[y]))/S[y].racks,hi=Math.max(...need.map(x=>x.n[y]))/S[y].racks,v=share(y);
-        return`<div class="build-row"><b>End-${y}</b><div class="build-track"><span class="build-inf" style="width:${w(v)}"></span><i class="build-band" style="left:${w(BAND[0])};width:${(100*(BAND[1]-BAND[0])).toFixed(2)}%"></i></div><strong>Inference ${pct(v)}${v>1?' (exceeds built)':''}<br><span class="small">${k(S[y].racks)} racks built · model mix ${pct(lo)}–${pct(hi)}</span></strong></div>`;}).join('');
-      const cross=BuildoutMath.YEARS.find(y=>share(y)>=BAND[0]);
-      $('#buildoutHeadline').innerHTML=`Serving the tokens we count needs <b>${pct(share('2026'))}</b> of the compute built by end-2026 and <b>${pct(share('2028'))}</b> by end-2028. Labs spend 26–36% of compute on serving today and most of the rest on training, so a small share is not spare capacity. `+(cross?`At these settings inference reaches labs’ serving share by <b>end-${cross}</b>; after that, inference and training compete for the same compute.`:`At these settings inference stays below labs’ serving share through 2028, leaving room for training to grow.`);
-      $('#buildoutNote').textContent=`Inference = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) × ${(g*100).toFixed(0)}%/mo growth ÷ GB300 rack throughput × ${d.toFixed(1)}× real-fleet factor, as a share of built compute (E). Bar uses a DeepSeek-V4-Pro-like model; “model mix” spans V4.1-Flash- to Kimi-K3-like.`;};
+      // Built racks between year ends grow geometrically.
+      const built=t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return S[ya].racks*(S[yb].racks/S[ya].racks)**f;}}return S['2028'].racks;};
+      const need0=exChina/mixes[1].rate*d,need=t=>need0*(1+g)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
+      const pts=[];for(let t=t0;t<=tEnd+1;t+=MON/2)pts.push(t);pts.push(tEnd);
+      const first=f=>pts.find(t=>f(t)),cross=first(t=>need(t)>=MID*built(t)),all=first(t=>need(t)>=built(t));
+      const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=(MID*built(tEnd)/need0)**(1/mEnd)-1;
+      const svg=$('#buildoutSvg'),narrow=(svg.getBoundingClientRect().width||900)<600,W=narrow?420:900,H=narrow?340:330,L=narrow?40:64,R=W-(narrow?78:150),T=16,B=H-34,fs=narrow?12:11,lo=Math.min(need0,built(t0)*BAND[0])/3,hi=built(tEnd)*2.2;
+      const x=t=>L+(t-t0)/(tEnd-t0)*(R-L),y=v=>B-(Math.log10(Math.max(v,lo))-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo))*(B-T),line=f=>pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(Math.min(f(t),hi)).toFixed(1)}`).join('');
+      svg.innerHTML='';svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+      for(let e=Math.ceil(Math.log10(lo));e<=Math.log10(hi);e++){const v=10**e;el('line',{x1:L,x2:R,y1:y(v),y2:y(v),stroke:css('--grid')},svg);el('text',{x:L-8,y:y(v)+4,'text-anchor':'end','font-size':fs},svg).textContent=v>=1e6?(v/1e6)+'M':v>=1e3?(v/1e3)+'k':v;}
+      el('text',{x:L-8,y:T-4,'text-anchor':'end','font-size':10},svg).textContent='racks';
+      for(const[t,yr]of ends.slice(1)){el('line',{x1:x(t),x2:x(t),y1:T,y2:B,stroke:css('--grid')},svg);el('text',{x:x(t),y:B+16,'text-anchor':'middle','font-size':11},svg).textContent=narrow?yr:'End-'+yr;}
+      if(x(ends[1][0])-x(t0)>70)el('text',{x:x(t0),y:B+16,'text-anchor':'start','font-size':11},svg).textContent=fmt(t0);
+      // Shortage region: demand above the serving band's midpoint.
+      el('path',{d:pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(BAND[1]*built(t)).toFixed(1)}`).join('')+[...pts].reverse().map(t=>`L${x(t).toFixed(1)},${y(BAND[0]*built(t)).toFixed(1)}`).join('')+'Z',fill:css('--s1'),opacity:.18},svg);
+      el('path',{d:line(built),fill:'none',stroke:css('--ink'),'stroke-width':1.5,'stroke-dasharray':'5 4'},svg);
+      el('path',{d:line(t=>MID*built(t)),fill:'none',stroke:css('--s1'),'stroke-width':2.5},svg);
+      el('path',{d:line(need),fill:'none',stroke:css('--s2'),'stroke-width':3,'data-build-need':'1'},svg);
+      // End labels, pushed apart so close lines stay readable.
+      const tags=[[built(tEnd),narrow?'All built':'All compute built',css('--ink')],[MID*built(tEnd),narrow?'Serving 30%':'Serving share (30%)',css('--s1')],[need(tEnd),need(tEnd)>hi?(narrow?'Inference ↑':'Inference ↑ off scale'):(narrow?'Inference':'Inference demand'),css('--s2')]].map(([v,text,color])=>({py:y(Math.min(v,hi))+4,text,color})).sort((a,b)=>a.py-b.py);
+      tags.forEach((g,i)=>{if(i&&g.py-tags[i-1].py<15)g.py=tags[i-1].py+15;el('text',{x:R+8,y:g.py,'font-size':12,'font-weight':600,fill:g.color},svg).textContent=g.text;});
+      if(cross){el('circle',{cx:x(cross),cy:y(need(cross)),r:6,fill:css('--s2')},svg);el('text',{x:x(cross),y:y(need(cross))-12,'text-anchor':'middle','font-size':12,'font-weight':600,class:'ink'},svg).textContent=(narrow?'':'Shortage from ')+fmt(cross);}
+      const pctm=v=>(v*100).toFixed(1)+'%/mo';
+      $('#buildoutHeadline').innerHTML=`Compute being built grows <b>≈${Math.round(buildRate*100)}% a year</b> through 2028 (Epoch, fixed). Inference demand grows at the token rate you choose. `+
+        (cross?`At <b>${(g*100).toFixed(0)}%/month</b>, inference outgrows labs’ serving share of compute in <b>${fmt(cross)}</b>: from then on there is a <b>shortage</b> unless training gives up compute${all?`, and by ${fmt(all)} inference alone would need everything built`:''}.`:`At <b>${(g*100).toFixed(0)}%/month</b>, inference stays inside labs’ serving share through 2028: <b>room to spare</b> for inference, so any shortage comes from training.`)+
+        ` Break-even: <b>≈${pctm(breakEven)}</b> token growth just fills the serving share by end-2028; faster means shortage, slower means oversupply for inference.`;
+      $('#buildoutNote').textContent=`Log scale, so slope = growth rate. Inference demand = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) ÷ measured GB300 NVL72 throughput (DeepSeek-V4-Pro-like) × ${d.toFixed(1)}× real-fleet factor, grown at ${(g*100).toFixed(0)}%/mo. Shaded band = 26–36% of built compute, the share labs spend on serving today (E).`;};
     for(const id of ['buildGrowth','buildDerate','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
+    let wideB=innerWidth>=600;addEventListener('resize',()=>{if((innerWidth>=600)!==wideB){wideB=!wideB;draw();}});
   }
   // Watch table
   if($('#watchTable')){
@@ -57,7 +80,7 @@
       a&&{hz:'Now',m:'Anthropic commitments due next 12 months vs revenue',v:`$${a.due_12m_b}B due vs $${a.revenue_run_rate_b}B revenue run-rate (${(a.due_12m_b/a.revenue_run_rate_b).toFixed(2)}×) · ${(a.due_12m_b/a.compute_expense_run_rate_b).toFixed(1)}× compute-expense run-rate`,c30:'filing',c90:'filing',sig:'risk',read:a.due_12m_b/a.revenue_run_rate_b>=.9?'Buyer committed ≈ its whole revenue → still buying (tight now), but a funding risk':'Commitments well covered by revenue',href:a.source_url,src:'S-1/A, November 2'},
       {hz:'Now',m:'New compute contracts recorded',v:(()=>{const c=[...NC.contracts].filter(c=>!c.excluded&&c.announced).sort((a,b)=>String(b.announced).localeCompare(String(a.announced)))[0];return c?`Latest: ${c.buyer} ← ${c.supplier} · ${String(c.announced).slice(0,10)}`:'—';})(),c30:deals(30),c90:deals(90),...dealSig(),href:'#deals',src:'Contracts table; cancellations not systematically tracked'},
     ,
-      W.spacex_2027&&{hz:'2026–28',m:'Planned power vs tracked sites: xAI / SpaceX 2027',v:`≈${W.spacex_2027.company_gw} GW SpaceX estimate (${W.spacex_2027.under_construction_gw} GW under construction) vs ${W.spacex_2027.tracked_gw.toFixed(1)} GW at Epoch-tracked sites; built compute in 2027–28 is a floor`,c30:'report',c90:'report',sig:'watch',read:'More supply coming than tracked sites show → adds glut risk',href:W.spacex_2027.source_url,src:'SemiAnalysis, November 3, 2026; Epoch data-center timelines'},
+      W.spacex_2027&&{hz:'2026–28',m:'Planned power vs tracked sites: xAI / SpaceX 2027',v:`CEO target ≈${W.spacex_2027.company_gw} GW nameplate by end-2027 vs ${W.spacex_2027.tracked_gw.toFixed(1)} GW facility at Epoch-tracked sites; filed ${W.spacex_2027.filed_gw} GW nameplate (${W.spacex_2027.filed_date}), CFO ${W.spacex_2027.cfo_ye2026_gw} GW by end-2026`,c30:'call',c90:'filing',sig:'watch',read:'Epoch misses most new SpaceX buildings, so tracked supply is a floor → adds glut risk if the target is met',href:W.spacex_2027.source_url,src:'SpaceX Q3 call (Oct 20) and 10-Q; Epoch data-center timelines'},
       W.training_funding&&{hz:'2026–28',m:'Labs’ training budgets (glut trigger)',v:`Training, research and internal use ≈${Math.round(W.training_funding.training_share_low*100)}–${Math.round(W.training_funding.training_share_high*100)}% of Anthropic’s compute spend; $${W.training_funding.short_term_q3_b.toFixed(1)}B short-term compute bought in Q3. A cut in lab training plans is what would free compute for the rental market`,c30:'filing',c90:'filing',sig:'watch',read:'Glut trigger: cuts to training plans would release most lab compute',href:W.training_funding.source_url,src:'Anthropic S-1/A, November 2'},
       W.hopper_2028&&{hz:'2026–28',m:'H100 1-year price in 2028, two precedents (E)',v:`≈$${W.hopper_2028.successor_path_usd.toFixed(2)}/hr if a successor arrives in a shortage (−15–17%) · ≈$${W.hopper_2028.glut_path_usd.toFixed(2)}/hr if supply catches up (−50% in 18 months)`,c30:'scenario',c90:'scenario',sig:'watch',read:'What each path would look like in prices',href:W.hopper_2028.source_url,src:'SemiAnalysis index history: A100 after H100, H100 after B200 and in 2024'}
     ].filter(Boolean).sort((x,y)=>(x.hz==='Now'?0:1)-(y.hz==='Now'?0:1));

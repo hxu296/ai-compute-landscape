@@ -61,12 +61,12 @@
     const rows = NC.contracts.filter(c => !c.excluded && (c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month))
       .map(c => ({ label: `${c.buyer} ← ${c.supplier}`, v: c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month, lease: !!c.implied_usd_per_kw_month, c }))
       .sort((a, b) => b.v - a.v).slice(0, 12);
-    const L = 200, R = 372, rh = 22, max = Math.max(...rows.map(r => r.v));
+    const L = 172, R = 300, rh = 22, max = Math.max(...rows.map(r => r.v));
     svg.setAttribute("viewBox", `0 0 440 ${rows.length * rh + 10}`);
     rows.forEach((r, i) => { const y = 6 + i * rh;
-      el("text", { x: L - 6, y: y + 14, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = r.label.length > 30 ? r.label.slice(0, 29) + "…" : r.label;
+      el("text", { x: L - 6, y: y + 14, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = r.label.length > 27 ? r.label.slice(0, 26) + "…" : r.label;
       const b = el("rect", { x: L, y: y + 3, width: Math.max(2, (r.v / max) * (R - L)), height: 14, rx: 3, fill: css(r.lease ? "--s3" : "--s2") }, svg);
-      el("text", { x: L + (r.v / max) * (R - L) + 4, y: y + 14, "font-size": 11 }, svg).textContent = `$${Math.round(r.v).toLocaleString()}`;
+      el("text", { x: L + (r.v / max) * (R - L) + 4, y: y + 14, "font-size": 11 }, svg).textContent = `$${Math.round(r.v).toLocaleString()}` + (r.lease ? "" : ` · $${(r.v * 2.12 / 730).toFixed(1)}/GPU-h`);
       hover(b, `<b>${esc(r.label)}</b>${r.lease ? "Lease (no chips)" : "All-in compute"}: $${Math.round(r.v).toLocaleString()} per kW-month${badge(r.c.confidence)}<br>` +
         `${money(r.c.value_usd)} · ${r.c.term_years} yrs · ${num(r.c.capacity_mw)} MW` + (r.c.implied_usd_per_gpu_hour_est ? `<br>≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h (floor)` : "")+`<br>${src(r.c.source_url)}`); });
   }

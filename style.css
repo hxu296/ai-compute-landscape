@@ -344,9 +344,18 @@ details.provider-profiles[open]>.fig{max-width:var(--wide);margin-left:calc((var
 .provider-profiles .provider-search{margin:14px 0;padding:0}
 #usMapSvg{display:block;width:100%;height:auto}
 .usmap-state{cursor:pointer}
-.usmap-city{cursor:pointer}.usmap-city:hover circle:last-child,.usmap-city:focus-visible circle:last-child{stroke-width:3}.usmap-city:focus{outline:none}
+.usmap-col{cursor:pointer}.usmap-col:focus{outline:none}.usmap-col:focus-visible polygon,.usmap-col:focus-visible circle{stroke:var(--ink);stroke-width:1.5}
+.usmap-controls{align-items:center;gap:10px 16px}
+.usmap-play{font:600 13px/1 var(--sans);color:var(--paper);background:var(--ink);border:0;border-radius:8px;padding:8px 12px;min-height:32px;cursor:pointer;white-space:nowrap}
+.usmap-play:hover{background:var(--accent)}
+.usmap-time{position:relative;flex:1 1 240px;min-width:0;padding-bottom:16px}
+#usMapTime{display:block;width:100%;margin:0;accent-color:var(--accent)}
+.usmap-ticks{position:absolute;left:8px;right:8px;bottom:0;height:14px;font:500 10.5px/1 var(--sans);color:var(--muted)}
+.usmap-ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.usmap-ticks span:first-child{transform:none}.usmap-ticks span:last-child{transform:translateX(-100%)}
+.usmap-time{padding-top:9px}.usmap-now{position:absolute;top:0;transform:translateX(-50%);font:9px/1 var(--sans);color:var(--accent);pointer-events:none}
+.usmap-readout{font:600 15px/1.35 var(--sans);color:var(--ink);margin:0 0 4px;font-variant-numeric:tabular-nums}
 .legend i.usmap-swatch{width:14px;height:10px;border-radius:2px;vertical-align:-1px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.legend i.usmap-ring{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink);vertical-align:-1px}
 .tip .usmap-tip{border-collapse:collapse;margin-top:3px;width:100%;font-size:11.5px;line-height:1.35}
 .tip .usmap-tip td{padding:3px 0;vertical-align:top;border-top:1px solid #4a463f}
 .tip .usmap-tip td+td{padding-left:10px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
