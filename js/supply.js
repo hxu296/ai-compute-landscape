@@ -7,7 +7,7 @@
   // One year's segment: the Epoch-tracked sites that add capacity in that year, with their own increments.
   const yearTip=(name,j,metric,fmt,fromNow=false,from=null,barValue=null)=>{const t=TL?.providers?.[name],[y]=YRS[j],prev=j?YRS[j-1][0]:fromNow&&t?.mw?.now!=null&&(!from||from>=String(TL.retrieved_utc).slice(0,10))?'now':'2025',sites=(t?.sites||[]).map(s=>({n:s.name,v:Math.max(0,(s[metric][y]||0)-(s[metric][prev]||0)),end:s[metric][y]||0})).filter(s=>s.v>0).sort((a,b)=>b.v-a.v);
     const head=j===0&&from&&prev!=='now'?`from ${esc(from)} (the company figure’s date) to end-${y}`:prev==='now'?`in the rest of ${y} (after ${String(TL.retrieved_utc).slice(0,10)})`:yLabel(y);
-    return `<b>${esc(name)} · Epoch-tracked, coming online ${head}</b>+${fmt(barValue??sites.reduce((a,s)=>a+s.v,0))} (E)${j===0&&from&&prev!=='now'?`<br><span class="small muted">Sites listed with their additions during ${y}:</span>`:''}<br>${sites.slice(0,8).map(s=>`${esc(s.n)}: +${fmt(s.v)} → ${fmt(s.end)}`).join('<br>')}${sites.length>8?`<br>…and ${sites.length-8} more`:''}<br><span class="small">Epoch projection from permits, filings and satellite imagery; dates can slip.</span>${src(TL.source_url,'Epoch data-center tracker')}`;};
+    return `<b>${esc(name)} · Epoch-tracked, coming online ${head}</b>+${fmt(barValue??sites.reduce((a,s)=>a+s.v,0))} (E)${j===0&&from&&barValue!=null&&CS[name]?.target_end_2026&&barValue<(t.mw[y]-levelAt(t,from))-1?`<br><span class="small">Capped at the company’s own year-end target (${esc(CS[name].target_end_2026.basis)}); Epoch’s remaining ${fmt((t.mw[y]-levelAt(t,from))-barValue)} is shown in 2027.</span>`:''}${j===0&&from&&prev!=='now'?`<br><span class="small muted">Sites listed with their additions during ${y}:</span>`:''}<br>${sites.slice(0,8).map(s=>`${esc(s.n)}: +${fmt(s.v)} → ${fmt(s.end)}`).join('<br>')}${sites.length>8?`<br>…and ${sites.length-8} more`:''}<br><span class="small">Epoch projection from permits, filings and satellite imagery; dates can slip.</span>${src(TL.source_url,'Epoch data-center tracker')}`;};
   function drawCompute(svg) {
     const all=designer==="All",tl=n=>TL?.providers?.[n];
     const names=[...new Set([...NC.providers.filter(p=>Object.keys(p.epoch_designers||{}).length).map(p=>p.name),...(all?Object.keys(TL?.providers||{}).filter(n=>n!=='Undisclosed owner'):[])])];
@@ -55,6 +55,8 @@
       if(on)on.value=on.raw*on.f;
       const fct=ct?toFac(ct.power_basis,rb):1,fs=toFac(rb,null),ctv=ct?ct.value*fct:0;
       const from=on?String(on.as_of).slice(0,10):RET,epoch=t?YRS.map(([y],j)=>Math.max(0,t.mw[y]-(j?t.mw[YRS[j-1][0]]:Math.max(levelAt(t,from),0)))):[0,0,0,0];
+      // A company's own year-end target caps Epoch's 2026 additions on top of its online figure (both in facility power).
+      const tg=CS[p.name]?.target_end_2026;if(tg&&on&&on.kind!=='epoch'){const cap=tg.mw*toFac(tg.power_basis,rb)-on.value;if(cap>=0&&epoch[0]>cap){epoch[1]+=epoch[0]-cap;epoch[0]=cap;}}
       let sch=ct&&CS[p.name]?SCHED.map(([k])=>(CS[p.name].segments?.[k]?.mw||0)*fs):SCHED.map(()=>0);
       // Where the company's stated target or backlog already includes its Epoch-tracked sites, take those out of the stated phases (earliest first).
       if(CS[p.name]?.includes_epoch==='same_year'){const yi={'2026':0,'2027':1,'2028':2};sch=sch.map((v,j)=>{const e=yi[SCHED[j][0]];return e==null?v:Math.max(0,v-epoch[e]);});}

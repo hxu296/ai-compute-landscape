@@ -27,7 +27,12 @@
       "undated_mw": 881,
       "overlap_with_epoch": "CoreWeave's year-end target is cumulative and fleet-wide, so Epoch's tracked sites are inside it. Of the +350 MW implied for H2 2026, Epoch already shows +124 MW after Nov 3 (Ellendale +26, Muskogee +98), so the 2026 segment is net 226. Additions at Epoch sites between 6/30 and 11/3 are not in online_mw (6/30) and not in Epoch's after-now figure, so they correctly stay inside the 226. Helios (Galaxy) sits entirely in the Epoch part. Galaxy's own schedule is Phase II 260 MW IT with data-hall deliveries beginning Q2 2027 and Phase III 133 MW IT in 2028. That equals CoreWeave 10-Q Q2 2026's '393 MW of electrical power remained undelivered at the site and was expected to be delivered in phases in 2026 and 2028'. Epoch instead shows Helios +400 facility MW in 2028 and +200 in 2029+, about one year later than Galaxy states, so the Epoch Helios timing should arguably shift to 2027 (+~395 facility) and 2028 (+~200). The 10-Q also says '355 MW of electrical power remains undelivered at these sites' (construction-cost-based leases, unnamed, likely Ellendale/Applied Digital) 'between 2026 and 2028'. That is probably also in the Epoch part and is not used here. Epoch figures are facility MW, while CoreWeave 'active power' is undefined in filings (landlord leases feeding it are critical IT). No scaling applied, so the 124 MW subtraction may slightly overstate the overlap.",
       "notes": "Rest-of-2026: management targets “more than 1.85 GW of active power” at year-end (Q2 call). From 1.5 GW at Jun 30 that is ≈350 MW, already exceeded by the ≈508 MW Epoch schedules at CoreWeave sites after Jun 30, so no extra company-stated 2026 segment is added. Q3 2026 results are NOT out yet: CoreWeave set its call for 2026-11-10 (IR release dated 2026-10-27), so figures are from the Q2 2026 release/call (2026-08-11) and the 9/17 PR (contracted ~4.2 GW as of 8/11; no ramp detail). The Q2 press release gives no forward power guidance; the >1.85 GW YE target comes from the call (Webull/AI transcript and MarketBeat; I found no verbatim official transcript). The call gave no 2027 or 2028 active-power figure; an analyst asked about '>3 GW by end of next year' and management did not confirm it. Long-term: 'at least 8 gigawatts by 2030' (cumulative, not a schedule). Outside the U.S., managemen",
-      "power_basis": "IT"
+      "power_basis": "IT",
+      "target_end_2026": {
+        "mw": 1850,
+        "power_basis": "IT",
+        "basis": "“More than 1.85 GW of active power” by year-end 2026 (Q2 2026 call)"
+      }
     },
     "Nebius": {
       "contracted_mw": 3500,
