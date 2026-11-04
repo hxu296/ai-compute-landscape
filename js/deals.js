@@ -71,7 +71,7 @@
     const firm = c => c.value_usd && !/up to/.test(c.value_relation || "") && !["conditional", "cancellable", "potential"].includes(c.value_status), oaF = oa.reduce((s, l) => s + l.cs.filter(firm).reduce((x, c) => x + c.value_usd, 0), 0);
     // Landlord total = every MW drawn into the landlord column, grouped operators included.
     const landMW = cols[2].reduce((s, n) => s + (n.mwIn || 0), 0), lessees = cols[1].filter(n => n.mwOut && !n.grouped).sort((a, b) => b.mwOut - a.mwOut);
-    if ($("#dealHeadline")) $("#dealHeadline").textContent = (oaV ? `OpenAI and Anthropic sign ≈${money(oaV)} of the ${money(tot)} disclosed (≈${money(oaF)} of it firm; the rest is "up to", conditional or cancellable); ${t4 / oaV > .5 ? "most of it" : "the largest part"} flows through ${list(top4.map(x => x[0]))}.` : tot ? `${money(tot)} disclosed in this view.` : "") +
+    if ($("#dealHeadline")) $("#dealHeadline").textContent = (oaV ? `OpenAI and Anthropic sign ≈${money(oaV)} of the ${money(tot)} disclosed; ≈${money(oaF)} of theirs is firm. ${t4 / oaV > .5 ? "Most of it" : "The largest part"} flows through ${list(top4.map(x => x[0]))}.` : tot ? `${money(tot)} disclosed in this view.` : "") +
       (landMW ? ` Disclosed landlords lease ≈${(landMW / 1000).toFixed(1)} GW, mostly to ${list(lessees.slice(0, 2).map(n => n.name))}.` : "");
     const maxMW = Math.max(1, ...L.map(l => l.mw)), maxUSD = Math.max(1, ...L.map(l => l.usd)), wOf = l => l.size > 0 ? 1.2 + 12 * Math.sqrt(l.size / (l.lease ? maxMW : maxUSD)) : 1;
     const scope = id => { if (!id) return new Set(L.map(l => l.k)); const n = N[id]; let keep = L.filter(l => l.a === id || l.b === id);
@@ -110,7 +110,7 @@
     highlight();
     const f = $("#flowFocus"); if (f) { f.innerHTML = `<option value="">All companies</option>` + [0, 1, 2].flatMap(cl => cols[cl].map(n => `<option value="${esc(n.id)}">${["Buyer", "Cloud", "Landlord"][cl]}: ${esc(n.name)}</option>`)).join(""); f.value = selId || ""; f.onchange = e => choose(e.target.value); }
     if ($("#flowMeta")) $("#flowMeta").innerHTML = sel ? `<b>${esc(sel.name)}</b> · ${esc(metric(N[sel.id]))}. Table 2 lists its deals; linked upstream or downstream deals are context, and no capacity allocation is inferred.` :
-      `Width: disclosed $ (buyer → cloud) and contracted MW (cloud → landlord), one scale per side; dashed = size undisclosed. Hyperscalers’ own campuses (QTS, Vantage, Stack and self-built) are not in the deal data.`;
+      `Hyperscalers’ own campuses and developers such as QTS, Vantage and Stack are not in the deal data.`;
     if ($("#dealSel")) $("#dealSel").textContent = sel ? `${sel.name} selected` : "";
     table1();
   }

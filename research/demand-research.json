@@ -415,7 +415,93 @@
         "usd_per_mtok": 0.039,
         "price_basis": "OpenRouter 30-day deepseek mix at list prices",
         "spend_usd_m_per_day": 36.5,
-        "spend_kind": "API-equivalent spend"
+        "spend_kind": "API-equivalent spend",
+        "parts": {
+          "note": "Disclosed company figures inside China’s total, each at its own date (not projected). Most are lower bounds. Model makers and serving platforms overlap (platforms host other makers’ models), so only model makers are stacked; platforms are listed. Alibaba, Baidu, MiniMax, Moonshot and iFlytek published only growth multiples in 2026, so they sit in the unattributed remainder.",
+          "makers": [
+            {
+              "name": "ByteDance (Doubao, Volcano Engine)",
+              "t_per_day": 180,
+              "date": "2026-06",
+              "relation": "more than",
+              "grade": "B",
+              "basis": "Doubao daily token calls, Volcano Engine president Tan Dai",
+              "source_url": "https://chatgpt.tmtpost.com/news/8037307"
+            },
+            {
+              "name": "DeepSeek",
+              "t_per_day": 155,
+              "date": "2026-10-20",
+              "relation": "at least",
+              "grade": "B",
+              "basis": "one V4.1 Flash cluster (company document); the whole company is larger",
+              "source_url": "https://github.com/deepseek-ai/DeepInfer/blob/774ce244b87cc0eb8d4b94ab9f5de2ab22049f01/doc/inference_deployment_qa.md"
+            },
+            {
+              "name": "Z.ai (GLM)",
+              "t_per_day": 4.2,
+              "date": "2025-11",
+              "relation": "",
+              "grade": "A",
+              "basis": "November 2025 daily average (prospectus); a later filing reports volume up more than 40× since the start of 2026 but no absolute figure",
+              "source_url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1230/2025123000018_c.pdf"
+            },
+            {
+              "name": "SenseTime",
+              "t_per_day": 2.42,
+              "date": "2026-07-21",
+              "relation": "",
+              "grade": "B",
+              "basis": "SenseCore inference serving",
+              "source_url": "https://tech.ifeng.com/c/8uxnxfvwon5"
+            },
+            {
+              "name": "Xiaomi (MiMo)",
+              "t_per_day": 1.0,
+              "date": "2026-04-02",
+              "relation": "more than",
+              "grade": "B",
+              "basis": "all channels, single day (Lei Jun)",
+              "source_url": "https://tech.ifeng.com/c/8s1KKPntX6B"
+            }
+          ],
+          "platforms": [
+            {
+              "name": "Tencent Cloud TokenHub",
+              "t_per_day": 5,
+              "date": "2026-06-05",
+              "relation": "more than",
+              "grade": "B",
+              "basis": "hosts Hunyuan plus DeepSeek, GLM, MiniMax and Kimi models",
+              "source_url": "https://en.tmtpost.com/news/8016309"
+            },
+            {
+              "name": "China Telecom Xingchen TokenHub",
+              "t_per_day": 1,
+              "date": "2026-08-20",
+              "relation": "more than",
+              "grade": "B",
+              "basis": "multi-model token platform",
+              "source_url": "https://m.c114.com.cn/w5339-1316097.html"
+            },
+            {
+              "name": "SiliconFlow",
+              "t_per_day": 0.58,
+              "date": "2026-04",
+              "relation": "",
+              "grade": "A",
+              "basis": "third-party inference platform (Hong Kong prospectus)",
+              "source_url": "https://www.ithome.com/0/972/866.htm"
+            }
+          ],
+          "growth_only": [
+            "Alibaba (Bailian 6× in 3 months)",
+            "Baidu (Qianfan ≈7× YoY)",
+            "MiniMax (20× Jan→Jul)",
+            "Moonshot Kimi",
+            "iFlytek (June month = 2× all of 2025)"
+          ]
+        }
       },
       {
         "name": "Google (all surfaces)",

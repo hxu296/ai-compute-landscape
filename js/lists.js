@@ -7,7 +7,7 @@
     const kw = NC.contracts.filter(c => !c.excluded), point = kw.filter(c => !kwFloor(c)), all = point.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = point.map(c => c.implied_usd_per_kw_month).filter(Boolean);
     const floors = kw.filter(c => kwFloor(c) && (c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month));
     const mdn = v => { v = [...v].sort((a, b) => a - b); return (v[Math.floor((v.length-1) / 2)]+v[Math.ceil((v.length-1) / 2)])/2; };
-    $("#kwNote").textContent = `Medians across available unit-price calculations: all-in compute $${Math.round(mdn(all)).toLocaleString()}/kW-month (n=${all.length}); powered-space leases $${Math.round(mdn(ls)).toLocaleString()}/kW-month (n=${ls.length}); gap ≈$${Math.round((mdn(all) - mdn(ls)) / 10) * 10}/kW-month. ${floors.length ? `Floors are left out of the medians: ${floors.map(c => `${c.buyer} ← ${c.supplier} (≥$${Math.round(c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month)})`).join(", ")}. ` : ""}Samples differ in geography, power basis, delivery date and contract terms.`;
+    $("#kwNote").textContent = `Median all-in compute: $${Math.round(mdn(all)).toLocaleString()}/kW-month, n=${all.length}. Median powered-space lease: $${Math.round(mdn(ls)).toLocaleString()}/kW-month, n=${ls.length}. Gap ≈$${Math.round((mdn(all) - mdn(ls)) / 10) * 10}/kW-month. ${floors.length ? `Floors are left out of the medians: ${floors.map(c => `${c.buyer} ← ${c.supplier} ≥$${Math.round(c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month)}`).join(", ")}. ` : ""}`;
   })();
   const c = NC.counts;
   // Readable timestamps, and contract counts that say what differs from Table 2 (equity, M&A and framework rows are excluded from the deal views).
@@ -32,8 +32,8 @@
     // Lead finding, computed: China's share of the world token estimate and the chips that dominate its deliveries.
     const est = window.DEMAND_RESEARCH?.global_estimate, cnTok = est?.components.find(c => /China/.test(c.name)), chips = [...NC.china_chips], tot = chips.reduce((s, r) => s + r.value, 0);
     const h20 = chips.filter(r => /^H20$/.test(r.chip)).reduce((s, r) => s + r.value, 0), asc = chips.filter(r => /^Ascend/.test(r.chip)).reduce((s, r) => s + r.value, 0);
-    if ($("#chinaLead") && tot) $("#chinaLead").innerHTML = `${cnTok && est ? `<b>China is ≈${Math.round(100 * cnTok.central / est.total.central)}% of the world token estimate</b>, and ` : ""}most accelerators delivered there are NVIDIA’s H20 (${Math.round(100 * h20 / tot)}%) and Huawei’s Ascend (${Math.round(100 * asc / tot)}%) in Epoch’s end-2025 estimate.`;
-    if ($("#closeChina")) $("#closeChina").innerHTML = `<b>For the answer:</b> Fig. 1 leaves China out on both sides, its tokens and its chips, so this chapter does not move the 2027–28 balance above.`;
+    if ($("#chinaLead") && tot) $("#chinaLead").innerHTML = `${cnTok && est ? `<b>China is ≈${Math.round(100 * cnTok.central / est.total.central)}% of the world token estimate.</b> ` : ""}Most accelerators delivered there by end-2025 are NVIDIA’s H20, ${Math.round(100 * h20 / tot)}%, and Huawei’s Ascend, ${Math.round(100 * asc / tot)}%, Epoch estimates.`;
+    if ($("#closeChina")) $("#closeChina").innerHTML = `<b>For the answer:</b> Fig. 1 excludes China’s tokens and chips, so China does not change the 2027–28 answer.`;
     const cn = NC.providers.filter(p => p.group === "China");
     table("#tChina", cn, [{ k: "name", h: "Company" }, { k: "cap", h: "Quarterly capex", f: r => cell(r.latest.capex_usd, "usd") },
       { k: "rev", h: "Quarterly revenue", f: r => cell(r.latest.revenue_usd, "usd") }, { k: "mw", h: "MW online", f: r => cell(r.latest.mw_online, "mw") },
@@ -61,13 +61,13 @@
   $("#providerSearch").oninput=cards;cards();
   // Sources and method as a compact definition list: short heads, the same statements and links.
   $("#methodBox").innerHTML = `<dl class="method-list">
-    <dt>Evidence</dt><dd>Filings, earnings calls, company pages, price APIs, named press and <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch AI</a> datasets (CC BY 4.0). Every figure links to its source; tags mark it <b>R</b> reported, <b>D</b> derived by a stated formula, or <b>E</b> estimated. The <a href="AUDIT.md">source audit</a> records selection rules and limits.</dd>
+    <dt>Evidence</dt><dd>Filings, earnings calls, company pages, price APIs, named press and <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch AI</a> datasets (CC BY 4.0). Tags: <b>R</b> reported, <b>D</b> derived by a stated formula, <b>E</b> estimated. The <a href="AUDIT.md">source audit</a> records selection rules and limits.</dd>
     <dt>Rules</dt><dd><ul>
-      <li>Online, contracted and pipeline power stay separate and are never summed; hosts carry MW, GPUs belong to their owners; money uses the cloud segment where one is reported.</li>
-      <li>Power: company MW → GPUs at 1.4 kW (Hopper) / 2.0 kW (GB200/GB300) IT power; $/GPU-hour and rack MW use 2.12 kW all-in facility power (SemiAnalysis).</li>
+      <li>Online, contracted and pipeline power stay separate and are never summed. Hosts carry MW; GPUs belong to their owners. Money uses the cloud segment where one is reported.</li>
+      <li>Power: company MW → GPUs at 1.4 kW (Hopper) or 2.0 kW (GB200/GB300) of IT power. Company IT power → facility ×${window.CONTRACT_SCHEDULE?.it_to_facility || 1.3} (PUE). $/GPU-hour and rack MW use SemiAnalysis’s 2.12 kW all-in facility power per GPU.</li>
       <li>H100-equivalents measure peak compute, not delivered throughput. Prices convert at the ECB rate on the source date.</li></ul></dd>
     <dt>Limits</dt><dd>Hyperscaler fleets are Epoch’s model, neocloud GPU counts are mostly inferred from power, training vs inference comes from statements, and tracked data-center supply is a floor.</dd>
-    <dt>Use</dt><dd>Hover any mark for its terms and source; click to pin it. Red source-note marks flag unresolved conflicts. Data: <a href="data/nc.js">data/nc.js</a> and the CSVs below.</dd>
+    <dt>Use</dt><dd>Hover any mark for its terms and source; click to pin it. Red marks flag unresolved source conflicts. Data: <a href="data/nc.js">data/nc.js</a> and the CSVs below.</dd>
   </dl>`;
   table("#tComparisons",NC.comparisons||[],[{k:"name",h:"Survey",f:r=>src(r.url,esc(r.name))},{k:"scope",h:"Focus"},{k:"strength",h:"Strength of the inspected source"},{k:"ours",h:"This page’s contribution and limit"}]);
   $("#gapN").textContent = NC.gaps.length;

@@ -33,7 +33,7 @@
     const oaHi = YEARS.map((_, i) => ["OpenAI", "Anthropic"].reduce((a, u) => a + lvl(u, "mw", i) + lvl(u, "shared_mw", i), 0) / (totals[i] || 1));
     const pct = i => { const lo = Math.round(oa[i] * 100), hi = Math.round(oaHi[i] * 100); return hi > lo ? `${lo}–${hi}%` : `${lo}%`; };
     if ($("#gwYearTitle")) $("#gwYearTitle").textContent = user ? "Who uses the tracked data-center power" : "Tracked data-center power, year by year";
-    if ($("#gwYearCaption")) $("#gwYearCaption").textContent = user ? "Each tracked site is credited to the lab Epoch lists as its user. Sites with several users and no stated split are shown as Shared; sites with no listed user as Undisclosed." : "Facility power at the frontier campuses Epoch AI tracks: a floor, not every data center.";
+    if ($("#gwYearCaption")) $("#gwYearCaption").textContent = user ? "Each tracked site is credited to the lab Epoch lists as its user. Sites with several users and no stated split are shown as Shared; sites with no listed user as Undisclosed." : "Facility power at Epoch-tracked frontier campuses: a floor, not every data center.";
     const planCtl = $("#gwYearPlans")?.closest("label"); if (planCtl) planCtl.hidden = user;
     const narrow = (svg.getBoundingClientRect().width || 900) < 600, W = narrow ? 420 : 900, H = narrow ? 300 : 370, fs = narrow ? 13 : 12;
     const L = narrow ? 44 : 52, R = W - 12, T = 18, B = H - 40, bw = (R - L) / YEARS.length * 0.58, cx = i => L + (i + .5) * (R - L) / YEARS.length, y = gw => B - gw / max * (B - T);

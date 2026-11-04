@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="077039d06925">
+<meta name="build" content="1a4316570e1a">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Will AI compute stay tight?</title>
@@ -36,14 +36,14 @@
     <h1>Will AI compute stay tight?</h1>
   </div>
   <div class="hero-text">
-    <p class="dek" id="heroDek">Tight now: rents are rising and labs are paying a premium for short-term capacity. Whether it stays tight depends on token demand outgrowing a build-out that <span id="dekBuild">more than doubles</span> by 2028. Every figure links to its source.</p>
+    <p class="dek" id="heroDek">Tight now: rents are rising, and labs pay a premium for short-term capacity. It stays tight only if token demand outgrows a build-out that <span id="dekBuild">more than doubles</span> by 2028.</p>
     <div class="byline" id="byline"></div>
   </div>
   <figure class="hero-map">
     <div class="hero-readout" id="heroReadout"></div>
     <svg id="heroMap" viewBox="0 0 993 383" role="img" aria-label="3D map of tracked AI data-center power by US city"></svg>
     <div class="hero-progress" aria-hidden="true"><i id="heroProgress"></i></div>
-    <figcaption class="hero-cap">Columns: each city's facility power in Epoch AI's frontier data-center tracker; capex is Epoch's estimated capital cost (compute + construction, 2025 USD); dates after its retrieval are Epoch projections. <span id="heroHint"></span> Hover a column for its sites. <a href="#watch">The answer ↓</a></figcaption>
+    <figcaption class="hero-cap">Facility power by city at Epoch-tracked frontier sites. Capex is Epoch’s compute-and-construction estimate, in 2025 dollars. <span id="heroHint"></span> <a href="#watch">The answer ↓</a></figcaption>
   </figure>
 </section>
 </div>
@@ -93,14 +93,14 @@
   <div class="prose">
     <div class="label"><span class="num">03</span>Supply</div>
     <h2>Chips and power</h2>
-    <p><b>Five hyperscalers own most AI chips</b>: Google, Microsoft, AWS, Meta and Oracle held about 14M H100-equivalents at the end of 2025 (Epoch AI estimates). Power at the frontier data centers Epoch tracks more than doubles, from about 22 GW at the end of 2026 to 50 GW by 2028, on Epoch’s dated projections.</p>
+    <p><b>Five hyperscalers own most AI chips.</b> Google, Microsoft, AWS, Meta and Oracle held about 14M H100-equivalents at end-2025, Epoch AI estimates. Tracked data-center power more than doubles by 2028.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 2</span><h3 class="fig-title">Who owns the chips, and how much power comes online when</h3></div>
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button></span></div><div class="ctl" id="supDesignerCtl"><label for="supDesigner" class="ctl-label">Chip designer</label><select id="supDesigner"><option value="All">All designers</option><option value="Nvidia">NVIDIA</option><option value="AMD">AMD Instinct</option><option value="Google">Google TPU</option><option value="Amazon">AWS Trainium</option></select></div></div>
     <div class="fig-body"><svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg></div>
     <div class="legend" id="supLegend"></div>
-    <p class="fig-caption">Estimates (E) from Epoch AI and company filings. Hover any segment for its sites, dates and source.</p>
+    <p class="fig-caption">Estimates from Epoch AI and company filings.</p>
     <details class="fig-notes"><summary>How to read this chart</summary><p class="small" id="supNote"></p></details>
     <p class="why" id="whySupply"></p>
   </div></div>
@@ -120,20 +120,20 @@
   <div class="prose">
     <div class="label"><span class="num">04</span>Demand</div>
     <h2>Inference and token use</h2>
-    <p><b>Labs spend most of their compute on training</b>; serving users takes about a quarter to a third. We estimate about 1.7 quadrillion tokens a day worldwide, growing about 15% a month, and ask whether the build-out keeps up.</p>
+    <p><b>We estimate about 1.7 quadrillion tokens a day worldwide, growing about 15% a month.</b> Labs spend most of their compute on training; serving takes a quarter to a third.</p>
   </div>
   <div class="fig demand-review" id="token-projection"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">Tokens per day today, by company</h3></div>
     <p class="fig-sub" id="projectionHeadline"></p>
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
-    <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to that date on the company’s own trend, updated daily · line = range. All values are estimates (E), not disclosures, projected to <span class="projection-date">today</span>. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
+    <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected on the company’s own trend · line = range. All are estimates, not disclosures, projected to <span class="projection-date">today</span>. OpenRouter and cloud marketplaces are left out to avoid double counting.</p>
     <details class="fig-notes"><summary>Components, trends, spend and sources</summary><p class="small" id="spendNote"></p><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
     <p class="why" id="whyTokens"></p>
   </div></div>
   <div class="fig" id="inference-split"><div class="fig-frame">
   <div class="inference-shares">
     <div class="fig-head"><span class="fig-no">Fig. 5</span><h3>Training vs inference: where lab compute goes</h3></div>
-    <p class="fig-sub">Labs spend most of their compute training models: Anthropic’s filing puts customer serving at ≈26% of compute spend.</p>
+    <p class="fig-sub">Anthropic’s filing puts customer serving at ≈26% of its compute spend.</p>
     <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Share of compute spent on inference versus training, by lab" style="width:100%;display:block"></svg></div>
     <details class="fig-notes"><summary>How to read this chart</summary><p>Anthropic’s filing puts customer serving at ≈26% of compute spend (up to ≈36% counting free-tier use, E). Hosts and chip sellers report inference above 50% of their own revenue or usage, which is a different measure (table below). Light segment = stated range. RL rollouts count as training but run like inference. Grades: R = reported (filed or attributed press), D = derived by this site from a filing or prospectus, E = estimate; R/E = reported low end with an estimated high end. Forecasts are left out. Hover a bar for basis and source.</p></details>
     <details class="fig-notes"><summary>Host and chip-seller statements (revenue or usage, not a lab’s split)</summary><div class="table-wrap"><table class="t" id="infSupplierTable"></table></div></details>
@@ -172,11 +172,11 @@
   <div class="prose">
     <div class="label"><span class="num">07</span>Contracts</div>
     <h2>Compute deals</h2>
-    <p><b>A few AI labs sign most of the money.</b> Anthropic and OpenAI are the largest buyers; neoclouds resell to them, and landlords build the halls. Fig. 6 draws these deals from buyer to cloud to landlord; Table 2 lists them. Framework plans such as Stargate’s $500B are left out because they commit no one to a price, and building leases are kept separate so the same capacity isn’t counted twice.</p>
+    <p><b>A few AI labs sign most of the money.</b> Anthropic and OpenAI are the largest buyers. Neoclouds resell to them, and landlords build the halls.</p>
   </div>
   <div class="fig" id="landscape"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 6</span><h2>How the companies connect</h2></div>
-    <p class="fig-sub">Buyers rent compute from clouds; clouds lease powered buildings from landlords. Width = disclosed $ on the left, contracted MW on the right.</p>
+    <p class="fig-sub">Buyers rent compute from clouds; clouds lease powered buildings from landlords. Width is disclosed dollars on the left, contracted MW on the right.</p>
     <p class="fig-headline" id="dealHeadline"></p>
     <div class="fig-controls">
       <div class="ctl"><span class="ctl-label">Announced from</span><select id="dealFrom"><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option></select></div>
@@ -188,7 +188,7 @@
     <p class="flow-mobile-hint">Swipe across the diagram to follow buyers → clouds → landlords, or choose a company above.</p><div class="flow-scroll"><svg id="flowSvg" role="img" aria-label="Disclosed deals between buyers, clouds and landlords"></svg></div>
     <div class="flow-meta" id="flowMeta"></div>
     <p class="fig-caption" id="flowCoverage"></p>
-    <details class="fig-notes"><summary>How to read this chart</summary><p>Built from the same contract rows as Table 2 (non-excluded, announced from the selected year). The six largest buyers are named; everyone else is one grey “Other buyers” row and undisclosed counterparties one “Undisclosed buyers” row; beyond the 14 largest clouds and 10 largest landlords the rest are grouped. A company that both buys and sells (Oracle, CoreWeave) is drawn once per side it acts on; its other role is named in the hover. Buyer → cloud width is disclosed nominal value; cloud → landlord width is contracted MW; each side has its own scale. Dashed links have no disclosed size. A row that its source marks as the same underlying deal as another (OpenAI–Oracle, 4.5 GW, 2025-07-22 and 2025-09-10) is counted once in MW. “Disclosed landlords” are the listed hosts and builders in the deal data (miners, Crusoe and others); hyperscalers’ own campuses and wholesale developers such as QTS, Vantage and Stack are not in the deal data, so this column is not the whole landlord side. Add chip-supply orders to include NVIDIA, AMD and other hardware deals. Framework plans such as Stargate’s $500B are excluded. A connected path does not allocate particular racks or megawatts through a reseller. Amounts retain their conditions and can overlap.</p></details>
+    <details class="fig-notes"><summary>How to read this chart</summary><p>Built from the same contract rows as Table 2 (non-excluded, announced from the selected year). The six largest buyers are named; everyone else is one grey “Other buyers” row and undisclosed counterparties one “Undisclosed buyers” row; beyond the 14 largest clouds and 10 largest landlords the rest are grouped. A company that both buys and sells (Oracle, CoreWeave) is drawn once per side it acts on; its other role is named in the hover. Buyer → cloud width is disclosed nominal value; cloud → landlord width is contracted MW; each side has its own scale. Dashed links have no disclosed size. A row that its source marks as the same underlying deal as another (OpenAI–Oracle, 4.5 GW, 2025-07-22 and 2025-09-10) is counted once in MW. “Disclosed landlords” are the listed hosts and builders in the deal data (miners, Crusoe and others); hyperscalers’ own campuses and wholesale developers such as QTS, Vantage and Stack are not in the deal data, so this column is not the whole landlord side. Add chip-supply orders to include NVIDIA, AMD and other hardware deals. Framework plans such as Stargate’s $500B are excluded: they commit no one to a price. Building leases are kept apart from compute services, so the same capacity is not counted twice. “Firm” means a stated amount that is not “up to”, conditional, cancellable or potential. A connected path does not allocate particular racks or megawatts through a reseller. Amounts retain their conditions and can overlap.</p></details>
     <div id="flowDetails" hidden><div class="scroll" style="max-height:220px"><table class="t" id="flowTable"></table></div></div>
   </div></div>
   <div class="fig"><div class="fig-frame">
@@ -205,24 +205,24 @@
   <div class="prose">
     <div class="label"><span class="num">08</span>Prices</div>
     <h2>Compute prices</h2>
-    <p><b id="priceLead">Rental prices for H100 and B200 GPUs come from daily market benchmarks.</b> Market benchmarks come first, then each provider’s published rates by commitment term. A chip-hour price does not compare model throughput.</p>
+    <p><b id="priceLead">Rental prices for H100 and B200 GPUs come from daily market benchmarks.</b> A chip-hour price does not compare model throughput.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div id="benchmarks" class="benchmark-grid"></div>
     <h3 class="fig-title">Market price movements</h3>
-    <p class="fig-sub">Same-series changes from public benchmark data, calculated over calendar windows. Hover a change for its exact start and end dates. A rental index is not a GPU resale price.</p>
+    <p class="fig-sub">Changes within each public benchmark series, over calendar windows. A rental index is not a GPU resale price.</p>
     <div class="scroll"><table class="t" id="marketChanges"></table></div>
-    <p class="fig-caption" id="marketSummary"></p>
   </div></div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
     <div><div class="fig-head"><span class="fig-no">Fig. 7</span></div><h4>Rental price indices over time</h4>
       <div class="fig-body"><svg id="idxSvg" viewBox="0 0 440 260" role="img" aria-label="Price index history"></svg></div><div class="legend" id="idxLegend"></div>
-      <p class="fig-caption">Silicon Data standardizes rental observations; Ornn describes executed trades. These are different benchmarks, not interchangeable one-year contract prices. Current values and source availability are shown above.</p></div>
+      <p class="fig-caption">Silicon Data standardizes rental observations; Ornn describes executed trades. Neither is a one-year contract price.</p></div>
     <div><div class="fig-head"><span class="fig-no">Fig. 8</span></div><h4>What the big deals cost per kilowatt, per month</h4>
-      <p class="fig-sub">Deal value ÷ (megawatts × 1,000) ÷ months of the term. Red deals buy compute, chips included; green deals rent only a powered building, and the tenant brings its own chips. The gap between the medians (below) is roughly what the chips and servers cost. For red bars on NVIDIA or AMD GPUs, ≈ $/GPU-hour converts at 2.12 kW per GB300-class GPU and 730 hours a month (E); Trainium and Cerebras deals get no GPU-hour figure. ≥ marks a floor: a minimum value or a maximum capacity.</p>
+      <p class="fig-sub">Red deals buy compute, chips included. Green deals rent only a powered building. The gap between the two medians is roughly what the chips and servers cost. ≥ marks a floor.</p>
       <div class="fig-body"><svg id="kwSvg" viewBox="0 0 440 300" role="img" aria-label="Deal prices per kW-month"></svg></div>
       <div class="legend"><span><i style="background:var(--s2)"></i>All-in compute (chips included)</span><span><i style="background:var(--s3)"></i>Building lease (no chips)</span></div>
-      <p class="fig-caption" id="kwNote"></p></div>
+      <p class="fig-caption" id="kwNote"></p>
+      <details class="fig-notes"><summary>How to read this chart</summary><p class="small">$/kW-month = deal value ÷ (megawatts × 1,000) ÷ months of the term. For red bars on NVIDIA or AMD GPUs, the ≈ $/GPU-hour label is an estimate (E) at 2.12 kW per GB300-class GPU and 730 hours a month; Trainium and Cerebras deals get no GPU-hour figure. ≥ marks a floor: a minimum value or a maximum capacity. Samples differ in geography, power basis, delivery date and contract terms.</p></details></div>
   </div></div></div>
   <p class="close" id="closePrices"></p>
 </section>
@@ -232,7 +232,7 @@
     <div class="label"><span class="num">09</span>China</div>
     <h2>Compute in China</h2>
     <p class="chapter-finding" id="chinaLead"></p>
-    <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company. China’s reported tokens are mostly text and agent traffic: video generation is an estimated 0.3–8% of the ~500T/day national figure (central 1.6%, E; <a href="research/GROK-CHINA-TOKENS-2026-11-03.md">method</a>).</p>
+    <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as one bucket, so Fig. 9 shows chips, not companies. China’s ~500T/day of reported tokens are mostly text and agent traffic; video is an estimated 1.6%, range 0.3–8% (<a href="research/GROK-CHINA-TOKENS-2026-11-03.md">method</a>).</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Fig. 9</span><h3 class="fig-title">Accelerators delivered to China, end-2025</h3></div>
@@ -383,7 +383,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=7eca82d0f6cf"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=c784944fe3df"></script>
+<script src="data/research.js?v=bb8903a836fb"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=c11cc3cabcf5"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -391,19 +391,19 @@
 <script src="js/landscape.js?v=3941d9037c83"></script>
 <script src="js/supply.js?v=f6b901ab803e"></script>
 <script src="js/chip_stacks.js?v=59ae588f4352"></script>
-<script src="js/deals.js?v=f35da8f9120d"></script>
+<script src="js/deals.js?v=a27276b6de77"></script>
 <script src="js/growth.js?v=5dbf4de766ec"></script>
-<script src="js/pricing.js?v=17177bef7081"></script>
+<script src="js/pricing.js?v=1f4c07a24dc7"></script>
 <script src="js/usage.js?v=6be6a1f27644"></script>
 <script src="js/token_math.js?v=6db1a97eee26"></script>
 <script src="js/tokens.js?v=aa5ded4797a0"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
-<script src="js/demand.js?v=cd2b4474fddd"></script>
-<script src="js/watch.js?v=ef423516ef43"></script>
+<script src="js/demand.js?v=611ab9f706fe"></script>
+<script src="js/watch.js?v=da72a944a645"></script>
 <script src="js/us_map.js?v=18d3e899c9a5"></script>
-<script src="js/gw_years.js?v=4a9b5af7b9f8"></script>
+<script src="js/gw_years.js?v=34a8be03f666"></script>
 <script src="js/capacity.js?v=0371c9e53121"></script>
-<script src="js/lists.js?v=29831dcfe9f1"></script>
+<script src="js/lists.js?v=3f4cad1226ca"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
 <script src="js/reader.js?v=0c0c71d93eb4"></script>
 </body>
