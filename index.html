@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="11c46ed36ae1">
+<meta name="build" content="d189133eca80">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Is AI compute tight now, and will it stay tight?</title>
@@ -61,14 +61,6 @@
   </div>
 </section>
 
-<div class="prose" style="margin-top:44px">
-  <p class="lede">Most numbers in this business are announced rather than measured. Contract terms can include floors or ceilings, a GPU count is often worked out from megawatts, and a hyperscaler's fleet is somebody else's model. So every figure here carries its source and a tag distinguishing reporting, calculation, and estimation.</p>
-  <div class="legend-box"><span class="h">How to read the tags</span>
-    <dl><dt><span class="badge r">R</span></dt><dd>Reported by a company, filing, or named press source; this tag is not independent verification.</dd>
-      <dt><span class="badge d">D</span></dt><dd>Derived from reported numbers by a stated formula, such as value ÷ term ÷ GPUs.</dd>
-      <dt><span class="badge e">E</span></dt><dd>Estimated by an analyst or inferred from indirect evidence. Source ranges are retained where available.</dd></dl></div>
-  <p>Hover over any mark for its terms and source; click to pin the box and open its links. Close it with Escape, the close button, or a click outside. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column. A source-note marker opens the two dated claims: “source conflict” means unresolved disagreement, “different bases” means the definitions differ, and “later evidence” identifies dated updates. Source-date warnings remain separate from verified revisions.</p>
-</div>
 
 <div class="part-title" id="part-later">Part 2 · 2027–28: depends on one number</div>
 
@@ -372,6 +364,15 @@
   <div class="prose">
     <div class="label"><span class="num">11</span>Sources and method</div>
     <h2>Sources and methods</h2>
+<div class="method-reading">
+  <p class="lede">Most numbers in this business are announced rather than measured. Contract terms can include floors or ceilings, a GPU count is often worked out from megawatts, and a hyperscaler's fleet is somebody else's model. So every figure here carries its source and a tag distinguishing reporting, calculation, and estimation.</p>
+  <div class="legend-box"><span class="h">How to read the tags</span>
+    <dl><dt><span class="badge r">R</span></dt><dd>Reported by a company, filing, or named press source; this tag is not independent verification.</dd>
+      <dt><span class="badge d">D</span></dt><dd>Derived from reported numbers by a stated formula, such as value ÷ term ÷ GPUs.</dd>
+      <dt><span class="badge e">E</span></dt><dd>Estimated by an analyst or inferred from indirect evidence. Source ranges are retained where available.</dd></dl></div>
+  <p>Hover over any mark for its terms and source; click to pin the box and open its links. Close it with Escape, the close button, or a click outside. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column. A source-note marker opens the two dated claims: “source conflict” means unresolved disagreement, “different bases” means the definitions differ, and “later evidence” identifies dated updates. Source-date warnings remain separate from verified revisions.</p>
+</div>
+
     <div class="method" id="methodBox"></div>
     <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
     <details class="fig-notes" id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
@@ -390,7 +391,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=7eca82d0f6cf"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=35939d6033be"></script>
+<script src="data/research.js?v=c784944fe3df"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=c11cc3cabcf5"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -398,7 +399,7 @@
 <script src="js/landscape.js?v=3941d9037c83"></script>
 <script src="js/supply.js?v=f6b901ab803e"></script>
 <script src="js/chip_stacks.js?v=59ae588f4352"></script>
-<script src="js/deals.js?v=9109ab0aa31f"></script>
+<script src="js/deals.js?v=f35da8f9120d"></script>
 <script src="js/growth.js?v=5dbf4de766ec"></script>
 <script src="js/pricing.js?v=17177bef7081"></script>
 <script src="js/usage.js?v=6be6a1f27644"></script>
@@ -406,7 +407,7 @@
 <script src="js/tokens.js?v=aa5ded4797a0"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=cd2b4474fddd"></script>
-<script src="js/watch.js?v=878eb7f00132"></script>
+<script src="js/watch.js?v=ef423516ef43"></script>
 <script src="js/us_map.js?v=18d3e899c9a5"></script>
 <script src="js/gw_years.js?v=4a9b5af7b9f8"></script>
 <script src="js/capacity.js?v=0371c9e53121"></script>

@@ -13,23 +13,23 @@
 The page refreshes prices and the token projection daily, so the live numbers move; these are the values on the date above. E = estimate.
 
 **1. Now: compute is tight.**
-- Rental prices for current GPUs are up over 90 days: H100 $3.41/h (+7%), B200 $6.47/h (+18%), SemiAnalysis composites. Older-chip list prices at hyperscalers fell 26–54% since Q1 2025, so "tight" holds mainly for current-generation chips.
+- Rents are tightening again after a long fall: H100 rents fell 26–54% by region since Q1 2025 (Silicon Data regional medians), then rose over the last 90 days to H100 $3.41/h (+7%) and B200 $6.47/h (+18%) (SemiAnalysis composites).
 - Anthropic bought $5.0B of short-term compute in Q3 2026 at a premium to its multi-year contracts, and its commitments due in the next 12 months are ≈1.0× its revenue run-rate (S-1/A, Nov 2).
-- On the record: NVIDIA expects supply "to remain a bottleneck at least through the end of fiscal year 2028"; Microsoft says demand "continues to exceed available supply"; CoreWeave's near-term capacity is "effectively sold out". Backlog grows faster than tracked capacity at Google Cloud and AWS, roughly even at CoreWeave, and slower at Microsoft and Oracle.
+- On the record: NVIDIA expects supply "to remain a bottleneck at least through the end of fiscal year 2028"; Microsoft says demand "continues to exceed available supply"; CoreWeave's near-term capacity is "effectively sold out". At CoreWeave, the one company reporting backlog and capacity on the same basis, backlog (+246%) and MW online (+219%) grew about evenly in the year to June 2026.
 
 ![Is compute tight now? Five measured signals and verbatim statements, with counter-signals](docs/screenshots/02-tight-now.png)
 
 **2. 2027–28: it depends on one number.**
 - Compute being built grows ≈64% a year through 2028 (Epoch AI tracked sites, ex-China; a floor).
 - Token demand is ≈1.7 quadrillion logical tokens/day worldwide (E), growing ≈15% a month on each company's own trend.
-- Priced at Anthropic's filed serving cost (≈$0.143 per million tokens) and $5 per GB300-equivalent GPU-hour, inference outgrows today's serving share of compute in **March 2028** at 12%/month growth. The break-even is **≈9%/month (≈2.9× a year)**: faster means it stays tight, slower means it loosens. Demand stays below everything built through 2028, so the squeeze falls on training.
+- Priced at Anthropic's filed serving cost (≈$0.143 per million tokens) and $5 per GB300-equivalent GPU-hour, inference outgrows today's serving share of compute in **November 2027** on today's ≈15%/month trend, and, if that trend held for two more years (≈33× today's tokens), would need more than everything tracked as built by December 2028, a small margin next to how much tracked supply undercounts. The break-even is **≈9%/month (≈2.9× a year)**: faster means it stays tight, slower means it loosens. Tracked supply is a floor, so this leans toward shortage.
 
 ![Shortage or oversupply: inference demand against the build-out](docs/screenshots/03-will-it-stay-tight.png)
 
 **3. Who holds the compute, and who is exposed if it loosens.**
-- Tracked frontier sites reach ≈50 GW by end-2028. OpenAI and Anthropic use 26–39% of it at end-2026 and 38–50% at end-2028 (exclusive sites → including sites they share); "most of the world's compute" holds only for new capacity in 2027–28.
-- OpenAI and Anthropic sign ≈$1.26T of the ≈$1.44T in disclosed compute deals since 2025, mostly through Oracle, Microsoft, AWS and Google.
-- Most exposed if demand falters: Core Scientific, CoreWeave and Galaxy Digital (debt, customer concentration, term mismatch).
+- Tracked frontier sites hold ≈22 GW at end-2026 and ≈50 GW by end-2028. OpenAI and Anthropic use 26–39% of the end-2026 total and 38–50% of the end-2028 total (exclusive sites → including sites they share). Of the capacity added, they take 20–32% in 2027 but 65–75% in 2028 (48–59% across both years), so "most of the world's compute" holds only for 2028's additions.
+- OpenAI and Anthropic sign ≈$1.26T of the ≈$1.44T in disclosed compute deals since 2025 (≈$1.06T of it firm; the rest is "up to", conditional or cancellable), mostly through Oracle, Microsoft, AWS and Google.
+- Most exposed if demand falters (tied at 15/18): Core Scientific, CoreWeave, Galaxy Digital and WhiteFiber (debt, customer concentration, term mismatch).
 
 ![Who uses the tracked data-center power](docs/screenshots/04-who-uses-compute.png)
 ![How the companies connect: buyers, clouds and landlords](docs/screenshots/05-who-pays-whom.png)

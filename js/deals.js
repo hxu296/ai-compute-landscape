@@ -67,8 +67,12 @@
     const lUsd = L.filter(l => !l.lease), tot = lUsd.reduce((s, l) => s + l.usd, 0), oa = lUsd.filter(l => /^0\|(OpenAI|Anthropic)$/.test(l.a)), oaV = oa.reduce((s, l) => s + l.usd, 0);
     const via = new Map(); oa.forEach(l => via.set(l.b.slice(2), (via.get(l.b.slice(2)) || 0) + l.usd)); const top4 = [...via].sort((a, b) => b[1] - a[1]).slice(0, 4), t4 = top4.reduce((s, x) => s + x[1], 0);
     const list = a => a.length > 1 ? a.slice(0, -1).join(", ") + " and " + a.at(-1) : a[0] || "", lease = cols[1].filter(n => n.mwOut && !n.grouped).sort((a, b) => b.mwOut - a.mwOut), lt = lease.reduce((s, n) => s + n.mwOut, 0);
-    if ($("#dealHeadline")) $("#dealHeadline").textContent = (oaV ? `OpenAI and Anthropic sign ≈${money(oaV)} of the ${money(tot)} disclosed; ${t4 / oaV > .5 ? "most of it" : "the largest part"} flows through ${list(top4.map(x => x[0]))}.` : tot ? `${money(tot)} disclosed in this view.` : "") +
-      (lt ? ` Disclosed landlords lease ≈${(lt / 1000).toFixed(1)} GW, mostly to ${list(lease.slice(0, 2).map(n => n.name))}.` : "");
+    // Firm = a stated amount without "up to", conditional, cancellable or potential status; "at least" amounts count as firm floors.
+    const firm = c => c.value_usd && !/up to/.test(c.value_relation || "") && !["conditional", "cancellable", "potential"].includes(c.value_status), oaF = oa.reduce((s, l) => s + l.cs.filter(firm).reduce((x, c) => x + c.value_usd, 0), 0);
+    // Landlord total = every MW drawn into the landlord column, grouped operators included.
+    const landMW = cols[2].reduce((s, n) => s + (n.mwIn || 0), 0), lessees = cols[1].filter(n => n.mwOut && !n.grouped).sort((a, b) => b.mwOut - a.mwOut);
+    if ($("#dealHeadline")) $("#dealHeadline").textContent = (oaV ? `OpenAI and Anthropic sign ≈${money(oaV)} of the ${money(tot)} disclosed (≈${money(oaF)} of it firm; the rest is "up to", conditional or cancellable); ${t4 / oaV > .5 ? "most of it" : "the largest part"} flows through ${list(top4.map(x => x[0]))}.` : tot ? `${money(tot)} disclosed in this view.` : "") +
+      (landMW ? ` Disclosed landlords lease ≈${(landMW / 1000).toFixed(1)} GW, mostly to ${list(lessees.slice(0, 2).map(n => n.name))}.` : "");
     const maxMW = Math.max(1, ...L.map(l => l.mw)), maxUSD = Math.max(1, ...L.map(l => l.usd)), wOf = l => l.size > 0 ? 1.2 + 12 * Math.sqrt(l.size / (l.lease ? maxMW : maxUSD)) : 1;
     const scope = id => { if (!id) return new Set(L.map(l => l.k)); const n = N[id]; let keep = L.filter(l => l.a === id || l.b === id);
       if (n.col === 0) { const m = new Set(keep.map(l => l.b)); keep = keep.concat(L.filter(l => m.has(l.a))); }

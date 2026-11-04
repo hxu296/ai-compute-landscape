@@ -837,15 +837,6 @@
         "direction": "loosening"
       },
       {
-        "company": "Microsoft (Azure)",
-        "speaker": "Amy Hood, CFO",
-        "date": "2026-10-28",
-        "quote": "Across our CPU fleet, engineering work enabled us to identify and monetize underutilized capacity this quarter, helping us serve more of the growing demand with our existing capacity.",
-        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/TranscriptQandAFY27Q1.docx",
-        "context": "An admission of slack, but it concerns CPUs and was recovered through efficiency. GPU efficiency gains also freed capacity for Foundry. Not a sign of idle AI GPUs.",
-        "direction": "loosening"
-      },
-      {
         "company": "Meta",
         "speaker": "Susan Li, CFO (CFO Outlook Commentary)",
         "date": "2026-10-21",
