@@ -363,3 +363,4 @@ details.provider-profiles[open]>.fig{max-width:var(--wide);margin-left:calc((var
 #usMapUnlocated ul{margin:6px 0 0;padding-left:18px}
 .usmap-table-title{font:600 11px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
 #usMapTable td:last-child{min-width:240px}
+#riskTable th{white-space:normal;min-width:70px;vertical-align:bottom}#riskTable td:nth-child(1){min-width:130px}#riskTable td:nth-child(3){min-width:250px}

@@ -94,18 +94,22 @@
   const R=D.neocloud_risk;
   if(R&&$('#riskTable')){
     const n=(v,d=1)=>v==null?'—':(+v).toFixed(d),pc=v=>v==null?'—':Math.round(v)+'%';
-    $('#riskNote').innerHTML=`Ranked by exposure (six 1–3 factors: backlog cover, cost of debt, concentration, tenor, interest burden, unfinanced build), 1 = most exposed. Backlog grade A filed, B company-stated, C estimated. Latest filings before Q3 results (due Nov 4–12). Landlord rent runs 10–20 years and cloud backlog 2–7, so compare debt ÷ annual contracted revenue. Lambda, Crusoe and Fluidstack disclose too little to compare.`;
+    $('#riskNote').innerHTML=`If AI demand or a big customer falters, who gets hurt first? Each company is scored on six factors from 1 (safe) to 3 (exposed), total 6–18: <b>High</b> 15+, <b>Medium</b> 12–14, <b>Low</b> under 12. Figures are from the latest filings before Q3 results (due Nov 4–12). Grades: A filed, B company-stated, C estimated. Lambda, Crusoe and Fluidstack disclose too little to score.`;
+    const FACTORS=[['concentration',r=>`${Math.round(r.top1_pct)}% of revenue from ${(r.top1_customer||'one customer').replace(/ \(.*$/,'')}`],['tenor',()=>'debt comes due before its contracts end'],['funding',r=>r.funding_unknown?'cost of planned build undisclosed':r.unfunded_usd_b?`$${(+r.unfunded_usd_b).toFixed(1)}B of planned build not yet financed`:'planned build needs financing'],['backlog_cover',r=>`backlog only ${(+r.D_backlog_to_debt).toFixed(1)}× its debt`],['cost',r=>`expensive debt (${(+(r.cost_of_debt_effective_pct_D??r.cost_of_debt_coupon_pct_D)).toFixed(1)}%)`],['interest_burden',()=>'interest takes over half of revenue']];
+    const level=t=>t>=15?['High','sig-short']:t>=12?['Medium','sig-risk']:['Low','sig-slack'];
+    const why=r=>{const hi=FACTORS.filter(([k])=>r.score?.[k]===3).map(([,f])=>f(r));return hi.length?hi.slice(0,3).join('; '):'no factor at the most exposed level';};
     table('#riskTable',R.rows,[
-      {k:'rank',h:'Rank',f:r=>`${r.rank}${r.funding_unknown?'<br><span class="small" title="Unfinanced build cost undisclosed; scored at the midpoint">funding unknown</span>':''}`},
       {k:'company',h:'Company',f:r=>`<b>${esc(r.company.replace(/ \(.*\)$/,''))}</b><br><span class="small">${esc(r.model.replace(/ \(.*\)$/,''))}</span>`},
-      {k:'backlog_usd_b',h:'Backlog',f:r=>`$${n(r.backlog_usd_b)}B <span class="small">grade ${esc(r.backlog_grade)}</span>`},
+      {k:'rank',h:'Exposure',f:r=>{const[l,c]=level(r.score?.total||0);return`<span class="sig ${c}">${l}</span><br><span class="small">${r.score?.total??'—'}/18 · #${r.rank}${r.funding_unknown?' · funding unknown':''}</span>`;}},
+      {k:'why',h:'Why',f:r=>`<span class="small">${esc(why(r))}</span>`},
+      {k:'backlog_usd_b',h:'Backlog (signed, not yet earned)',f:r=>`$${n(r.backlog_usd_b)}B <span class="small">grade ${esc(r.backlog_grade)}</span>`},
       {k:'debt_principal_usd_b',h:'Debt',f:r=>`$${n(r.debt_principal_usd_b,2)}B`},
-      {k:'cost_of_debt_effective_pct_D',h:'Cost of debt',f:r=>{const v=r.cost_of_debt_effective_pct_D??r.cost_of_debt_coupon_pct_D;return v==null?'—':n(v)+'%'+(r.cost_of_debt_effective_pct_D==null?' <span class="small">coupon</span>':'');}},
-      {k:'D_debt_to_stabilized_annual_contracted_rev',h:'Debt ÷ annual contracted revenue',f:r=>r.D_debt_to_stabilized_annual_contracted_rev==null?(r.D_debt_to_annualized_revenue==null?'—':n(r.D_debt_to_annualized_revenue)+'× revenue'):n(r.D_debt_to_stabilized_annual_contracted_rev)+'×'},
-      {k:'unfunded_usd_b',h:'Build not yet financed',f:r=>r.unfunded_usd_b==null&&r.unfunded_mw==null?'—':`<span title="${esc(r.unfunded_basis||'')}">${r.unfunded_usd_b!=null?'$'+n(r.unfunded_usd_b)+'B':''}${r.unfunded_mw?`${r.unfunded_usd_b!=null?' · ':''}${Number(r.unfunded_mw).toLocaleString('en-US')} MW`:''}</span> <span class="small">grade ${esc(r.unfunded_grade||'')}</span>`},
-      {k:'top1_pct',h:'Top customer',f:r=>`${pc(r.top1_pct)} ${esc((r.top1_customer||'').replace(/ \(.*$/,''))}${r.top3_pct?`<br><span class="small">top 3: ${pc(r.top3_pct)}</span>`:''}`},
-      {k:'backstops',h:'Backstops',f:r=>{const t=r.backstops||'None disclosed.',first=t.split(/(?<=\.)\s/)[0];return`<span class="small" title="${esc(t)}">${esc(first)}${first.length<t.length?' …':''}</span>`;}},
-      {k:'period_end',h:'Period',f:r=>`<span class="nw">${esc(String(r.period_end).slice(0,10))}</span>`},
+      {k:'cost_of_debt_effective_pct_D',h:'Interest rate',f:r=>{const v=r.cost_of_debt_effective_pct_D??r.cost_of_debt_coupon_pct_D;return v==null?'—':n(v)+'%'+(r.cost_of_debt_effective_pct_D==null?' <span class="small">coupon</span>':'');}},
+      {k:'D_debt_to_stabilized_annual_contracted_rev',h:'Debt ÷ yearly contracted revenue',f:r=>r.D_debt_to_stabilized_annual_contracted_rev==null?(r.D_debt_to_annualized_revenue==null?'—':n(r.D_debt_to_annualized_revenue)+'× revenue'):n(r.D_debt_to_stabilized_annual_contracted_rev)+'×'},
+      {k:'unfunded_usd_b',h:'Planned build not yet financed',f:r=>r.unfunded_usd_b==null&&r.unfunded_mw==null?'—':`<span title="${esc(r.unfunded_basis||'')}">${r.unfunded_usd_b!=null?'$'+n(r.unfunded_usd_b)+'B':''}${r.unfunded_mw?`${r.unfunded_usd_b!=null?' · ':''}${Number(r.unfunded_mw).toLocaleString('en-US')} MW`:''}</span> <span class="small">grade ${esc(r.unfunded_grade||'')}</span>`},
+      {k:'top1_pct',h:'Largest customer',f:r=>`${pc(r.top1_pct)} ${esc((r.top1_customer||'').replace(/ \(.*$/,''))}${r.top3_pct?`<br><span class="small">top 3: ${pc(r.top3_pct)}</span>`:''}`},
+      {k:'backstops',h:'Backstop if a customer defaults',f:r=>{const t=r.backstops||'None disclosed.',first=t.split(/(?<=\.)\s/)[0];return`<span class="small" title="${esc(t)}">${esc(first)}${first.length<t.length?' …':''}</span>`;}},
+      {k:'period_end',h:'Data as of',f:r=>`<span class="nw">${esc(String(r.period_end).slice(0,10))}</span>`},
       {k:'filing_url',h:'Source',f:r=>`${src(r.filing_url,'Filing ↗')}<br><span class="small">next ${esc(r.next_report||'')}</span>`}]);
   }
 })();
