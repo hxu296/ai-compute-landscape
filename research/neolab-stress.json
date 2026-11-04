@@ -1,0 +1,391 @@
+{
+ "schema_version": 1,
+ "as_of": "2026-11-04",
+ "rule": "Independent labs with frontier or near-frontier models and a last raise of at least $500M, as of 2026-11-04. Absorbed labs (Inflection, Adept, Character.AI, Cursor, World Labs) are out: their compute is still in use. App-layer companies that mostly route to other labs’ models (Perplexity, Cognition, Harvey) are out: their traffic already sits on big-lab compute.",
+ "excluded": [
+  "Perplexity",
+  "Cognition",
+  "Harvey",
+  "Magic",
+  "Runway",
+  "Black Forest Labs",
+  "Midjourney",
+  "Inflection",
+  "Adept",
+  "Character.AI",
+  "Cursor",
+  "World Labs"
+ ],
+ "labs": [
+  {
+   "name": "Mistral",
+   "type": "LLM",
+   "last_raise": "€3B Series D, Sep 2026",
+   "spend_bn": [
+    0.6,
+    1.2
+   ],
+   "runway": "not disclosed",
+   "where": "Own GB300 cluster (Fluidstack-operated) and Fluidstack",
+   "bucket": "gpu",
+   "exit": "own cluster, partly debt-financed",
+   "grade": "D",
+   "source_url": "https://www.orrick.com/en/News/2026/09/Orrick-Advises-Mistral-in-its-3B-Series-D-at-21B-Post-Money-Valuation"
+  },
+  {
+   "name": "Cohere",
+   "type": "LLM",
+   "last_raise": "Series E up to C$7B, first close Oct 2026",
+   "spend_bn": [
+    0.2,
+    0.3
+   ],
+   "runway": "not disclosed",
+   "where": "CoreWeave (Cambridge, ON) and BUZZ HPC, GB200",
+   "bucket": "gpu",
+   "exit": "BUZZ: 3-year term; CoreWeave: not disclosed",
+   "grade": "D",
+   "source_url": "https://aiweekly.co/alerts/cohere-marks-initial-close-of-5b-series-e-at-205b-valuation"
+  },
+  {
+   "name": "Reflection",
+   "type": "LLM",
+   "last_raise": "$2.5B, Apr 2026",
+   "spend_bn": [
+    1.8,
+    2.1
+   ],
+   "runway": "≈1–2 years at contract rate (D)",
+   "where": "SpaceX Colossus 2 GB300, and Nebius",
+   "bucket": "gpu",
+   "exit": "SpaceX: 90 days’ notice after the first 3 months",
+   "grade": "C",
+   "source_url": "https://techcrunch.com/2026/07/14/reflection-inks-1b-compute-deal-with-nebius/"
+  },
+  {
+   "name": "Thinking Machines",
+   "type": "LLM",
+   "last_raise": "$2B seed, Jul 2025; Nvidia, Mar 2026",
+   "spend_bn": [
+    0.5,
+    2.0
+   ],
+   "runway": "not disclosed",
+   "where": "Google Cloud, GB300",
+   "bucket": "hyperscaler",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://thenextweb.com/news/thinking-machines-lab-6bn-round-nvidia-accel"
+  },
+  {
+   "name": "SSI",
+   "type": "LLM",
+   "last_raise": "Nvidia, ≈$5B reported, Jul 2026",
+   "spend_bn": [
+    0.5,
+    2.0
+   ],
+   "runway": "not disclosed; no revenue",
+   "where": "Google Cloud TPUs",
+   "bucket": "hyperscaler",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://www.maginative.com/article/sutskevers-safe-superintelligence-raises-another-2b-at-32b-valuation/"
+  },
+  {
+   "name": "Poolside",
+   "type": "LLM",
+   "last_raise": "$1B Nvidia equity + licence, Aug 2026",
+   "spend_bn": [
+    0.2,
+    0.4
+   ],
+   "runway": "not disclosed",
+   "where": "None active: CoreWeave deals ended before delivery (Apr 2026)",
+   "bucket": "unknown",
+   "exit": "ended",
+   "grade": "D",
+   "source_url": "https://thenextweb.com/news/nvidia-poolside-6bn-model-factory-licence"
+  },
+  {
+   "name": "Physical Intelligence",
+   "type": "robotics",
+   "last_raise": "$600M, Nov 2025",
+   "spend_bn": [
+    0.1,
+    0.4
+   ],
+   "runway": "not disclosed",
+   "where": "Unnamed clouds, TPU and GPU",
+   "bucket": "unknown",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://www.bloomberg.com/news/articles/2026-03-27/ex-deepmind-staffers-robotics-startup-in-talks-for-11-billion-valuation"
+  },
+  {
+   "name": "Figure",
+   "type": "robotics",
+   "last_raise": ">$1B Series C, Sep 2025",
+   "spend_bn": [
+    0.1,
+    0.5
+   ],
+   "runway": "not disclosed",
+   "where": "Microsoft Azure now; Nscale Vera Rubin from 2H 2027",
+   "bucket": "hyperscaler",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://www.figure.ai/news/series-c"
+  },
+  {
+   "name": "Luma",
+   "type": "video",
+   "last_raise": "$900M Series C, Nov 2025",
+   "spend_bn": [
+    0.1,
+    1.0
+   ],
+   "runway": "not disclosed",
+   "where": "HUMAIN (Saudi), AMD",
+   "bucket": "unknown",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://www.businesswire.com/news/home/20251119678010/en/Luma-AI-Raises-$900-Million-Series-C-Led-by-HUMAIN-And-Partners-on-2-Gigawatt-AI-Supercluster-in-Saudi-Arabia"
+  },
+  {
+   "name": "AMI Labs",
+   "type": "research",
+   "last_raise": "$1.03B seed, Mar 2026",
+   "spend_bn": [
+    0.2,
+    0.6
+   ],
+   "runway": "not disclosed",
+   "where": "Nebius (reported)",
+   "bucket": "gpu",
+   "exit": "not disclosed",
+   "grade": "D",
+   "source_url": "https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models"
+  }
+ ],
+ "conversion": {
+  "usd_per_gpu_hour": 3.75,
+  "kw_it_per_gpu": 1.87,
+  "gpus_per_rack": 72,
+  "note": "Spend → IT power at one stated price: a GB300-class GPU-hour at $3.75 (middle of $3.0–4.5 rental) and 1.87 kW of IT power per GPU (a 72-GPU rack ≈135 kW). That is ≈$17.6M per IT MW-year."
+ },
+ "tokens": {
+  "own_model_share": [
+   0.005,
+   0.03
+  ],
+  "central": 0.015,
+  "grade": "D",
+  "note": "Share of industry tokens served on these labs’ own models. Traffic from apps that call OpenAI, Anthropic or Google is not counted as lost. No lab discloses its split.",
+  "migrate_default": 0.75,
+  "precedent": "Character.AI’s traffic fell ≈25% from its peak after the Google deal; Pi was throttled after Inflection. Neither is a clean measure of users moving elsewhere."
+ },
+ "rentable_it_mw": {
+  "low": 2415,
+  "high": 2680,
+  "items": [
+   {
+    "name": "CoreWeave",
+    "mw": "1,500",
+    "basis": "active power, Jun 30 2026 (company)"
+   },
+   {
+    "name": "Nebius",
+    "mw": "615–770",
+    "basis": "800–1,000 MW connected target for end-2026 ÷ 1.3"
+   },
+   {
+    "name": "Fluidstack",
+    "mw": "≈100–190",
+    "basis": ">100,000 GPUs under management × 1.0–1.9 kW"
+   },
+   {
+    "name": "Together AI",
+    "mw": "200",
+    "basis": "secured, Mar 2025"
+   },
+   {
+    "name": "Vast.ai",
+    "mw": "≈15–25",
+    "basis": "17,000–20,000 marketplace GPUs"
+   }
+  ],
+  "note": "Disclosed rentable neocloud and marketplace GPU power, IT basis. Lambda, RunPod and SF Compute disclose no fleet totals, so this is a floor and the price shock an upper bound. Crusoe’s operating power is mostly OpenAI’s Abilene campus, so it is left out."
+ },
+ "absorption": {
+  "default": 0.7,
+  "note": "Freed GPUs went to a big lab whenever one wanted them: Colossus 1 (≈11% used) was leased to Anthropic in May 2026; OpenAI took the CoreWeave option Microsoft passed on. Part 1 says compute is tight, so the default is above half. Licence-and-hire deals (Inflection, Adept, Covariant) moved people, not GPUs."
+ },
+ "elasticity": {
+  "range": [
+   -0.5,
+   -2
+  ],
+  "default": -1,
+  "note": "% change in rents per % change in rentable supply. 2024–25 gives ≈−0.5 (H100 rents roughly halved while supply roughly quadrupled), but demand grew at the same time, so that is the mild end. A pure supply shock likely moves prices more. Not identified from data."
+ },
+ "precedents": [
+  {
+   "case": "Character.AI -> Google licence, then Chapter 11",
+   "date": "2024-08-02 (licence); 2026-10-12 (Ch.11)",
+   "fate": "dumped",
+   "source_url": "https://bnnbloomberg.ca/business/technology/2024/08/02/characterai-co-founders-hired-by-google-in-licensing-deal"
+  },
+  {
+   "case": "Stability AI unpaid cloud bills",
+   "date": "2024-04 to 2024-06",
+   "fate": "renegotiated",
+   "source_url": "https://www.theregister.com/2024/04/03/stability_ai_bills/"
+  },
+  {
+   "case": "Poolside-CoreWeave Project Horizon collapse, then Nvidia licence",
+   "date": "2026-02 to 2026-08",
+   "fate": "dumped",
+   "source_url": "https://d191cipm7p004k.cloudfront.net/interactive/259732/en"
+  },
+  {
+   "case": "Windsurf -> Google licence + Cognition acquisition",
+   "date": "2025-07-11 / 2025-07-14",
+   "fate": "absorbed",
+   "source_url": "https://www.bloomberg.com/news/articles/2025-07-14/ai-startup-cognition-to-buy-windsurf-after-google-licensing-deal"
+  },
+  {
+   "case": "Builder.ai insolvency",
+   "date": "2025-05",
+   "fate": "dumped",
+   "source_url": "https://sifted.eu/articles/builder-ai-leaked-memo"
+  },
+  {
+   "case": "Microsoft walks from CoreWeave $12B option; OpenAI takes it",
+   "date": "2025-03",
+   "fate": "absorbed",
+   "source_url": "https://dataconomy.com/2025/03/21/microsoft-bails-on-12-billion-usd-coreweave-deal-as-openai-steps-in"
+  },
+  {
+   "case": "xAI folded into SpaceX; Colossus 1 leased to Anthropic",
+   "date": "2026-05-06",
+   "fate": "absorbed",
+   "source_url": "https://datacenterdynamics.com/en/news/anthropic-to-use-all-of-spacex-xais-colossus-1-data-center-compute/"
+  },
+  {
+   "case": "Crusoe Project Jade (Wyoming) paused",
+   "date": "2026-06-10",
+   "fate": "renegotiated",
+   "source_url": "https://www.datacenterdynamics.com/en/news/crusoe-pauses-work-on-18gw-cheyenne-wyoming-data-center-at-the-request-of-our-customer/"
+  },
+  {
+   "case": "Fluidstack exits €10B 1 GW France project",
+   "date": "2026-03-18",
+   "fate": "dumped",
+   "source_url": "https://www.bloomberg.com/news/articles/2026-03-18/fluidstack-drops-out-of-marquee-10-billion-ai-project-in-france"
+  },
+  {
+   "case": "Aleph Alpha -> Cohere combination",
+   "date": "2026-09-16 (definitive agreement)",
+   "fate": "absorbed",
+   "source_url": "https://unite.ai/cohere-signs-definitive-combination-agreement-with-aleph-alpha"
+  },
+  {
+   "case": "Cursor (Anysphere) -> SpaceX",
+   "date": "2026-08-14",
+   "fate": "absorbed",
+   "source_url": "https://siliconangle.com/?p=721052"
+  },
+  {
+   "case": "World Labs -> AMD (pending)",
+   "date": "2026-09-28",
+   "fate": "absorbed",
+   "source_url": "https://fintool.com/news/world-labs-1-billion-funding-spatial-intelligence"
+  }
+ ],
+ "exposure": {
+  "neolab": [
+   {
+    "who": "SpaceX AI",
+    "what": "Reflection: $150M/month, cancellable on 90 days’ notice. ≈4% of its disclosed lease run-rate (Anthropic ≈$1.25B, Google ≈$920M, unnamed ≈$1.11B a month).",
+    "grade": "C",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/0001181412/000162828026052535/spcx-20260630.htm"
+   },
+   {
+    "who": "Nscale",
+    "what": "Figure: $3.5B from 2H 2027, ≈3% of its ≈$103B backlog (S-1, as reported).",
+    "grade": "C",
+    "source_url": "https://cryptobriefing.com/nscale-contracts-surge-microsoft-anthropic/"
+   },
+   {
+    "who": "Nebius",
+    "what": "Reflection (>$1B through 2029), Cohere, AMI Labs. Most of its >$40B of commitments are Microsoft and Meta; neolab share not disclosed.",
+    "grade": "C",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926027886/tm268879d1_ex99-1.htm"
+   },
+   {
+    "who": "Fluidstack",
+    "what": "Mistral, Poolside, Black Forest Labs. Private; share not disclosed.",
+    "grade": "C",
+    "source_url": null
+   },
+   {
+    "who": "CoreWeave",
+    "what": "Cohere (anchor tenant, Cambridge ON). Top three customers were 72% of Q2 2026 revenue; neolab share not disclosed.",
+    "grade": "A/C",
+    "source_url": "https://sec-api.io/insights/coreweave-crwv-2026-revenue-analysis-top-customer-concentration-exposure"
+   },
+   {
+    "who": "Marketplaces",
+    "what": "Vast, RunPod, SF Compute, Together: where released GPUs would be resold. Exposure not disclosed.",
+    "grade": "—",
+    "source_url": null
+   }
+  ],
+  "control": [
+   {
+    "who": "Oracle",
+    "what": "≈45% of its backlog is from OpenAI.",
+    "grade": "C"
+   },
+   {
+    "who": "Microsoft",
+    "what": "≈45% of its $625B commercial RPO was from OpenAI at Dec 2025.",
+    "grade": "B"
+   },
+   {
+    "who": "CoreWeave",
+    "what": "OpenAI contracts ≈$22.4B, in three tranches.",
+    "grade": "B"
+   },
+   {
+    "who": "AWS",
+    "what": "OpenAI contracts ≈$138B (Nov 2025 + Feb 2026).",
+    "grade": "C"
+   }
+  ]
+ },
+ "future": [
+  {
+   "lab": "Thinking Machines",
+   "short": "Thinking Machines’ 1 GW Vera Rubin target (2027)",
+   "mw": 1000,
+   "when": "deployment targeted early 2027",
+   "basis": "company-stated “at least one gigawatt”; host and power basis not stated",
+   "source_url": "https://techcrunch.com/2026/03/10/thinking-machines-lab-inks-massive-compute-deal-with-nvidia"
+  },
+  {
+   "lab": "Figure",
+   "short": "Figure’s up to 100,000 Rubin GPUs at Nscale (≈0.19 GW, 2H 2027)",
+   "mw": 187,
+   "when": "first deployments 2H 2027",
+   "basis": "up to 100,000 Vera Rubin GPUs × 1.87 kW (Rubin likely draws more)",
+   "source_url": "https://www.eweek.com/news/figure-ai-3-5-billion-nscale-humanoid-robot-compute/"
+  }
+ ],
+ "future_note": "A bust frees today’s compute, which loosens the market, but it also cancels compute planned for 2027–28, which tightens it later. Slipped builds come off Fig. 1’s built compute at the H100e per MW of OpenAI’s tracked 2027–28 additions (Epoch). Chips a failed buyer leaves may go to other buyers, so the slider is the share that never gets built. Mistral’s Swedish Vera Rubin site states no MW and is left out. Thinking Machines’ and Figure’s builds may not be among Epoch’s tracked sites; if not, subtracting them overstates the tightening.",
+ "control": {
+  "shortfall_default": 0.25,
+  "note": "OpenAI pays for only part of its next 12 months. MW released = shortfall × OpenAI’s tracked fleet 12 months out (Epoch, by user, ÷1.3 to IT). Tokens stay: its users still want them, so only the compute side changes. Its unfunded share of tracked 2027–28 additions slips by the second slider."
+ }
+}

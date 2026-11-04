@@ -22,7 +22,7 @@ The page refreshes prices and the token projection daily, so the live numbers mo
 **2. 2027–28: it depends on one number.**
 - Compute being built grows ≈64% a year through 2028 (Epoch AI tracked sites, ex-China; a floor).
 - Token demand is ≈1.7 quadrillion logical tokens/day worldwide (E), growing ≈15% a month on each company's own trend.
-- Priced at Anthropic's filed serving cost (≈$0.143 per million tokens) and $5 per GB300-equivalent GPU-hour, inference outgrows today's serving share of compute in **November 2027** on today's ≈15%/month trend, and, if that trend held for two more years (≈33× today's tokens), would need more than everything tracked as built by December 2028, a small margin next to how much tracked supply undercounts. The break-even is **≈9%/month (≈2.9× a year)**: faster means it stays tight, slower means it loosens. Tracked supply is a floor, so this leans toward shortage.
+- Priced at Anthropic's filed serving cost (≈$0.143 per million tokens) and $5 per GB300-equivalent GPU-hour, inference outgrows today's serving share of compute in **November 2027** on today's ≈15%/month trend, and, if that trend held for two more years (≈32× today's tokens), would need more than everything tracked as built by late November 2028, a small margin next to how much tracked supply undercounts. The break-even is **≈9%/month (≈2.9× a year)**: faster means it stays tight, slower means it loosens. Tracked supply is a floor, so this leans toward shortage.
 
 ![Shortage or oversupply: inference demand against the build-out](docs/screenshots/03-will-it-stay-tight.png)
 
@@ -30,6 +30,7 @@ The page refreshes prices and the token projection daily, so the live numbers mo
 - Tracked frontier sites hold ≈22 GW at end-2026 and ≈50 GW by end-2028. OpenAI and Anthropic use 26–39% of the end-2026 total and 38–50% of the end-2028 total (exclusive sites → including sites they share). Of the capacity added, they take 20–32% in 2027 but 65–75% in 2028 (48–59% across both years), so "most of the world's compute" holds only for 2028's additions.
 - OpenAI and Anthropic sign ≈$1.26T of the ≈$1.44T in disclosed compute deals since 2025 (≈$1.06T of it firm; the rest is "up to", conditional or cancellable), mostly through Oracle, Microsoft, AWS and Google.
 - Most exposed if demand falters (tied at 15/18): Core Scientific, CoreWeave, Galaxy Digital and WhiteFiber (debt, customer concentration, term mismatch).
+- Stress test: if all ten independent labs (Mistral, Cohere, Reflection, Thinking Machines, SSI and others) failed at once, ≈240–600 MW of compute would come free and ≈0.4% of tokens would disappear (E). Rents fall ≈1–6% and, net of the builds they cancel, the November 2027 crossing barely moves. The control case, OpenAI paying for only 75% of its next year, is looser now and tighter later: the crossing moves about a week later, but ≈1.4 GW of slipped 2027–28 builds bring the outright shortage ≈11 days sooner.
 
 ![Who uses the tracked data-center power](docs/screenshots/04-who-uses-compute.png)
 ![How the companies connect: buyers, clouds and landlords](docs/screenshots/05-who-pays-whom.png)

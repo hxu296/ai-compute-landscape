@@ -7,7 +7,7 @@
     const kw = NC.contracts.filter(c => !c.excluded), point = kw.filter(c => !kwFloor(c)), all = point.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = point.map(c => c.implied_usd_per_kw_month).filter(Boolean);
     const floors = kw.filter(c => kwFloor(c) && (c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month));
     const mdn = v => { v = [...v].sort((a, b) => a - b); return (v[Math.floor((v.length-1) / 2)]+v[Math.ceil((v.length-1) / 2)])/2; };
-    $("#kwNote").textContent = `Median all-in compute: $${Math.round(mdn(all)).toLocaleString()}/kW-month, n=${all.length}. Median powered-space lease: $${Math.round(mdn(ls)).toLocaleString()}/kW-month, n=${ls.length}. Gap ≈$${Math.round((mdn(all) - mdn(ls)) / 10) * 10}/kW-month. ${floors.length ? `Floors are left out of the medians: ${floors.map(c => `${c.buyer} ← ${c.supplier} ≥$${Math.round(c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month)}`).join(", ")}. ` : ""}`;
+    $("#kwNote").textContent = `Medians: $${Math.round(mdn(all)).toLocaleString()} all-in (n=${all.length}), $${Math.round(mdn(ls)).toLocaleString()} lease (n=${ls.length}); gap ≈$${Math.round((mdn(all) - mdn(ls)) / 10) * 10}/kW-month. ${floors.length ? `Floors (≥) are left out. ` : ""}`;
   })();
   const c = NC.counts;
   // Readable timestamps, and contract counts that say what differs from Table 2 (equity, M&A and framework rows are excluded from the deal views).

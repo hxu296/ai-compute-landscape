@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="9ec3824f0155">
+<meta name="build" content="0133da78b1f1">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Will AI compute stay tight?</title>
@@ -14,14 +14,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='6' fill='%23161513'/%3E%3Crect x='6.5' y='15' width='4' height='6.5' rx='1' fill='%23fffdf8' fill-opacity='.6'/%3E%3Crect x='12' y='10.5' width='4' height='11' rx='1' fill='%23fffdf8' fill-opacity='.85'/%3E%3Crect x='17.5' y='6' width='4' height='15.5' rx='1' fill='%2366c2b1'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=e4ff50d01515">
+<link rel="stylesheet" href="style.css?v=239fac3ed8b7">
 </head>
 <body>
 <div class="tip" id="tip"></div>
 <header class="masthead" id="readingNav">
   <div class="masthead-bar">
     <a class="brand" href="#top" aria-label="Who powers the Token Economy? Back to the top"><svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" rx="6" fill="#161513"/><rect x="6.5" y="15" width="4" height="6.5" rx="1" fill="#fffdf8" fill-opacity=".6"/><rect x="12" y="10.5" width="4" height="11" rx="1" fill="#fffdf8" fill-opacity=".85"/><rect x="17.5" y="6" width="4" height="15.5" rx="1" fill="#66c2b1"/></svg><span class="brand-name">Token Economy</span></a>
-    <nav class="masthead-nav" aria-label="Sections"><a href="#watch">Now</a><a href="#outlook">2027–28</a><a href="#supply">Supply</a><a href="#usage">Demand</a><a href="#exposure">Exposure</a><a href="#deals">Deals</a><a href="#pricing">Prices</a><a href="#china">China</a><a href="#more">More data</a><a href="#method">Sources</a></nav>
+    <nav class="masthead-nav" aria-label="Sections"><a href="#watch">Now</a><a href="#outlook">2027–28</a><a href="#supply">Supply</a><a href="#usage">Demand</a><a href="#stress">Stress test</a><a href="#exposure">Exposure</a><a href="#deals">Deals</a><a href="#pricing">Prices</a><a href="#china">China</a><a href="#more">More data</a><a href="#method">Sources</a></nav>
     <a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository (new tab)"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
   </div>
   <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
@@ -57,7 +57,7 @@
     <p class="lead-line" id="watchLead"></p>
     <div class="lead-stats" id="watchStats"></div>
     <div id="tightQuotes"></div>
-    <p class="lead-asof"><span id="watchAsOf"></span> <a href="#watchSignals">All signals, with basis ↓</a></p>
+    <p class="lead-asof"><span id="watchAsOf"></span> <a href="#watchSignals">All signals ↓</a></p>
   </div>
 </section>
 
@@ -126,14 +126,13 @@
     <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">Tokens per day today, by company</h3></div>
     <p class="fig-sub" id="projectionHeadline"></p>
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
-    <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected on the company’s own trend · line = range. All are estimates, not disclosures, projected to <span class="projection-date">today</span>. OpenRouter and cloud marketplaces are left out to avoid double counting.</p>
+    <p class="small"><span class="legend-swatch solid"></span> latest disclosed · <span class="legend-swatch light"></span> projected on its own trend to <span class="projection-date">today</span> · line = range. Hover a name for its scope. Router and marketplace traffic is left out (double counting).</p>
     <details class="fig-notes"><summary>Components, trends, spend and sources</summary><p class="small" id="spendNote"></p><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
     <p class="why" id="whyTokens"></p>
   </div></div>
   <div class="fig" id="inference-split"><div class="fig-frame">
   <div class="inference-shares">
     <div class="fig-head"><span class="fig-no">Fig. 5</span><h3>Training vs inference: where lab compute goes</h3></div>
-    <p class="fig-sub">Anthropic’s filing puts customer serving at ≈26% of its compute spend.</p>
     <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Share of compute spent on inference versus training, by lab" style="width:100%;display:block"></svg></div>
     <details class="fig-notes"><summary>How to read this chart</summary><p>Anthropic’s filing puts customer serving at ≈26% of compute spend (up to ≈36% counting free-tier use, E). Hosts and chip sellers report inference above 50% of their own revenue or usage, which is a different measure (table below). Light segment = stated range. RL rollouts count as training but run like inference. Grades: R = reported (filed or attributed press), D = derived by this site from a filing or prospectus, E = estimate; R/E = reported low end with an estimated high end. Forecasts are left out. Hover a bar for basis and source.</p></details>
     <details class="fig-notes"><summary>Host and chip-seller statements (revenue or usage, not a lab’s split)</summary><div class="table-wrap"><table class="t" id="infSupplierTable"></table></div></details>
@@ -151,11 +150,30 @@
   </div>
 </section>
 
+<section class="chapter" id="stress">
+  <div class="prose">
+    <div class="label"><span class="num">06</span>Stress test</div>
+    <h2>What if the neolabs fail?</h2>
+    <p class="chapter-finding" id="stressLead"></p>
+  </div>
+  <div class="fig" id="stressFig"><div class="fig-frame">
+    <div class="fig-controls"><span class="seg" id="stressMode"><button data-mode="neolab" class="on">All neolabs fail</button><button data-mode="control">Control: OpenAI pays for part of a year</button></span></div>
+    <div class="research-controls">
+      <label id="stressMigrateBox">Traffic that moves to other labs <output id="stressMigrateValue"></output><input id="stressMigrate" type="range" min="25" max="100" step="5" value="75"></label>
+      <label id="stressShortfallBox" hidden>Share OpenAI can’t pay <output id="stressShortfallValue"></output><input id="stressShortfall" type="range" min="5" max="50" step="5" value="25"></label>
+      <label>Freed compute big labs take <output id="stressAbsorbValue"></output><input id="stressAbsorb" type="range" min="0" max="100" step="5" value="70"></label>
+      <label>Unfunded builds that slip <output id="stressSlipValue"></output><input id="stressSlip" type="range" min="0" max="100" step="10" value="50"></label>
+      <label>Rent response, % per % supply <output id="stressElasticValue"></output><input id="stressElastic" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+    </div>
+    <ol class="stress-steps" id="stressSteps"></ol>
+  </div></div>
+</section>
+
 <div class="part-title" id="part-hurt">Part 3 · Who gets hurt if it loosens</div>
 
 <section class="chapter" id="exposure">
   <div class="prose">
-    <div class="label"><span class="num">06</span>Exposure</div>
+    <div class="label"><span class="num">07</span>Exposure</div>
     <h2>Who is exposed</h2>
     <p class="chapter-finding" id="exposureLead"></p>
   </div>
@@ -170,7 +188,7 @@
 
 <section class="chapter" id="deals">
   <div class="prose">
-    <div class="label"><span class="num">07</span>Contracts</div>
+    <div class="label"><span class="num">08</span>Contracts</div>
     <h2>Compute deals</h2>
     <p><b>A few AI labs sign most of the money.</b> Anthropic and OpenAI are the largest buyers. Neoclouds resell to them, and landlords build the halls.</p>
   </div>
@@ -203,22 +221,21 @@
 
 <section class="chapter" id="pricing">
   <div class="prose">
-    <div class="label"><span class="num">08</span>Prices</div>
+    <div class="label"><span class="num">09</span>Prices</div>
     <h2>Compute prices</h2>
-    <p><b id="priceLead">Rental prices for H100 and B200 GPUs come from daily market benchmarks.</b> A chip-hour price does not compare model throughput.</p>
+    <p><b id="priceLead">Rental prices for H100 and B200 GPUs come from daily market benchmarks.</b></p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div id="benchmarks" class="benchmark-grid"></div>
     <h3 class="fig-title">Market price movements</h3>
-    <p class="fig-sub">Changes within each public benchmark series, over calendar windows. A rental index is not a GPU resale price.</p>
     <div class="scroll"><table class="t" id="marketChanges"></table></div>
   </div></div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
     <div><div class="fig-head"><span class="fig-no">Fig. 7</span></div><h4>Rental price indices over time</h4>
       <div class="fig-body"><svg id="idxSvg" viewBox="0 0 440 260" role="img" aria-label="Price index history"></svg></div><div class="legend" id="idxLegend"></div>
-      <p class="fig-caption">Silicon Data standardizes rental observations; Ornn describes executed trades. Neither is a one-year contract price.</p></div>
+      <p class="fig-caption">Neither index is a one-year contract price.</p></div>
     <div><div class="fig-head"><span class="fig-no">Fig. 8</span></div><h4>What the big deals cost per kilowatt, per month</h4>
-      <p class="fig-sub">Red deals buy compute, chips included. Green deals rent only a powered building. The gap between the two medians is roughly what the chips and servers cost. ≥ marks a floor.</p>
+      <p class="fig-sub">Red: compute, chips included. Green: a powered building only. The gap between the medians is roughly the chips and servers. ≥ marks a floor.</p>
       <div class="fig-body"><svg id="kwSvg" viewBox="0 0 440 300" role="img" aria-label="Deal prices per kW-month"></svg></div>
       <div class="legend"><span><i style="background:var(--s2)"></i>All-in compute (chips included)</span><span><i style="background:var(--s3)"></i>Building lease (no chips)</span></div>
       <p class="fig-caption" id="kwNote"></p>
@@ -229,7 +246,7 @@
 
 <section class="chapter" id="china">
   <div class="prose">
-    <div class="label"><span class="num">09</span>China</div>
+    <div class="label"><span class="num">10</span>China</div>
     <h2>Compute in China</h2>
     <p class="chapter-finding" id="chinaLead"></p>
     <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as one bucket, so Fig. 9 shows chips, not companies. China’s ~500T/day of reported tokens are mostly text and agent traffic; video is an estimated 1.6%, range 0.3–8% (<a href="research/GROK-CHINA-TOKENS-2026-11-03.md">method</a>).</p>
@@ -350,7 +367,7 @@
 
 <section class="chapter" id="providers">
   <div class="prose">
-    <div class="label"><span class="num">10</span>Providers</div>
+    <div class="label"><span class="num">11</span>Providers</div>
     <h2>Company profiles</h2>
     <p>One card per company with its fleet, power, contracts and prices. Empty means not disclosed, not zero.</p>
   </div>
@@ -362,7 +379,7 @@
 
 <section class="chapter" id="method">
   <div class="prose">
-    <div class="label"><span class="num">11</span>Sources and method</div>
+    <div class="label"><span class="num">12</span>Sources and method</div>
     <h2>Sources and method</h2>
 
     <div class="method" id="methodBox"></div>
@@ -383,7 +400,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=7eca82d0f6cf"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=a6042070fe50"></script>
+<script src="data/research.js?v=07a38560109b"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=c11cc3cabcf5"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -393,17 +410,18 @@
 <script src="js/chip_stacks.js?v=59ae588f4352"></script>
 <script src="js/deals.js?v=a27276b6de77"></script>
 <script src="js/growth.js?v=5dbf4de766ec"></script>
-<script src="js/pricing.js?v=1f4c07a24dc7"></script>
+<script src="js/pricing.js?v=0acb40b4d16f"></script>
 <script src="js/usage.js?v=6be6a1f27644"></script>
 <script src="js/token_math.js?v=6db1a97eee26"></script>
 <script src="js/tokens.js?v=aa5ded4797a0"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
-<script src="js/demand.js?v=0aafce288b4a"></script>
-<script src="js/watch.js?v=da72a944a645"></script>
+<script src="js/demand.js?v=e09a64c64e9d"></script>
+<script src="js/watch.js?v=f539b1f4106b"></script>
+<script src="js/neolab.js?v=9700041b5775"></script>
 <script src="js/us_map.js?v=18d3e899c9a5"></script>
 <script src="js/gw_years.js?v=34a8be03f666"></script>
 <script src="js/capacity.js?v=0371c9e53121"></script>
-<script src="js/lists.js?v=3f4cad1226ca"></script>
+<script src="js/lists.js?v=d0bb15761f03"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
 <script src="js/reader.js?v=0c0c71d93eb4"></script>
 </body>

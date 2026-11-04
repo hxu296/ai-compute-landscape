@@ -8,7 +8,9 @@
   const ctl = $("#priceCtl");
   BASES.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{basis=k;draw();};ctl.appendChild(b);});
   $("#priceGroup").onchange=$("#priceFamily").onchange=draw;
-  $("#benchmarks").innerHTML=NC.benchmarks.map(b=>`<div class="benchmark"><div class="kicker">${esc(b.name)}</div><strong>${b.range_low!=null?`$${b.range_low.toFixed(2)}–${b.range_high.toFixed(2)}`:b.usd==null?"No public fixing":`$${b.usd.toFixed(2)}`}</strong><p>${esc(b.sku)} · ${b.usd==null?"checked":"as of"} ${b.date}</p><p>${esc(b.terms)}</p>${src(b.source_url)}</div>`).join("");
+  // Short card labels; the full terms stay in the hover.
+  const TERMS=b=>/Compute Desk/.test(b.name)?"US one-year index, ex-hyperscalers":/SemiAnalysis/.test(b.name)?"One-year contracts, 25th–75th percentile":/Silicon Data/.test(b.name)?"Neocloud rental index":b.terms;
+  $("#benchmarks").innerHTML=NC.benchmarks.map(b=>`<div class="benchmark"><div class="kicker">${esc(b.name)}</div><strong>${b.range_low!=null?`$${b.range_low.toFixed(2)}–${b.range_high.toFixed(2)}`:b.usd==null?"No public fixing":`$${b.usd.toFixed(2)}`}</strong><p>${esc(b.sku)} · ${b.usd==null?"checked":"as of"} ${b.date}</p><p title="${esc(b.terms)}">${esc(TERMS(b))}</p>${src(b.source_url)}</div>`).join("");
   $("#priceLegend").innerHTML = GROUPS.map(([g,c])=>`<span><i style="background:var(${c})"></i>${g}</span>`).join("")+`<span>│ median of shown providers</span>`;
   const pct = v => `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
   table("#marketChanges", NC.market_checks, [{k:"name",h:"Benchmark"},{k:"terms",h:"Market / terms"},{k:"date",h:"Last observation"},{k:"usd",h:"USD / GPU-h",f:r=>`$${r.usd.toFixed(2)}`}, ...[7,30,90].map(n=>({k:`change${n}`,h:`${n}d change`,f:r=>{const c=r.changes[n];if(!c)return "unavailable";return `<span title="${esc(`${c.first_date}: $${c.first} → ${c.last_date}: $${c.last}`)}">${pct(c.percent)}</span>`;}})),{k:"source_url",h:"",f:r=>src(r.source_url)}]);

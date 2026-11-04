@@ -40,8 +40,10 @@
       const built=t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return S[ya].racks*(S[yb].racks/S[ya].racks)**f;}}return S['2028'].racks;};
       const need0=exChina*SC.usd_per_mtok/1e6/(price*24)/72,implied=need0/(exChina/mixes[1].rate),need=t=>need0*(1+g)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
       const pts=[];for(let t=t0;t<=tEnd+1;t+=MON/2)pts.push(t);pts.push(tEnd);
-      const first=f=>pts.find(t=>f(t)),cross=first(t=>need(t)>=MID*built(t)),all=first(t=>need(t)>=built(t));
-      const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=(MID*built(tEnd)/need0)**(1/mEnd)-1;if(BE0===null){BE0=breakEven;BR0=buildRate;CR0=cross||null;G0=g;}
+      const grid=[];for(let t=t0;t<=tEnd;t+=864e5)grid.push(t);const first=f=>grid.find(t=>f(t)),cross=first(t=>need(t)>=MID*built(t)),all=first(t=>need(t)>=built(t));
+      const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=(MID*built(tEnd)/need0)**(1/mEnd)-1;if(BE0===null){BE0=breakEven;BR0=buildRate;CR0=cross||null;G0=g;const Sf=S;
+        // Fig. 1 at its defaults, frozen, for the stress test (js/neolab.js): it changes only the inputs it names.
+        window.BuildoutBase={need0,g,t0,MON,MID,tEnd,cross,all,fmt,rackKw:72*1.87,built:t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return Sf[ya].racks*(Sf[yb].racks/Sf[ya].racks)**f;}}return Sf['2028'].racks;}};}
       const svg=$('#buildoutSvg'),narrow=(svg.getBoundingClientRect().width||900)<600,W=narrow?420:900,H=narrow?340:330,L=narrow?40:64,R=W-(narrow?96:150),T=16,B=H-34,fs=narrow?12:11,lo=Math.min(need0,built(t0)*BAND[0])/3,hi=built(tEnd)*2.2;
       const x=t=>L+(t-t0)/(tEnd-t0)*(R-L),y=v=>B-(Math.log10(Math.max(v,lo))-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo))*(B-T),line=f=>pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(Math.min(f(t),hi)).toFixed(1)}`).join('');
       svg.innerHTML='';svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
@@ -121,7 +123,7 @@
       $('#watchAnswer').textContent=tight?'Yes.':'Not clearly.';
       const parts=[(h&&b&&d90(h)!=null&&d90(b)!=null)?`H100 and B200 rents ${d90(h)>0&&d90(b)>0?'rose':'moved'} ${Math.abs(Math.round(d90(h)))}% and ${Math.abs(Math.round(d90(b)))}% in 90 days`:'',
         TF?.short_term_q3_b?`Anthropic bought $${TF.short_term_q3_b.toFixed(1)}B of short-term compute in Q3`:'',ra!=null?`${TF?.short_term_q3_b?'Its':'Anthropic’s'} next-12-month commitments are ≈${ra.toFixed(1)}× its revenue run-rate`:''].filter(Boolean);
-      $('#watchLead').innerHTML=`${parts.map(x=>x+'. ').join('')}Will it last? <a href="#outlook">Part 2 ↓</a>`;
+      $('#watchLead').innerHTML=`${tight?'Rents are rising again after a long fall, and buyers pay a premium for short-term capacity.':parts.map(x=>x+'. ').join('')} Will it last? <a href="#outlook">Part 2 ↓</a>`;
       $('#watchStats').innerHTML=[h&&tile('H100 rental',`$${h.usd.toFixed(2)}/h`,delta(d90(h)),word[ph.sig]||'—','#pricing'),
         b&&tile('B200 rental',`$${b.usd.toFixed(2)}/h`,delta(d90(b)),word[pb.sig]||'—','#pricing'),
         TF?.short_term_q3_b&&tile('Anthropic short-term compute',`$${TF.short_term_q3_b.toFixed(1)}B`,'bought in Q3','premium capacity','#watchSignals'),
@@ -140,11 +142,10 @@
         const bg=b1/b0-1,cg=c1/c0-1,yoy=Date.parse(b2)-Date.parse(a2)>200*864e5;return{n,bg,cg,yoy,basis,b1,c0,c1,read:bg>cg*1.15?'backlog faster':cg>bg*1.15?'capacity faster':'about even'};}).filter(Boolean);
       const pctx=v=>(v>=0?'+':'')+Math.round(v*100)+'%',faster=BK.filter(r=>r.read==='backlog faster').map(r=>r.n.replace(' Cloud','').replace(' Azure','').replace(' OCI','')),even=BK.filter(r=>r.read==='about even').map(r=>r.n),slower=BK.filter(r=>r.read==='capacity faster').map(r=>r.n.replace(' Azure','').replace(' OCI',''));
       const evid=`<p class="lead-quotes-head">Measured evidence</p><ul class="lead-quotes lead-evidence">`+
-        `<li><b>Prices.</b> H100 rents fell 26–54% by region from Q1 2025. They have turned up: H100 ${pctx((mc('SemiAnalysis H100')?.changes?.['90']?.percent||0)/100)} and B200 ${pctx((mc('SemiAnalysis B200')?.changes?.['90']?.percent||0)/100)} in the last 90 days.</li>`+
-        (BK.length?`<li><b>Backlog vs capacity.</b> CoreWeave’s contracted backlog grew ${Math.round(BK[0].bg*100)}% and its MW online ${Math.round(BK[0].cg*100)}% in the year to June 2026. Demand is keeping pace with a fast build. Oracle delivered 850 MW and more than 300,000 GPUs in one quarter, while its RPO rose $209B in a year to $664B.</li>`:'')+`</ul>`;
+                (BK.length?`<li><b>Backlog vs capacity.</b> CoreWeave’s backlog grew ${Math.round(BK[0].bg*100)}% and its MW online ${Math.round(BK[0].cg*100)}% in the year to June 2026: demand keeps pace with a fast build. Oracle delivered 850 MW in one quarter while its RPO rose $209B to $664B.</li>`:'')+`</ul>`;
       // Sources, scope notes and the remaining statements, collapsed under the block.
       const notes=`<details class="fig-notes"><summary>Sources and more statements</summary><p class="small">Rents: SemiAnalysis composites, 90-day change; the 26–54% fall since Q1 2025 is Silicon Data’s regional medians. Anthropic: S-1/A, November 2; revenue run-rate = Q3 × 4. Oracle: 8-K, Sep 10. CoreWeave is the one company that reports backlog and capacity on the same basis. Other companies report backlog for a wider scope (all commercial or all cloud) than any capacity figure we have, so they are not compared. E = estimate.</p>${tq.length>3?`<ul class="lead-quotes">${tq.slice(3).map(qli).join('')}</ul>`:''}${lq.length?`<p class="small"><b>Counter-signals in full:</b></p><ul class="lead-quotes">${lq.map(qli).join('')}</ul>`:''}</details>`;
-      if($('#tightQuotes'))$('#tightQuotes').innerHTML=evid+(Q.length?`<p class="lead-quotes-head">What companies said. A weaker signal: “sold out” is also a sales pitch.</p><ul class="lead-quotes">${tq.slice(0,3).map(qli).join('')}</ul>`+(lq.length?`<p class="small lead-counter-line"><b>Counter-signals:</b> ${lq.map(q=>`${esc(q.company.replace(/ \(.*\)$/,''))}${q.source_url?' '+src(q.source_url,'↗'):''}`).join(' · ')}</p>`:''):'')+notes;
+      if($('#tightQuotes'))$('#tightQuotes').innerHTML=evid+(Q.length?`<p class="lead-quotes-head">What companies say. Weaker: “sold out” is also a sales pitch.</p><ul class="lead-quotes">${tq.slice(0,3).map(qli).join('')}</ul>`+(lq.length?`<p class="small lead-counter-line"><b>Counter-signals:</b> ${lq.map(q=>`${esc(q.company.replace(/ \(.*\)$/,''))}${q.source_url?' '+src(q.source_url,'↗'):''}`).join(' · ')}</p>`:''):'')+notes;
       // Part 2 lead: the one number.
       const stays=gw>be;
       if($('#outlookLead')&&be!=null)$('#outlookLead').innerHTML=`<b>It depends on one number: token growth of ≈${Math.round(be*100)}% a month, or ≈${yr(be).toFixed(1)}× a year.</b> Faster, and compute stays tight. Slower, and it loosens. Today’s trend is ≈${Math.round(gw*100)}%/month.`;
@@ -164,12 +165,12 @@
         `<li><b>Whether buyers can pay.</b> ${ra!=null?`Anthropic’s next-12-month commitments are ≈${ra.toFixed(1)}× its revenue run-rate. `:''}If buyers can’t pay, landlords and neoclouds feel it first. <a href="#exposure">Table 1 ↓</a></li>`,
         SX?`<li><b>More supply than tracked.</b> SpaceX’s CEO targets ≈${SX.company_gw} GW nameplate by end-2027; Epoch tracks ${SX.tracked_gw.toFixed(1)} GW facility power at its sites. Untracked buildings would loosen compute sooner.</li>`:'',
         `<li><b>Cheaper GPU-hours or slower tokens.</b> Both move Fig. 1’s break-even. <a href="#buildout">Fig. 1 ↑</a></li>`].filter(Boolean).join('');
-      if($('#closePrices')){const HP=W.hopper_2028;$('#closePrices').innerHTML=`<b>Now:</b> ${h&&d90(h)!=null?`H100 rents ${d90(h)>=0?'up':'down'} ${Math.abs(d90(h)).toFixed(1)}%`:''}${b&&d90(b)!=null?` and B200 ${d90(b)>=0?'up':'down'} ${Math.abs(d90(b)).toFixed(1)}% over 90 days`:''}: still tight.${HP?` <b>2028:</b> two precedents put a 1-year H100 rental at ≈$${HP.successor_path_usd.toFixed(2)}/h if a successor arrives in a shortage, or ≈$${HP.glut_path_usd.toFixed(2)}/h if supply catches up. Both are estimates.`:''}`;}
+      if($('#closePrices')){const HP=W.hopper_2028;$('#closePrices').innerHTML=HP?`<b>2028:</b> a 1-year H100 rental at ≈$${HP.successor_path_usd.toFixed(2)}/h if a successor arrives in a shortage, ≈$${HP.glut_path_usd.toFixed(2)}/h if supply catches up (two precedents; estimates).`:'';}
       if($('#closeDeals'))$('#closeDeals').innerHTML=`<b>If it loosens:</b> two buyers sign most of the money, so their demand decides whether these contracts hold.`;
     }
     const now=rows.filter(r=>r.hz==='Now'),n=t=>now.filter(r=>r.sig===t).length;
     $('#watchVerdict').innerHTML=`<b>Now:</b> ${n('short')} of ${now.length} signals point to a shortage${n('slack')?`, ${n('slack')} to slack`:''}${n('risk')?`; ${n('risk')} flag${n('risk')===1?'s':''} buyer risk (funding or concentration)`:''}. <b>2026–28:</b> supply keeps growing fast, and the tracked sites undercount it. A glut needs demand growth to slow or labs to cut training budgets; those rows are the ones to watch.<details class="fig-notes"><summary>How each row is read</summary><p class="small"> rents up more than ${TH.rentUp}% over 90 days = shortage, down more than ${-TH.rentDown}% = slack, otherwise balanced; token demand growing faster than ${TH.tokens*100}% a month = shortage; commitments due within 12 months at ${TH.commit}× revenue or more = funding risk; valued deals signed in 90 days = buyers still signing, but risk rather than shortage when one buyer signed them all. Conditional and “up to” deal values are shown apart from firm ones.</p></details>`;
-    $('#watchAsOf').textContent=`As of ${String(NC.built).slice(0,10)}. Prices ${String(window.LIVE?.checked_at||'').slice(0,10)}; tokens projected to ${est.as_of}.`;
+    $('#watchAsOf').textContent=`Prices ${String(window.LIVE?.checked_at||'').slice(0,10)}; tokens projected to ${est.as_of}.`;
   }
   // Neocloud and landlord risk: filed backlog, debt, cost of debt and customer concentration.
   const R=D.neocloud_risk;
