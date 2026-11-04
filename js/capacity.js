@@ -8,7 +8,7 @@
   const mainIds=points.map(p=>p.result_id);
   const label=p=>`${p.model.replace('DeepSeek-','')} · ${p.hardware_label} · ${p.interactivity_p90_tok_s_user.toFixed(1)} tok/s/user`;
   // The default boundary is this site's November 2026 global estimate; disclosed presets keep their scopes.
-  const global=window.DEMAND_RESEARCH?.global_estimate,presets=[...(global?[{label:`Estimated global traffic, November 3, 2026 · ${Math.round(global.total.central).toLocaleString('en-US')}T/day (E)`,value:Math.round(global.total.central),note:`Central estimate from the projection above (range ${Math.round(global.total.low).toLocaleString('en-US')}–${Math.round(global.total.high).toLocaleString('en-US')}T/day). An estimate, not a measured market total.`}]:[]),...legacy.presets.filter(p=>!/500T/.test(p.label)||p.value==null)];
+  const global=window.DEMAND_RESEARCH?.global_estimate,presets=[...(global?[{label:`Estimated global traffic, ${global.as_of} · ${Math.round(global.total.central).toLocaleString('en-US')}T/day (E)`,value:Math.round(global.total.central),note:`Central estimate from the projection above (range ${Math.round(global.total.low).toLocaleString('en-US')}–${Math.round(global.total.high).toLocaleString('en-US')}T/day). An estimate, not a measured market total.`}]:[]),...legacy.presets.filter(p=>!/500T/.test(p.label)||p.value==null)];
   presets.forEach((p,i)=>{const option=document.createElement('option');option.value=i;option.textContent=p.label;$('#capacityPreset').appendChild(option);});
   function draw(){
     const volume=$('#capacityVolume').valueAsNumber,q=$('#capacityOutput').valueAsNumber/100,h=$('#capacityCache').valueAsNumber/100,u=$('#capacityUse').valueAsNumber/100;

@@ -61,7 +61,7 @@
           el('line',{x1:x(Math.min(e.low,max)),x2:x(Math.min(e.high,max)),y1:y+17,y2:y+17,stroke:css('--muted'),'stroke-width':1.5},svg);
           el('text',{x:x(Math.min(e.high,max))+7,y:y+15,class:'token-value'},svg).textContent='≈'+tok(e.central)+' E';
           el('text',{x:x(Math.min(e.high,max))+7,y:y+29,class:'token-scope'},svg).textContent='range '+tok(e.low)+'–'+tok(e.high);
-          hover(bar,`<b>${esc(r.subject)}</b>Estimate, not a disclosure: ≈${tok(e.central)}/day (range ${tok(e.low)}–${tok(e.high)}), November 3.<br>${esc(e.basis)}<br>${src(e.source_url,'Basis ↗')}`);return;}
+          hover(bar,`<b>${esc(r.subject)}</b>Estimate, not a disclosure: ≈${tok(e.central)}/day (range ${tok(e.low)}–${tok(e.high)}), ${esc(window.DEMAND_RESEARCH?.global_estimate?.as_of||'')}.<br>${esc(e.basis)}<br>${src(e.source_url,'Basis ↗')}`);return;}
         const label=el('text',{x:L+8,y:y+19,class:'token-value'},svg);label.textContent='Total unavailable';hover(label,`<b>${esc(r.subject)}</b>${esc(r.note||'No comparable total verified.')}<br>${r.source_url?src(r.source_url,'Sources checked'):''}`);return;}
       const d=r.daily,bar=el('rect',{x:L,y:y+5,width:Math.max(2,x(d.value)-L),height:25,rx:3,fill:css(d.converted?'--s4':'--s1'),opacity:.72,'data-token-scope':r.scope_id},svg);
       if(d.high!=null){el('line',{x1:x(d.value),x2:x(d.high),y1:y+17,y2:y+17,stroke:css('--s1'),'stroke-width':2,'stroke-dasharray':'3 2'},svg);el('line',{x1:x(d.high),x2:x(d.high),y1:y+10,y2:y+24,stroke:css('--s1'),'stroke-width':2},svg);}

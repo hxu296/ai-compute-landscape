@@ -1,39 +1,45 @@
-// Inference vs training: every share statement as a dot (date x share), and token-volume series as a table.
+// Training vs inference: each lab's compute split as a 100% bar; supplier revenue/usage statements stay a separate measure.
 (function () {
-  // One row per statement, grouped by vantage point; an arrow marks a lower bound ("more than 40%").
-  const VANT = [["Suppliers (revenue or usage)", "--s1"], ["AI labs (spend)", "--s2"], ["Market estimates", "--s3"]];
-  const vant = s => /^market/.test(s) ? 2 : /OpenAI|Anthropic|MiniMax|Z\.ai/.test(s) ? 1 : 0;
-  const PUB = u => /deloitte/.test(u) ? "Deloitte" : /mckinsey/.test(u) ? "McKinsey" : /gartner|cxotoday/.test(u) ? "Gartner" : "";
+  const SPLIT = window.DEMAND_RESEARCH?.compute_split;
+  const GROUPS = [["AI labs · share of compute spend", r => !/Deloitte/.test(r.who)], ["Market estimate · all AI compute, incl. hosts", r => /Deloitte/.test(r.who)]];
   function draw() {
-    const svg = $("#infSvg"); svg.innerHTML = "";
-    const seen = new Set();
-    const pts = NC.inference.filter(r => r.metric === "inference_share" && r.value > 0 && r.value <= 1)
-      .filter(r => { const k = `${r.subject}|${r.as_of}|${r.value}`; if (seen.has(k)) return false; seen.add(k); return true; })
-      .sort((a, b) => vant(a.subject) - vant(b.subject) || a.as_of.localeCompare(b.as_of));
-    const L = 200, R = 420, rh = 19, T = 22;
-    const x = v => L + v * (R - L);
-    let y = T, last = -1;
-    const rows = [];
-    pts.forEach(p => { const g = vant(p.subject); if (g !== last) { rows.push({ head: VANT[g][0], y }); y += rh; last = g; } rows.push({ p, y }); y += rh; });
-    svg.setAttribute("viewBox", `0 0 440 ${y + 26}`);
-    for (let v = 0; v <= 1.001; v += 0.25) { el("line", { x1: x(v), x2: x(v), y1: T - 8, y2: y, stroke: css("--grid") }, svg);
-      el("text", { x: x(v), y: y + 16, "text-anchor": "middle" }, svg).textContent = `${v * 100}%`; }
-    el("line", { x1: x(0.5), x2: x(0.5), y1: T - 8, y2: y, stroke: css("--text-muted"), "stroke-dasharray": "3 3" }, svg);
-    el("text", { x: L, y: 10, "font-size": 11 }, svg).textContent = "share serving inference →";
-    rows.forEach(r => {
-      if (r.head) { el("text", { x: 4, y: r.y + 13, "font-size": 11, "font-weight": 600, class: "ink" }, svg).textContent = r.head; return; }
-      const p = r.p, cy = r.y + 9, col = css(VANT[vant(p.subject)][1]), lb = /lower bound|more than|well over|in excess|>\s?50/i.test(p.note);
-      const who = /^market/.test(p.subject) ? `${PUB(p.source_url) || "Market"}${/IaaS/.test(p.subject) ? " (cloud AI spend)" : ""}` : p.subject;
-      const chartWho = /^market/.test(p.subject) && /IaaS/.test(p.subject) ? `${PUB(p.source_url) || "Market"} (IaaS)` : who;
-      const forecast=p.as_of>NC.built.slice(0,10);
-      el("text", { x: L - 8, y: cy + 4, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = `${chartWho} · ${p.as_of.slice(0, 4)}${forecast?' forecast':''}`;
-      el("line", { x1: L, x2: R, y1: cy, y2: cy, stroke: css("--grid"), "stroke-dasharray": "2 3" }, svg);
-      if (lb) el("path", { d: `M${x(p.value)},${cy} L${x(p.value) + 22},${cy} M${x(p.value) + 17},${cy - 4} L${x(p.value) + 22},${cy} L${x(p.value) + 17},${cy + 4}`, stroke: col, "stroke-width": 2, fill: "none" }, svg);
-      const filled = p.confidence === "reported";
-      const c = el("circle", { cx: x(p.value), cy, r: 5.5, fill: filled ? col : css("--surface-1"), stroke: col, "stroke-width": 2 }, svg);
-      el("text", { x: x(p.value) + (lb ? 26 : 9), y: cy + 4, "font-size": 10 }, svg).textContent = `${lb ? "≥" : ""}${Math.round(p.value * 100)}%`;
-      hover(c, `<b>${esc(who)}</b>${lb ? "at least " : ""}${Math.round(p.value * 100)}% inference${badge(p.confidence)} · ${esc(p.as_of)}${forecast?' · forecast':''}<br><span class="muted">${esc(p.note)}</span><br>${src(p.source_url)}`);
+    const svg = $("#infSvg"); if (!svg || !SPLIT) return; svg.innerHTML = "";
+    const L = 150, R = 418, rh = 26, T = 34, x = v => L + v * (R - L);
+    let y = T; const rows = [];
+    for (const [head, keep] of GROUPS) { rows.push({ head, y }); y += 20; for (const r of SPLIT.rows.filter(keep)) { rows.push({ r, y }); y += rh; } y += 6; }
+    svg.setAttribute("viewBox", `0 0 440 ${y + 22}`);
+    el("text", { x: L + 14, y: 12, "font-size": 11, class: "ink" }, svg).textContent = "inference (serving)";
+    el("rect", { x: L - 1, y: 3, width: 10, height: 10, fill: css("--s1") }, svg);
+    el("rect", { x: L + 132, y: 3, width: 10, height: 10, fill: css("--s3"), opacity: .55 }, svg);
+    el("text", { x: L + 146, y: 12, "font-size": 11, class: "ink" }, svg).textContent = "training, research, other";
+    for (let v = 0; v <= 1.001; v += 0.25) {
+      el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: y - 6, stroke: css("--grid") }, svg);
+      el("text", { x: x(v), y: y + 10, "text-anchor": "middle", "font-size": 10 }, svg).textContent = `${v * 100}%`;
+    }
+    rows.forEach(o => {
+      if (o.head) { el("text", { x: 4, y: o.y + 12, "font-size": 11, "font-weight": 600, class: "ink" }, svg).textContent = o.head; return; }
+      const r = o.r, cy = o.y + 2, h = 16, inf = r.inference, hi = r.inference_high;
+      el("text", { x: L - 8, y: cy + 12, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = `${r.who} · ${r.period}`;
+      el("rect", { x: L, y: cy, width: x(1) - L, height: h, fill: css("--s3"), opacity: .55 }, svg);
+      el("rect", { x: L, y: cy, width: x(inf) - L, height: h, fill: css("--s1") }, svg);
+      if (hi) el("rect", { x: x(inf), y: cy, width: x(hi) - x(inf), height: h, fill: css("--s1"), opacity: .4 }, svg);
+      const label = el("text", { x: x(hi || inf) + 5, y: cy + 12, "font-size": 10, class: "ink", "font-weight": 600 }, svg);
+      label.textContent = `${Math.round(inf * 100)}%${hi ? `–${Math.round(hi * 100)}%` : ""}`;
+      const hit = el("rect", { x: L, y: cy, width: x(1) - L, height: h, fill: "transparent", "data-split": r.who }, svg);
+      hover(hit, `<b>${esc(r.who)} · ${esc(r.period)}</b>Inference ${Math.round(inf * 100)}%${hi ? `–${Math.round(hi * 100)}%` : ""}, training and other ${Math.round((1 - (hi || inf)) * 100)}%${hi ? `–${Math.round((1 - inf) * 100)}%` : ""} · ${esc(r.basis)} · grade ${esc(r.grade)}<br><span class="muted">${esc(r.note)}</span><br>${src(r.source_url)}`);
     });
   }
-  onTheme(draw); draw();
+  // Supplier statements measure revenue or usage at a host or chip seller, not a lab's own split.
+  function suppliers() {
+    if (!$("#infSupplierTable")) return;
+    const seen = new Set(), rows = NC.inference.filter(r => r.metric === "inference_share" && !/^market$/.test(r.subject) && !/OpenAI|Anthropic|MiniMax|Z\.ai/.test(r.subject))
+      .filter(r => { const k = `${r.subject}|${r.as_of}|${r.value}`; if (seen.has(k)) return false; seen.add(k); return true; })
+      .sort((a, b) => b.as_of.localeCompare(a.as_of));
+    table("#infSupplierTable", rows, [
+      { k: "subject", h: "Who", f: r => `<b>${esc(r.subject.replace(/^market \(AI-optimized IaaS\)$/, "Gartner (cloud AI rental spend)"))}</b>` },
+      { k: "value", h: "Inference", f: r => `${/lower bound|more than|well over|in excess/i.test(r.note) ? "≥" : ""}${Math.round(r.value * 100)}%` },
+      { k: "as_of", h: "Date", f: r => `<span class="nw">${esc(r.as_of)}</span>` },
+      { k: "note", h: "What it measures", f: r => `<span class="small">${esc(r.note)}</span> ${src(r.source_url, "Source ↗")}` }]);
+  }
+  onTheme(draw); draw(); suppliers();
 })();

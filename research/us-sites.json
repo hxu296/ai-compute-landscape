@@ -1,0 +1,2748 @@
+{
+  "schema_version": 1,
+  "source_url": "https://epoch.ai/data/data_centers/data_centers.zip",
+  "dataset_url": "https://epoch.ai/data/ai-data-centers",
+  "license": "CC BY 4.0 (Epoch AI)",
+  "retrieved_utc": "2026-11-03T23:16:18+00:00",
+  "now_date": "2026-11-03",
+  "response_sha256": "95d569aeaeaeb4304f72bec0272415cc5e86b970eee6ab70b64ca0879c6d260f",
+  "years": [
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "final",
+    "now"
+  ],
+  "unit": "MW facility power (Epoch \"Power (MW)\"); H100 equivalents as published by Epoch",
+  "method": "Epoch AI frontier data-center tracker, US sites (Country = United States). Each value is the latest dated observation or Epoch projection on or before the date: year end for 2025-2028, the retrieval date for \"now\"; \"final\" is the last projected level (to 2030). A site before its first observation counts 0 MW; a blank cell is skipped, not read as zero. State is parsed from the Address field (2-letter code or full state name). Where the address names none, a reviewed override applies only if the site's own Epoch \"Selected Sources\" text names the state (state_basis \"source text\") or the site name does unambiguously (\"site name\"); the supporting text is kept in state_evidence. Sites with no supported state keep state null and are listed in \"unlocated\". Power is Epoch facility power (\"Power (MW)\" in data_center_timelines.csv); the \"Current power (MW)\" column of data_centers.csv is IT power and is not used. Covers tracked frontier campuses only, not every data center. Planned levels are Epoch projections and can slip.",
+  "us_sites": 77,
+  "unlocated": 1,
+  "unlocated_sites": [
+    "Anthropic Barber Lake"
+  ],
+  "state_overrides": [
+    "Google Mesa",
+    "Google Kansas City East",
+    "AWS New Albany",
+    "Google Storey County",
+    "Stream Phoenix",
+    "OpenAI Stargate Michigan",
+    "OpenAI Stargate Milam",
+    "OpenAI Stargate New Mexico",
+    "OpenAI Stargate Wisconsin"
+  ],
+  "states": {
+    "TX": {
+      "name": "Texas",
+      "sites": 13,
+      "mw": {
+        "2025": 805.0,
+        "2026": 2476.8,
+        "2027": 5462.3,
+        "2028": 8434.3,
+        "final": 8634.3,
+        "now": 2384.8
+      },
+      "h100e": {
+        "2025": 678401,
+        "2026": 2204948,
+        "2027": 7393124,
+        "2028": 13705153,
+        "final": 13864705,
+        "now": 2033649
+      },
+      "largest": "OpenAI Stargate Shackelford"
+    },
+    "WI": {
+      "name": "Wisconsin",
+      "sites": 2,
+      "mw": {
+        "2025": 0.0,
+        "2026": 442.0,
+        "2027": 885.0,
+        "2028": 4015.0,
+        "final": 4015.0,
+        "now": 442.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 445680,
+        "2027": 889338,
+        "2028": 7155129,
+        "final": 7155129,
+        "now": 445680
+      },
+      "largest": "Microsoft Fairwater Wisconsin"
+    },
+    "OH": {
+      "name": "Ohio",
+      "sites": 7,
+      "mw": {
+        "2025": 1059.0,
+        "2026": 2061.0,
+        "2027": 3081.0,
+        "2028": 3631.0,
+        "final": 3631.0,
+        "now": 1795.0
+      },
+      "h100e": {
+        "2025": 844583,
+        "2026": 1757514,
+        "2027": 3113728,
+        "2028": 3947238,
+        "final": 3947238,
+        "now": 1523711
+      },
+      "largest": "Meta Prometheus"
+    },
+    "IN": {
+      "name": "Indiana",
+      "sites": 3,
+      "mw": {
+        "2025": 751.0,
+        "2026": 1692.0,
+        "2027": 2106.0,
+        "2028": 3586.0,
+        "final": 3586.0,
+        "now": 1485.0
+      },
+      "h100e": {
+        "2025": 471450,
+        "2026": 1404583,
+        "2027": 2421258,
+        "2028": 4890050,
+        "final": 4890050,
+        "now": 1021561
+      },
+      "largest": "Anthropic-Amazon New Carlisle"
+    },
+    "NM": {
+      "name": "New Mexico",
+      "sites": 2,
+      "mw": {
+        "2025": 0.0,
+        "2026": 147.0,
+        "2027": 147.0,
+        "2028": 2723.0,
+        "final": 2723.0,
+        "now": 147.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 133906,
+        "2027": 133906,
+        "2028": 5972714,
+        "final": 5972714,
+        "now": 133906
+      },
+      "largest": "OpenAI Stargate New Mexico"
+    },
+    "TN": {
+      "name": "Tennessee",
+      "sites": 3,
+      "mw": {
+        "2025": 765.0,
+        "2026": 1815.0,
+        "2027": 2604.0,
+        "2028": 2604.0,
+        "final": 2604.0,
+        "now": 1815.0
+      },
+      "h100e": {
+        "2025": 553714,
+        "2026": 1487014,
+        "2027": 2199495,
+        "2028": 2199495,
+        "final": 2199495,
+        "now": 1487014
+      },
+      "largest": "Colossus 2"
+    },
+    "IA": {
+      "name": "Iowa",
+      "sites": 4,
+      "mw": {
+        "2025": 418.0,
+        "2026": 1244.0,
+        "2027": 2413.0,
+        "2028": 2413.0,
+        "final": 2413.0,
+        "now": 512.0
+      },
+      "h100e": {
+        "2025": 301162,
+        "2026": 1115264,
+        "2027": 3332004,
+        "2028": 3332004,
+        "final": 3332004,
+        "now": 411319
+      },
+      "largest": "QTS Cedar Rapids"
+    },
+    "LA": {
+      "name": "Louisiana",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 2203.0,
+        "final": 2203.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 4142944,
+        "final": 4142944,
+        "now": 0
+      },
+      "largest": "Meta Hyperion"
+    },
+    "VA": {
+      "name": "Virginia",
+      "sites": 7,
+      "mw": {
+        "2025": 899.0,
+        "2026": 1398.0,
+        "2027": 1615.0,
+        "2028": 1984.0,
+        "final": 1984.0,
+        "now": 1398.0
+      },
+      "h100e": {
+        "2025": 584979,
+        "2026": 1067870,
+        "2027": 1221483,
+        "2028": 1410973,
+        "final": 1410973,
+        "now": 1067870
+      },
+      "largest": "STACK Infrastructure NVA02"
+    },
+    "MS": {
+      "name": "Mississippi",
+      "sites": 2,
+      "mw": {
+        "2025": 341.0,
+        "2026": 614.0,
+        "2027": 819.0,
+        "2028": 1827.0,
+        "final": 1827.0,
+        "now": 614.0
+      },
+      "h100e": {
+        "2025": 214348,
+        "2026": 385647,
+        "2027": 514337,
+        "2028": 1302713,
+        "final": 1302713,
+        "now": 385647
+      },
+      "largest": "Amazon Ridgeland"
+    },
+    "MI": {
+      "name": "Michigan",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 1383.0,
+        "final": 1383.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 2880243,
+        "final": 2880243,
+        "now": 0
+      },
+      "largest": "OpenAI Stargate Michigan"
+    },
+    "NE": {
+      "name": "Nebraska",
+      "sites": 4,
+      "mw": {
+        "2025": 473.0,
+        "2026": 843.0,
+        "2027": 1012.0,
+        "2028": 1202.0,
+        "final": 1202.0,
+        "now": 843.0
+      },
+      "h100e": {
+        "2025": 188984,
+        "2026": 588682,
+        "2027": 1063164,
+        "2028": 1769076,
+        "final": 1769076,
+        "now": 588682
+      },
+      "largest": "Google Omaha"
+    },
+    "GA": {
+      "name": "Georgia",
+      "sites": 3,
+      "mw": {
+        "2025": 457.0,
+        "2026": 923.0,
+        "2027": 923.0,
+        "2028": 923.0,
+        "final": 923.0,
+        "now": 923.0
+      },
+      "h100e": {
+        "2025": 399452,
+        "2026": 812478,
+        "2027": 812478,
+        "2028": 812478,
+        "final": 812478,
+        "now": 812478
+      },
+      "largest": "Microsoft Fairwater Atlanta"
+    },
+    "AL": {
+      "name": "Alabama",
+      "sites": 2,
+      "mw": {
+        "2025": 0.0,
+        "2026": 397.0,
+        "2027": 663.0,
+        "2028": 663.0,
+        "final": 663.0,
+        "now": 397.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 341278,
+        "2027": 574247,
+        "2028": 574247,
+        "final": 574247,
+        "now": 341278
+      },
+      "largest": "Meta Montgomery"
+    },
+    "OK": {
+      "name": "Oklahoma",
+      "sites": 2,
+      "mw": {
+        "2025": 63.0,
+        "2026": 540.0,
+        "2027": 623.0,
+        "2028": 623.0,
+        "final": 623.0,
+        "now": 442.0
+      },
+      "h100e": {
+        "2025": 26377,
+        "2026": 727640,
+        "2027": 834765,
+        "2028": 834765,
+        "final": 834765,
+        "now": 636685
+      },
+      "largest": "Google Pryor (North)"
+    },
+    "UT": {
+      "name": "Utah",
+      "sites": 2,
+      "mw": {
+        "2025": 179.0,
+        "2026": 453.0,
+        "2027": 590.0,
+        "2028": 590.0,
+        "final": 590.0,
+        "now": 179.0
+      },
+      "h100e": {
+        "2025": 151354,
+        "2026": 382665,
+        "2027": 498322,
+        "2028": 498322,
+        "final": 498322,
+        "now": 151354
+      },
+      "largest": "QTS Eagle Mountain"
+    },
+    "AZ": {
+      "name": "Arizona",
+      "sites": 3,
+      "mw": {
+        "2025": 389.0,
+        "2026": 577.0,
+        "2027": 577.0,
+        "2028": 577.0,
+        "final": 767.0,
+        "now": 577.0
+      },
+      "h100e": {
+        "2025": 315311,
+        "2026": 540828,
+        "2027": 540828,
+        "2028": 540828,
+        "final": 654876,
+        "now": 540828
+      },
+      "largest": "Stream Phoenix"
+    },
+    "ND": {
+      "name": "North Dakota",
+      "sites": 1,
+      "mw": {
+        "2025": 88.0,
+        "2026": 114.0,
+        "2027": 520.0,
+        "2028": 520.0,
+        "final": 520.0,
+        "now": 88.0
+      },
+      "h100e": {
+        "2025": 93482,
+        "2026": 300152,
+        "2027": 505306,
+        "2028": 505306,
+        "final": 505306,
+        "now": 93482
+      },
+      "largest": "CoreWeave Ellendale ND"
+    },
+    "NY": {
+      "name": "New York",
+      "sites": 2,
+      "mw": {
+        "2025": 19.0,
+        "2026": 303.0,
+        "2027": 499.0,
+        "2028": 499.0,
+        "final": 499.0,
+        "now": 303.0
+      },
+      "h100e": {
+        "2025": 19859,
+        "2026": 364583,
+        "2027": 598837,
+        "2028": 598837,
+        "final": 598837,
+        "now": 364583
+      },
+      "largest": "Anthropic Lake Mariner"
+    },
+    "OR": {
+      "name": "Oregon",
+      "sites": 2,
+      "mw": {
+        "2025": 336.0,
+        "2026": 428.0,
+        "2027": 428.0,
+        "2028": 428.0,
+        "final": 428.0,
+        "now": 428.0
+      },
+      "h100e": {
+        "2025": 191550,
+        "2026": 299180,
+        "2027": 299180,
+        "2028": 299180,
+        "final": 299180,
+        "now": 299180
+      },
+      "largest": "Meta-QTS Hillsboro 2"
+    },
+    "NV": {
+      "name": "Nevada",
+      "sites": 1,
+      "mw": {
+        "2025": 214.0,
+        "2026": 214.0,
+        "2027": 389.0,
+        "2028": 389.0,
+        "final": 389.0,
+        "now": 214.0
+      },
+      "h100e": {
+        "2025": 133906,
+        "2026": 133906,
+        "2027": 540677,
+        "2028": 540677,
+        "final": 540677,
+        "now": 133906
+      },
+      "largest": "Google Storey County"
+    },
+    "PA": {
+      "name": "Pennsylvania",
+      "sites": 2,
+      "mw": {
+        "2025": 66.0,
+        "2026": 139.0,
+        "2027": 336.0,
+        "2028": 336.0,
+        "final": 336.0,
+        "now": 139.0
+      },
+      "h100e": {
+        "2025": 35321,
+        "2026": 81354,
+        "2027": 377969,
+        "2028": 377969,
+        "final": 377969,
+        "now": 81354
+      },
+      "largest": "AWS Berwick"
+    },
+    "WY": {
+      "name": "Wyoming",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 182.0,
+        "2027": 249.0,
+        "2028": 249.0,
+        "final": 249.0,
+        "now": 182.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 172815,
+        "2027": 235978,
+        "2028": 235978,
+        "final": 235978,
+        "now": 172815
+      },
+      "largest": "Meta Cheyenne"
+    },
+    "MN": {
+      "name": "Minnesota",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 241.0,
+        "2027": 241.0,
+        "2028": 241.0,
+        "final": 241.0,
+        "now": 241.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 215675,
+        "2027": 215675,
+        "2028": 215675,
+        "final": 215675,
+        "now": 215675
+      },
+      "largest": "Meta Rosemount"
+    },
+    "ID": {
+      "name": "Idaho",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 198.0,
+        "2027": 198.0,
+        "2028": 198.0,
+        "final": 198.0,
+        "now": 198.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 173248,
+        "2027": 173248,
+        "2028": 173248,
+        "final": 173248,
+        "now": 173248
+      },
+      "largest": "Meta Kuna"
+    },
+    "SC": {
+      "name": "South Carolina",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 168.0,
+        "2027": 168.0,
+        "2028": 168.0,
+        "final": 168.0,
+        "now": 90.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 147044,
+        "2027": 147044,
+        "2028": 147044,
+        "final": 147044,
+        "now": 78322
+      },
+      "largest": "Meta Aiken"
+    },
+    "MO": {
+      "name": "Missouri",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 126.0,
+        "2027": 126.0,
+        "2028": 126.0,
+        "final": 126.0,
+        "now": 126.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 202628,
+        "2027": 202628,
+        "2028": 202628,
+        "final": 202628,
+        "now": 202628
+      },
+      "largest": "Google Kansas City East"
+    },
+    "NC": {
+      "name": "North Carolina",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 91.0,
+        "2027": 91.0,
+        "2028": 91.0,
+        "final": 91.0,
+        "now": 91.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 78828,
+        "2027": 78828,
+        "2028": 78828,
+        "final": 78828,
+        "now": 78828
+      },
+      "largest": "CoreWeave Marble NC"
+    },
+    "NJ": {
+      "name": "New Jersey",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 70.0,
+        "2027": 70.0,
+        "2028": 70.0,
+        "final": 70.0,
+        "now": 70.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 56847,
+        "2027": 56847,
+        "2028": 56847,
+        "final": 56847,
+        "now": 56847
+      },
+      "largest": "Microsoft-Nebius New Jersey"
+    },
+    "unlocated": {
+      "name": "No state in address",
+      "sites": 1,
+      "mw": {
+        "2025": 0.0,
+        "2026": 244.0,
+        "2027": 300.0,
+        "2028": 300.0,
+        "final": 300.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 234462,
+        "2027": 288530,
+        "2028": 288530,
+        "final": 288530,
+        "now": 0
+      },
+      "largest": "Anthropic Barber Lake"
+    }
+  },
+  "sites": [
+    {
+      "name": "Microsoft Fairwater Wisconsin",
+      "owner": "Microsoft",
+      "users": "OpenAI, Microsoft",
+      "city": "Mount Pleasant",
+      "state": "WI",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "4800 90th St, Mount Pleasant, WI 53403",
+      "mw": {
+        "2025": 0.0,
+        "2026": 442.0,
+        "2027": 885.0,
+        "2028": 2715.0,
+        "final": 2715.0,
+        "now": 442.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 445680,
+        "2027": 889338,
+        "2028": 4527539,
+        "final": 4527539,
+        "now": 445680
+      },
+      "observations": 7
+    },
+    {
+      "name": "OpenAI Stargate New Mexico",
+      "owner": "Oracle",
+      "users": "OpenAI",
+      "city": null,
+      "state": "NM",
+      "state_basis": "site name",
+      "state_evidence": "Name: \"New Mexico\"",
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 2450.0,
+        "final": 2450.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 5103588,
+        "final": 5103588,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "Anthropic-Amazon New Carlisle",
+      "owner": "Amazon",
+      "users": "Anthropic",
+      "city": "New Carlisle",
+      "state": "IN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "55001 Larrison Blvd, New Carlisle, IN 46552",
+      "mw": {
+        "2025": 751.0,
+        "2026": 1244.0,
+        "2027": 1244.0,
+        "2028": 2310.0,
+        "final": 2310.0,
+        "now": 1244.0
+      },
+      "h100e": {
+        "2025": 471450,
+        "2026": 818428,
+        "2027": 818428,
+        "2028": 1746038,
+        "final": 1746038,
+        "now": 818428
+      },
+      "observations": 12
+    },
+    {
+      "name": "Meta Hyperion",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Holly Ridge",
+      "state": "LA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "Holly Ridge, LA 71269",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 2203.0,
+        "final": 2203.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 4142944,
+        "final": 4142944,
+        "now": 0
+      },
+      "observations": 5
+    },
+    {
+      "name": "Colossus 2",
+      "owner": "SpaceXAI",
+      "users": "Anthropic, Cursor, SpaceXAI",
+      "city": "Memphis",
+      "state": "TN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5420 Tulane Rd, Memphis, TN 38109",
+      "mw": {
+        "2025": 323.0,
+        "2026": 1276.0,
+        "2027": 2065.0,
+        "2028": 2065.0,
+        "final": 2065.0,
+        "now": 1276.0
+      },
+      "h100e": {
+        "2025": 277918,
+        "2026": 1111673,
+        "2027": 1824154,
+        "2028": 1824154,
+        "final": 1824154,
+        "now": 1111673
+      },
+      "observations": 7
+    },
+    {
+      "name": "OpenAI Stargate Shackelford",
+      "owner": "Oracle",
+      "users": "OpenAI",
+      "city": "Abilene",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "175 Private Road 1604, Abilene, TX 79601, Shackelford County",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 588.0,
+        "2028": 1960.0,
+        "final": 1960.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 1066195,
+        "2028": 4562911,
+        "final": 4562911,
+        "now": 0
+      },
+      "observations": 14
+    },
+    {
+      "name": "QTS Cedar Rapids",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Fairfax",
+      "state": "IA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "6200 76th Ave SW, Fairfax, IA 52228",
+      "mw": {
+        "2025": 0.0,
+        "2026": 627.0,
+        "2027": 1587.0,
+        "2028": 1587.0,
+        "final": 1587.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 510479,
+        "2027": 2250549,
+        "2028": 2250549,
+        "final": 2250549,
+        "now": 0
+      },
+      "observations": 7
+    },
+    {
+      "name": "OpenAI Stargate Michigan",
+      "owner": "Oracle",
+      "users": "OpenAI",
+      "city": null,
+      "state": "MI",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"Michigan Public Service Commission\"",
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 1383.0,
+        "final": 1383.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 2880243,
+        "final": 2880243,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "Meta Prometheus",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "New Albany",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1 Community Cir, New Albany, OH 43054",
+      "mw": {
+        "2025": 99.0,
+        "2026": 878.0,
+        "2027": 1128.0,
+        "2028": 1328.0,
+        "final": 1328.0,
+        "now": 612.0
+      },
+      "h100e": {
+        "2025": 86624,
+        "2026": 770146,
+        "2027": 988985,
+        "2028": 1164337,
+        "final": 1164337,
+        "now": 536343
+      },
+      "observations": 13
+    },
+    {
+      "name": "OpenAI Stargate Wisconsin",
+      "owner": "Oracle",
+      "users": "OpenAI",
+      "city": "Port Washington",
+      "state": "WI",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"port-washington-wisconsin\"",
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 1300.0,
+        "final": 1300.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 2627590,
+        "final": 2627590,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "Goodnight",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Claude",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "10001 Lima Rd, Claude, TX 79019",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 1294.1,
+        "2028": 1294.1,
+        "final": 1294.1,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 2278929,
+        "2028": 2278929,
+        "final": 2278929,
+        "now": 0
+      },
+      "observations": 7
+    },
+    {
+      "name": "OpenAI Stargate Milam",
+      "owner": "Softbank",
+      "users": "OpenAI",
+      "city": null,
+      "state": "TX",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"milam-county-texas\"",
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 1200.0,
+        "final": 1200.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 2496210,
+        "final": 2496210,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "OpenAI Stargate Abilene",
+      "owner": "Oracle",
+      "users": "OpenAI",
+      "city": "Abilene",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5502 Spinks Rd, Abilene, TX 79601",
+      "mw": {
+        "2025": 288.0,
+        "2026": 1154.0,
+        "2027": 1154.0,
+        "2028": 1154.0,
+        "final": 1154.0,
+        "now": 1154.0
+      },
+      "h100e": {
+        "2025": 254674,
+        "2026": 1018696,
+        "2027": 1018696,
+        "2028": 1018696,
+        "final": 1018696,
+        "now": 1018696
+      },
+      "observations": 10
+    },
+    {
+      "name": "Google Fort Wayne",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Fort Wayne",
+      "state": "IN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "6015 Adams Center Road, Fort Wayne, IN 46806",
+      "mw": {
+        "2025": 0.0,
+        "2026": 207.0,
+        "2027": 621.0,
+        "2028": 1035.0,
+        "final": 1035.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 383022,
+        "2027": 1399697,
+        "2028": 2940879,
+        "final": 2940879,
+        "now": 0
+      },
+      "observations": 11
+    },
+    {
+      "name": "Amazon Ridgeland",
+      "owner": "Amazon",
+      "users": "Anthropic",
+      "city": "Ridgeland",
+      "state": "MS",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1626 County Line Road Ridgeland, Mississippi",
+      "mw": {
+        "2025": 0.0,
+        "2026": 273.0,
+        "2027": 341.0,
+        "2028": 1008.0,
+        "final": 1008.0,
+        "now": 273.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 171299,
+        "2027": 214250,
+        "2028": 788277,
+        "final": 788277,
+        "now": 171299
+      },
+      "observations": 5
+    },
+    {
+      "name": "Crusoe Abilene Expansion",
+      "owner": "Microsoft",
+      "users": "Microsoft",
+      "city": "Abilene",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5502 Spinks Rd, Abilene, TX 79601",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 941.0,
+        "2028": 941.0,
+        "final": 941.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 1707933,
+        "2028": 1707933,
+        "final": 1707933,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "Microsoft Fairwater Atlanta",
+      "owner": "Microsoft",
+      "users": "OpenAI, Microsoft",
+      "city": "Fayetteville",
+      "state": "GA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1435 Hwy 54 W, Fayetteville, GA 30214",
+      "mw": {
+        "2025": 433.0,
+        "2026": 859.0,
+        "2027": 859.0,
+        "2028": 859.0,
+        "final": 859.0,
+        "now": 859.0
+      },
+      "h100e": {
+        "2025": 387982,
+        "2026": 768769,
+        "2027": 768769,
+        "2028": 768769,
+        "final": 768769,
+        "now": 768769
+      },
+      "observations": 5
+    },
+    {
+      "name": "Amazon Madison Mega Site",
+      "owner": "Amazon",
+      "users": "Anthropic",
+      "city": "Canton",
+      "state": "MS",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "Amazon Data Services Inc, Madison Mega Site Nissan Parkway and Highway 22 Canton, Mississippi Madison County",
+      "mw": {
+        "2025": 341.0,
+        "2026": 341.0,
+        "2027": 478.0,
+        "2028": 819.0,
+        "final": 819.0,
+        "now": 341.0
+      },
+      "h100e": {
+        "2025": 214348,
+        "2026": 214348,
+        "2027": 300087,
+        "2028": 514436,
+        "final": 514436,
+        "now": 214348
+      },
+      "observations": 7
+    },
+    {
+      "name": "Coreweave Helios",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Afton",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "984 County Road 112, Afton, TX 79220",
+      "mw": {
+        "2025": 0.0,
+        "2026": 200.0,
+        "2027": 200.0,
+        "2028": 600.0,
+        "final": 800.0,
+        "now": 200.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 159552,
+        "2027": 159552,
+        "2028": 478655,
+        "final": 638207,
+        "now": 159552
+      },
+      "observations": 7
+    },
+    {
+      "name": "Meta Bowling Green",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Bowling Green",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "12356 Middleton Pike, Bowling Green, OH 43402",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 220.0,
+        "2028": 570.0,
+        "final": 570.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 197001,
+        "2028": 855159,
+        "final": 855159,
+        "now": 0
+      },
+      "observations": 6
+    },
+    {
+      "name": "CoreWeave Ellendale ND",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Ellendale",
+      "state": "ND",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "9685 87th Ave SE, Ellendale, ND 58436",
+      "mw": {
+        "2025": 88.0,
+        "2026": 114.0,
+        "2027": 520.0,
+        "2028": 520.0,
+        "final": 520.0,
+        "now": 88.0
+      },
+      "h100e": {
+        "2025": 93482,
+        "2026": 300152,
+        "2027": 505306,
+        "2028": 505306,
+        "final": 505306,
+        "now": 93482
+      },
+      "observations": 9
+    },
+    {
+      "name": "STACK Infrastructure NVA02",
+      "owner": null,
+      "users": null,
+      "city": "Manassas",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "9590 Hornbaker Rd, Manassas, VA 20109",
+      "mw": {
+        "2025": 118.0,
+        "2026": 118.0,
+        "2027": 118.0,
+        "2028": 487.0,
+        "final": 487.0,
+        "now": 118.0
+      },
+      "h100e": {
+        "2025": 61142,
+        "2026": 61142,
+        "2027": 61142,
+        "2028": 250632,
+        "final": 250632,
+        "now": 61142
+      },
+      "observations": 4
+    },
+    {
+      "name": "Google Omaha",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Omaha",
+      "state": "NE",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "11110 State St, Omaha, NE 68142",
+      "mw": {
+        "2025": 189.0,
+        "2026": 284.0,
+        "2027": 284.0,
+        "2028": 474.0,
+        "final": 474.0,
+        "now": 284.0
+      },
+      "h100e": {
+        "2025": 88428,
+        "2026": 198585,
+        "2027": 198585,
+        "2028": 904497,
+        "final": 904497,
+        "now": 198585
+      },
+      "observations": 11
+    },
+    {
+      "name": "Meta Montgomery",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Montgomery",
+      "state": "AL",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "Co Rd 42, Montgomery, AL 36105, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 199.0,
+        "2027": 465.0,
+        "2028": 465.0,
+        "final": 465.0,
+        "now": 199.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 174517,
+        "2027": 407486,
+        "2028": 407486,
+        "final": 407486,
+        "now": 174517
+      },
+      "observations": 6
+    },
+    {
+      "name": "Google Columbus",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Columbus",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5076 S High St, Columbus, OH 43207",
+      "mw": {
+        "2025": 260.0,
+        "2026": 364.0,
+        "2027": 464.0,
+        "2028": 464.0,
+        "final": 464.0,
+        "now": 364.0
+      },
+      "h100e": {
+        "2025": 211218,
+        "2026": 331986,
+        "2027": 576049,
+        "2028": 576049,
+        "final": 576049,
+        "now": 331986
+      },
+      "observations": 9
+    },
+    {
+      "name": "Google Pryor (North)",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Pryor",
+      "state": "OK",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "4581 Webb St, Pryor, OK 74361",
+      "mw": {
+        "2025": 63.0,
+        "2026": 442.0,
+        "2027": 442.0,
+        "2028": 442.0,
+        "final": 442.0,
+        "now": 442.0
+      },
+      "h100e": {
+        "2025": 26377,
+        "2026": 636685,
+        "2027": 636685,
+        "2028": 636685,
+        "final": 636685,
+        "now": 636685
+      },
+      "observations": 5
+    },
+    {
+      "name": "Anthropic Lake Mariner",
+      "owner": "AI XPV Platform",
+      "users": "Anthropic",
+      "city": "Barker",
+      "state": "NY",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "7725 Lake Rd, Barker, NY 14012",
+      "mw": {
+        "2025": 0.0,
+        "2026": 245.0,
+        "2027": 441.0,
+        "2028": 441.0,
+        "final": 441.0,
+        "now": 245.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 292830,
+        "2027": 527084,
+        "2028": 527084,
+        "final": 527084,
+        "now": 292830
+      },
+      "observations": 6
+    },
+    {
+      "name": "Colossus 1",
+      "owner": "SpaceXAI",
+      "users": "Anthropic",
+      "city": "Memphis",
+      "state": "TN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3231 Riverport Rd, Memphis, TN 38109",
+      "mw": {
+        "2025": 442.0,
+        "2026": 425.0,
+        "2027": 425.0,
+        "2028": 425.0,
+        "final": 425.0,
+        "now": 425.0
+      },
+      "h100e": {
+        "2025": 275796,
+        "2026": 275796,
+        "2027": 275796,
+        "2028": 275796,
+        "final": 275796,
+        "now": 275796
+      },
+      "observations": 13
+    },
+    {
+      "name": "QTS Eagle Mountain",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Eagle Mountain",
+      "state": "UT",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "652 E Hyperscale Way, Eagle Mountain, UT 84013",
+      "mw": {
+        "2025": 0.0,
+        "2026": 274.0,
+        "2027": 411.0,
+        "2028": 411.0,
+        "final": 411.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 231311,
+        "2027": 346968,
+        "2028": 346968,
+        "final": 346968,
+        "now": 0
+      },
+      "observations": 5
+    },
+    {
+      "name": "AWS New Albany",
+      "owner": "Amazon",
+      "users": null,
+      "city": "New Albany",
+      "state": "OH",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"newalbanyohio.org\"",
+      "address": "13360 Miller Rd NW",
+      "mw": {
+        "2025": 136.0,
+        "2026": 255.0,
+        "2027": 405.0,
+        "2028": 405.0,
+        "final": 405.0,
+        "now": 255.0
+      },
+      "h100e": {
+        "2025": 92471,
+        "2026": 201112,
+        "2027": 351693,
+        "2028": 351693,
+        "final": 351693,
+        "now": 201112
+      },
+      "observations": 5
+    },
+    {
+      "name": "Google New Albany",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "New Albany",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1101 Beech Rd SW, New Albany, OH 43054",
+      "mw": {
+        "2025": 400.0,
+        "2026": 400.0,
+        "2027": 400.0,
+        "2028": 400.0,
+        "final": 400.0,
+        "now": 400.0
+      },
+      "h100e": {
+        "2025": 323901,
+        "2026": 323901,
+        "2027": 323901,
+        "2028": 323901,
+        "final": 323901,
+        "now": 323901
+      },
+      "observations": 7
+    },
+    {
+      "name": "CoreWeave Denton TX",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Denton",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "8171 Jim Christal Rd, Denton, TX 76207",
+      "mw": {
+        "2025": 94.0,
+        "2026": 367.0,
+        "2027": 395.0,
+        "2028": 395.0,
+        "final": 395.0,
+        "now": 367.0
+      },
+      "h100e": {
+        "2025": 64679,
+        "2026": 252653,
+        "2027": 271854,
+        "2028": 271854,
+        "final": 271854,
+        "now": 252653
+      },
+      "observations": 8
+    },
+    {
+      "name": "Google Storey County",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": null,
+      "state": "NV",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"storey-county-nevada\"",
+      "address": null,
+      "mw": {
+        "2025": 214.0,
+        "2026": 214.0,
+        "2027": 389.0,
+        "2028": 389.0,
+        "final": 389.0,
+        "now": 214.0
+      },
+      "h100e": {
+        "2025": 133906,
+        "2026": 133906,
+        "2027": 540677,
+        "2028": 540677,
+        "final": 540677,
+        "now": 133906
+      },
+      "observations": 6
+    },
+    {
+      "name": "Google Lincoln",
+      "owner": "Google",
+      "users": null,
+      "city": "Lincoln",
+      "state": "NE",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5475 Cloud Ct, Lincoln, NE 68514",
+      "mw": {
+        "2025": 0.0,
+        "2026": 170.0,
+        "2027": 339.0,
+        "2028": 339.0,
+        "final": 339.0,
+        "now": 170.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 197575,
+        "2027": 672057,
+        "2028": 672057,
+        "final": 672057,
+        "now": 197575
+      },
+      "observations": 4
+    },
+    {
+      "name": "QTS Richmond 3",
+      "owner": null,
+      "users": null,
+      "city": "Sandston",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3525–3543 Portugee Rd, Sandston, VA 23150",
+      "mw": {
+        "2025": 0.0,
+        "2026": 202.0,
+        "2027": 336.0,
+        "2028": 336.0,
+        "final": 336.0,
+        "now": 202.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 174836,
+        "2027": 291056,
+        "2028": 291056,
+        "final": 291056,
+        "now": 174836
+      },
+      "observations": 7
+    },
+    {
+      "name": "QTS Richmond 1",
+      "owner": null,
+      "users": null,
+      "city": "Sandston",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "6000 Technology Blvd, Sandston, VA 23150",
+      "mw": {
+        "2025": 333.0,
+        "2026": 333.0,
+        "2027": 333.0,
+        "2028": 333.0,
+        "final": 333.0,
+        "now": 333.0
+      },
+      "h100e": {
+        "2025": 242547,
+        "2026": 242547,
+        "2027": 242547,
+        "2028": 242547,
+        "final": 242547,
+        "now": 242547
+      },
+      "observations": 9
+    },
+    {
+      "name": "Google Cedar Rapids",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Cedar Rapids",
+      "state": "IA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5800 EDGEWOOD RD SW CEDAR RAPIDS, IA 52404",
+      "mw": {
+        "2025": 0.0,
+        "2026": 105.0,
+        "2027": 314.0,
+        "2028": 314.0,
+        "final": 314.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 193466,
+        "2027": 670136,
+        "2028": 670136,
+        "final": 670136,
+        "now": 0
+      },
+      "observations": 7
+    },
+    {
+      "name": "Anthropic Barber Lake",
+      "owner": "Cipher Mining",
+      "users": "Anthropic",
+      "city": null,
+      "state": null,
+      "state_basis": null,
+      "state_evidence": null,
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 244.0,
+        "2027": 300.0,
+        "2028": 300.0,
+        "final": 300.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 234462,
+        "2027": 288530,
+        "2028": 288530,
+        "final": 288530,
+        "now": 0
+      },
+      "observations": 5
+    },
+    {
+      "name": "OpenAI Stargate Lordstown",
+      "owner": "Softbank",
+      "users": "OpenAI",
+      "city": "Warren",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "2300 Hallock Young Rd, Warren, OH 44481",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 300.0,
+        "2028": 300.0,
+        "final": 300.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 545730,
+        "2028": 545730,
+        "final": 545730,
+        "now": 0
+      },
+      "observations": 4
+    },
+    {
+      "name": "Google Bristow",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Bristow",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "13001 Rollins Ford Road, Bristow, VA 20136",
+      "mw": {
+        "2025": 208.0,
+        "2026": 286.0,
+        "2027": 286.0,
+        "2028": 286.0,
+        "final": 286.0,
+        "now": 286.0
+      },
+      "h100e": {
+        "2025": 120249,
+        "2026": 209861,
+        "2027": 209861,
+        "2028": 209861,
+        "final": 209861,
+        "now": 209861
+      },
+      "observations": 4
+    },
+    {
+      "name": "Google Council Bluffs (East)",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Council Bluffs",
+      "state": "IA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "10410 Bunge Ave, Council Bluffs, IA 51503",
+      "mw": {
+        "2025": 190.0,
+        "2026": 284.0,
+        "2027": 284.0,
+        "2028": 284.0,
+        "final": 284.0,
+        "now": 284.0
+      },
+      "h100e": {
+        "2025": 145528,
+        "2026": 255685,
+        "2027": 255685,
+        "2028": 255685,
+        "final": 255685,
+        "now": 255685
+      },
+      "observations": 6
+    },
+    {
+      "name": "Google Papillion",
+      "owner": "Google",
+      "users": "Google DeepMind",
+      "city": "Papillion",
+      "state": "NE",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "14651-15249 Gold Coast Rd 68138 Papillion Nebraska, USA",
+      "mw": {
+        "2025": 284.0,
+        "2026": 284.0,
+        "2027": 284.0,
+        "2028": 284.0,
+        "final": 284.0,
+        "now": 284.0
+      },
+      "h100e": {
+        "2025": 100556,
+        "2026": 100556,
+        "2027": 100556,
+        "2028": 100556,
+        "final": 100556,
+        "now": 100556
+      },
+      "observations": 7
+    },
+    {
+      "name": "Meta Los Lunas",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Los Lunas",
+      "state": "NM",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "4250 Messenger Lp, Los Lunas, NM 87031",
+      "mw": {
+        "2025": 0.0,
+        "2026": 147.0,
+        "2027": 147.0,
+        "2028": 273.0,
+        "final": 273.0,
+        "now": 147.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 133906,
+        "2027": 133906,
+        "2028": 869126,
+        "final": 869126,
+        "now": 133906
+      },
+      "observations": 5
+    },
+    {
+      "name": "Stream Phoenix",
+      "owner": null,
+      "users": null,
+      "city": null,
+      "state": "AZ",
+      "state_basis": "site name",
+      "state_evidence": "Name: \"Phoenix\"",
+      "address": "2950 S. Litchfield Road",
+      "mw": {
+        "2025": 0.0,
+        "2026": 77.0,
+        "2027": 77.0,
+        "2028": 77.0,
+        "final": 267.0,
+        "now": 77.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 46134,
+        "2027": 46134,
+        "2028": 46134,
+        "final": 160182,
+        "now": 46134
+      },
+      "observations": 4
+    },
+    {
+      "name": "Microsoft Goodyear",
+      "owner": "Microsoft",
+      "users": "OpenAI, Microsoft",
+      "city": "Goodyear",
+      "state": "AZ",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "14250 W Broadway Rd, Goodyear, AZ 85338",
+      "mw": {
+        "2025": 263.0,
+        "2026": 263.0,
+        "2027": 263.0,
+        "2028": 263.0,
+        "final": 263.0,
+        "now": 263.0
+      },
+      "h100e": {
+        "2025": 205154,
+        "2026": 205154,
+        "2027": 205154,
+        "2028": 205154,
+        "final": 205154,
+        "now": 205154
+      },
+      "observations": 6
+    },
+    {
+      "name": "QTS Richmond 2",
+      "owner": null,
+      "users": null,
+      "city": "Sandston",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "6030–6070 Technology Blvd, Sandston, VA 23150",
+      "mw": {
+        "2025": 202.0,
+        "2026": 252.0,
+        "2027": 252.0,
+        "2028": 252.0,
+        "final": 252.0,
+        "now": 252.0
+      },
+      "h100e": {
+        "2025": 138959,
+        "2026": 182921,
+        "2027": 182921,
+        "2028": 182921,
+        "final": 182921,
+        "now": 182921
+      },
+      "observations": 8
+    },
+    {
+      "name": "Meta Cheyenne",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Cheyenne",
+      "state": "WY",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "Cheyenne, WY 82007, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 182.0,
+        "2027": 249.0,
+        "2028": 249.0,
+        "final": 249.0,
+        "now": 182.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 172815,
+        "2027": 235978,
+        "2028": 235978,
+        "final": 235978,
+        "now": 172815
+      },
+      "observations": 5
+    },
+    {
+      "name": "Meta-QTS Hillsboro 2",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Hillsboro",
+      "state": "OR",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "4755 NE Huffman St, Hillsboro, OR 97124",
+      "mw": {
+        "2025": 243.0,
+        "2026": 243.0,
+        "2027": 243.0,
+        "2028": 243.0,
+        "final": 243.0,
+        "now": 243.0
+      },
+      "h100e": {
+        "2025": 123839,
+        "2026": 123839,
+        "2027": 123839,
+        "2028": 123839,
+        "final": 123839,
+        "now": 123839
+      },
+      "observations": 6
+    },
+    {
+      "name": "Meta Jeffersonville",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Jeffersonville",
+      "state": "IN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "500 8th St, Jeffersonville, IN 47130, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 241.0,
+        "2027": 241.0,
+        "2028": 241.0,
+        "final": 241.0,
+        "now": 241.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 203133,
+        "2027": 203133,
+        "2028": 203133,
+        "final": 203133,
+        "now": 203133
+      },
+      "observations": 3
+    },
+    {
+      "name": "Meta Rosemount",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Rosemount",
+      "state": "MN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1772-2396 145th St, Rosemount, MN 55068, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 241.0,
+        "2027": 241.0,
+        "2028": 241.0,
+        "final": 241.0,
+        "now": 241.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 215675,
+        "2027": 215675,
+        "2028": 215675,
+        "final": 215675,
+        "now": 215675
+      },
+      "observations": 3
+    },
+    {
+      "name": "Google Mesa",
+      "owner": "Google",
+      "users": null,
+      "city": "Mesa",
+      "state": "AZ",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"mesa-data-center-campus-in-arizona\"",
+      "address": null,
+      "mw": {
+        "2025": 126.0,
+        "2026": 237.0,
+        "2027": 237.0,
+        "2028": 237.0,
+        "final": 237.0,
+        "now": 237.0
+      },
+      "h100e": {
+        "2025": 110157,
+        "2026": 289540,
+        "2027": 289540,
+        "2028": 289540,
+        "final": 289540,
+        "now": 289540
+      },
+      "observations": 5
+    },
+    {
+      "name": "Meta Temple",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Temple",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "2310 Eberhardt Rd, Temple, TX 76504",
+      "mw": {
+        "2025": 198.0,
+        "2026": 231.0,
+        "2027": 231.0,
+        "2028": 231.0,
+        "final": 231.0,
+        "now": 231.0
+      },
+      "h100e": {
+        "2025": 173248,
+        "2026": 202473,
+        "2027": 202473,
+        "2028": 202473,
+        "final": 202473,
+        "now": 202473
+      },
+      "observations": 7
+    },
+    {
+      "name": "Microsoft Project Osmium",
+      "owner": "Microsoft",
+      "users": "OpenAI",
+      "city": "Cumming",
+      "state": "IA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5855 SW Kerry St, Cumming, IA 50061",
+      "mw": {
+        "2025": 228.0,
+        "2026": 228.0,
+        "2027": 228.0,
+        "2028": 228.0,
+        "final": 228.0,
+        "now": 228.0
+      },
+      "h100e": {
+        "2025": 155634,
+        "2026": 155634,
+        "2027": 155634,
+        "2028": 155634,
+        "final": 155634,
+        "now": 155634
+      },
+      "observations": 6
+    },
+    {
+      "name": "AWS Berwick",
+      "owner": "Amazon",
+      "users": "Anthropic",
+      "city": "Berwick",
+      "state": "PA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1125 Electron Ave, Berwick, PA 18603",
+      "mw": {
+        "2025": 66.0,
+        "2026": 139.0,
+        "2027": 212.0,
+        "2028": 212.0,
+        "final": 212.0,
+        "now": 139.0
+      },
+      "h100e": {
+        "2025": 35321,
+        "2026": 81354,
+        "2027": 145023,
+        "2028": 145023,
+        "final": 145023,
+        "now": 81354
+      },
+      "observations": 10
+    },
+    {
+      "name": "Meta Huntsville",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Toney",
+      "state": "AL",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "5400 Prosperity Dr NW, Toney, AL",
+      "mw": {
+        "2025": 0.0,
+        "2026": 198.0,
+        "2027": 198.0,
+        "2028": 198.0,
+        "final": 198.0,
+        "now": 198.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 166761,
+        "2027": 166761,
+        "2028": 166761,
+        "final": 166761,
+        "now": 166761
+      },
+      "observations": 6
+    },
+    {
+      "name": "Meta Kuna",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Kuna",
+      "state": "ID",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "601 Kuna Mora Rd, Kuna ID 83634",
+      "mw": {
+        "2025": 0.0,
+        "2026": 198.0,
+        "2027": 198.0,
+        "2028": 198.0,
+        "final": 198.0,
+        "now": 198.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 173248,
+        "2027": 173248,
+        "2028": 173248,
+        "final": 173248,
+        "now": 173248
+      },
+      "observations": 3
+    },
+    {
+      "name": "CoreWeave Chester VA",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Chester",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1401 Meadowville Technology Parkway, Chester, VA",
+      "mw": {
+        "2025": 38.0,
+        "2026": 114.0,
+        "2027": 197.0,
+        "2028": 197.0,
+        "final": 197.0,
+        "now": 114.0
+      },
+      "h100e": {
+        "2025": 22082,
+        "2026": 88428,
+        "2027": 125821,
+        "2028": 125821,
+        "final": 125821,
+        "now": 88428
+      },
+      "observations": 6
+    },
+    {
+      "name": "Google Red Oak",
+      "owner": "Google",
+      "users": null,
+      "city": "Red Oak",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "330 Austin Blvd, Red Oak, TX 75154",
+      "mw": {
+        "2025": 93.0,
+        "2026": 185.0,
+        "2027": 185.0,
+        "2028": 185.0,
+        "final": 185.0,
+        "now": 93.0
+      },
+      "h100e": {
+        "2025": 108135,
+        "2026": 279434,
+        "2027": 279434,
+        "2028": 279434,
+        "final": 279434,
+        "now": 108135
+      },
+      "observations": 4
+    },
+    {
+      "name": "Google The Dalles",
+      "owner": "Google",
+      "users": null,
+      "city": "The Dalles",
+      "state": "OR",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3500 River Rd, The Dalles, OR",
+      "mw": {
+        "2025": 93.0,
+        "2026": 185.0,
+        "2027": 185.0,
+        "2028": 185.0,
+        "final": 185.0,
+        "now": 185.0
+      },
+      "h100e": {
+        "2025": 67711,
+        "2026": 175341,
+        "2027": 175341,
+        "2028": 175341,
+        "final": 175341,
+        "now": 175341
+      },
+      "observations": 3
+    },
+    {
+      "name": "CoreWeave Muskogee OK",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Muskogee",
+      "state": "OK",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1525 W 43rd St S, Muskogee, OK 74401, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 98.0,
+        "2027": 181.0,
+        "2028": 181.0,
+        "final": 181.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 90955,
+        "2027": 198080,
+        "2028": 198080,
+        "final": 198080,
+        "now": 0
+      },
+      "observations": 5
+    },
+    {
+      "name": "Vantage TX1",
+      "owner": null,
+      "users": null,
+      "city": "San Antonio",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "14720 Omicron Dr, San Antonio, TX 78245",
+      "mw": {
+        "2025": 0.0,
+        "2026": 44.8,
+        "2027": 179.2,
+        "2028": 179.2,
+        "final": 179.2,
+        "now": 44.8
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 38706,
+        "2027": 154624,
+        "2028": 154624,
+        "final": 154624,
+        "now": 38706
+      },
+      "observations": 3
+    },
+    {
+      "name": "Meta Eagle Mountain",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Eagle Mountain",
+      "state": "UT",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1275 N Community Cir, Eagle Mountain, UT 84005",
+      "mw": {
+        "2025": 179.0,
+        "2026": 179.0,
+        "2027": 179.0,
+        "2028": 179.0,
+        "final": 179.0,
+        "now": 179.0
+      },
+      "h100e": {
+        "2025": 151354,
+        "2026": 151354,
+        "2027": 151354,
+        "2028": 151354,
+        "final": 151354,
+        "now": 151354
+      },
+      "observations": 4
+    },
+    {
+      "name": "Meta Aiken",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Trenton",
+      "state": "SC",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "7601 State Hwy 105, Trenton, SC 29847, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 168.0,
+        "2027": 168.0,
+        "2028": 168.0,
+        "final": 168.0,
+        "now": 90.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 147044,
+        "2027": 147044,
+        "2028": 147044,
+        "final": 147044,
+        "now": 78322
+      },
+      "observations": 4
+    },
+    {
+      "name": "Google Lancaster",
+      "owner": "Google",
+      "users": null,
+      "city": "Lancaster",
+      "state": "OH",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "105 Whiley Rd, Lancaster, OH 43130",
+      "mw": {
+        "2025": 164.0,
+        "2026": 164.0,
+        "2027": 164.0,
+        "2028": 164.0,
+        "final": 164.0,
+        "now": 164.0
+      },
+      "h100e": {
+        "2025": 130369,
+        "2026": 130369,
+        "2027": 130369,
+        "2028": 130369,
+        "final": 130369,
+        "now": 130369
+      },
+      "observations": 5
+    },
+    {
+      "name": "Google Kansas City East",
+      "owner": "Google",
+      "users": null,
+      "city": "Kansas City",
+      "state": "MO",
+      "state_basis": "source text",
+      "state_evidence": "Selected Sources: \"kansas-city-missouri\"",
+      "address": null,
+      "mw": {
+        "2025": 0.0,
+        "2026": 126.0,
+        "2027": 126.0,
+        "2028": 126.0,
+        "final": 126.0,
+        "now": 126.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 202628,
+        "2027": 202628,
+        "2028": 202628,
+        "final": 202628,
+        "now": 202628
+      },
+      "observations": 7
+    },
+    {
+      "name": "CoreWeave Lancaster Greenfield site",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Lancaster",
+      "state": "PA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "216 Greenfield Rd, Lancaster, PA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 124.0,
+        "2028": 124.0,
+        "final": 124.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 232946,
+        "2028": 232946,
+        "final": 232946,
+        "now": 0
+      },
+      "observations": 3
+    },
+    {
+      "name": "Google Midlothian",
+      "owner": "Google",
+      "users": null,
+      "city": "Midlothian",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3250 Railport Parkway, Midlothian, TX 76065",
+      "mw": {
+        "2025": 0.0,
+        "2026": 123.0,
+        "2027": 123.0,
+        "2028": 123.0,
+        "final": 123.0,
+        "now": 123.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 143581,
+        "2027": 143581,
+        "2028": 143581,
+        "final": 143581,
+        "now": 143581
+      },
+      "observations": 4
+    },
+    {
+      "name": "Meta Gallatin",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Gallatin",
+      "state": "TN",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1 Meta Lp, Gallatin, TN 37066",
+      "mw": {
+        "2025": 0.0,
+        "2026": 114.0,
+        "2027": 114.0,
+        "2028": 114.0,
+        "final": 114.0,
+        "now": 114.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 99545,
+        "2027": 99545,
+        "2028": 99545,
+        "final": 99545,
+        "now": 99545
+      },
+      "observations": 3
+    },
+    {
+      "name": "Microsoft SAT40",
+      "owner": "Microsoft",
+      "users": null,
+      "city": "San Antonio",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "15000 Lambda Drive, San Antonio, TX 78245",
+      "mw": {
+        "2025": 106.0,
+        "2026": 106.0,
+        "2027": 106.0,
+        "2028": 106.0,
+        "final": 106.0,
+        "now": 106.0
+      },
+      "h100e": {
+        "2025": 64679,
+        "2026": 64679,
+        "2027": 64679,
+        "2028": 64679,
+        "final": 64679,
+        "now": 64679
+      },
+      "observations": 4
+    },
+    {
+      "name": "Meta Sarpy",
+      "owner": "Meta",
+      "users": "Meta",
+      "city": "Springfield",
+      "state": "NE",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "14436-14998 Fairview Rd, Springfield, NE 68059, USA",
+      "mw": {
+        "2025": 0.0,
+        "2026": 105.0,
+        "2027": 105.0,
+        "2028": 105.0,
+        "final": 105.0,
+        "now": 105.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 91966,
+        "2027": 91966,
+        "2028": 91966,
+        "final": 91966,
+        "now": 91966
+      },
+      "observations": 3
+    },
+    {
+      "name": "Google Arcola",
+      "owner": "Google",
+      "users": null,
+      "city": "Sterling",
+      "state": "VA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "42575 Arcola Blvd, Sterling, VA 20166",
+      "mw": {
+        "2025": 0.0,
+        "2026": 93.0,
+        "2027": 93.0,
+        "2028": 93.0,
+        "final": 93.0,
+        "now": 93.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 108135,
+        "2027": 108135,
+        "2028": 108135,
+        "final": 108135,
+        "now": 108135
+      },
+      "observations": 4
+    },
+    {
+      "name": "CoreWeave Marble NC",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Marble",
+      "state": "NC",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "155 Palmer Ln, Marble, NC 28905",
+      "mw": {
+        "2025": 0.0,
+        "2026": 91.0,
+        "2027": 91.0,
+        "2028": 91.0,
+        "final": 91.0,
+        "now": 91.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 78828,
+        "2027": 78828,
+        "2028": 78828,
+        "final": 78828,
+        "now": 78828
+      },
+      "observations": 4
+    },
+    {
+      "name": "Microsoft-Nebius New Jersey",
+      "owner": "Nebius",
+      "users": "Microsoft",
+      "city": "Vineland",
+      "state": "NJ",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3963 S Lincoln Ave, Vineland, New Jersey",
+      "mw": {
+        "2025": 0.0,
+        "2026": 70.0,
+        "2027": 70.0,
+        "2028": 70.0,
+        "final": 70.0,
+        "now": 70.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 56847,
+        "2027": 56847,
+        "2028": 56847,
+        "final": 56847,
+        "now": 56847
+      },
+      "observations": 4
+    },
+    {
+      "name": "Microsoft SAT14",
+      "owner": "Microsoft",
+      "users": null,
+      "city": "San Antonio",
+      "state": "TX",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "3545 Wiseman Boulevard, San Antonio, TX 78251",
+      "mw": {
+        "2025": 26.0,
+        "2026": 66.0,
+        "2027": 66.0,
+        "2028": 66.0,
+        "final": 66.0,
+        "now": 66.0
+      },
+      "h100e": {
+        "2025": 12986,
+        "2026": 45174,
+        "2027": 45174,
+        "2028": 45174,
+        "final": 45174,
+        "now": 45174
+      },
+      "observations": 5
+    },
+    {
+      "name": "Core42 Lake Mariner",
+      "owner": "Core42",
+      "users": "G42",
+      "city": "Barker",
+      "state": "NY",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "7725 Lake Rd, Barker, NY 14012",
+      "mw": {
+        "2025": 19.0,
+        "2026": 58.0,
+        "2027": 58.0,
+        "2028": 58.0,
+        "final": 58.0,
+        "now": 58.0
+      },
+      "h100e": {
+        "2025": 19859,
+        "2026": 71753,
+        "2027": 71753,
+        "2028": 71753,
+        "final": 71753,
+        "now": 71753
+      },
+      "observations": 5
+    },
+    {
+      "name": "CoreWeave Dalton 1 & 2",
+      "owner": "CoreWeave",
+      "users": "OpenAI",
+      "city": "Dalton",
+      "state": "GA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "2205 Industrial South Rd, Dalton, GA, 30721",
+      "mw": {
+        "2025": 0.0,
+        "2026": 40.0,
+        "2027": 40.0,
+        "2028": 40.0,
+        "final": 40.0,
+        "now": 40.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 32239,
+        "2027": 32239,
+        "2028": 32239,
+        "final": 32239,
+        "now": 32239
+      },
+      "observations": 4
+    },
+    {
+      "name": "xAI QTS Atlanta",
+      "owner": "SpaceXAI",
+      "users": "SpaceXAI",
+      "city": "Atlanta",
+      "state": "GA",
+      "state_basis": "address",
+      "state_evidence": null,
+      "address": "1025 Jefferson Street NW, Atlanta, GA 30318",
+      "mw": {
+        "2025": 24.0,
+        "2026": 24.0,
+        "2027": 24.0,
+        "2028": 24.0,
+        "final": 24.0,
+        "now": 24.0
+      },
+      "h100e": {
+        "2025": 11470,
+        "2026": 11470,
+        "2027": 11470,
+        "2028": 11470,
+        "final": 11470,
+        "now": 11470
+      },
+      "observations": 4
+    }
+  ]
+}

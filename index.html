@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="bbe5fa458370">
+<meta name="build" content="6bef21b98214">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=30dc5e5de3aa">
+<link rel="stylesheet" href="style.css?v=d4c4eccf7d15">
 </head>
 <body>
 <div class="tip" id="tip"></div>
@@ -38,7 +38,7 @@
 <section class="chapter" id="watch">
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Watch</span><h3 class="fig-title">Is compute running ahead of demand?</h3></div>
-    <p class="fig-sub"><b>Now:</b> prices and spot buying point to a shortage. <b>2026–28:</b> whether the build-out becomes a glut depends on real-world efficiency, model mix and how older chips re-price after Rubin.</p>
+    <p class="fig-sub" id="watchVerdict"></p>
     <p class="fig-sub" id="watchAsOf"></p>
     <div class="table-wrap"><table class="t" id="watchTable"></table></div>
   </div></div>
@@ -89,6 +89,17 @@
     <p class="small">The table also includes reported deliveries, customer-use subsets and planned deployments. These records can overlap the chart and one another. H100/H200 is one combined source category; it is not split into invented counts.</p>
     <div class="seg" id="chipCtl"></div><div class="scroll" style="max-height:420px"><table class="t" id="nativeChips"></table></div>
     </details>
+  </div></div>
+  <div class="fig" id="us-map"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 1b</span><h3 class="fig-title">Tracked frontier data-center power by US state</h3></div>
+    <p class="fig-sub">Epoch AI's site-by-site tracker of the largest AI campuses, summed by state: from each site's address, or where the address names none, from its Epoch source links or site name (marked in the hover). Hover or tap a state for its sites; circles mark the largest cities in the selected view.</p>
+    <div class="fig-controls"><label class="ctl"><span class="ctl-label">View</span><select id="usMapView"><option value="now" selected>Online now (MW)</option><option value="add2026">Planned additions by end-2026</option><option value="add2027">Planned additions by end-2027</option><option value="add2028">Planned additions by end-2028</option><option value="total2028">Total by end-2028</option></select></label></div>
+    <div class="fig-body"><svg id="usMapSvg" viewBox="0 0 960 567" role="img" aria-label="US states shaded by tracked AI data-center power"></svg></div>
+    <div class="legend" id="usMapLegend"></div>
+    <p class="fig-caption" id="usMapNote"></p>
+    <details class="fig-notes" id="usMapUnlocated"></details>
+    <p class="usmap-table-title">Top ten states in the selected view</p>
+    <div class="scroll"><table class="t" id="usMapTable"></table></div>
   </div></div>
 </section>
 
@@ -185,10 +196,11 @@
     <p class="chart-swipe-hint">Swipe horizontally within each chart to see its full axes.</p>
     <div class="fig-grid inference-grid">
       <div class="inference-shares">
-        <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Reported inference shares</h3></div>
-        <p class="fig-sub">Shares of revenue, usage, spending or compute retain their original basis.</p>
-        <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Inference share statements" style="width:100%;display:block"></svg></div>
-        <div class="legend"><span><i style="background:var(--s1)"></i>Suppliers</span><span><i style="background:var(--s2)"></i>AI labs</span><span><i style="background:var(--s3)"></i>Market estimates</span><span>○ derived or estimated</span><span>→ lower bound</span></div>
+        <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Training vs inference: where lab compute goes</h3></div>
+        <p class="fig-sub">Labs spend most of their compute training models: Anthropic’s filing puts customer serving at ≈26% of compute spend (up to ≈36% counting free-tier use, E). Hosts and chip sellers report inference above 50% of their own revenue or usage, which is a different measure (table below).</p>
+        <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Share of compute spent on inference versus training, by lab" style="width:100%;display:block"></svg></div>
+        <p class="small">Light segment = stated range. RL rollouts count as training but run like inference. Hover a bar for basis and source.</p>
+        <details class="fig-notes"><summary>Host and chip-seller statements (revenue or usage, not a lab’s split)</summary><div class="table-wrap"><table class="t" id="infSupplierTable"></table></div></details>
       </div>
       <div id="tokens" class="inference-tokens">
         <div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest reported token use</h3></div>
@@ -204,25 +216,26 @@
     <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
   <div class="fig demand-review" id="token-projection"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Projection</span><h3 class="fig-title">Token use projected to November 3, 2026</h3></div>
+    <div class="fig-head"><span class="fig-no">Projection</span><h3 class="fig-title">Token use projected to <span class="projection-date">today</span></h3></div>
     <p class="fig-sub" id="projectionHeadline"></p>
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
-    <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to November 3 on the company’s own trend · line = range. Estimates (E), not disclosures. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
+    <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to that date on the company’s own trend, updated daily · line = range. Estimates (E), not disclosures. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
     <details class="fig-notes"><summary>Components, trends, spend and sources</summary><p class="small" id="spendNote"></p><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
   </div></div>
   <div class="fig demand-review" id="buildout"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Build-out</span><h3 class="fig-title">Compute being built vs compute needed, ex-China</h3></div>
-    <p class="fig-sub">Bars: compute built (GB300 NVL72 rack-equivalents). Marker: compute needed for ex-China tokens. The answer turns on the derate, how far real fleets run below benchmark.</p>
+    <div class="fig-head"><span class="fig-no">Build-out</span><h3 class="fig-title">How much of the compute being built does inference need?</h3></div>
+    <p class="fig-sub" id="buildoutHeadline"></p>
     <div class="research-controls">
       <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
-      <label>Real-world derate vs benchmark <output id="buildDerateValue"></output><input id="buildDerate" type="range" min="1" max="8" step="0.5" value="3"></label>
-      <label>Count 2028 additions by<select id="buildRubin"><option value="1" selected>8-bit FLOPs (Epoch H100e)</option><option value="0.824">bandwidth for Rubin, high HBM4 (Rubin ÷1.3)</option><option value="0.619">bandwidth for Rubin, low HBM4 (Rubin ÷2)</option></select></label>
-      <label>Serving share of compute<select id="buildShare"><option value="0.26">0.26</option><option value="0.30" selected>0.30</option><option value="0.36">0.36</option></select></label>
+      <label>Real fleets vs benchmark <output id="buildDerateValue"></output><input id="buildDerate" type="range" min="1" max="8" step="0.5" value="3"></label>
     </div>
-    <div id="buildoutBars" role="img" aria-label="Compute built vs needed by year"></div>
+    <div class="build-legend small"><span><i class="sw inf"></i>inference: serving the tokens we count</span><span><i class="sw rest"></i>training, research and other uses</span><span><i class="sw band"></i>labs’ serving share of compute spend today (26–36%)</span></div>
+    <div id="buildoutBars" role="img" aria-label="Share of built compute that inference needs, by year"></div>
     <p class="small" id="buildoutNote"></p>
-    <details class="fig-notes"><summary>Method and limits</summary>
-      <p class="small">One rack-equivalent = 182 H100e (72 × 2.53 B300). Supply: covered owners’ end-2025 deliveries plus additions at Epoch-tracked sites. Derate includes utilization (70% usable alone is 1.4×). Serving share is one lab’s compute <i>spend</i> split (Anthropic’s filing implies 26–36% serving), not GPU-hours. Supply excludes ByteDance, Huawei and Alibaba to match ex-China demand. Racks are counted by GPUs (needed GPUs ÷ 72) to compare with supply; the capacity calculator below counts whole racks, which leaves GPUs unused when a serving group does not divide 72 (about 1.3× more racks for V4-Pro, 1.8× for Kimi). 2028 additions are mostly Rubin, which Epoch counts at 8.84 H100e by 8-bit FLOPs; decode is bandwidth-bound and Rubin has about 4–6.6× H100’s bandwidth, so the bandwidth options count the Rubin part 1.3–2× lower. Rubin is about 76% of the H100e in Epoch’s 2028-dated chip entries (ex-China), so 2028 additions scale by 0.82 or 0.62; GB300 and other chips keep their FLOP count. Tracked sites cover frontier campuses only; planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
+    <details class="fig-notes"><summary>More assumptions, method and limits</summary>
+      <div class="research-controls"><label>Count 2028 additions by<select id="buildRubin"><option value="1" selected>8-bit FLOPs (Epoch H100e)</option><option value="0.824">bandwidth for Rubin, high HBM4 (Rubin ÷1.3)</option><option value="0.619">bandwidth for Rubin, low HBM4 (Rubin ÷2)</option></select></label></div>
+      <p class="small"><b>Read it as:</b> a small inference share is not idle compute. Rental prices are rising and labs buy short-term compute at a premium, so the rest is in use: training (labs choose its size, it does not scale with tokens), traffic we cannot count (the revenue check says our tokens run ≈1.6–2× low), recommender and ads workloads in Meta’s and Google’s fleets, and chips delivered but not yet powered. When inference passes labs’ serving share, inference and training compete for the same compute.</p>
+      <p class="small"><b>Method:</b> inference racks = ex-China logical tokens/day, grown monthly from the projection date, ÷ the measured GB300 NVL72 throughput of a DeepSeek-V4-Pro-like configuration (bar; line spans V4.1-Flash- to Kimi-K3-like) × the real-fleet factor. The factor covers utilization, peaks, latency targets, long contexts, older chips and models larger than the benchmark; Anthropic’s filed serving spend implies ≈3–4× for its own traffic (E). One rack-equivalent = 182 H100e (72 × 2.53 B300). Built compute: covered owners’ end-2025 deliveries plus additions at Epoch-tracked sites, ex-China; tracked sites cover frontier campuses only, so later years are a floor (SemiAnalysis reports SpaceX alone now plans ≈13 GW in 2027 against 2.5 GW tracked). Racks are counted by GPUs (needed GPUs ÷ 72). 2028 additions are mostly Rubin, which Epoch counts at 8.84 H100e by 8-bit FLOPs; decode is bandwidth-bound, so the bandwidth options count the Rubin part (≈76% of 2028-dated H100e) 1.3–2× lower. Planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
     </details>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
@@ -314,7 +327,8 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=4da819d65e7a"></script>
+<script src="data/research.js?v=4c70ab9b3262"></script>
+<script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
 <script src="js/sketch.js?v=988580f7f567"></script>
@@ -324,13 +338,14 @@
 <script src="js/deals.js?v=cfeb78e629e6"></script>
 <script src="js/growth.js?v=d5afbb4ddebf"></script>
 <script src="js/pricing.js?v=f875c6e255d7"></script>
-<script src="js/usage.js?v=772852d7944c"></script>
+<script src="js/usage.js?v=cf9b41c59515"></script>
 <script src="js/token_math.js?v=6db1a97eee26"></script>
-<script src="js/tokens.js?v=28199b20c2c6"></script>
+<script src="js/tokens.js?v=f2cee2df5fd7"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
-<script src="js/demand.js?v=ebe75e4cb5c2"></script>
-<script src="js/watch.js?v=7e2e6d14a92a"></script>
-<script src="js/capacity.js?v=e0b38cbd1c37"></script>
+<script src="js/demand.js?v=045455b7d7a9"></script>
+<script src="js/watch.js?v=da016e1cc59d"></script>
+<script src="js/us_map.js?v=cb30876d57d2"></script>
+<script src="js/capacity.js?v=350457fea4d2"></script>
 <script src="js/lists.js?v=50311a88dd8f"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
 <script src="js/reader.js?v=21f7c8a0eac3"></script>

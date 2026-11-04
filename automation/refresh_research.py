@@ -7,7 +7,7 @@ succeeds. A newly selected benchmark run without a verified topology fails loudl
 import datetime as dt, json, sys, urllib.request
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import build_research, snapshot_capacity, snapshot_dc_timelines
+import build_research, snapshot_capacity, snapshot_dc_timelines, snapshot_us_sites
 
 ROOT = snapshot_capacity.ROOT
 CACHE = ROOT/'.cache'/'research'
@@ -37,10 +37,14 @@ def main():
     years = [sum(p['h100e'][y] for p in timelines['providers'].values()) for y in timelines['years'][:-1]]
     if len(timelines['providers']) < 10 or any(b < a for a, b in zip(years, years[1:])):
         raise ValueError('Data-center timelines look incomplete or decreasing: '+str(years))
+    us_sites = snapshot_us_sites.build(CACHE/'data_centers.zip', now)
+    if us_sites['us_sites'] < 50 or len(us_sites['sites']) != us_sites['us_sites']:
+        raise ValueError('US site snapshot looks incomplete: '+str(us_sites['us_sites']))
     old = json.loads((ROOT/'research/capacity-expanded.json').read_text())
     changed = sorted({p['result_id'] for p in capacity['points']} ^ {p['result_id'] for p in old['points']})
     (ROOT/'research/capacity-expanded.json').write_text(json.dumps(capacity, ensure_ascii=False, indent=2)+'\n')
     (ROOT/'research/dc-timelines.json').write_text(json.dumps(timelines, ensure_ascii=False, indent=2)+'\n')
+    (ROOT/'research/us-sites.json').write_text(json.dumps(us_sites, ensure_ascii=False, indent=2)+'\n')
     build_research.build(ROOT)
     print('Research inputs refreshed;', 'selection changed: '+', '.join(changed) if changed else 'benchmark selection unchanged')
 
