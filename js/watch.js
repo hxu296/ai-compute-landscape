@@ -46,6 +46,12 @@
       el('text',{x:L-8,y:T-4,'text-anchor':'end','font-size':10},svg).textContent='racks';
       for(const[t,yr]of ends.slice(1)){el('line',{x1:x(t),x2:x(t),y1:T,y2:B,stroke:css('--grid')},svg);el('text',{x:x(t),y:B+16,'text-anchor':'middle','font-size':11},svg).textContent=narrow?yr:'End-'+yr;}
       if(x(ends[1][0])-x(t0)>70)el('text',{x:x(t0),y:B+16,'text-anchor':'start','font-size':11},svg).textContent=fmt(t0);
+      // Coloured areas: training and other uses (serving share up to all compute built), spare serving capacity (demand
+      // below the serving share), and shortage (demand above it).
+      const area=(up,lo,attrs)=>el('path',{d:pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(Math.min(up(t),hi)).toFixed(1)}`).join('')+[...pts].reverse().map(t=>`L${x(t).toFixed(1)},${y(Math.min(lo(t),hi)).toFixed(1)}`).join('')+'Z',...attrs},svg);
+      area(built,t=>MID*built(t),{fill:css('--line'),opacity:.45,'data-area':'training'});
+      area(t=>MID*built(t),t=>Math.min(need(t),MID*built(t)),{fill:css('--s3'),opacity:.22,'data-area':'spare'});
+      area(t=>Math.max(need(t),MID*built(t)),t=>MID*built(t),{fill:css('--s2'),opacity:.25,'data-area':'shortage'});
       // Shortage region: demand above the serving band's midpoint.
       el('path',{d:pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(BAND[1]*built(t)).toFixed(1)}`).join('')+[...pts].reverse().map(t=>`L${x(t).toFixed(1)},${y(BAND[0]*built(t)).toFixed(1)}`).join('')+'Z',fill:css('--s1'),opacity:.18},svg);
       el('path',{d:line(built),fill:'none',stroke:css('--ink'),'stroke-width':1.5,'stroke-dasharray':'5 4'},svg);
