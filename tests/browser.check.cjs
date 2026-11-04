@@ -10,7 +10,6 @@ const file=path.resolve(process.argv[2]||'index.html'),exe=process.env.CHROME_PA
     const count=async(sel)=>page.locator(sel).count(),expect=async(name,sel,min)=>{const n=await count(sel);if(n<min)failures.push(`${width}px: ${name} has ${n}, expected at least ${min}`);};
     await expect('watch table rows','#watchTable tbody tr',8);
     await expect('GW per year segments','#gwYearSvg [data-gw-segment]',20);
-    await expect('US map states','#usMapSvg .usmap-state',48);
     await expect('hero map states','#heroMap .usmap-state',48);
     await expect('hero map columns','#heroMap .usmap-col',10);
     await expect('build-out demand line','#buildoutSvg [data-build-need]',1);

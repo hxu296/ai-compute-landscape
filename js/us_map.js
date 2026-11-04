@@ -284,8 +284,9 @@
       if (i === shown) return;
       shown = i;
       const day = MONTHS[i], r = render(heroSvg, {day, measure: 'mw', mode: '3d', compact: true});
-      out.innerHTML = `<span class="hero-date">${esc(dayMonth(day))}</span><span class="hero-total">${esc(gw(r.total))} tracked US</span><span class="hero-status">${esc(statusOf(day))}</span>`;
-      heroSvg.setAttribute('aria-label', `3D map of tracked AI data-center power by US city, ${dayMonth(day)}: ${gw(r.total)} tracked US (${statusOf(day)})`);
+      const capex = modelAt(D, day, 'capex').total;
+      out.innerHTML = `<span class="hero-date">${esc(dayMonth(day))}</span><span class="hero-total">${esc(gw(r.total))} <span class="hero-sep">·</span> ${esc(usd(capex))} est. capex <span class="hero-scope">tracked US</span></span><span class="hero-status">${esc(statusOf(day))}</span>`;
+      heroSvg.setAttribute('aria-label', `3D map of tracked AI data-center power by US city, ${dayMonth(day)}: ${gw(r.total)} and ${usd(capex)} estimated capex tracked US (${statusOf(day)})`);
     };
     const queue = () => { if (!raf) raf = requestAnimationFrame(frame); };
     addEventListener('scroll', queue, {passive: true});

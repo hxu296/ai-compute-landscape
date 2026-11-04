@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="44f4e41666ab">
+<meta name="build" content="095d0d41e59c">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -11,16 +11,19 @@
 <meta property="og:description" content="Explore AI chip ownership, cloud deals, GPU prices and reported token demand, with sources and an interactive DeepSeek capacity calculator.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='44' rx='4' fill='%23e9dfc9' stroke='%232a2420' stroke-width='3'/%3E%3Crect x='14' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3Crect x='27' y='20' width='10' height='26' fill='%23f6d9d2' stroke='%23c23a2b' stroke-width='2'/%3E%3Crect x='40' y='20' width='10' height='26' fill='%23dbe4ee' stroke='%232a2420' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=9d95f5933357">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='6' fill='%23161513'/%3E%3Crect x='6.5' y='15' width='4' height='6.5' rx='1' fill='%23fffdf8' fill-opacity='.6'/%3E%3Crect x='12' y='10.5' width='4' height='11' rx='1' fill='%23fffdf8' fill-opacity='.85'/%3E%3Crect x='17.5' y='6' width='4' height='15.5' rx='1' fill='%2366c2b1'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v=e32ceb9a63d4">
 </head>
 <body>
 <div class="tip" id="tip"></div>
-<header class="masthead">
-  <a class="brand" href="#top"><svg id="brandArt" viewBox="0 0 64 64" aria-hidden="true"></svg><span><b>Token Economy</b><small>An illustrated data guide</small></span></a>
-  <nav><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a><a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository">GitHub ↗</a></nav>
+<header class="masthead" id="readingNav">
+  <div class="masthead-bar">
+    <a class="brand" href="#top" aria-label="Who powers the Token Economy? Back to the top"><svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" rx="6" fill="#161513"/><rect x="6.5" y="15" width="4" height="6.5" rx="1" fill="#fffdf8" fill-opacity=".6"/><rect x="12" y="10.5" width="4" height="11" rx="1" fill="#fffdf8" fill-opacity=".85"/><rect x="17.5" y="6" width="4" height="15.5" rx="1" fill="#66c2b1"/></svg><span class="brand-name">Token Economy</span></a>
+    <nav class="masthead-nav" aria-label="Sections"><a href="#landscape">Landscape</a><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav>
+    <a class="repo-link" href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener" aria-label="Open the GitHub repository (new tab)"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+  </div>
+  <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
 </header>
-<div class="reading-nav" id="readingNav"><div class="reading-progress" id="readingProgress"></div><nav aria-label="Sections"><a href="#landscape">Landscape</a><a href="#supply">Fleets</a><a href="#deals">Contracts</a><a href="#growth">Growth</a><a href="#pricing">Prices</a><a href="#usage">Inference</a><a href="#china">China</a><a href="#providers">Providers</a><a href="#method">Sources</a></nav></div>
 
 <main id="top">
 <aside id="dailyBrief" class="news-banner" aria-label="Daily compute news"></aside>
@@ -36,7 +39,7 @@
     <div class="hero-readout" id="heroReadout"></div>
     <svg id="heroMap" viewBox="0 0 993 383" role="img" aria-label="3D map of tracked AI data-center power by US city"></svg>
     <div class="hero-progress" aria-hidden="true"><i id="heroProgress"></i></div>
-    <figcaption class="hero-cap">Columns: each city's facility power in Epoch AI's frontier data-center tracker; dates after its retrieval are Epoch projections. <span id="heroHint"></span> <a href="#us-map">Explore the map ↓</a></figcaption>
+    <figcaption class="hero-cap">Columns: each city's facility power in Epoch AI's frontier data-center tracker; capex is Epoch's estimated capital cost (compute + construction, 2025 USD); dates after its retrieval are Epoch projections. <span id="heroHint"></span> Hover a column for its sites. <a href="#supply">Fleets and power ↓</a></figcaption>
   </figure>
 </section>
 </div>
@@ -45,7 +48,7 @@
 <section class="chapter" id="watch">
   <div class="fig"><div class="fig-frame">
     <div class="fig-head"><span class="fig-no">Watch</span><h3 class="fig-title">Is compute running ahead of demand?</h3></div>
-    <p class="fig-sub" id="watchVerdict"></p>
+    <div class="fig-sub" id="watchVerdict"></div>
     <p class="fig-sub" id="watchAsOf"></p>
     <div class="table-wrap"><table class="t" id="watchTable"></table></div>
   </div></div>
@@ -77,49 +80,34 @@
   <div class="prose">
     <div class="label"><span class="num">01</span>Fleets</div>
     <h2>Chips and power</h2>
-    <p>Hyperscaler chip disclosures cover selected generations and deployments. Epoch AI models cumulative chip deliveries and converts them into H100-equivalents so that a TPU and a GPU can share an axis. Neoclouds and hosts also disclose power, so the second view compares them in megawatts, including clearly labelled partial AI-site observations where a company total is unavailable.</p>
+    <p><b>Five hyperscalers own most AI chips</b>: Google, Microsoft, AWS, Meta and Oracle held about 14M H100-equivalents at the end of 2025 (Epoch AI estimates). Power at the frontier data centers Epoch tracks more than doubles, from about 22 GW at the end of 2026 to 50 GW by 2028, on Epoch’s dated projections.</p>
   </div>
   <div class="fig"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 1</span><h3 class="fig-title">Accelerator fleets by chip designer, and power by provider</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 1</span><h3 class="fig-title">Who owns the chips, and how much power comes online when</h3></div>
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Measure</span><span class="seg"><button id="supCompute" class="on">Compute · H100e</button><button id="supPower">Power · MW</button></span></div><div class="ctl" id="supDesignerCtl"><label for="supDesigner" class="ctl-label">Chip designer</label><select id="supDesigner"><option value="All">All designers</option><option value="Nvidia">NVIDIA</option><option value="AMD">AMD Instinct</option><option value="Google">Google TPU</option><option value="Amazon">AWS Trainium</option></select></div></div>
     <div class="fig-body"><svg id="supSvg" viewBox="0 0 900 420" role="img" aria-label="Supplier sizes"></svg></div>
     <div class="legend" id="supLegend"></div>
-    <p class="fig-caption" id="supNote"></p>
+    <p class="fig-caption">Estimates (E) from Epoch AI and company filings. Hover any segment for its sites, dates and source.</p>
+    <details class="fig-notes"><summary>How to read this chart</summary><p class="small" id="supNote"></p></details>
   </div></div>
-  <div class="fig" id="native-accelerators"><div class="fig-frame"><h3 class="fig-title">Native accelerator counts: NVIDIA, AMD, TPU and Trainium</h3>
+  <div class="fig" id="native-accelerators"><div class="fig-frame"><div class="fig-head"><span class="fig-no">Fig. 2</span><h3 class="fig-title">Which chips are in the fleets</h3></div>
     <p class="fig-sub">Estimated delivered chips, stacked by owner. These are physical chip counts, not equal units of performance. Renting capacity does not transfer chip ownership.</p>
     <div class="fig-controls"><label class="ctl">Snapshot <select id="chipStackDate"><option value="2025-12-31">End 2025 · common reporting date</option><option value="2026-03-31">Q1 2026 · partial coverage</option></select></label><label class="ctl"><input type="checkbox" id="chipStackFuture" checked> Include announced future deliveries</label><label class="ctl">Group by <select id="chipStackGroup"><option value="family">Chip designer</option><option value="model" selected>Accelerator model</option></select></label></div>
     <div class="native-stack-scroll"><svg id="chipStackSvg" role="img" aria-label="Native accelerator counts stacked by chip owner"></svg></div>
     <div class="legend" id="chipStackLegend"></div>
     <p class="fig-caption" id="chipStackNote"></p>
-    <details><summary>Individual disclosures and source records</summary>
+    <details class="fig-notes"><summary>Individual disclosures and source records</summary>
     <p class="small">The table also includes reported deliveries, customer-use subsets and planned deployments. These records can overlap the chart and one another. H100/H200 is one combined source category; it is not split into invented counts.</p>
     <div class="seg" id="chipCtl"></div><div class="scroll" style="max-height:420px"><table class="t" id="nativeChips"></table></div>
     </details>
   </div></div>
-  <div class="fig" id="us-map"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 1b</span><h3 class="fig-title">Tracked frontier data-center power and capex across the US, over time</h3></div>
-    <p class="fig-sub">Each column is a city's tracked facility power, or Epoch's estimated capex, from Epoch AI's site-by-site tracker of the largest AI campuses, at the date on the slider; press Play to run from 2024 to Epoch's last projection. States take their state's colour. Hover or tap a column or state for its sites.</p>
-    <div class="fig-controls usmap-controls">
-      <span class="seg" role="group" aria-label="Map view"><button type="button" id="usMap3d" class="on" aria-pressed="true">3D</button><button type="button" id="usMap2d" aria-pressed="false">2D</button></span>
-      <span class="ctl"><span class="ctl-label">Measure</span><span class="seg" role="group" aria-label="Measure"><button type="button" id="usMapPower" class="on" aria-pressed="true">Power (GW)</button><button type="button" id="usMapCapex" aria-pressed="false">Capex ($B)</button></span></span>
-      <button type="button" id="usMapPlay" class="usmap-play" aria-pressed="false">▶ Play</button>
-      <div class="usmap-time"><input type="range" id="usMapTime" aria-label="Date shown on the map"><div class="usmap-ticks" id="usMapTicks" aria-hidden="true"></div></div>
-    </div>
-    <p class="usmap-readout" id="usMapReadout"></p>
-    <div class="fig-body"><svg id="usMapSvg" viewBox="0 0 960 520" role="img" aria-label="Tracked AI data-center power by US city"></svg></div>
-    <div class="legend" id="usMapLegend"></div>
-    <p class="fig-caption" id="usMapNote"></p>
-    <details class="fig-notes" id="usMapUnlocated"></details>
-    <p class="usmap-table-title" id="usMapTableTitle">Top ten states at the slider date</p>
-    <div class="scroll"><table class="t" id="usMapTable"></table></div>
-  </div></div>
   <div class="fig" id="gw-years"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 1c</span><h3 class="fig-title">Frontier data-center power per year, by owner or by the lab using it</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 3</span><h3 class="fig-title">Tracked data-center power, year by year</h3></div>
     <div class="fig-controls"><span class="seg"><button id="gwYearTotal" class="on">Online at year end</button><button id="gwYearAdded">Added during the year</button></span><div class="ctl"><span class="ctl-label">Credit to</span><span class="seg"><button id="gwCreditOwner" class="on">Site owner</button><button id="gwCreditUser">Lab using it</button></span></div><label class="ctl"><input type="checkbox" id="gwYearPlans" checked> Add SpaceX’s stated plan</label></div>
     <div class="fig-body"><svg id="gwYearSvg" viewBox="0 0 900 370" role="img" aria-label="Gigawatts of tracked data-center power per year, stacked by company"></svg></div>
     <div class="legend" id="gwYearLegend"></div>
-    <p class="fig-caption" id="gwYearNote"></p>
+    <p class="fig-caption">Facility power at the frontier campuses Epoch AI tracks: a floor, not every data center.</p>
+    <details class="fig-notes"><summary>How to read this chart</summary><p class="small" id="gwYearNote"></p></details>
   </div></div>
 </section>
 
@@ -127,11 +115,10 @@
   <div class="prose">
     <div class="label"><span class="num">02</span>Contracts</div>
     <h2>Compute deals</h2>
-    <p>A compute contract is a promise to pay for capacity over several years. The flow below runs from buyer to supplier, and the default view shows relationships even when prices are undisclosed. Switch to disclosed dollars to size the bands by value. Framework deals such as Stargate's $500B plan are left out, because they commit no one to a price.</p>
-    <p>Building leases get their own view. A host that rents a powered hall to Fluidstack, which then sells the same capacity to Anthropic, would otherwise be counted twice.</p>
+    <p><b>A few AI labs sign most of the money.</b> Anthropic and OpenAI are the largest buyers; neoclouds resell to them, and landlords build the halls. The flow runs from buyer to supplier; switch to disclosed dollars to size it by value. Framework plans such as Stargate’s $500B are left out because they commit no one to a price, and building leases are kept separate so the same capacity isn’t counted twice.</p>
   </div>
   <div class="fig"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 2</span><h3 class="fig-title">Who buys capacity from whom</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">Who buys capacity from whom</h3></div>
     <p class="fig-sub">Relationships include unpriced TPU access and AMD supply agreements. Link widths and circle areas scale with disclosed nominal value in this view; unpriced links stay thin and unpriced nodes hollow. Minimum node sizes preserve visibility. Filter smaller agreements with the slider, or select Disclosed dollars for a stacked value view. Amounts retain their conditions and can overlap.</p>
     <div class="fig-controls">
       <div class="ctl"><span class="seg"><button id="dealRelations" class="on">Relationships</button><button id="dealDollars">Disclosed dollars</button></span></div>
@@ -160,10 +147,10 @@
   <div class="prose">
     <div class="label"><span class="num">03</span>Growth</div>
     <h2>Supplier growth</h2>
-    <p>All selected companies share one set of axes. Absolute values show scale; Indexed compares growth from a Q2 2025 baseline. Each revenue series keeps a fixed cloud, hosting or consolidated reporting scope; exact dates and definitions appear below.</p>
+    <p><b>The big clouds keep growing every quarter</b>, and the neoclouds grow faster from a smaller base. Pick companies and a metric; Indexed shows growth since Q2 2025 on one scale.</p>
   </div>
   <div class="fig"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 3</span><h3 class="fig-title">Growth on shared axes</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 5</span><h3 class="fig-title">Revenue, power and backlog over time</h3></div>
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Metric</span><span class="seg" id="growthCtl"></span></div></div>
     <div class="fig-controls"><span class="seg"><button id="growthAbs" class="on">Absolute</button><button id="growthIdx">Indexed · Q2 2025 = 100</button></span><button id="growthAll">Select all</button><button id="growthNone">Select none</button></div>
     <div id="growthCompanies" class="company-picks"></div>
@@ -179,7 +166,7 @@
   <div class="prose">
     <div class="label"><span class="num">04</span>Prices</div>
     <h2>Compute prices</h2>
-    <p>Compare market benchmarks first, then published provider rates by commitment term. A hyperscaler’s one-year retail reservation is not a negotiated neocloud contract. TPU and Trainium rates use physical chip-hours; price alone does not compare model throughput.</p>
+    <p><b id="priceLead">Rental prices for H100 and B200 GPUs come from daily market benchmarks.</b> Market benchmarks come first, then each provider’s published rates by commitment term. A chip-hour price does not compare model throughput.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <div id="benchmarks" class="benchmark-grid"></div>
@@ -187,7 +174,7 @@
     <p class="fig-sub">Same-series changes from public benchmark data, calculated over calendar windows. Hover a change for its exact start and end dates. A rental index is not a GPU resale price.</p>
     <div class="scroll"><table class="t" id="marketChanges"></table></div>
     <p class="fig-caption" id="marketSummary"></p>
-    <div class="fig-head"><span class="fig-no">Fig. 4</span><h3 class="fig-title">Published rates per physical accelerator-hour</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 6</span><h3 class="fig-title">Published rental rates by chip</h3></div>
     <p class="fig-sub">One dot per provider: its lowest published region/configuration quote for the selected terms. “From” rates stay separate. The table retains every region, configuration, billing formula and source.</p>
     <div class="fig-controls"><div class="ctl"><span class="ctl-label">Terms</span><span class="seg" id="priceCtl"></span></div></div>
     <div class="fig-controls"><label>Providers <select id="priceGroup"><option>All</option><option>Neocloud</option><option>Hyperscaler</option><option>Marketplace</option><option>China</option><option>Other</option></select></label><label>Silicon <select id="priceFamily"><option>All</option><option>NVIDIA</option><option>AMD</option><option>Google TPU</option><option>AWS Trainium</option><option>Huawei Ascend</option></select></label></div>
@@ -197,10 +184,10 @@
     <details class="fig-notes"><summary>Rate cards, original billing units and conversions</summary><div class="scroll"><table class="t" id="priceTable"></table></div></details>
   </div></div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
-    <div><div class="fig-head"><span class="fig-no">Fig. 5</span></div><h4>Rental benchmarks, with different methodologies</h4>
+    <div><div class="fig-head"><span class="fig-no">Fig. 7</span></div><h4>Rental price indices over time</h4>
       <svg id="idxSvg" viewBox="0 0 440 260" role="img" aria-label="Price index history"></svg><div class="legend" id="idxLegend"></div>
       <p class="fig-caption">Silicon Data standardizes rental observations; Ornn describes executed trades. These are different benchmarks, not interchangeable one-year contract prices. Current values and source availability are shown above.</p></div>
-    <div><div class="fig-head"><span class="fig-no">Fig. 6</span></div><h4>What the big deals cost per kilowatt of power, per month</h4>
+    <div><div class="fig-head"><span class="fig-no">Fig. 8</span></div><h4>What the big deals cost per kilowatt, per month</h4>
       <p class="fig-sub">Deal value ÷ (megawatts × 1,000) ÷ months of the term. Red deals buy compute, chips included; green deals rent only a powered building, and the tenant brings its own chips. The gap between the medians (below) is roughly what the chips and servers cost. For red bars on NVIDIA or AMD GPUs, ≈ $/GPU-hour converts at 2.12 kW per GB300-class GPU and 730 hours a month (E); Trainium and Cerebras deals get no GPU-hour figure. ≥ marks a floor: a minimum value or a maximum capacity.</p>
       <svg id="kwSvg" viewBox="0 0 440 300" role="img" aria-label="Deal prices per kW-month"></svg>
       <div class="legend"><span><i style="background:var(--s2)"></i>All-in compute (chips included)</span><span><i style="background:var(--s3)"></i>Building lease (no chips)</span></div>
@@ -212,20 +199,20 @@
   <div class="prose">
     <div class="label"><span class="num">05</span>Inference</div>
     <h2>Inference and token use</h2>
-    <p>Public disclosures describe inference through shares of spending or usage, and through tokens served. These views answer different questions: revenue, compute, spending and token counts are distinct measures. Each chart retains its sources, dates and scope.</p>
+    <p><b>Labs spend most of their compute on training</b>; serving users takes about a quarter to a third. We estimate about 1.7 quadrillion tokens a day worldwide, growing about 15% a month, and ask whether the build-out keeps up.</p>
   </div>
   <div class="fig"><div class="fig-frame">
     <p class="chart-swipe-hint">Swipe horizontally within each chart to see its full axes.</p>
     <div class="fig-grid inference-grid">
       <div class="inference-shares">
-        <div class="fig-head"><span class="fig-no">Fig. 7</span><h3>Training vs inference: where lab compute goes</h3></div>
+        <div class="fig-head"><span class="fig-no">Fig. 9</span><h3>Training vs inference: where lab compute goes</h3></div>
         <p class="fig-sub">Labs spend most of their compute training models: Anthropic’s filing puts customer serving at ≈26% of compute spend (up to ≈36% counting free-tier use, E). Hosts and chip sellers report inference above 50% of their own revenue or usage, which is a different measure (table below).</p>
         <div class="inference-chart-scroll"><svg id="infSvg" viewBox="0 0 440 400" role="img" aria-label="Share of compute spent on inference versus training, by lab" style="width:100%;display:block"></svg></div>
         <p class="small">Light segment = stated range. RL rollouts count as training but run like inference. Grades: R = reported (filed or attributed press), D = derived by this site from a filing or prospectus, E = estimate; R/E = reported low end with an estimated high end. Forecasts are left out. Hover a bar for basis and source.</p>
         <details class="fig-notes"><summary>Host and chip-seller statements (revenue or usage, not a lab’s split)</summary><div class="table-wrap"><table class="t" id="infSupplierTable"></table></div></details>
       </div>
       <div id="tokens" class="inference-tokens">
-        <div class="fig-head"><span class="fig-no">Token activity</span><h3>Latest reported token use</h3></div>
+        <div class="fig-head"><span class="fig-no">Fig. 10</span><h3>Tokens served, as each company reports them</h3></div>
         <div class="fig-controls"><label class="ctl">View <select id="tokenPeriod"></select></label></div>
         <p class="fig-sub" id="tokenViewNote">Daily equivalents grouped by reporting scope and period, with native disclosures retained below.</p>
         <div class="inference-chart-scroll"><svg id="tokenSvg" role="img" aria-label="Dated token activity grouped by coverage, including separate historical and national disclosures"></svg></div>
@@ -233,26 +220,26 @@
     </div>
     <p class="fig-caption">Latest verified disclosure per scope, not today’s volume. Gold bars (D) are period conversions; obs = observed date, pub = publication date. Scopes overlap.</p>
     <details class="fig-notes"><summary>Conversion rules</summary><p class="small">Month-only rates use a stated 30-day convention; exact observed windows use their day count. API, company, rollout and single-cluster coverage remain distinct. Bounds and ranges survive conversion. Router, provider and national totals overlap.</p></details>
-    <div class="table-wrap"><table class="t" id="tokenTable"></table></div>
-    <details id="tokenReconciliation"><summary>Why Google’s daily and monthly figures differ</summary><p class="small">Google’s May 2026 figure of over 3.2 quadrillion tokens/month covers its surfaces broadly (over 106.7T/day using a 30-day month). The October disclosure of nearly 32B/minute covers first-party model APIs (nearly 46.08T/day as a rate equivalent). The old 3T/day series covers internal developer tools. These are overlapping scopes from different dates; none should be substituted for another. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">May disclosure</a> · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">October disclosure</a> · <a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank" rel="noopener">Internal-tools disclosure</a>.</p></details>
-    <details><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
+    <details class="fig-notes"><summary>All disclosures, with dates, scope and sources</summary><div class="table-wrap"><table class="t" id="tokenTable"></table></div></details>
+    <details class="fig-notes" id="tokenReconciliation"><summary>Why Google’s daily and monthly figures differ</summary><p class="small">Google’s May 2026 figure of over 3.2 quadrillion tokens/month covers its surfaces broadly (over 106.7T/day using a 30-day month). The October disclosure of nearly 32B/minute covers first-party model APIs (nearly 46.08T/day as a rate equivalent). The old 3T/day series covers internal developer tools. These are overlapping scopes from different dates; none should be substituted for another. <a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/" target="_blank" rel="noopener">May disclosure</a> · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm" target="_blank" rel="noopener">October disclosure</a> · <a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank" rel="noopener">Internal-tools disclosure</a>.</p></details>
+    <details class="fig-notes"><summary>Coverage and undisclosed totals</summary><div id="tokenCoverage" class="small"></div></details>
   </div></div>
   <div class="fig demand-review" id="token-projection"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Projection</span><h3 class="fig-title">Token use projected to <span class="projection-date">today</span></h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 11</span><h3 class="fig-title">Token use projected to <span class="projection-date">today</span></h3></div>
     <p class="fig-sub" id="projectionHeadline"></p>
     <div id="projectionBars" role="img" aria-label="Projected logical tokens per day by component, with ranges"></div>
     <p class="small"><span class="legend-swatch solid"></span> latest disclosed level · <span class="legend-swatch light"></span> projected to that date on the company’s own trend, updated daily · line = range. Estimates (E), not disclosures. OpenRouter and cloud marketplaces are excluded because they route traffic already counted by labs and hosts.</p>
     <details class="fig-notes"><summary>Components, trends, spend and sources</summary><p class="small" id="spendNote"></p><div class="table-wrap"><table class="t" id="projectionTable"></table></div></details>
   </div></div>
   <div class="fig demand-review" id="buildout"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Build-out</span><h3 class="fig-title">Shortage or oversupply? Inference growth vs the build-out</h3></div>
+    <div class="fig-head"><span class="fig-no">Fig. 12</span><h3 class="fig-title">Shortage or oversupply? Inference growth vs the build-out</h3></div>
     <p class="fig-sub" id="buildoutHeadline"></p>
     <div class="research-controls">
       <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
       <label>Price per GB300-equivalent GPU-hour <output id="buildPriceValue"></output><input id="buildPrice" type="range" min="3" max="7" step="0.25" value="5"><span class="small">Turns serving dollars into GPUs. $3 ≈ new long-term rental deals, $7 ≈ today’s B200 rental index; older chips count at their GB300-equivalent share.</span></label>
     </div>
     <svg id="buildoutSvg" viewBox="0 0 900 330" role="img" aria-label="Inference compute demand against compute being built, monthly to end-2028, log scale" style="width:100%;display:block"></svg>
-    <p class="small" id="buildoutNote"></p>
+    <details class="fig-notes"><summary>How demand is calculated</summary><p class="small" id="buildoutNote"></p></details>
     <details class="fig-notes"><summary>More assumptions, method and limits</summary>
       <div class="research-controls"><label>Count 2028 additions by<select id="buildRubin"><option value="1" selected>8-bit FLOPs (Epoch H100e)</option><option value="0.824">bandwidth for Rubin, high HBM4 (Rubin ÷1.3)</option><option value="0.619">bandwidth for Rubin, low HBM4 (Rubin ÷2)</option></select></label></div>
       <p class="small"><b>Read it as:</b> a small inference share is not idle compute. Rental indices are up over 90 days (SemiAnalysis H100 and B200, early November 2026; mixed over 30 days) and labs buy short-term compute at a premium, so the rest is in use: training (labs choose its size, it does not scale with tokens), traffic we cannot count (the revenue check says our tokens run ≈1.6–2× low), recommender and ads workloads in Meta’s and Google’s fleets, and chips delivered but not yet powered. When inference passes labs’ serving share, inference and training compete for the same compute.</p>
@@ -260,8 +247,8 @@
     </details>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Capacity scenario</span><h3 class="fig-title">If this traffic ran on open models</h3></div>
-    <p class="fig-sub">Racks needed if the estimated November 2026 traffic ran on one open model. One measured GB200/GB300 NVL72 configuration per model: the highest output throughput per GPU above 50 tokens/s per user.</p>
+    <div class="fig-head"><span class="fig-no">Fig. 13</span><h3 class="fig-title">How many racks this traffic would need on open models</h3></div>
+    <p class="fig-sub">If today’s estimated traffic ran on one open model, at that model’s best measured throughput on GB300 NVL72 racks (above 50 tokens/s per user). A configuration comparison, not an equal-quality ranking.</p>
     <div class="capacity-controls">
       <label>Traffic boundary<select id="capacityPreset"></select></label>
       <label>Logical tokens / day (trillions)<input id="capacityVolume" type="number" min="0.001" max="10000000" step="any" value="1671"></label>
@@ -271,18 +258,17 @@
 
     </div>
     <p id="capacityBoundary" class="small"></p>
-    <p class="small">GLM-5.3 has no NVL72 run, so GLM-5.2 is shown. Physical GPUs per group are checked against each run’s job topology. A configuration comparison, not an equal-quality ranking.</p>
-    <p class="small">Usable capacity reserves headroom for downtime and peaks (not a measured utilization). Speeds are 1 ÷ P90 inter-token latency.</p>
     <p id="capacityError" role="alert" hidden>Enter a positive traffic volume and nonnegative finite cost and power assumptions.</p>
     <div id="capacityResults">
       <p class="capacity-summary" id="capacitySummary" aria-live="polite"></p>
       <div id="capacityBars" aria-label="Conditional rack comparison"></div>
-      <div class="table-wrap"><table class="t" id="capacityComparison"></table></div>
+      <details class="fig-notes"><summary>Per-model operating point, racks and GPUs</summary><div class="table-wrap"><table class="t" id="capacityComparison"></table></div></details>
       <h4>Tokens are not all the same work</h4>
       <div id="capacityMix"></div>
       <p class="small">Cache hits change the token mix above, <b>not the rack estimate</b>: the benchmarks do not isolate uncached prefill, so racks keep each run’s own cache behavior.</p>
     </div>
-      <details><summary>Assumptions, packing and source checks</summary>
+      <details class="fig-notes"><summary>Assumptions, packing and source checks</summary>
+        <p class="small">GLM-5.3 has no NVL72 run, so GLM-5.2 is shown. Physical GPUs per group are checked against each run’s job topology. Usable capacity reserves headroom for downtime and peaks (not a measured utilization). Speeds are 1 ÷ P90 inter-token latency.</p>
         <div class="capacity-controls capacity-costs">
           <label>Ownership cost ($ / GPU-hour)<input id="capacityCost" type="number" min="0" step="0.01" value="2.31"></label>
           <label>All-in power (kW / GPU)<input id="capacityPower" type="number" min="0" step="0.01" value="2.12"></label>
@@ -309,7 +295,7 @@
     <p>Chinese clouds disclose spending and revenue but almost never fleet sizes. Epoch AI tracks China as a single bucket, so the chart shows its estimate of accelerators delivered to China by the end of 2025, by chip rather than by company. China’s reported tokens are mostly text and agent traffic: video generation is an estimated 0.3–8% of the ~500T/day national figure (central 1.6%, E; <a href="research/GROK-CHINA-TOKENS-2026-11-03.md">method</a>).</p>
   </div>
   <div class="fig"><div class="fig-frame"><div class="fig-grid">
-    <div><div class="fig-head"><span class="fig-no">Fig. 8</span></div><h4>Accelerators delivered to China, end-2025</h4>
+    <div><div class="fig-head"><span class="fig-no">Fig. 14</span></div><h4>Accelerators delivered to China, end-2025</h4>
       <svg id="cnSvg" viewBox="0 0 440 300" role="img" aria-label="Accelerators in China by chip"></svg>
       <div class="legend"><span><i style="background:var(--s1)"></i>US chips (export versions)</span><span><i style="background:var(--s2)"></i>Chinese chips</span></div></div>
     <div><div class="fig-head"><span class="fig-no">Table 3</span></div><h4>What the Chinese clouds disclose</h4><div class="table-scroll"><table class="t" id="tChina"></table></div></div>
@@ -322,7 +308,7 @@
   <div class="prose">
     <div class="label"><span class="num">07</span>Providers</div>
     <h2>Company profiles</h2>
-    <p>One card per company, collapsed by default because the charts above already carry the main figures. Empty fields mean not disclosed, not zero; hosts show megawatts only, because the GPUs in their buildings belong to their tenants.</p>
+    <p>One card per company with its fleet, power, contracts and prices. Empty means not disclosed, not zero.</p>
   </div>
   <details class="fig-notes provider-profiles" id="providerProfiles"><summary>Show all provider profiles: fleets, power, contracts and prices for each company, with sources</summary>
   <div class="fig"><div class="fig-controls"><div class="ctl"><span class="ctl-label">Group</span><span class="seg" id="provCtl"></span></div></div>
@@ -336,40 +322,43 @@
     <h2>Sources and methods</h2>
     <div class="method" id="methodBox"></div>
     <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
-    <details id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
+    <details class="fig-notes" id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
     <details class="fig-notes"><summary>Related surveys: where they are stronger and what this page adds</summary><p>Established surveys already cover this market. This comparison describes inspected public features; it is not a ranking of accuracy or a claim to be first.</p><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
     <p class="download-links">Download the presentation data: <a href="data/providers.csv">providers CSV</a> · <a href="data/contracts.csv">contracts CSV</a> · <a href="data/prices.csv">prices CSV</a>. Source URLs, units and dates are retained.</p>
     <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><p><a href="research/SANITY-2026-11-03.md">Latest coverage and consistency review</a> · <a href="research/GAPS.md">Priority research gaps</a>. Remaining priorities include measured utilization, comparable token accounting, financing and cash flow, and HBM, networking and grid commissioning.</p><div class="scroll"><table class="t" id="tGaps"></table></div></details>
   </div>
 </section>
 </main>
-<footer class="colophon"><p class="asof" id="asof"></p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</footer>
+<footer class="colophon">
+  <div><a class="colophon-brand" href="#top"><svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" rx="6" fill="#161513"/><rect x="6.5" y="15" width="4" height="6.5" rx="1" fill="#fffdf8" fill-opacity=".6"/><rect x="12" y="10.5" width="4" height="11" rx="1" fill="#fffdf8" fill-opacity=".85"/><rect x="17.5" y="6" width="4" height="15.5" rx="1" fill="#66c2b1"/></svg>Who powers the Token Economy?</a></div>
+  <div><p class="asof" id="asof"></p><p>Compiled from public filings, earnings calls, company pages, price pages and press, November 2026. Fleet estimates from Epoch AI (CC BY 4.0). Not investment advice.</p><p class="colophon-links"><a href="https://github.com/hxu296/ai-compute-landscape" target="_blank" rel="noopener">Source and data on GitHub</a></p></div>
+</footer>
 <button id="backTop" class="back-top" aria-label="Back to top" hidden>↑ Top</button>
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=799f8ba54585"></script>
+<script src="data/research.js?v=8fccb7cb978e"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=4f4a95834fbf"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
-<script src="js/sketch.js?v=ccb904c58f1a"></script>
+<script src="js/sketch.js?v=736616d143dd"></script>
 <script src="js/landscape.js?v=cf5a64e11cb0"></script>
-<script src="js/supply.js?v=ec5146118f94"></script>
+<script src="js/supply.js?v=ad2bc64d869e"></script>
 <script src="js/chip_stacks.js?v=3cf1a45bcdf3"></script>
-<script src="js/deals.js?v=cfeb78e629e6"></script>
-<script src="js/growth.js?v=d5afbb4ddebf"></script>
-<script src="js/pricing.js?v=3728b45cedff"></script>
+<script src="js/deals.js?v=a0c5a4f3ad61"></script>
+<script src="js/growth.js?v=352f2af696fb"></script>
+<script src="js/pricing.js?v=17177bef7081"></script>
 <script src="js/usage.js?v=6be6a1f27644"></script>
 <script src="js/token_math.js?v=6db1a97eee26"></script>
 <script src="js/tokens.js?v=f2cee2df5fd7"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=045455b7d7a9"></script>
-<script src="js/watch.js?v=f600c69b9dbb"></script>
-<script src="js/us_map.js?v=6192102bad3b"></script>
+<script src="js/watch.js?v=7a4253010897"></script>
+<script src="js/us_map.js?v=71eb7d6043a9"></script>
 <script src="js/gw_years.js?v=26541f5781e8"></script>
 <script src="js/capacity.js?v=350457fea4d2"></script>
 <script src="js/lists.js?v=305585466d8a"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
-<script src="js/reader.js?v=21f7c8a0eac3"></script>
+<script src="js/reader.js?v=00d6c2ff61c8"></script>
 </body>
 </html>

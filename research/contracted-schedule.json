@@ -26,7 +26,8 @@
       },
       "undated_mw": 881,
       "overlap_with_epoch": "CoreWeave's year-end target is cumulative and fleet-wide, so Epoch's tracked sites are inside it. Of the +350 MW implied for H2 2026, Epoch already shows +124 MW after Nov 3 (Ellendale +26, Muskogee +98), so the 2026 segment is net 226. Additions at Epoch sites between 6/30 and 11/3 are not in online_mw (6/30) and not in Epoch's after-now figure, so they correctly stay inside the 226. Helios (Galaxy) sits entirely in the Epoch part. Galaxy's own schedule is Phase II 260 MW IT with data-hall deliveries beginning Q2 2027 and Phase III 133 MW IT in 2028. That equals CoreWeave 10-Q Q2 2026's '393 MW of electrical power remained undelivered at the site and was expected to be delivered in phases in 2026 and 2028'. Epoch instead shows Helios +400 facility MW in 2028 and +200 in 2029+, about one year later than Galaxy states, so the Epoch Helios timing should arguably shift to 2027 (+~395 facility) and 2028 (+~200). The 10-Q also says '355 MW of electrical power remains undelivered at these sites' (construction-cost-based leases, unnamed, likely Ellendale/Applied Digital) 'between 2026 and 2028'. That is probably also in the Epoch part and is not used here. Epoch figures are facility MW, while CoreWeave 'active power' is undefined in filings (landlord leases feeding it are critical IT). No scaling applied, so the 124 MW subtraction may slightly overstate the overlap.",
-      "notes": "Rest-of-2026: management targets “more than 1.85 GW of active power” at year-end (Q2 call). From 1.5 GW at Jun 30 that is ≈350 MW, already exceeded by the ≈508 MW Epoch schedules at CoreWeave sites after Jun 30, so no extra company-stated 2026 segment is added. Q3 2026 results are NOT out yet: CoreWeave set its call for 2026-11-10 (IR release dated 2026-10-27), so figures are from the Q2 2026 release/call (2026-08-11) and the 9/17 PR (contracted ~4.2 GW as of 8/11; no ramp detail). The Q2 press release gives no forward power guidance; the >1.85 GW YE target comes from the call (Webull/AI transcript and MarketBeat; I found no verbatim official transcript). The call gave no 2027 or 2028 active-power figure; an analyst asked about '>3 GW by end of next year' and management did not confirm it. Long-term: 'at least 8 gigawatts by 2030' (cumulative, not a schedule). Outside the U.S., managemen"
+      "notes": "Rest-of-2026: management targets “more than 1.85 GW of active power” at year-end (Q2 call). From 1.5 GW at Jun 30 that is ≈350 MW, already exceeded by the ≈508 MW Epoch schedules at CoreWeave sites after Jun 30, so no extra company-stated 2026 segment is added. Q3 2026 results are NOT out yet: CoreWeave set its call for 2026-11-10 (IR release dated 2026-10-27), so figures are from the Q2 2026 release/call (2026-08-11) and the 9/17 PR (contracted ~4.2 GW as of 8/11; no ramp detail). The Q2 press release gives no forward power guidance; the >1.85 GW YE target comes from the call (Webull/AI transcript and MarketBeat; I found no verbatim official transcript). The call gave no 2027 or 2028 active-power figure; an analyst asked about '>3 GW by end of next year' and management did not confirm it. Long-term: 'at least 8 gigawatts by 2030' (cumulative, not a schedule). Outside the U.S., managemen",
+      "power_basis": "IT"
     },
     "Nebius": {
       "contracted_mw": 3500,
@@ -70,7 +71,9 @@
       },
       "undated_mw": 700,
       "overlap_with_epoch": "Epoch's +106 MW at Mantsala (Finland) in 2027 is taken to be part of the stated >1 GW 2027 deployment, so it is subtracted from the 2027 segment (1,000 - 106 = 894). Epoch's Vineland NJ is flat at 70 MW, so nothing is after now. The rest of Vineland is inside the 2026 connected-power increment.",
-      "notes": "The contracted figure (>3.5 GW, May 2026) is stale. The Q2 2026 letter (2026-08-12) raised the year-end contracted target to 5 GW, and management said 'Almost all of that power will come online over the next 3, maybe to 3.5 years' (Q2 call). The 700 MW undated is the part of 3.5 GW left after the 2026-2028 increments; the 3-3.5 year window points it to about 2029 but gives no date. Online 170 MW is active power at 2025-12-31 and is stale: Nebius said capacity came online in late Q2 and that it expects 'to significantly increase our capacity in place in 3Q', but it published no current active or connected MW. Some of the 2026 630 MW is therefore probably already live before 2026-11-03; the split is unknown. Basis: contracted power = 'power secured by contracted land and power commitments' (grid/facility level). Connected = 'power connected into fully built and equipped data centers'. Acti"
+      "notes": "The 2026 segment is the company’s year-end target (800 MW) minus 170 MW online at Dec 31 2025, so it already includes capacity Epoch tracks; Epoch-tracked additions are taken out of it. The contracted figure (>3.5 GW, May 2026) is stale. The Q2 2026 letter (2026-08-12) raised the year-end contracted target to 5 GW, and management said 'Almost all of that power will come online over the next 3, maybe to 3.5 years' (Q2 call). The 700 MW undated is the part of 3.5 GW left after the 2026-2028 increments; the 3-3.5 year window points it to about 2029 but gives no date. Online 170 MW is active power at 2025-12-31 and is stale: Nebius said capacity came online in late Q2 and that it expects 'to significantly increase our capacity in place in 3Q', but it published no current active o",
+      "includes_epoch": "same_year",
+      "power_basis": "connected"
     },
     "Lambda": {
       "contracted_mw": 425,
@@ -90,7 +93,8 @@
       },
       "undated_mw": 402,
       "overlap_with_epoch": "None. Epoch part is 0.",
-      "notes": "Online is null in the input, so it is treated as 0 and the remainder equals the full 425. Part of the 425 is probably already in service, so the true future remainder is likely lower. Undated 402 = Hut 8 Beacon Point / Nueces County TX ~350 MW (WSJ 2026-08-31, grade C: Anthropic $35B six-year deal with Lambda; Nvidia reportedly holds the lease) + Kansas City 24 MW (slated to 'launch in early 2026'; launch unconfirmed but likely past) + Prime LAX01 Vernon 21 MW (facility opened Nov 2024; likely live) + ~7 MW Atlanta (EdgeConneX '>30MW' less Chicago 23; Lambda already in ATL02). Hut 8's own schedule (grade A/B, Hut 8 8-K/PRs): Phase 1 352 MW IT, initial energization Q1 2027, first data hall Q3 2027; Phase 2 352 MW IT, first data hall Q2 2028. Lambda's ~350 MW 'closely matches one of Beacon Point's two 352-megawatt phases' (theenergymag 2026-09-01), but which phase is not disclosed, so it i"
+      "notes": "Online is null in the input, so it is treated as 0 and the remainder equals the full 425. Part of the 425 is probably already in service, so the true future remainder is likely lower. Undated 402 = Hut 8 Beacon Point / Nueces County TX ~350 MW (WSJ 2026-08-31, grade C: Anthropic $35B six-year deal with Lambda; Nvidia reportedly holds the lease) + Kansas City 24 MW (slated to 'launch in early 2026'; launch unconfirmed but likely past) + Prime LAX01 Vernon 21 MW (facility opened Nov 2024; likely live) + ~7 MW Atlanta (EdgeConneX '>30MW' less Chicago 23; Lambda already in ATL02). Hut 8's own schedule (grade A/B, Hut 8 8-K/PRs): Phase 1 352 MW IT, initial energization Q1 2027, first data hall Q3 2027; Phase 2 352 MW IT, first data hall Q2 2028. Lambda's ~350 MW 'closely matches one of Beacon Point's two 352-megawatt phases' (theenergymag 2026-09-01), but which phase is not disclosed, so it i",
+      "power_basis": "IT"
     },
     "Crusoe": {
       "contracted_mw": 6000,
@@ -129,7 +133,8 @@
       },
       "undated_mw": 4310,
       "overlap_with_epoch": "Epoch attributes 0 MW after-now to Crusoe, so there is no overlap in the Crusoe row. Epoch does track Stargate Abilene, but under OpenAI/Oracle, not Crusoe.",
-      "notes": "Contracted 6 GW+ is 'gross' (facility) per the Series F PR of 2026-09-17, which gives no per-site dates. Undated 4310 MW includes Microsoft Abilene building 2 (~450 MW, no date), Childress TX 1.0 GW with Lancium for a hyperscaler (PR 2026-07-15 says only 'Construction is expected to begin in Q3 2026'; Bloomberg reported Meta took ~1.6 GW across Childress and Warrenton MO), Warrenton MO, Goodnight/Armstrong County TX (Google; no company date), Crusoe Cloud capacity, and other unallocated contracted capacity. Wyoming/Cheyenne Project Jade (1.8 GW) is excluded: it was paused in June 2026 and the June 9, 2026 4.9 GW contracted figure excluded it (Converge Digest, Bloomberg Law). Using the Crusoe 1 GW 'operational' figure as Abilene is an approximation. If more of the 1 GW is non-Abilene, the 2026 Abilene residual is larger, and vice versa. Sources: https://convergedigest.com/crusoe-nears-5-g"
+      "notes": "Contracted 6 GW+ is 'gross' (facility) per the Series F PR of 2026-09-17, which gives no per-site dates. Undated 4310 MW includes Microsoft Abilene building 2 (~450 MW, no date), Childress TX 1.0 GW with Lancium for a hyperscaler (PR 2026-07-15 says only 'Construction is expected to begin in Q3 2026'; Bloomberg reported Meta took ~1.6 GW across Childress and Warrenton MO), Warrenton MO, Goodnight/Armstrong County TX (Google; no company date), Crusoe Cloud capacity, and other unallocated contracted capacity. Wyoming/Cheyenne Project Jade (1.8 GW) is excluded: it was paused in June 2026 and the June 9, 2026 4.9 GW contracted figure excluded it (Converge Digest, Bloomberg Law). Using the Crusoe 1 GW 'operational' figure as Abilene is an approximation. If more of the 1 GW is non-Abilene, the 2026 Abilene residual is larger, and vice versa. Sources: https://convergedigest.com/crusoe-nears-5-g",
+      "power_basis": "gross"
     },
     "Together AI": {
       "contracted_mw": 250,
@@ -161,7 +166,8 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "None. Epoch part is 0.",
-      "notes": "The official Together AI/HUMAIN Business Wire PR (2026-08-31, announced 'today at LEAP') states only 'construction of a new 250 megawatt data center' in Saudi Arabia, with no chip count and no timeline. The chip count and the Nov 2026 / 2027 milestones come from single-source press, so both segments are grade C. The basis of the 250 MW (IT vs facility) is not stated. Online is null and treated as 0, so the remainder is 250 for this deal only. Together's existing Maryland, Memphis and Sweden sites are not in the contracted figure. If the 2027 'full allocation' is chips placed before the full 250 MW hall is built, the MW timing could lag. Sacra: https://sacra.com/c/together-ai/ ."
+      "notes": "The official Together AI/HUMAIN Business Wire PR (2026-08-31, announced 'today at LEAP') states only 'construction of a new 250 megawatt data center' in Saudi Arabia, with no chip count and no timeline. The chip count and the Nov 2026 / 2027 milestones come from single-source press, so both segments are grade C. The basis of the 250 MW (IT vs facility) is not stated. Online is null and treated as 0, so the remainder is 250 for this deal only. Together's existing Maryland, Memphis and Sweden sites are not in the contracted figure. If the 2027 'full allocation' is chips placed before the full 250 MW hall is built, the MW timing could lag. Sacra: https://sacra.com/c/together-ai/ .",
+      "power_basis": "IT"
     },
     "Nscale": {
       "contracted_mw": 1370,
@@ -181,13 +187,14 @@
       },
       "undated_mw": 863,
       "overlap_with_epoch": "Narvik: Epoch has +124 MW in rest-2026, but the company targets completion on 2027-04-05. Only the 230-124 = 106 MW Epoch does not show is added, in 2027; Epoch's 124 arguably also belongs in 2027. Sines: SIN02 (200 MW owned, Microsoft Vera Rubin 'starting in late 2027') is treated as covered by Epoch's Start Campus Sines +240 MW in 2027, so nothing is added. Keflavik +6.7 is Epoch-only. Epoch counts facility MW; Nscale's 'capacity' is IT MW ('active capacity' is defined as IT MW). Nothing was scaled.",
-      "notes": "S-1 (2026-09-18), as of 2026-08-31: '~1.37 GW of active and contracted capacity (1 GW at owned sites, 200 MW at leased sites and 165 MW at colocation sites)', '5 active and 12 contracted sites', '~25,000 active GPUs and 461,000 active and contracted GPUs'. It gives no site-level MW schedule. The undated 863 MW is made up of: (1) Ward County, Texas, leased ~200 MW (financing says ~275 MW IT, GB300 + VR200). Microsoft services begin 'in phases from Q3 2026' and equipment rent schedules started 2026-08-01 or 2026-09-01, so it is probably split across late 2026 and 2027, but no amounts are stated. (2) About 450 MW of owned contracted capacity not tied to a named site. This is likely the Monarch Compute Campus in West Virginia, where four Anthropic Vera Rubin tranches were signed 2026-08-25 and the S-1 says 'initial 2 GWs of gross power capacity (1.37 GWs of IT load power capacity) expected t"
+      "notes": "S-1 (2026-09-18), as of 2026-08-31: '~1.37 GW of active and contracted capacity (1 GW at owned sites, 200 MW at leased sites and 165 MW at colocation sites)', '5 active and 12 contracted sites', '~25,000 active GPUs and 461,000 active and contracted GPUs'. It gives no site-level MW schedule. The undated 863 MW is made up of: (1) Ward County, Texas, leased ~200 MW (financing says ~275 MW IT, GB300 + VR200). Microsoft services begin 'in phases from Q3 2026' and equipment rent schedules started 2026-08-01 or 2026-09-01, so it is probably split across late 2026 and 2027, but no amounts are stated. (2) About 450 MW of owned contracted capacity not tied to a named site. This is likely the Monarch Compute Campus in West Virginia, where four Anthropic Vera Rubin tranches were signed 2026-08-25 and the S-1 says 'initial 2 GWs of gross power capacity (1.37 GWs of IT load power capacity) expected t",
+      "power_basis": "IT"
     },
     "Fluidstack": {
       "contracted_mw": 941,
       "segments": {
         "2026": {
-          "mw": 453,
+          "mw": 504,
           "items": [
             {
               "mw": 168,
@@ -209,6 +216,11 @@
               "basis": "Barber Lake (Cipher landlord) original 168 IT phase less 51 IT already RFS'd (Q3 call) = 117 IT; Data Halls 1&2 Q4'26, 3&4 'Q4 2026 - Q1 2027' (amended) -- part could slip into Q1 2027.",
               "source_url": "https://www.sec.gov/Archives/edgar/data/0001819989/000181998926000047/cipherdigital_businessup.htm",
               "source_date": "2026-11-02"
+            },
+            {
+              "mw": 51,
+              "grade": "B",
+              "basis": "Barber Lake first 51 MW IT, ready for service (Cipher Q3 call, Nov 2 2026)"
             }
           ]
         },
@@ -236,19 +248,22 @@
       "overlap_with_epoch": "Epoch part 0 for this row, but Barber Lake (168 of the 941) is the same capacity Epoch plots as 'Anthropic Barber Lake' under Cipher Mining and the same capacity in the Cipher row; Lake Mariner duplicates the TeraWulf row; River Bend duplicates the Hut 8 / Highrise row. Only Abernathy (JV, excluded from TeraWulf's 839) is not in another landlord row. Fluidstack is the tenant/intermediary (Google backstop; Anthropic end user at River Bend/Barber Lake), so ALL 941 MW double counts with landlord rows / Epoch if stacked.",
       "notes": "941 = Lake Mariner 200 (CB-3/CB-4, Aug-2025) + 160 (CB-5) + Abernathy 168 + River Bend 245 + Barber Lake 168, all critical IT (Barber Lake per Sep-2025 Cipher 8-K: 168 IT / 244 gross, 'Expected by September 2026'). Online is null in input (treated 0), but ~93 MW IT is already in service: Lake Mariner CB-3 42 MW 'Operational' (TeraWulf Aug-2026; TeraWulf's 102 MW online = Core42 60 + CB-3 42) and Barber Lake first 51 MW IT RFS notice delivered (Cipher Q3 call 2026-11-02). Those 93 MW are placed in undated_mw only to close the arithmetic -- they are NOT future capacity; better fix is online_mw=93, remainder 848 = 453 (2026) + 395 (2027). Updated contracted would be ~998 MW IT (Lake Mariner restated to 378; Barber Lake +39 IT expansion Nov-2025, hall 5 due Q1 2027 -> 2027). Not in basis: Fluidstack's own France project, its IREN GPU-cloud customer contract, Hut 8's 1,000 MW ROFO. TeraWulf Q",
       "online_override": {
-        "mw": 93,
+        "mw": 42,
         "grade": "B",
-        "basis": "Already in service: Lake Mariner CB-3 42 MW (TeraWulf, Aug 2026) + Barber Lake first 51 MW IT ready-for-service (Cipher Q3 call, Nov 2). Critical IT.",
+        "basis": "Already in service: Lake Mariner CB-3 42 MW (TeraWulf, Aug 2026), critical IT. Barber Lake’s first 51 MW (ready for service per Cipher, Nov 2) is left in the rest-of-2026 segment, as in the Cipher row and Epoch.",
         "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000119312526419743/d134900dex991.htm",
-        "as_of": "2026-11-02"
-      }
+        "as_of": "2026-11-02",
+        "power_basis": "IT"
+      },
+      "power_basis": "IT"
     },
     "Vultr": {
       "contracted_mw": 50,
       "segments": {},
       "undated_mw": 50,
       "overlap_with_epoch": "None. Epoch part is 0.",
-      "notes": "Vultr blog (2025-12-02, https://blogs.vultr.com/vultr-amd-ai-supercluster): 'a new 50 MW deployment', with more than 24,000 MI355X GPUs at 5C's Springfield, Ohio campus, and no online date. Bloomberg/Reuters (Dec 2025) reported 'online by early 2026'/Q1 2026, which was missed. Ideastream/WYSO (2026-08-14, https://www.ideastream.org/2026-08-14/springfields-1-3b-data-center-brings-economic-hope-and-environmental-skepticism; grade C): '25 of its anticipated 75 megawatt capacity is expected to be fully operational by the end of September', with the 'first phase ... completed within the next few months'. I found no go-live confirmation as of 2026-11-03. Every stated date (Q1 2026, end-Sept 2026) is already past, so no post-Nov-3 period can be assigned and all 50 MW is left undated. If the first 25 MW is now live, the true remainder is ~25 MW, and it would be ~0 if the full 50 MW is live. The "
+      "notes": "Vultr blog (2025-12-02, https://blogs.vultr.com/vultr-amd-ai-supercluster): 'a new 50 MW deployment', with more than 24,000 MI355X GPUs at 5C's Springfield, Ohio campus, and no online date. Bloomberg/Reuters (Dec 2025) reported 'online by early 2026'/Q1 2026, which was missed. Ideastream/WYSO (2026-08-14, https://www.ideastream.org/2026-08-14/springfields-1-3b-data-center-brings-economic-hope-and-environmental-skepticism; grade C): '25 of its anticipated 75 megawatt capacity is expected to be fully operational by the end of September', with the 'first phase ... completed within the next few months'. I found no go-live confirmation as of 2026-11-03. Every stated date (Q1 2026, end-Sept 2026) is already past, so no post-Nov-3 period can be assigned and all 50 MW is left undated. If the first 25 MW is now live, the true remainder is ~25 MW, and it would be ~0 if the full 50 MW is live. The ",
+      "power_basis": "IT"
     },
     "TensorWave": {
       "contracted_mw": 222,
@@ -258,8 +273,8 @@
           "items": [
             {
               "mw": 222,
-              "grade": "A",
-              "basis": "Fermi 10-Q for Q2 2026 (MD&A, TensorWave lease): four data halls plus one network hall, 'total facility power of 222 MW'. 'target delivery dates ranging from the end of 2027 through the first quarter of 2028 for the network hall', and 'January 1, 2028 for data halls 1 and 2, and February 1, 2028 for data halls 3 and 4'. All four data halls, which carry the load, are targeted in Q1 2028, so the full 222 MW is placed in 2028. No MW split by phase is given.",
+              "grade": "C",
+              "basis": "Fermi 10-Q for Q2 2026 (MD&A, TensorWave lease): four data halls plus one network hall, 'total facility power of 222 MW'. 'target delivery dates ranging from the end of 2027 through the first quarter of 2028 for the network hall', and 'January 1, 2028 for data halls 1 and 2, and February 1, 2028 for data halls 3 and 4'. All four data halls, which carry the load, are targeted in Q1 2028, so the full 222 MW is placed in 2028. No MW split by phase is given. Lease not confirmed closed by its Oct 31 2026 deadline.",
               "source_url": "https://www.sec.gov/Archives/edgar/data/0002071778/000207177826000051/frmi-20260630.htm",
               "source_date": "2026-08-13"
             }
@@ -268,7 +283,8 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "None. Epoch part is 0.",
-      "notes": "222 MW is facility power, matching the contracted basis. The Fermi PR of 2026-08-10 and the Q2 deck (8-K, 2026-08-13) say 'Phased, beginning the second half of 2027' and '2H 2027 Phased Delivery Begins'. Only the network hall (no MW given) could land in late 2027. RISK: the lease is not yet effective. Closing conditions include an investment-grade guaranty and project financing, and on 2026-09-22 the parties extended the closing date from 2026-09-30 to 2026-10-31. I found no confirmation of closing, termination or a further extension after Oct 31. Fermi's Q3 results are reportedly due 2026-11-12. Expansion options (two more buildings, to ~650 MW total, which must be energized by 2028-12-31) are not in the 222. The 10-Q filing date is approximate (on or after 2026-08-11). The date shown is the Q2 earnings 8-K date."
+      "notes": "222 MW is facility power, matching the contracted basis. The Fermi PR of 2026-08-10 and the Q2 deck (8-K, 2026-08-13) say 'Phased, beginning the second half of 2027' and '2H 2027 Phased Delivery Begins'. Only the network hall (no MW given) could land in late 2027. RISK: the lease is not yet effective. Closing conditions include an investment-grade guaranty and project financing, and on 2026-09-22 the parties extended the closing date from 2026-09-30 to 2026-10-31. I found no confirmation of closing, termination or a further extension after Oct 31. Fermi's Q3 results are reportedly due 2026-11-12. Expansion options (two more buildings, to ~650 MW total, which must be energized by 2028-12-31) are not in the 222. The 10-Q filing date is approximate (on or after 2026-08-11). The date shown is the Q2 earnings 8-K date.",
+      "power_basis": "facility"
     },
     "Northern Data": {
       "contracted_mw": 250,
@@ -278,8 +294,8 @@
           "items": [
             {
               "mw": 200,
-              "grade": "A",
-              "basis": "Rumble (owner since 2026-06-17) Q2 2026 8-K exhibit: 'Quake AI now has approximately 250MW of unmonetized capacity targeted for 2027'. Closing release (8-K ex.99.1, 2026-06-17): '~250 MW of current energized and planned power, almost all of which is expected to come online by 2027 across ten data centers' and 'More than 200 MW of this capacity is currently unmonetized'. The >200 MW not-yet-monetized part is placed in 2027.",
+              "grade": "C",
+              "basis": "Rumble (owner since 2026-06-17) Q2 2026 8-K exhibit: 'Quake AI now has approximately 250MW of unmonetized capacity targeted for 2027'. Closing release (8-K ex.99.1, 2026-06-17): '~250 MW of current energized and planned power, almost all of which is expected to come online by 2027 across ten data centers' and 'More than 200 MW of this capacity is currently unmonetized'. The >200 MW not-yet-monetized part is placed in 2027. No customer named, so not a contracted in-service commitment.",
               "source_url": "https://www.sec.gov/Archives/edgar/data/0001830081/000121390026069733/ea029508101ex99-1.htm",
               "source_date": "2026-06-17"
             }
@@ -288,7 +304,8 @@
       },
       "undated_mw": 50,
       "overlap_with_epoch": "None (Epoch part 0).",
-      "notes": "The 250 MW figure mixes energized and planned power. It is not customer-contracted: Rumble calls >200 MW of it 'unmonetized'. The 50 MW undated is roughly the currently energized or monetized part (it hosts ~22,000 H100/H200 GPUs), which is probably already online, but no online MW is published (the input online is null). The Q2 2026 release was filed 2026-08-10 (accession 0001213900-26-087311). The 2027 quote there uses 'targeted for 2027' and the June release says 'by 2027', so part could land in late 2026. Maysville, Georgia (up to 180 MW, press) is likely the bulk of the planned capacity. Rumble Q3 2026 results were not found yet. Sources disagree on the site count (8, 9 or 10). Rumble's 6/30/2026 investor presentation was not reviewed."
+      "notes": "The 250 MW figure mixes energized and planned power. It is not customer-contracted: Rumble calls >200 MW of it 'unmonetized'. The 50 MW undated is roughly the currently energized or monetized part (it hosts ~22,000 H100/H200 GPUs), which is probably already online, but no online MW is published (the input online is null). The Q2 2026 release was filed 2026-08-10 (accession 0001213900-26-087311). The 2027 quote there uses 'targeted for 2027' and the June release says 'by 2027', so part could land in late 2026. Maysville, Georgia (up to 180 MW, press) is likely the bulk of the planned capacity. Rumble Q3 2026 results were not found yet. Sources disagree on the site count (8, 9 or 10). Rumble's 6/30/2026 investor presentation was not reviewed.",
+      "power_basis": "IT"
     },
     "DayOne": {
       "contracted_mw": 2300,
@@ -313,9 +330,11 @@
         "grade": "A",
         "basis": "F-1 (Oct 5 2026), as of Sep 20 2026: billings 953 MW income-generating (capacity in service 962 MW). IT power.",
         "source_url": "https://www.sec.gov/Archives/edgar/data/0002118192/000119312526414188/d223752df1.htm",
-        "as_of": "2026-09-20"
+        "as_of": "2026-09-20",
+        "power_basis": "IT"
       },
-      "includes_epoch": true
+      "includes_epoch": "all",
+      "power_basis": "IT"
     },
     "Applied Digital": {
       "contracted_mw": 1410,
@@ -380,7 +399,8 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "APLD row's Epoch part is 0 so the full schedule is given. Overlap: Polaris Forge 1 (=Epoch 'CoreWeave Ellendale ND', attributed to CoreWeave) - the 150 MW IT Building 3 in 2027 is the same capacity Epoch shows in CoreWeave's after-now figures (Ellendale facility MW 88 now -> 114 YE2026 -> 520 YE2027, i.e. +26 rest-2026, +406 in 2027). Epoch's Ellendale 'now' (88 facility MW) lags APLD's 250 MW IT already RFS, so Epoch's +406 MW 2027 step covers B2 catch-up plus B3. If the chart shows landlord and tenant bars side by side, PF1 B3 is counted in both.",
-      "notes": "Contracted 1,410 MW critical IT = PF1 400 + PF2 200 + PF3 300 + DF1 300 + DF2 210 (10-K table as of 2026-05-31; reaffirmed in 10-Q: 'aggregate contracted critical IT load is 1,410 MW'). Online 250 MW = PF1 B1 100 (Oct 2025) + B2 150 (75 MW Jul 1 2026 + 75 MW Oct 1 2026). Schedule sums exactly to the 1,160 MW remainder. PF2 is built as 300 MW (two buildings) but only 200 MW is leased; the 100 MW expansion lease is unsigned, so it is excluded. All figures critical IT, matching the contracted basis. Allocation caveat: PF3 and DF1 (600 MW) are placed in 2028 by the full-capacity convention; the company says initial RFS starts 2H27 (PF3) and 1H27 (DF1), so a substantial unstated share could land in 2027. Under an alternative 'initial-year' convention, 2027 would be 900 and 2028 210. Next update: fiscal Q2 FY2027 results (~early Jan 2027)."
+      "notes": "Contracted 1,410 MW critical IT = PF1 400 + PF2 200 + PF3 300 + DF1 300 + DF2 210 (10-K table as of 2026-05-31; reaffirmed in 10-Q: 'aggregate contracted critical IT load is 1,410 MW'). Online 250 MW = PF1 B1 100 (Oct 2025) + B2 150 (75 MW Jul 1 2026 + 75 MW Oct 1 2026). Schedule sums exactly to the 1,160 MW remainder. PF2 is built as 300 MW (two buildings) but only 200 MW is leased; the 100 MW expansion lease is unsigned, so it is excluded. All figures critical IT, matching the contracted basis. Allocation caveat: PF3 and DF1 (600 MW) are placed in 2028 by the full-capacity convention; the company says initial RFS starts 2H27 (PF3) and 1H27 (DF1), so a substantial unstated share could land in 2027. Under an alternative 'initial-year' convention, 2027 would be 900 and 2028 210. Next update: fiscal Q2 FY2027 results (~early Jan 2027).",
+      "power_basis": "IT"
     },
     "Core Scientific": {
       "contracted_mw": 1120,
@@ -419,7 +439,8 @@
       },
       "undated_mw": 1,
       "overlap_with_epoch": "Landlord row: epoch_part is 0, so the full remainder is kept. For reference, Epoch attributes Denton, Muskogee, Marble and Dalton to CoreWeave. Epoch Dalton is 40 MW flat, so it does not capture the ~145 MW CoreWeave Dalton balance. Epoch Muskogee (0 now, 98 by end-2026, 181 by 2027, facility MW) conflicts with Core Scientific's report that CoreWeave's ~70 MW at Muskogee is already billing, and its 2027 step may reflect the separate AMD ~82 MW Muskogee phase (2H 2027).",
-      "notes": "Q3 2026 results not yet released (no 8-K Item 2.02 after 2026-07-28 on EDGAR as of 11/3). Schedule is from the Q2 2026 deck (8-K Ex 99, 2026-07-28), plus the 8/14 Polaris-closing 8-K (Muskogee 82 MW 2H 2027) and the 9/10 8-K on ERCOT status: Pecos's existing 300 MW is in Batch Zero and 'We will not receive the final allocation and load ramp until the conclusion of the Batch Zero process', a risk to the Pecos 1H 2027 date. Hunt's 431 MW is conditionally approved and under construction. All figures are leased/critical IT, the same basis as contracted 1,120 and billing 437. Site figures are '~' rounded: the CoreWeave site rows sum to ~590 and the AMD rows to ~529-530. The CoreWeave 153 MW is the arithmetic balance (590 - 437); part may already be billing by Nov 3 (the Q1 call targeted >450 billable MW 'by end of summer') or come online in Q4 2026, but no 2026 figure is stated, so all of it "
+      "notes": "Q3 2026 results not yet released (no 8-K Item 2.02 after 2026-07-28 on EDGAR as of 11/3). Schedule is from the Q2 2026 deck (8-K Ex 99, 2026-07-28), plus the 8/14 Polaris-closing 8-K (Muskogee 82 MW 2H 2027) and the 9/10 8-K on ERCOT status: Pecos's existing 300 MW is in Batch Zero and 'We will not receive the final allocation and load ramp until the conclusion of the Batch Zero process', a risk to the Pecos 1H 2027 date. Hunt's 431 MW is conditionally approved and under construction. All figures are leased/critical IT, the same basis as contracted 1,120 and billing 437. Site figures are '~' rounded: the CoreWeave site rows sum to ~590 and the AMD rows to ~529-530. The CoreWeave 153 MW is the arithmetic balance (590 - 437); part may already be billing by Nov 3 (the Q1 call targeted >450 billable MW 'by end of summer') or come online in Q4 2026, but no 2026 figure is stated, so all of it ",
+      "power_basis": "IT"
     },
     "Galaxy Digital": {
       "contracted_mw": 526,
@@ -451,7 +472,8 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "Landlord row: epoch_part is 0 because Epoch attributes Helios to CoreWeave, so the full remainder is kept. For reference, Epoch's 'Coreweave Helios (Galaxy)' is facility MW: 200 now, 600 in 2028, 800 final. Galaxy's '800 MW Gross Leased Capacity' equals 526 MW critical IT (ratio ~1.52), so Phase I 133 IT ~ 200 facility (matches Epoch now), Phase II 260 IT ~ 395 facility, Phase III 133 IT ~ 200 facility. Epoch places Phase II in 2028 and Phase III in 2029+, about one year later than Galaxy's stated Q2 2027 / 2028.",
-      "notes": "No Phase II delivery in 2026: the Q3 release says only Phase I's 133 MW was delivered ('all 133 MW of critical IT load delivered to CoreWeave by the end of the second quarter') and that Phase II deliveries 'begin' Q2 2027. Phase II completion inside 2027 is not explicitly stated; I put all 260 in 2027 on the basis of the Q2 2027 start/rent commencement, and some could slip into 2028. CoreWeave's 10-Q (6/30/2026) describes the same 393 MW as delivered 'in phases in 2026 and 2028', which conflicts with Galaxy's dates; Galaxy's later (10/27) statement is used. Not in contracted: 830 MW of approved Helios II capacity 'not yet under lease'. All figures are critical IT, the same basis as contracted and online."
+      "notes": "No Phase II delivery in 2026: the Q3 release says only Phase I's 133 MW was delivered ('all 133 MW of critical IT load delivered to CoreWeave by the end of the second quarter') and that Phase II deliveries 'begin' Q2 2027. Phase II completion inside 2027 is not explicitly stated; I put all 260 in 2027 on the basis of the Q2 2027 start/rent commencement, and some could slip into 2028. CoreWeave's 10-Q (6/30/2026) describes the same 393 MW as delivered 'in phases in 2026 and 2028', which conflicts with Galaxy's dates; Galaxy's later (10/27) statement is used. Not in contracted: 830 MW of approved Helios II capacity 'not yet under lease'. All figures are critical IT, the same basis as contracted and online.",
+      "power_basis": "IT"
     },
     "Cipher Mining": {
       "contracted_mw": 700,
@@ -461,8 +483,8 @@
           "items": [
             {
               "mw": 162.5,
-              "grade": "A",
-              "basis": "Black Pearl (AWS) phases due 2026, gross",
+              "grade": "B",
+              "basis": "Black Pearl (AWS) halls due in 2026, gross; the linked deck gives the campus total, the split by hall and year is ours",
               "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000119312526419743/d134900dex991.htm"
             }
           ]
@@ -472,13 +494,15 @@
           "items": [
             {
               "mw": 112.5,
-              "grade": "A",
-              "basis": "Black Pearl DH4, gross"
+              "grade": "C",
+              "basis": "Black Pearl DH4, gross (timing from the Q3 2026 call and deck; split ours)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000119312526419743/d134900dex991.htm"
             },
             {
               "mw": 100,
-              "grade": "A",
-              "basis": "Stingray (investment-grade hyperscaler lease), gross"
+              "grade": "C",
+              "basis": "Stingray (investment-grade hyperscaler lease), gross (timing from the Q3 2026 call and deck; split ours)",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000119312526419743/d134900dex991.htm"
             }
           ]
         }
@@ -491,8 +515,10 @@
         "grade": "B",
         "basis": "HPC delivered: 18 MW critical IT at Black Pearl (≈25 MW gross), Q3 2026 call, Nov 2. The 207 MW previously shown is Odessa bitcoin mining, not data-center capacity.",
         "source_url": "https://www.sec.gov/Archives/edgar/data/1819989/000119312526419743/d134900dex991.htm",
-        "as_of": "2026-11-02"
-      }
+        "as_of": "2026-11-02",
+        "power_basis": "gross"
+      },
+      "power_basis": "gross"
     },
     "TeraWulf": {
       "contracted_mw": 839,
@@ -536,7 +562,8 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "Epoch part is 0, so the full schedule is given and there is no Epoch overlap. Note: Lake Mariner CB-4/CB-5 (Fluidstack) also appear in the Fluidstack (tenant) row.",
-      "notes": "839 MW IT = Core42 60 + Fluidstack 378 (Lake Mariner) + Anthropic 401 (Hawesville). Online 102 MW (July 2026) = WULF Den 2 + CB-1 16 + CB-2A 21 + CB-2B 21 + CB-3 42, which covers all of Core42 plus Fluidstack CB-3. Remainder 737 = CB-4 168 + CB-5 168 + Hawesville 401, an exact match. Caveats: (1) The July 2026 amendments add ~6 MW IT each to CB-4 and CB-5 (~+12 MW total), not reflected in the 839 figure; I kept 168/168 to match the contracted total. (2) The CB-4 date shift is Q3'26, so part of CB-4 may already have been delivered before Nov 3, 2026; the 102 MW online figure is stale (July). (3) The amendment table shows a CB-5 'date shift' of Q4'26 while slide 8 and the 10-Q say Q1 2027/early 2027; I used 2027. (4) Abernathy JV (Fluidstack, TX) is being sold for $530M and is not in the 839. (5) The Q3 2026 results are scheduled for Nov 6, 2026, so they were not available. October 2026 8-"
+      "notes": "839 MW IT = Core42 60 + Fluidstack 378 (Lake Mariner) + Anthropic 401 (Hawesville). Online 102 MW (July 2026) = WULF Den 2 + CB-1 16 + CB-2A 21 + CB-2B 21 + CB-3 42, which covers all of Core42 plus Fluidstack CB-3. Remainder 737 = CB-4 168 + CB-5 168 + Hawesville 401, an exact match. Caveats: (1) The July 2026 amendments add ~6 MW IT each to CB-4 and CB-5 (~+12 MW total), not reflected in the 839 figure; I kept 168/168 to match the contracted total. (2) The CB-4 date shift is Q3'26, so part of CB-4 may already have been delivered before Nov 3, 2026; the 102 MW online figure is stale (July). (3) The amendment table shows a CB-5 'date shift' of Q4'26 while slide 8 and the 10-Q say Q1 2027/early 2027; I used 2027. (4) Abernathy JV (Fluidstack, TX) is being sold for $530M and is not in the 839. (5) The Q3 2026 results are scheduled for Nov 6, 2026, so they were not available. October 2026 8-",
+      "power_basis": "IT"
     },
     "Hut 8 / Highrise": {
       "contracted_mw": 949,
@@ -565,8 +592,8 @@
             },
             {
               "mw": 352,
-              "grade": "A",
-              "basis": "Beacon Point Phase 2 (same tenant, 352 MW IT, lease July 2026): 'Delivery Timeline: Initial Phase 2 data hall delivery expected in Q2 2028.' 10-Q: 'Initial delivery is expected to start in Q2 2028.' No completion date is stated, so the tail could slip into 2029.",
+              "grade": "B",
+              "basis": "Beacon Point Phase 2 (same tenant, 352 MW IT, lease July 2026): 'Delivery Timeline: Initial Phase 2 data hall delivery expected in Q2 2028.' 10-Q: 'Initial delivery is expected to start in Q2 2028.' No completion date is stated, so the tail could slip into 2029. Only an “initial delivery Q2 2028” date is given.",
               "source_url": "https://www.sec.gov/Archives/edgar/data/1964789/000110465926084862/tm2620835d1_ex99-1.htm",
               "source_date": "2026-07-20"
             }
@@ -575,14 +602,18 @@
       },
       "undated_mw": 0,
       "overlap_with_epoch": "Epoch part is 0, so the full schedule is given and there is no Epoch overlap. Note: River Bend's 245 MW also appears in the Fluidstack (tenant) row's contracted figure.",
-      "notes": "949 MW IT = River Bend 245 + Beacon Point Phase 1 352 + Phase 2 352 (Q2 2026 release: '949 MW of contracted IT capacity'). Utility capacity: River Bend 330 MW, Beacon Point ~1,000 MW (500 per phase). The schedule uses IT MW, matching the contracted basis. Sum = 949 = remainder. The Q3 2026 results are due Nov 4, 2026, after this cut-off, so they were not available. The latest filed statements are the Aug 4, 2026 release/10-Q. Under an initial-year convention, Beacon Point P1 would move to 2027, making 2027 597 and 2028 352. Excludes River Bend's 1,000 MW ROFO expansion (not contracted)."
+      "notes": "949 MW IT = River Bend 245 + Beacon Point Phase 1 352 + Phase 2 352 (Q2 2026 release: '949 MW of contracted IT capacity'). Utility capacity: River Bend 330 MW, Beacon Point ~1,000 MW (500 per phase). The schedule uses IT MW, matching the contracted basis. Sum = 949 = remainder. The Q3 2026 results are due Nov 4, 2026, after this cut-off, so they were not available. The latest filed statements are the Aug 4, 2026 release/10-Q. Under an initial-year convention, Beacon Point P1 would move to 2027, making 2027 597 and 2028 352. Excludes River Bend's 1,000 MW ROFO expansion (not contracted).",
+      "power_basis": "IT"
     },
     "VNET": {
       "contracted_mw": 970,
       "segments": {},
       "undated_mw": 0,
       "overlap_with_epoch": "None (Epoch part 0).",
-      "notes": "Confirmed in the Q2 2026 6-K ex.99-1 (2026-08-18): 'Capacity in service was 1,007MW', 'Total capacity committed was 970MW', and 'Commitment rate for capacity in service was 96.3%' (wholesale, as of 2026-06-30). The 970 MW is a commitment on capacity already in service, so contracted minus online is negative and the remainder is 0. Separately, 'Capacity under construction was 585MW' (wholesale); the release gives no pre-commitment MW or delivery dates for it, and it is not part of the 970 MW."
+      "notes": "Confirmed in the Q2 2026 6-K ex.99-1 (2026-08-18): 'Capacity in service was 1,007MW', 'Total capacity committed was 970MW', and 'Commitment rate for capacity in service was 96.3%' (wholesale, as of 2026-06-30). The 970 MW is a commitment on capacity already in service, so contracted minus online is negative and the remainder is 0. Separately, 'Capacity under construction was 585MW' (wholesale); the release gives no pre-commitment MW or delivery dates for it, and it is not part of the 970 MW.",
+      "power_basis": "IT"
     }
-  }
+  },
+  "it_to_facility": 1.3,
+  "it_to_facility_basis": "Facility ÷ IT power (PUE) ≈1.3: Epoch’s implied ratio at Colossus 1–2 is 1.25–1.35. Gross and connected power are treated as facility power."
 }

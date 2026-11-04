@@ -2,7 +2,9 @@
 (function () {
   const METRICS = [["revenue_usd", "Quarterly revenue"], ["mw_online", "MW online"], ["backlog_usd", "Backlog"]];
   let metric = "revenue_usd", mode = "absolute";
-  const selected = new Set(Object.keys(NC.growth));
+  // Start with a readable handful: the three big clouds, Oracle and the two largest neoclouds; the rest are one click away.
+  const START=['AWS','Microsoft Azure','Google Cloud','Oracle OCI','CoreWeave','Nebius'],selected = new Set(Object.keys(NC.growth).filter(n=>START.includes(n)));
+  if(!selected.size)Object.keys(NC.growth).forEach(n=>selected.add(n));
   const ctl = $("#growthCtl");
   METRICS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;b.dataset.k=k;b.onclick=()=>{metric=k;draw();};ctl.appendChild(b);});
   function draw() {
@@ -37,7 +39,7 @@
       s.pts.forEach(p=>{const c=el("circle",{cx:x(p[0]),cy:y(value(s,p)),r:4,fill:p[2]==="reported"?css(s.c):css("--surface-1"),stroke:css(s.c),"stroke-width":1.7},svg);
         hover(c,`<b>${esc(s.n)}</b>${p[0]} · ${metric==="mw_online"?num(p[1])+" MW":money(p[1])}${badge(p[2])}<br>${esc(p[4]||"company")}${p[6]?' · '+esc(p[6])+' power':''}<br>${esc(p[7]||'')}${mode==="index"?`<br>Index ${value(s,p).toFixed(1)}; base ${s.base[0]}`:""}<br>${src(p[3])}`);});
     });
-    $("#growthLegend").innerHTML=subs.map(s=>`<span><i style="background:var(${s.c})"></i>${esc(s.n)}</span>`).join("");
+    $("#growthLegend").innerHTML="";
     const rows=subs.map(s=>{const a=s.pts[0],b=s.pts.at(-1);return {name:s.n,start:a[0],first:a[1],end:b[0],last:b[1],mult:s.pts.length>1&&a[1]>0?b[1]/a[1]:null,scope:[b[4]||"company",b[6]].filter(Boolean).join(' · '),source_url:b[3]};});
     table("#growthSummary",rows,[{k:"name",h:"Company"},{k:"start",h:"First date"},{k:"first",h:"First",f:r=>metric==="mw_online"?num(r.first):money(r.first)},{k:"end",h:"Latest date"},{k:"last",h:"Latest",f:r=>metric==="mw_online"?num(r.last):money(r.last)},{k:"mult",h:"Multiple",f:r=>r.mult==null?'—':r.mult.toFixed(2)+"×"},{k:"scope",h:"Reporting scope"},{k:"source_url",h:"",f:r=>src(r.source_url)}]);
   }

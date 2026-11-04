@@ -74,4 +74,10 @@
         (gpuh ? `<br>${gpuh} at 2.12 kW per GB300-class GPU and 730 h/month (E)` + (r.c.implied_usd_per_gpu_hour_est ? `; ≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h at 2.0–2.6 kW per GPU, pre-Rubin draw (floor for later deliveries)` : "") : r.lease ? "" : "<br>Not NVIDIA or AMD GPUs, so no $/GPU-hour") + `<br>${src(r.c.source_url)}`); });
   }
   onTheme(() => { draw(); drawIdx(); drawKw(); }); draw(); drawIdx(); drawKw();
+  // Chapter lead: today's H100 and B200 benchmark range and their 90-day direction, from the daily feed.
+  const lead = $("#priceLead"), mk = (window.LIVE?.market_checks || []);
+  if (lead) { const by = sku => mk.filter(m => m.sku === sku && m.usd), rng = sku => { const v = by(sku).map(m => m.usd); return v.length ? `$${Math.min(...v).toFixed(2)}–${Math.max(...v).toFixed(2)}` : null; },
+    up = sku => by(sku).map(m => m.changes?.['90']?.percent).filter(v => v != null), dir = v => !v.length ? '' : v.every(x => x > 0) ? 'up' : v.every(x => x < 0) ? 'down' : 'mixed';
+    const h = rng('H100'), b = rng('B200'), d = [...new Set([dir(up('H100')), dir(up('B200'))])].filter(Boolean);
+    if (h && b) lead.textContent = `Renting an H100 costs about ${h} an hour and a B200 about ${b}${d.length === 1 ? `, both ${d[0]} over the last 90 days` : ''}.`; }
 })();
