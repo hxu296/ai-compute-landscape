@@ -9,6 +9,8 @@ const file=path.resolve(process.argv[2]||'index.html'),exe=process.env.CHROME_PA
     await page.goto('file://'+file);await page.waitForTimeout(500);
     const count=async(sel)=>page.locator(sel).count(),expect=async(name,sel,min)=>{const n=await count(sel);if(n<min)failures.push(`${width}px: ${name} has ${n}, expected at least ${min}`);};
     await expect('watch table rows','#watchTable tbody tr',8);
+    await expect('GW per year segments','#gwYearSvg [data-gw-segment]',20);
+    await expect('US map states','#usMapSvg .usmap-state',48);
     await expect('build-out years','#buildoutBars .build-row',4);
     await expect('token chart labels','#tokenSvg text',20);
     await expect('projection rows','#projectionBars .projection-row',6);

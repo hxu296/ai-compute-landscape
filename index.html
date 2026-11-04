@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="6bef21b98214">
+<meta name="build" content="3df24c9d39cc">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -100,6 +100,13 @@
     <details class="fig-notes" id="usMapUnlocated"></details>
     <p class="usmap-table-title">Top ten states in the selected view</p>
     <div class="scroll"><table class="t" id="usMapTable"></table></div>
+  </div></div>
+  <div class="fig" id="gw-years"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Fig. 1c</span><h3 class="fig-title">Frontier data-center power per year, by company</h3></div>
+    <div class="fig-controls"><span class="seg"><button id="gwYearTotal" class="on">Online at year end</button><button id="gwYearAdded">Added during the year</button></span></div>
+    <div class="fig-body"><svg id="gwYearSvg" viewBox="0 0 900 370" role="img" aria-label="Gigawatts of tracked data-center power per year, stacked by company"></svg></div>
+    <div class="legend" id="gwYearLegend"></div>
+    <p class="fig-caption" id="gwYearNote"></p>
   </div></div>
 </section>
 
@@ -327,7 +334,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=4c70ab9b3262"></script>
+<script src="data/research.js?v=62a65411b807"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -345,6 +352,7 @@
 <script src="js/demand.js?v=045455b7d7a9"></script>
 <script src="js/watch.js?v=da016e1cc59d"></script>
 <script src="js/us_map.js?v=cb30876d57d2"></script>
+<script src="js/gw_years.js?v=3446db41f5d0"></script>
 <script src="js/capacity.js?v=350457fea4d2"></script>
 <script src="js/lists.js?v=50311a88dd8f"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
