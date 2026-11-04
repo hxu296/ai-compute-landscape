@@ -726,6 +726,15 @@
       "filed_date": "2026-09-30",
       "cfo_ye2026_gw": "2.5–3",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026066880/spcx-20260930.htm"
+    },
+    "serving_cost": {
+      "cost_of_revenue_usd": 4812000000.0,
+      "days": 273,
+      "period": "Jan–Sep 2026",
+      "tokens_avg_t_per_day": 123.2,
+      "usd_per_mtok": 0.1431,
+      "note": "Anthropic S-1/A Note 8: cost of revenue $4.812B in January–September 2026, “substantially all” compute for customer-serving workloads, ÷ its consumption-billed tokens over the same months (our revenue-based estimate, averaged on its own trend). Subscription traffic is not in the token count, so this overstates cost per token; Anthropic’s models are also likely heavier than the market average.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm"
     }
   },
   "neocloud_risk": {

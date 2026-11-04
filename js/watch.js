@@ -29,11 +29,12 @@
   if($('#buildoutSvg')){
     const day=s=>Date.parse(s+'T00:00:00Z'),MON=30.4375*864e5,t0=day(est.as_of),ends=BuildoutMath.YEARS.map(y=>[day(y+'-12-31'),y]);
     const fmt=t=>new Date(t).toLocaleDateString('en-US',{month:'short',year:'numeric',timeZone:'UTC'});
-    const draw=()=>{const g=$('#buildGrowth').valueAsNumber/100,d=$('#buildDerate').valueAsNumber;S=BuildoutMath.supply(NC.providers,TL,+($('#buildRubin')?.value||1));
-      $('#buildGrowthValue').textContent=(g*100).toFixed(0)+'%/mo';$('#buildDerateValue').textContent=d.toFixed(1)+'×';
+    const SC=D.watch?.serving_cost;
+    const draw=()=>{const g=$('#buildGrowth').valueAsNumber/100,price=$('#buildPrice').valueAsNumber;S=BuildoutMath.supply(NC.providers,TL,+($('#buildRubin')?.value||1));
+      $('#buildGrowthValue').textContent=(g*100).toFixed(0)+'%/mo';$('#buildPriceValue').textContent='$'+price.toFixed(2)+'/h';
       // Built racks between year ends grow geometrically.
       const built=t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return S[ya].racks*(S[yb].racks/S[ya].racks)**f;}}return S['2028'].racks;};
-      const need0=exChina/mixes[1].rate*d,need=t=>need0*(1+g)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
+      const need0=exChina*SC.usd_per_mtok/1e6/(price*24)/72,implied=need0/(exChina/mixes[1].rate),need=t=>need0*(1+g)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
       const pts=[];for(let t=t0;t<=tEnd+1;t+=MON/2)pts.push(t);pts.push(tEnd);
       const first=f=>pts.find(t=>f(t)),cross=first(t=>need(t)>=MID*built(t)),all=first(t=>need(t)>=built(t));
       const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=(MID*built(tEnd)/need0)**(1/mEnd)-1;
@@ -57,14 +58,14 @@
       $('#buildoutHeadline').innerHTML=`Compute being built grows <b>≈${Math.round(buildRate*100)}% a year</b> through 2028 (Epoch, fixed). Inference demand grows at the token rate you choose. `+
         (cross?`At <b>${(g*100).toFixed(0)}%/month</b>, inference outgrows labs’ serving share of compute in <b>${fmt(cross)}</b>: from then on there is a <b>shortage</b> unless training gives up compute${all?`, and by ${fmt(all)} inference alone would need everything built`:''}.`:`At <b>${(g*100).toFixed(0)}%/month</b>, inference stays inside labs’ serving share through 2028: <b>room to spare</b> for inference, so any shortage comes from training.`)+
         ` Break-even: <b>≈${pctm(breakEven)}</b> token growth just fills the serving share by end-2028; faster means shortage, slower means oversupply for inference.`;
-      $('#buildoutNote').textContent=`Log scale, so slope = growth rate. Inference demand = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) ÷ measured GB300 NVL72 throughput (DeepSeek-V4-Pro-like) × ${d.toFixed(1)}× real-fleet factor, grown at ${(g*100).toFixed(0)}%/mo. Shaded band = 26–36% of built compute, the share labs spend on serving today (E).`;};
-    for(const id of ['buildGrowth','buildDerate','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
+      $('#buildoutNote').textContent=`Log scale, so slope = growth rate. Inference demand = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) × $${SC.usd_per_mtok.toFixed(3)} serving cost per million tokens (Anthropic’s filed cost of revenue ÷ its tokens, ${SC.period}) ÷ $${price.toFixed(2)} per GB300-equivalent hour, grown at ${(g*100).toFixed(0)}%/mo. That is ≈${implied.toFixed(1)}× the GPUs the DeepSeek-V4-Pro benchmark would need. Shaded band = 26–36% of built compute, the share labs spend on serving today (E).`;};
+    for(const id of ['buildGrowth','buildPrice','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
     let wideB=innerWidth>=600;addEventListener('resize',()=>{if((innerWidth>=600)!==wideB){wideB=!wideB;draw();}});
   }
   // Watch table
   if($('#watchTable')){
     const g=est.components.filter(c=>c.monthly_growth!=null),gw=g.reduce((a,c)=>a+c.central*c.monthly_growth,0)/g.reduce((a,c)=>a+c.central,0);
-    const use=d=>BuildoutMath.needed(exChina,mixes[1].rate,0,d,1,est.as_of)['2026']/S0['2026'].racks;
+    const SCw=D.watch?.serving_cost,use=price=>exChina*SCw.usd_per_mtok/1e6/(price*24)/72/S0['2026'].racks;
     const mc=n=>(window.LIVE?.market_checks||[]).find(m=>m.name===n),chg=(m,w)=>m?.changes?.[w]?.percent==null?'—':(m.changes[w].percent>0?'+':'')+m.changes[w].percent.toFixed(1)+'%';
     const ago=n=>new Date(Date.parse(String(NC.built).slice(0,10))-n*864e5).toISOString().slice(0,10),recent=n=>NC.contracts.filter(c=>!c.excluded&&String(c.announced||'')>=ago(n));
     const deals=n=>{const cs=recent(n),v=cs.reduce((a,c)=>a+(c.value_usd||0),0),buyers=new Set(cs.filter(c=>c.value_usd).map(c=>c.buyer));return`${cs.length} deal${cs.length===1?'':'s'}${v?` · $${(v/1e9).toFixed(0)}B disclosed${buyers.size===1?`, all one buyer (${[...buyers][0]})`:''}`:' · value not disclosed'}`;};
@@ -74,7 +75,7 @@
     const rows=[
       {hz:'Now',m:'Logical tokens per day, global (E)',v:`≈${(est.total.central/1000).toFixed(2)}Q (${(est.total.low/1000).toFixed(2)}–${(est.total.high/1000).toFixed(2)}Q)`,c30:`≈+${(100*((1+gw)-1)).toFixed(0)}% trend E`,c90:`≈+${(100*((1+gw)**3-1)).toFixed(0)}% trend E`,sig:gw>.03?'short':'neutral',read:gw>.03?`Demand growing ≈${(gw*100).toFixed(0)}%/month, faster than compute → tight`:'Demand growth slowing',href:'#token-projection',src:'Projection from each company’s dated trend'},
       {hz:'2026–28',m:'H100e delivered → planned, ex-China',v:`${M(S0['2025'].h100e)} delivered by end-2025 → ${M(S0['2026'].h100e)} / ${M(S0['2027'].h100e)} / ${M(S0['2028'].h100e)} by 2026/27/28 (2028 with Rubin on a bandwidth basis: ${M(BuildoutMath.supply(NC.providers,TL,0.619)['2028'].h100e)}–${M(BuildoutMath.supply(NC.providers,TL,0.824)['2028'].h100e)})`,c30:'annual series',c90:'annual series',sig:'watch',read:`Supply ≈${(S0['2028'].h100e/S0['2026'].h100e).toFixed(1)}× from end-2026 to end-2028 → glut if demand or training budgets slow`,href:'#supply',src:'Epoch chip-owner deliveries + tracked data-center timelines'},
-      {hz:'2026–28',m:'Share of end-2026 compute that today’s ex-China tokens need for serving',v:`${pct(use(1))} at benchmark – ${pct(use(6))} at 6× real-fleet factor (V4-Pro-like mix, E); labs spend 26–36% on serving`,c30:'—',c90:'—',sig:'watch',read:'Small share is not idle: training and uncounted traffic use the rest; see Build-out',href:'#buildout',src:'Build-out vs demand chart'},
+      {hz:'2026–28',m:'Share of end-2026 compute that today’s ex-China tokens need for serving',v:`${pct(use(7))}–${pct(use(3))} at $7–3 per GB300-equivalent hour, priced at Anthropic’s serving cost per token (E); labs spend 26–36% on serving`,c30:'—',c90:'—',sig:'watch',read:'Small share is not idle: training and uncounted traffic use the rest; see Build-out',href:'#buildout',src:'Build-out vs demand chart'},
       {hz:'Now',m:'H100 rental, SemiAnalysis composite',v:h?`$${h.usd.toFixed(2)}/hr · ${h.date}`:'—',c30:chg(h,'30'),c90:chg(h,'90'),...price(h,'H100'),href:'#pricing',src:'Daily market feed'},
       {hz:'Now',m:'B200 rental, SemiAnalysis composite',v:b?`$${b.usd.toFixed(2)}/hr · ${b.date}`:'—',c30:chg(b,'30'),c90:chg(b,'90'),...price(b,'B200'),href:'#pricing',src:'Daily market feed'},
       a&&{hz:'Now',m:'Anthropic commitments due next 12 months vs revenue',v:`$${a.due_12m_b}B due vs $${a.revenue_run_rate_b}B revenue run-rate (${(a.due_12m_b/a.revenue_run_rate_b).toFixed(2)}×) · ${(a.due_12m_b/a.compute_expense_run_rate_b).toFixed(1)}× compute-expense run-rate`,c30:'filing',c90:'filing',sig:'risk',read:a.due_12m_b/a.revenue_run_rate_b>=.9?'Buyer committed ≈ its whole revenue → still buying (tight now), but a funding risk':'Commitments well covered by revenue',href:a.source_url,src:'S-1/A, November 2'},

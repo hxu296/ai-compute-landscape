@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="fb27c50f744e">
+<meta name="build" content="78fb2e8745f5">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -241,14 +241,14 @@
     <p class="fig-sub" id="buildoutHeadline"></p>
     <div class="research-controls">
       <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
-      <label>Real-world GPUs needed per benchmark GPU <output id="buildDerateValue"></output><input id="buildDerate" type="range" min="1" max="16" step="0.5" value="6"><span class="small">How many GPUs a real fleet uses per GPU the benchmark needs for the same tokens. Calibrated on Anthropic: ≈6–14× (method below); default 6×, the low end.</span></label>
+      <label>Price per GB300-equivalent GPU-hour <output id="buildPriceValue"></output><input id="buildPrice" type="range" min="3" max="7" step="0.25" value="5"><span class="small">Turns serving dollars into GPUs. $3 ≈ new long-term rental deals, $7 ≈ today’s B200 rental index; older chips count at their GB300-equivalent share.</span></label>
     </div>
     <svg id="buildoutSvg" viewBox="0 0 900 330" role="img" aria-label="Inference compute demand against compute being built, monthly to end-2028, log scale" style="width:100%;display:block"></svg>
     <p class="small" id="buildoutNote"></p>
     <details class="fig-notes"><summary>More assumptions, method and limits</summary>
       <div class="research-controls"><label>Count 2028 additions by<select id="buildRubin"><option value="1" selected>8-bit FLOPs (Epoch H100e)</option><option value="0.824">bandwidth for Rubin, high HBM4 (Rubin ÷1.3)</option><option value="0.619">bandwidth for Rubin, low HBM4 (Rubin ÷2)</option></select></label></div>
       <p class="small"><b>Read it as:</b> a small inference share is not idle compute. Rental prices are rising and labs buy short-term compute at a premium, so the rest is in use: training (labs choose its size, it does not scale with tokens), traffic we cannot count (the revenue check says our tokens run ≈1.6–2× low), recommender and ads workloads in Meta’s and Google’s fleets, and chips delivered but not yet powered. When inference passes labs’ serving share, inference and training compete for the same compute.</p>
-      <p class="small"><b>Method:</b> inference racks = ex-China logical tokens/day, grown monthly from the projection date, ÷ the measured GB300 NVL72 throughput of a DeepSeek-V4-Pro-like configuration (bar; line spans V4.1-Flash- to Kimi-K3-like) × the real-fleet factor. The factor covers utilization, peaks, latency targets, long contexts, older chips and models larger than the benchmark. <b>Calibration (E):</b> Anthropic’s filed cost of revenue, “substantially all” customer-serving compute, was $4.812B over January–September 2026, ≈$17.6M/day. At $2.31–3.50 per GPU-hour that buys ≈210–320k GPUs serving around the clock. Its consumption tokens averaged ≈110–170T/day over the period (our revenue-based estimate, plus up to 50% for subscription traffic), which the benchmark (DeepSeek-V4-Pro on GB300, ≈5.0B tokens per GPU per day at this mix) would serve on ≈22–34k GPUs. The ratio is ≈6–14×. It runs high if cost of revenue includes non-compute costs or cheaper TPU/Trainium hours buy more chips, and low if subscription traffic is larger. One rack-equivalent = 182 H100e (72 × 2.53 B300). Built compute: covered owners’ end-2025 deliveries plus additions at Epoch-tracked sites, ex-China; tracked sites cover frontier campuses only, so later years are a floor (SpaceX’s CEO targets ≈13 GW nameplate by end-2027 against 2.5 GW tracked). Racks are counted by GPUs (needed GPUs ÷ 72). 2028 additions are mostly Rubin, which Epoch counts at 8.84 H100e by 8-bit FLOPs; decode is bandwidth-bound, so the bandwidth options count the Rubin part (≈76% of 2028-dated H100e) 1.3–2× lower. Planned dates can slip, most of all Oracle’s 2028 Stargate sites. Estimates (E).</p>
+      <p class="small"><b>Method:</b> inference demand = ex-China logical tokens/day, grown monthly from the projection date. <b>It is priced, not benchmarked:</b> GPUs needed = tokens × serving cost per token ÷ price per GPU-hour. Serving cost per token comes from Anthropic’s filing: cost of revenue $4.812B in January–September 2026 (“substantially all” customer-serving compute) ÷ its ≈123T/day of consumption-billed tokens over those months = ≈$0.143 per million tokens. This bundles utilization, model size, chip mix and overheads as they actually occurred at one large lab. It overstates cost per token because subscription traffic is not in the token count, and Anthropic’s models are likely heavier than average; cheaper-to-serve traffic elsewhere would need fewer GPUs. The note under the chart shows how many times the GPUs the DeepSeek-V4-Pro benchmark would need this implies.</p>
     </details>
   </div></div>
   <div class="fig capacity" id="capacity"><div class="fig-frame">
@@ -340,7 +340,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=baa5467774d5"></script>
+<script src="data/research.js?v=0c27da90b024"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -356,7 +356,7 @@
 <script src="js/tokens.js?v=f2cee2df5fd7"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=045455b7d7a9"></script>
-<script src="js/watch.js?v=bec47cf8658a"></script>
+<script src="js/watch.js?v=739041ad1964"></script>
 <script src="js/us_map.js?v=6ecac7aa1fb9"></script>
 <script src="js/gw_years.js?v=2b13d7bb6170"></script>
 <script src="js/capacity.js?v=350457fea4d2"></script>
