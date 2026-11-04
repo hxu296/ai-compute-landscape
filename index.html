@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="e96473bc622a">
+<meta name="build" content="fb27c50f744e">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -91,10 +91,11 @@
     </details>
   </div></div>
   <div class="fig" id="us-map"><div class="fig-frame">
-    <div class="fig-head"><span class="fig-no">Fig. 1b</span><h3 class="fig-title">Tracked frontier data-center power across the US, over time</h3></div>
-    <p class="fig-sub">Each column is a city's tracked facility power (Epoch AI's site-by-site tracker of the largest AI campuses) at the date on the slider; press Play to run from 2024 to Epoch's last projection. States take their state's colour. Hover or tap a column or state for its sites.</p>
+    <div class="fig-head"><span class="fig-no">Fig. 1b</span><h3 class="fig-title">Tracked frontier data-center power and capex across the US, over time</h3></div>
+    <p class="fig-sub">Each column is a city's tracked facility power, or Epoch's estimated capex, from Epoch AI's site-by-site tracker of the largest AI campuses, at the date on the slider; press Play to run from 2024 to Epoch's last projection. States take their state's colour. Hover or tap a column or state for its sites.</p>
     <div class="fig-controls usmap-controls">
       <span class="seg" role="group" aria-label="Map view"><button type="button" id="usMap3d" class="on" aria-pressed="true">3D</button><button type="button" id="usMap2d" aria-pressed="false">2D</button></span>
+      <span class="ctl"><span class="ctl-label">Measure</span><span class="seg" role="group" aria-label="Measure"><button type="button" id="usMapPower" class="on" aria-pressed="true">Power (GW)</button><button type="button" id="usMapCapex" aria-pressed="false">Capex ($B)</button></span></span>
       <button type="button" id="usMapPlay" class="usmap-play" aria-pressed="false">▶ Play</button>
       <div class="usmap-time"><input type="range" id="usMapTime" aria-label="Date shown on the map"><div class="usmap-ticks" id="usMapTicks" aria-hidden="true"></div></div>
     </div>
@@ -339,7 +340,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=4f458673b9c5"></script>
 <script src="data/live.js?v=93b90634c470"></script>
-<script src="data/research.js?v=291974298cc2"></script>
+<script src="data/research.js?v=baa5467774d5"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=1257680fb759"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -356,7 +357,7 @@
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=045455b7d7a9"></script>
 <script src="js/watch.js?v=bec47cf8658a"></script>
-<script src="js/us_map.js?v=d03fd6e5f6b5"></script>
+<script src="js/us_map.js?v=6ecac7aa1fb9"></script>
 <script src="js/gw_years.js?v=2b13d7bb6170"></script>
 <script src="js/capacity.js?v=350457fea4d2"></script>
 <script src="js/lists.js?v=50311a88dd8f"></script>

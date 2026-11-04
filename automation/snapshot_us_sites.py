@@ -48,14 +48,14 @@ STATE_OVERRIDES = {
 }
 clean = lambda s: re.sub(r'\s*#\w+', '', s or '').strip()
 
-def steps(series):
+def steps(series, digits=1):
     """Compact dated facility-MW series: [[date, MW], ...] at each change, so level(series, d) == level(steps, d) after rounding."""
     out, prev = [], 0.0
     by_date = {}
     for date, v in sorted(series):
         by_date[date] = v  # same rule as level(): the last of a date's sorted values wins
     for date in sorted(by_date):
-        v = round(by_date[date], 1)
+        v = round(by_date[date], digits)
         if v != prev:
             out.append([date, v]); prev = v
     return out
@@ -93,9 +93,9 @@ def build(zip_path, retrieved_utc):
     read = lambda name: list(csv.DictReader(io.TextIOWrapper(z.open(name), encoding='utf-8')))
     centers = [r for r in read('data_centers.csv') if r['Country'].strip() == 'United States']
     # Each measure is its own series: a blank cell is a missing observation, not a zero.
-    mw, h100e = defaultdict(list), defaultdict(list)
+    mw, h100e, capex = defaultdict(list), defaultdict(list), defaultdict(list)
     for r in read('data_center_timelines.csv'):
-        for series, col in ((mw, 'Power (MW)'), (h100e, 'H100 equivalents')):
+        for series, col in ((mw, 'Power (MW)'), (h100e, 'H100 equivalents'), (capex, 'Total capital cost (2025 USD billions)')):
             try:
                 series[r['Data center']].append((r['Date'][:10], float(r[col])))
             except ValueError:
@@ -120,7 +120,8 @@ def build(zip_path, retrieved_utc):
                     address=' '.join(r['Address'].split()) or None,
                     mw={y: round(level(mw[name], d), 1) for y, d in days},
                     h100e={y: round(level(h100e[name], d)) for y, d in days},
-                    observations=len(mw[name]), series=steps(mw[name]))
+                    capex_busd={y: round(level(capex[name], d), 2) for y, d in days},
+                    observations=len(mw[name]), series=steps(mw[name]), capex_series=steps(capex[name], 2))
         sites.append(site)
         if state is None:
             unlocated.append(name)
@@ -128,18 +129,18 @@ def build(zip_path, retrieved_utc):
     states = {}
     for s in sites:
         k = s['state'] or 'unlocated'
-        st = states.setdefault(k, dict(name=STATES.get(k, 'No state in address'), sites=0, mw={y: 0.0 for y, _ in days}, h100e={y: 0 for y, _ in days}, largest=None))
+        st = states.setdefault(k, dict(name=STATES.get(k, 'No state in address'), sites=0, mw={y: 0.0 for y, _ in days}, h100e={y: 0 for y, _ in days}, capex_busd={y: 0.0 for y, _ in days}, largest=None))
         st['sites'] += 1
         for y, _ in days:
-            st['mw'][y] += s['mw'][y]; st['h100e'][y] += s['h100e'][y]
+            st['mw'][y] += s['mw'][y]; st['h100e'][y] += s['h100e'][y]; st['capex_busd'][y] += s['capex_busd'][y]
         if st['largest'] is None:
             st['largest'] = s['name']
     for st in states.values():
-        st['mw'] = {k: round(v, 1) for k, v in st['mw'].items()}
+        st['mw'] = {k: round(v, 1) for k, v in st['mw'].items()}; st['capex_busd'] = {k: round(v, 2) for k, v in st['capex_busd'].items()}
     return dict(schema_version=1, source_url=SOURCE, dataset_url='https://epoch.ai/data/ai-data-centers', license='CC BY 4.0 (Epoch AI)',
                 retrieved_utc=retrieved_utc, now_date=now, response_sha256=hashlib.sha256(raw).hexdigest(),
                 years=[y for y, _ in YEARS] + ['now'], series_start=min((p[0] for s in sites for p in s['series']), default=None),
-                series_end=max((d for n in mw for d, _ in mw[n]), default=None), unit='MW facility power (Epoch "Power (MW)"); H100 equivalents as published by Epoch',
+                series_end=max((d for n in mw for d, _ in mw[n]), default=None), unit='MW facility power (Epoch "Power (MW)"); H100 equivalents as published by Epoch; capex_busd in billions of 2025 USD (Epoch "Total capital cost")',
                 method='Epoch AI frontier data-center tracker, US sites (Country = United States). Each value is the latest dated observation '
                        'or Epoch projection on or before the date: year end for 2025-2028, the retrieval date for "now"; "final" is the last projected level (to 2030). '
                        'A site before its first observation counts 0 MW; a blank cell is skipped, not read as zero. State is parsed from the Address '
@@ -148,6 +149,8 @@ def build(zip_path, retrieved_utc):
                        'the supporting text is kept in state_evidence. Sites with no supported state keep state null and are listed in "unlocated". '
                        'Power is Epoch facility power ("Power (MW)" in data_center_timelines.csv); the "Current power (MW)" column of data_centers.csv is IT power and is not used. '
                        'Each site also carries "series": its facility MW at every dated change (latest observation on or before a date gives the level); dates after the retrieval date are Epoch projections. '
+                       '"capex_busd" and "capex_series" are Epoch\'s estimated total capital cost (compute + construction, billions of 2025 USD, rounded to 0.01) by the same rule; '
+                       'they are Epoch model estimates, not company-reported spend. A blank cell is skipped, not read as zero. '
                        'Covers tracked frontier campuses only, not every data center. Planned levels are Epoch projections and can slip.',
                 us_sites=len(sites), unlocated=len(unlocated), unlocated_sites=unlocated, state_overrides=overridden,
                 states=dict(sorted(states.items(), key=lambda kv: (kv[0] == 'unlocated', -kv[1]['mw']['2028'], kv[0]))),

@@ -30,6 +30,22 @@ test('per-state totals equal the sum of their sites',()=>{
   close(m.cities.reduce((a,c)=>a+c.value,0)+m.unlocated.value,m.total,y+' cities + unlocated = national');}
 });
 
+test('capex series reproduce year-end values, and state capex sums match their sites at every year end',()=>{
+ const DAYS={'2025':'2025-12-31','2026':'2026-12-31','2027':'2027-12-31','2028':'2028-12-31',final:'9999-12-31',now:D.now_date};
+ const near=(a,b,msg)=>assert.ok(Math.abs(a-b)<0.011,`${msg}: ${a} != ${b}`);
+ assert.match(D.method,/estimated total capital cost/);assert.match(D.method,/not company-reported/);
+ for(const s of D.sites){assert.ok(Array.isArray(s.capex_series),s.name);let prev='',pv=0;
+  for(const [d,v] of s.capex_series){assert.ok(d>prev&&v!==pv&&v>=0,s.name);assert.equal(Math.round(v*100)/100,v,s.name+' not rounded to 0.01');prev=d;pv=v;}
+  for(const [y,day] of Object.entries(DAYS)){assert.equal(typeof s.capex_busd[y],'number');assert.ok(Math.abs(M.levelAt(s.capex_series,day)-s.capex_busd[y])<0.006,`${s.name} capex ${y}`);}}
+ for(const [k,st] of Object.entries(D.states))for(const y of Object.keys(DAYS))near(st.capex_busd[y],D.sites.filter(x=>(x.state||'unlocated')===k).reduce((a,x)=>a+x.capex_busd[y],0),`${k} capex ${y}`);
+ for(const [y,day] of Object.entries(DAYS)){const m=M.modelAt(D,day,'capex');
+  for(const [k,r] of m.states)near(r.value,D.states[k||'unlocated'].capex_busd[y],`model ${y} ${k}`);
+  near(m.total,D.sites.reduce((a,x)=>a+x.capex_busd[y],0),y+' national capex');
+  assert.equal(m.cities.reduce((a,c)=>a+c.sites.length,0)+m.unlocated.sites.length,D.sites.length);}
+ // Colours are ranked by MW and do not depend on the measure shown.
+ assert.deepEqual([...M.colourStates(D)],[...M.colourStates(D)]);
+});
+
 test('each site series reproduces its year-end and current values, and is a compact dated step list',()=>{
  const DAYS={'2025':'2025-12-31','2026':'2026-12-31','2027':'2027-12-31','2028':'2028-12-31',final:'9999-12-31',now:D.now_date};
  for(const s of D.sites){

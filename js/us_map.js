@@ -24,23 +24,26 @@
   }
   // Per-state and per-city rows at a date, summed from the sites themselves. Sites with a state but no city are grouped
   // at "<state> (city not given)" so they still get a column (placed at the state's centre by the renderer).
-  function modelAt(D, day) {
-    const states = new Map(), cities = new Map();
+  // measure: 'mw' (facility MW, s.series) or 'capex' (Epoch estimated total capital cost, $B of 2025 USD, s.capex_series).
+  const MEASURES = {mw: {series: 'series', end: s => s.mw['2028'], round: r1},
+    capex: {series: 'capex_series', end: s => s.capex_busd['2028'], round: v => Math.round(v * 100) / 100}};
+  function modelAt(D, day, measure = 'mw') {
+    const M = MEASURES[measure], states = new Map(), cities = new Map();
     for (const s of D.sites) {
-      const v = levelAt(s.series, day), k = s.state || null;
+      const v = levelAt(s[M.series], day), k = s.state || null;
       if (!states.has(k)) states.set(k, {state: k, sites: [], value: 0, y2028: 0});
-      const st = states.get(k); st.sites.push(s); st.value += v; st.y2028 += s.mw['2028'];
+      const st = states.get(k); st.sites.push(s); st.value += v; st.y2028 += M.end(s);
       if (!k) continue;
       const ck = s.city ? `${s.city}, ${k}` : `${k} (city not given)`;
       if (!cities.has(ck)) cities.set(ck, {key: ck, state: k, city: s.city ? `${s.city}, ${k}` : null, sites: [], value: 0});
       const c = cities.get(ck); c.sites.push(s); c.value += v;
     }
     for (const x of [...states.values(), ...cities.values()]) {
-      x.value = r1(x.value); if ('y2028' in x) x.y2028 = r1(x.y2028);
-      x.sites.sort((a, b) => b.mw['2028'] - a.mw['2028'] || a.name.localeCompare(b.name));
+      x.value = M.round(x.value); if ('y2028' in x) x.y2028 = M.round(x.y2028);
+      x.sites.sort((a, b) => M.end(b) - M.end(a) || a.name.localeCompare(b.name));
     }
     return {states, cities: [...cities.values()], unlocated: states.get(null) || {state: null, sites: [], value: 0, y2028: 0},
-      total: r1(D.sites.reduce((a, s) => a + levelAt(s.series, day), 0))};
+      total: M.round(D.sites.reduce((a, s) => a + levelAt(s[M.series], day), 0))};
   }
   // Fixed colour assignment: the seven states with the most tracked MW by end-2028 get a categorical slot, in this order;
   // every other state with a site is neutral. Ranked once, never by the slider, so a colour follows its state.
@@ -50,7 +53,7 @@
     for (const s of D.sites) if (s.state) tot.set(s.state, (tot.get(s.state) || 0) + s.mw['2028']);
     return new Map([...tot].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, SLOTS.length).map(([k], i) => [k, SLOTS[i]]));
   }
-  const api = {levelAt, months, modelAt, colourStates, SLOTS};
+  const api = {levelAt, months, modelAt, colourStates, SLOTS, MEASURES};
   if (typeof window !== 'undefined') window.US_MAP = api;
   if (typeof module !== 'undefined') module.exports = api;
   if (typeof document === 'undefined') return;
@@ -59,15 +62,19 @@
   if (!svg || !window.US_SITES || !window.US_STATES) return;
   const D = window.US_SITES, G = window.US_STATES, CITY = window.US_CITIES || {}, META = window.US_MAP_META || {width: 960, height: 567};
   const note = $('#usMapNote'), legend = $('#usMapLegend'), unloc = $('#usMapUnlocated'), slider = $('#usMapTime'), readout = $('#usMapReadout'),
-    play = $('#usMapPlay'), b3 = $('#usMap3d'), b2 = $('#usMap2d'), ticks = $('#usMapTicks');
+    play = $('#usMapPlay'), b3 = $('#usMap3d'), b2 = $('#usMap2d'), ticks = $('#usMapTicks'), bPow = $('#usMapPower'), bCap = $('#usMapCapex');
   const MONTHS = months(D), NOW = MONTHS.findIndex(d => d === D.now_date), COLOUR = colourStates(D);
   const fmt = v => Math.round(v).toLocaleString('en-US'), mw = v => fmt(v) + ' MW', gw = v => (v / 1000).toFixed(1) + ' GW';
+  const usd = v => '$' + (v >= 100 ? fmt(v) : v >= 1 || v === 0 ? v.toFixed(1) : v.toFixed(2)) + 'B';
+  // Display rules per measure; colours stay ranked by MW (colourStates) whichever measure is shown.
+  const SHOW = {mw: {short: v => gw(v), long: v => mw(v), name: 'power', unit: 'MW', col: 'MW'},
+    capex: {short: v => usd(v), long: v => usd(v), name: 'capex', unit: '$B', col: '$B'}};
   const dayLong = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'});
   const dayMonth = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', {month: 'short', year: 'numeric', timeZone: 'UTC'});
   const label = i => i === NOW ? dayLong(MONTHS[i]) : dayMonth(MONTHS[i]);
   const byAddress = D.sites.filter(s => s.state && s.state_basis !== 'site name' && s.state_basis !== 'source text').length;
   const byName = D.sites.filter(s => s.state_basis === 'site name').length, bySource = D.sites.filter(s => s.state_basis === 'source text').length;
-  let mode = '3d', idx = NOW < 0 ? MONTHS.length - 1 : NOW, timer = null;
+  let mode = '3d', measure = 'mw', idx = NOW < 0 ? MONTHS.length - 1 : NOW, timer = null;
 
   // ---- geometry: parse the projected paths once; 3D is an affine tilt (rotate, then compress y) of the same points
   const W = META.width, H = META.height, CX = W / 2, CY = H / 2, TH = 0.07, K = 0.56;
@@ -79,13 +86,14 @@
   const pos = c => CITY[c.key] || G[c.state].c; // city point, or the state centre when Epoch gives no city
   // One linear height scale for the whole timeline (the tallest column at any date reaches HMAX), so Play is comparable.
   const HMAX = 150, A = 6.5;
-  const cityMax = Math.max(1, ...MONTHS.map(d => Math.max(0, ...modelAt(D, d).cities.map(c => c.value))));
-  const hOf = v => HMAX * v / cityMax;
+  const CMAX = Object.fromEntries(Object.keys(MEASURES).map(k => [k, Math.max(1e-9, ...MONTHS.map(d => Math.max(0, ...modelAt(D, d, k).cities.map(c => c.value))))]));
+  const REF = {mw: [1000, '1 GW'], capex: CMAX.capex >= 60 ? [25, '$25B'] : [10, '$10B']};
+  const hOf = (v, k = measure) => HMAX * v / CMAX[k];
   const b3d = (() => { // frame: the tilted map plus the highest column top at any date, plus room for labels
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
     for (const k of Object.keys(G)) for (const [, p] of rings[k]) if (p) { const [x, y] = tilt(p); x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
     let top = y0;
-    for (const d of MONTHS) for (const c of modelAt(D, d).cities) top = Math.min(top, tilt(pos(c))[1] - A * K - hOf(c.value));
+    for (const k of Object.keys(MEASURES)) for (const d of MONTHS) for (const c of modelAt(D, d, k).cities) top = Math.min(top, tilt(pos(c))[1] - A * K - hOf(c.value, k));
     return [x0 - 8, top - 34, x1 - x0 + 16, y1 - top + 34 + 14];
   })();
 
@@ -101,8 +109,9 @@
 
   function siteRows(sites, day, limit) {
     const basis = s => s.state_basis === 'site name' ? ' · <i>state inferred from site name</i>' : s.state_basis === 'source text' ? ' · <i>state from Epoch source text, not address</i>' : '';
-    return `<span class="muted small">Site · owner, MW at ${esc(label(idx))} → end-2028</span><table class="usmap-tip">` +
-      sites.slice(0, limit).map(s => `<tr><td>${esc(s.name)}<span class="muted"> · ${esc(s.owner || 'owner not listed')}${s.city ? '' : ' · city not given'}${basis(s)}</span></td><td>${fmt(levelAt(s.series, MONTHS[idx]))} → ${fmt(s.mw['2028'])}</td></tr>`).join('') +
+    return `<span class="muted small">Site · owner; at ${esc(label(idx))}, then end-2028 (MW · est. capex)</span><table class="usmap-tip">` +
+      sites.slice(0, limit).map(s => `<tr><td>${esc(s.name)}<span class="muted"> · ${esc(s.owner || 'owner not listed')}${s.city ? '' : ' · city not given'}${basis(s)}</span></td>` +
+        `<td>${fmt(levelAt(s.series, MONTHS[idx]))} MW · ${usd(levelAt(s.capex_series, MONTHS[idx]))}<br><span class="muted">${fmt(s.mw['2028'])} MW · ${usd(s.capex_busd['2028'])}</span></td></tr>`).join('') +
       '</table>' + (sites.length > limit ? `<span class="muted">+${sites.length - limit} more sites</span>` : '');
   }
   const status = () => MONTHS[idx] > D.now_date ? 'Epoch projection' : MONTHS[idx] === D.now_date ? 'latest Epoch data (retrieval date)' : 'Epoch dated observations';
@@ -121,7 +130,7 @@
         if (up || dx) el('line', {x1: x, y1: yTop, x2: anchor === 'middle' ? cx : anchor === 'end' ? cx + 2 : cx - 2, y2: base - (dx ? fs * 0.8 : 0), stroke: P.muted, 'stroke-width': Math.max(0.6, 0.8 / Math.max(fs / 11, 1) * fs / 11)}, gLabels);
         const t = el('text', {x: cx, y: base - fs * 1.25, 'text-anchor': anchor, style: `font-size:${fs}px;font-weight:600;fill:${P.ink};paint-order:stroke;stroke:${P.paper};stroke-width:${fs / 3.5}px;stroke-linejoin:round`}, gLabels);
         el('tspan', {x: cx, dy: 0}, t).textContent = name;
-        const v = el('tspan', {x: cx, dy: fs * 1.15}, t); v.textContent = gw(value); v.setAttribute('style', `font-weight:400;fill:${P.muted}`);
+        const v = el('tspan', {x: cx, dy: fs * 1.15}, t); v.textContent = SHOW[measure].short(value); v.setAttribute('style', `font-weight:400;fill:${P.muted}`);
         return true;
       }
       return false;
@@ -129,11 +138,13 @@
   }
 
   function draw() {
-    const P = palette(), day = MONTHS[idx], m = modelAt(D, day), is3d = mode === '3d', T = is3d ? tilt : p => p;
+    const P = palette(), day = MONTHS[idx], m = modelAt(D, day, measure), is3d = mode === '3d', T = is3d ? tilt : p => p, S = SHOW[measure];
+    const both = sites => [sites.reduce((a, s) => a + levelAt(s.series, day), 0), sites.reduce((a, s) => a + levelAt(s.capex_series, day), 0)];
+    const bothLine = sites => { const [w, c] = both(sites); return `${mw(w)} · ${usd(c)} est. capex`; };
     const frame = is3d ? b3d : [0, 0, W, H];
     svg.setAttribute('viewBox', frame.map(v => v.toFixed(1)).join(' '));
     svg.replaceChildren();
-    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center power by US city at ${label(idx)} (${status()}), states coloured by state`);
+    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center ${measure === 'mw' ? 'power (MW)' : 'estimated capex ($B)'} by US city at ${label(idx)} (${status()}), states coloured by state`);
     const scale = (svg.getBoundingClientRect().width || frame[2]) / frame[2], narrow = scale < 0.6, fs = Math.min(30, 11 / scale);
     const defs = el('defs', {}, svg), pat = el('pattern', {id: 'usMapHatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
     el('rect', {width: 6, height: 6, fill: P.none}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: P.line, 'stroke-width': 1.2}, pat);
@@ -144,13 +155,13 @@
       const r = m.states.get(k), d = PATHS[mode][k];
       const p = el('path', {d, fill: r ? P.tint(k) : 'url(#usMapHatch)', stroke: P.paper, 'stroke-width': 1, 'stroke-linejoin': 'round', class: 'usmap-state'}, gStates);
       p.addEventListener('mouseenter', () => outline.setAttribute('d', d)); p.addEventListener('mouseleave', () => outline.setAttribute('d', ''));
-      p.setAttribute('aria-label', G[k].name + (r ? `: ${mw(r.value)} at ${label(idx)}` : ': no tracked site'));
+      p.setAttribute('aria-label', G[k].name + (r ? `: ${S.long(r.value)} at ${label(idx)}` : ': no tracked site'));
       hover(p, () => r
-        ? `<b>${esc(G[k].name)}</b>${mw(r.value)} at ${esc(label(idx))} (${esc(status())}) · ${r.sites.length} tracked site${r.sites.length > 1 ? 's' : ''}<br><span class="muted">${mw(r.y2028)} by end-2028 (Epoch facility power)</span>` + siteRows(r.sites, day, innerWidth < 600 ? 6 : 12)
+        ? `<b>${esc(G[k].name)}</b>${bothLine(r.sites)} at ${esc(label(idx))} (${esc(status())}) · ${r.sites.length} tracked site${r.sites.length > 1 ? 's' : ''}<br><span class="muted">End-2028: ${mw(r.sites.reduce((a, s) => a + s.mw['2028'], 0))} · ${usd(r.sites.reduce((a, s) => a + s.capex_busd['2028'], 0))}</span>` + siteRows(r.sites, day, innerWidth < 600 ? 6 : 12)
         : `<b>${esc(G[k].name)}</b>No tracked site in this state. That is not zero data-center capacity: Epoch tracks frontier campuses only${m.unlocated.sites.length ? `, and ${m.unlocated.sites.length} tracked US site${m.unlocated.sites.length > 1 ? 's have' : ' has'} no supported state` : ''}.`);
     }
     const cols = m.cities.filter(c => c.value > 0).map(c => ({...c, p: pos(c)}));
-    const tipFor = c => () => `<b>${esc(c.city || G[c.state].name + ' · city not given')}</b>${mw(c.value)} at ${esc(label(idx))} (${esc(status())}) · ${c.sites.length} site${c.sites.length > 1 ? 's' : ''}` +
+    const tipFor = c => () => `<b>${esc(c.city || G[c.state].name + ' · city not given')}</b>${bothLine(c.sites)} at ${esc(label(idx))} (${esc(status())}) · ${c.sites.length} site${c.sites.length > 1 ? 's' : ''}` +
       `<span class="muted small">${CITY[c.key] ? 'Placed at the Census Gazetteer point for the city, not the site parcel.' : c.city ? 'No Census point for this city: placed at the state’s centre.' : 'Epoch gives no city: placed at the state’s centre.'}</span>` + siteRows(c.sites, day, innerWidth < 600 ? 4 : 8);
     const place = labeller(gLabels, fs, frame, P), nLabels = narrow ? 4 : 6;
     if (is3d) {
@@ -162,7 +173,7 @@
       const touch = 18 / scale;
       for (const q of prisms) {
         const col = P.base(q.c.state), top = q.base.map(([x, y]) => [x, y - q.h]), mid = q.base.reduce((a, p) => [a[0] + p[0] / 4, a[1] + p[1] / 4], [0, 0]);
-        const g = el('g', {class: 'usmap-col', tabindex: 0, role: 'button', 'aria-label': `${q.c.city || G[q.c.state].name}: ${mw(q.c.value)}`}, gCols);
+        const g = el('g', {class: 'usmap-col', tabindex: 0, role: 'button', 'aria-label': `${q.c.city || G[q.c.state].name}: ${S.long(q.c.value)}`}, gCols);
         const faces = q.base.map((p, i) => { const n = q.base[(i + 1) % 4], ex = (p[0] + n[0]) / 2 - mid[0], ey = (p[1] + n[1]) / 2 - mid[1]; return {p, n, i, ex, ey}; }).sort((a, b) => a.ey - b.ey);
         for (const f of faces) {
           const pts = [f.p, f.n, top[(f.i + 1) % 4], top[f.i]].map(v => v.map(z => z.toFixed(1)).join(',')).join(' ');
@@ -176,28 +187,28 @@
         hover(g, tipFor(q.c));
       }
       for (const q of [...prisms].sort((a, b) => b.c.value - a.c.value).slice(0, nLabels)) place(q.labelAt[0], q.labelAt[1], shortName(q.c), q.c.value);
-      // Reference column: 1 GW on the same scale, in the empty Atlantic corner.
-      const rx = frame[0] + frame[2] - 54 / Math.max(scale, 0.5), ry = frame[1] + frame[3] - 22, rh = hOf(1000);
+      // Reference column (1 GW or $10B/$25B) on the same scale, in the empty Atlantic corner.
+      const rx = frame[0] + frame[2] - 54 / Math.max(scale, 0.5), ry = frame[1] + frame[3] - 22, rh = hOf(REF[measure][0]);
       const rb = [[rx - A, ry - A * K], [rx + A, ry - A * K], [rx + A, ry + A * K], [rx - A, ry + A * K]];
       const ref = el('g', {'pointer-events': 'none'}, svg);
       el('polygon', {points: [rb[3], rb[2], [rb[2][0], rb[2][1] - rh], [rb[3][0], rb[3][1] - rh]].map(v => v.join(',')).join(' '), fill: mix(P.line, P.ink, 0.35)}, ref);
       el('polygon', {points: rb.map(([x, y]) => [x, y - rh].join(',')).join(' '), fill: mix(P.line, P.ink, 0.15)}, ref);
-      const rt = el('text', {x: rx - A - 4, y: ry - rh / 2, 'text-anchor': 'end', style: `font-size:${fs * 0.95}px;fill:${P.muted}`}, ref); rt.textContent = '1 GW';
+      const rt = el('text', {x: rx - A - 4, y: ry - rh / 2, 'text-anchor': 'end', style: `font-size:${fs * 0.95}px;fill:${P.muted}`}, ref); rt.textContent = REF[measure][1];
     } else {
-      const RMAX = 30, rOf = v => RMAX * Math.sqrt(v / cityMax);
+      const RMAX = 30, rOf = v => RMAX * Math.sqrt(v / CMAX[measure]);
       for (const c of [...cols].sort((a, b) => b.value - a.value)) {
-        const [x, y] = c.p, g = el('g', {class: 'usmap-col', tabindex: 0, role: 'button', 'aria-label': `${c.city || G[c.state].name}: ${mw(c.value)}`}, gCols), r = Math.max(2, rOf(c.value));
+        const [x, y] = c.p, g = el('g', {class: 'usmap-col', tabindex: 0, role: 'button', 'aria-label': `${c.city || G[c.state].name}: ${S.long(c.value)}`}, gCols), r = Math.max(2, rOf(c.value));
         el('circle', {cx: x, cy: y, r: Math.max(r, 9 / scale), fill: 'transparent'}, g);
         el('circle', {cx: x, cy: y, r, fill: P.base(c.state), 'fill-opacity': 0.82, stroke: P.paper, 'stroke-width': 1.2}, g);
         c.labelAt = [x, y - r - 2];
         hover(g, tipFor(c));
       }
       for (const c of [...cols].sort((a, b) => b.value - a.value).slice(0, nLabels)) place(c.labelAt[0], c.labelAt[1], shortName(c), c.value);
-      const rx = W - 60, ry = H - 40, rr = rOf(1000), ref = el('g', {'pointer-events': 'none'}, svg);
+      const rx = W - 60, ry = H - 40, rr = rOf(REF[measure][0]), ref = el('g', {'pointer-events': 'none'}, svg);
       el('circle', {cx: rx, cy: ry, r: rr, fill: 'none', stroke: P.muted, 'stroke-width': 1}, ref);
-      const rt = el('text', {x: rx - rr - 5, y: ry + 4, 'text-anchor': 'end', style: `font-size:${fs * 0.95}px;fill:${P.muted}`}, ref); rt.textContent = '1 GW';
+      const rt = el('text', {x: rx - rr - 5, y: ry + 4, 'text-anchor': 'end', style: `font-size:${fs * 0.95}px;fill:${P.muted}`}, ref); rt.textContent = REF[measure][1];
     }
-    const text = `Online at ${label(idx)} · ${gw(m.total)} tracked US · ${status()}`;
+    const text = `Online at ${label(idx)} · ${S.short(m.total)}${measure === 'capex' ? ' est. capex' : ''} tracked US · ${status()}`;
     readout.textContent = text; slider.setAttribute('aria-valuetext', text);
     drawLegend(P, is3d);
   }
@@ -207,27 +218,29 @@
     const sw = (bg, t) => `<span><i class="usmap-swatch" style="background:${bg}"></i>${t}</span>`;
     legend.innerHTML = [...COLOUR.keys()].map(k => sw(P.base(k), esc(G[k].name))).join('') + sw(P.base('__'), 'other states with a tracked site') +
       sw(`repeating-linear-gradient(45deg,${P.line} 0 1.2px,${P.none} 1.2px 4px)`, 'no tracked site') +
-      `<span class="muted">${is3d ? 'Column height' : 'Circle area'} = city MW, one scale for all dates</span>`;
+      `<span class="muted">${is3d ? 'Column height' : 'Circle area'} = city ${measure === 'mw' ? 'MW' : 'estimated capex ($B, 2025 USD)'}, one scale for all dates; colours by MW rank</span>`;
   }
 
   function drawText() {
-    const m = modelAt(D, MONTHS[idx]), un = m.unlocated, un28 = un.sites.reduce((a, s) => a + s.mw['2028'], 0);
+    const m = modelAt(D, MONTHS[idx], measure), S = SHOW[measure], un = m.unlocated, un28 = un.sites.reduce((a, s) => a + s.mw['2028'], 0);
     note.innerHTML = `Epoch AI frontier data-center tracker: ${D.us_sites} tracked US sites, facility power (MW). Covers frontier campuses only, not every data center; planned levels are Epoch projections and can slip. Retrieved ${esc(dayLong(D.now_date))}. ` +
-      `Each site's level is its latest Epoch observation or projection on or before the slider date; dates after the retrieval date are projections. Columns (3D) and circles (2D) sum the sites in a city on one fixed scale; sites without a city or Census city point sit at their state's centre. ` +
+      `Each site's level is its latest Epoch observation or projection on or before the slider date; dates after the retrieval date are projections. Columns (3D) and circles (2D) sum the sites in a city on one fixed scale per measure; sites without a city or Census city point sit at their state's centre. ` +
+      `Capex is Epoch's estimated total capital cost (compute + construction, 2025 USD): a model estimate, not company-reported spend. ` +
       `${byAddress} sites are placed by the state in their Epoch address, ${bySource} by a state named in their Epoch source links and ${byName} by their site name alone (each marked in the hover). ` +
       (D.unlocated ? `${D.unlocated} site${D.unlocated > 1 ? 's' : ''} (${mw(un28)} by end-2028) ${D.unlocated > 1 ? 'have' : 'has'} no supported state, ${D.unlocated > 1 ? 'are' : 'is'} not on the map but ${D.unlocated > 1 ? 'are' : 'is'} in the US total and listed below, so a state marked “no tracked site” may still host ${D.unlocated > 1 ? 'one of them' : 'it'}. ` : '') +
       `State colours mark the ${COLOUR.size} states with the most tracked MW by end-2028; the rest share one neutral. ${src(D.dataset_url || D.source_url, 'Epoch AI data')} (CC BY 4.0); boundaries us-atlas / U.S. Census Bureau; city points Census Gazetteer.`;
     if (unloc) unloc.hidden = !D.unlocated;
     if (unloc && D.unlocated) unloc.innerHTML = `<summary>${D.unlocated} tracked US site${D.unlocated > 1 ? 's' : ''} with no supported state (not mapped)</summary><ul class="small">` +
-      un.sites.map(s => `<li>${esc(s.name)} · ${esc(s.owner || 'owner not listed')} · ${mw(levelAt(s.series, MONTHS[idx]))} at ${esc(label(idx))} → ${mw(s.mw['2028'])} by end-2028${s.address ? ' · address: “' + esc(s.address) + '”' : ' · no address'}</li>`).join('') + '</ul>';
+      un.sites.map(s => `<li>${esc(s.name)} · ${esc(s.owner || 'owner not listed')} · ${mw(levelAt(s.series, MONTHS[idx]))} · ${usd(levelAt(s.capex_series, MONTHS[idx]))} est. capex at ${esc(label(idx))} → ${mw(s.mw['2028'])} · ${usd(s.capex_busd['2028'])} by end-2028${s.address ? ' · address: “' + esc(s.address) + '”' : ' · no address'}</li>`).join('') + '</ul>';
     const rows = [...m.states.values()].filter(r => r.state && r.value > 0).sort((a, b) => b.value - a.value || b.y2028 - a.y2028).slice(0, 10).map(r => {
-      const big = [...r.sites].sort((a, b) => levelAt(b.series, MONTHS[idx]) - levelAt(a.series, MONTHS[idx]) || b.mw['2028'] - a.mw['2028'])[0];
-      return {state: G[r.state].name, sites: r.sites.length, mw_at_date: r.value, date: MONTHS[idx], basis: status(), mw_end_2028: r.y2028,
-        largest_site: big.name, largest_site_mw: levelAt(big.series, MONTHS[idx]), retrieved_utc: D.retrieved_utc, source_url: D.source_url};
+      const key = MEASURES[measure].series, big = [...r.sites].sort((a, b) => levelAt(b[key], MONTHS[idx]) - levelAt(a[key], MONTHS[idx]) || MEASURES[measure].end(b) - MEASURES[measure].end(a))[0];
+      return {state: G[r.state].name, sites: r.sites.length, value_at_date: r.value, value_end_2028: r.y2028, unit: measure === 'mw' ? 'MW facility power' : 'USD billions (2025), Epoch estimated total capital cost',
+        date: MONTHS[idx], basis: status(), largest_site: big.name, largest_site_value: levelAt(big[key], MONTHS[idx]), retrieved_utc: D.retrieved_utc, source_url: D.source_url};
     });
+    const cell = v => measure === 'mw' ? fmt(v) : usd(v);
     $('#usMapTableTitle') && ($('#usMapTableTitle').textContent = `Top ten states at ${label(idx)}${MONTHS[idx] > D.now_date ? ' (projected)' : ''}`);
-    table('#usMapTable', rows, [{k: 'state', h: 'State'}, {k: 'sites', h: 'Sites'}, {k: 'mw_at_date', h: 'MW at date', f: r => fmt(r.mw_at_date)},
-      {k: 'mw_end_2028', h: 'MW end-2028', f: r => fmt(r.mw_end_2028)}, {k: 'largest_site', h: 'Largest site at date', f: r => `${esc(r.largest_site)} <span class="muted small">${fmt(r.largest_site_mw)} MW</span>`}]);
+    table('#usMapTable', rows, [{k: 'state', h: 'State'}, {k: 'sites', h: 'Sites'}, {k: 'value_at_date', h: `${S.col} at date`, f: r => cell(r.value_at_date)},
+      {k: 'value_end_2028', h: `${S.col} end-2028`, f: r => cell(r.value_end_2028)}, {k: 'largest_site', h: 'Largest site at date', f: r => `${esc(r.largest_site)} <span class="muted small">${measure === 'mw' ? fmt(r.largest_site_value) + ' MW' : usd(r.largest_site_value)}</span>`}]);
   }
 
   // ---- controls
@@ -252,6 +265,8 @@
   });
   const setMode = m => { mode = m; b3.classList.toggle('on', m === '3d'); b2.classList.toggle('on', m === '2d'); b3.setAttribute('aria-pressed', m === '3d'); b2.setAttribute('aria-pressed', m === '2d'); draw(); };
   b3.addEventListener('click', () => setMode('3d')); b2.addEventListener('click', () => setMode('2d'));
+  const setMeasure = k => { measure = k; bPow.classList.toggle('on', k === 'mw'); bCap.classList.toggle('on', k === 'capex'); bPow.setAttribute('aria-pressed', k === 'mw'); bCap.setAttribute('aria-pressed', k === 'capex'); draw(); drawText(); };
+  if (bPow && bCap) { bPow.addEventListener('click', () => setMeasure('mw')); bCap.addEventListener('click', () => setMeasure('capex')); }
   onTheme(() => { draw(); });
   let w = 0; addEventListener('resize', () => { const nw = svg.getBoundingClientRect().width; if (Math.abs(nw - w) > 40) { w = nw; draw(); } });
   setMode('3d'); drawText(); w = svg.getBoundingClientRect().width;
