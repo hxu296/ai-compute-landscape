@@ -439,12 +439,14 @@
             },
             {
               "name": "Z.ai (GLM)",
-              "t_per_day": 4.2,
-              "date": "2025-11",
-              "relation": "",
-              "grade": "A",
-              "basis": "November 2025 daily average (prospectus); a later filing reports volume up more than 40× since the start of 2026 but no absolute figure",
-              "source_url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1230/2025123000018_c.pdf"
+              "t_per_day": null,
+              "date": "2026-08-31",
+              "relation": "estimate",
+              "grade": "E",
+              "basis": "Nov 2025 average of 4.2T/day (prospectus) × “more than 40×” MaaS token invocations since the start of 2026 (HKEX filing, Aug 31); the top of the range would rival Doubao, so the lower half is more likely. No absolute figure is disclosed.",
+              "source_url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0831/2026083101539.pdf",
+              "t_low": 40,
+              "t_high": 170
             },
             {
               "name": "SenseTime",
@@ -500,7 +502,9 @@
             "MiniMax (20× Jan→Jul)",
             "Moonshot Kimi",
             "iFlytek (June month = 2× all of 2025)"
-          ]
+          ],
+          "national_note": "China’s total uses CAICT’s June 2026 daily average of ≈500T (B; report released Oct 23). A second CAICT figure, ≈175T in early June, continues a narrower monitored series (100T end-2025, 140T end-March) and cannot be the national total: Doubao alone reported 180T/day in June. No source says whether video tokens, cache hits or overseas users are counted.",
+          "floor_note": "Attributed shares are floors twice over: most figures are lower bounds, and June–October figures sit inside a November projection without being rolled forward."
         }
       },
       {
