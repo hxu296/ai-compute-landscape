@@ -3,9 +3,11 @@
   $("#byline").innerHTML = `${NC.counts.facts.toLocaleString()} sourced facts · ${NC.providers.length} provider profiles · compiled ${String(NC.built).slice(0, 10)}`;
   // takeaways computed from the data, so they stay true when the data is rebuilt
   (function takeaways() {
-    const kw = NC.contracts.filter(c => !c.excluded), all = kw.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = kw.map(c => c.implied_usd_per_kw_month).filter(Boolean);
+    // Floors (a minimum value or a maximum capacity) are not point prices, so medians leave them out.
+    const kw = NC.contracts.filter(c => !c.excluded), point = kw.filter(c => !kwFloor(c)), all = point.map(c => c.implied_allin_usd_per_kw_month).filter(Boolean), ls = point.map(c => c.implied_usd_per_kw_month).filter(Boolean);
+    const floors = kw.filter(c => kwFloor(c) && (c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month));
     const mdn = v => { v = [...v].sort((a, b) => a - b); return (v[Math.floor((v.length-1) / 2)]+v[Math.ceil((v.length-1) / 2)])/2; };
-    $("#kwNote").textContent = `Medians across available unit-price calculations: all-in compute $${Math.round(mdn(all)).toLocaleString()}/kW-month (n=${all.length}); powered-space leases $${Math.round(mdn(ls)).toLocaleString()}/kW-month (n=${ls.length}). Samples differ in geography, power basis, delivery date and contract terms.`;
+    $("#kwNote").textContent = `Medians across available unit-price calculations: all-in compute $${Math.round(mdn(all)).toLocaleString()}/kW-month (n=${all.length}); powered-space leases $${Math.round(mdn(ls)).toLocaleString()}/kW-month (n=${ls.length}); gap ≈$${Math.round((mdn(all) - mdn(ls)) / 10) * 10}/kW-month. ${floors.length ? `Floors are left out of the medians: ${floors.map(c => `${c.buyer} ← ${c.supplier} (≥$${Math.round(c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month)})`).join(", ")}. ` : ""}Samples differ in geography, power basis, delivery date and contract terms.`;
   })();
   const c = NC.counts;
   $("#asof").innerHTML = `Built ${NC.built}: ${c.facts.toLocaleString()} facts, ${c.contracts} contracts, ${c.prices} price points; ${c.reported.toLocaleString()} reported,

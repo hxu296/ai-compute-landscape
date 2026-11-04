@@ -59,16 +59,19 @@
   function drawKw() {
     const svg = $("#kwSvg"); svg.innerHTML = "";
     const rows = NC.contracts.filter(c => !c.excluded && (c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month))
-      .map(c => ({ label: `${c.buyer} ← ${c.supplier}`, v: c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month, lease: !!c.implied_usd_per_kw_month, c }))
+      .map(c => ({ label: `${c.buyer} ← ${c.supplier}`, v: c.implied_allin_usd_per_kw_month || c.implied_usd_per_kw_month, lease: !!c.implied_usd_per_kw_month, floor: kwFloor(c), gpu: gpuDeal(c), c }))
       .sort((a, b) => b.v - a.v).slice(0, 12);
     const L = 172, R = 300, rh = 22, max = Math.max(...rows.map(r => r.v));
     svg.setAttribute("viewBox", `0 0 440 ${rows.length * rh + 10}`);
     rows.forEach((r, i) => { const y = 6 + i * rh;
       el("text", { x: L - 6, y: y + 14, "text-anchor": "end", "font-size": 11, class: "ink" }, svg).textContent = r.label.length > 27 ? r.label.slice(0, 26) + "…" : r.label;
       const b = el("rect", { x: L, y: y + 3, width: Math.max(2, (r.v / max) * (R - L)), height: 14, rx: 3, fill: css(r.lease ? "--s3" : "--s2") }, svg);
-      el("text", { x: L + (r.v / max) * (R - L) + 4, y: y + 14, "font-size": 11 }, svg).textContent = `$${Math.round(r.v).toLocaleString()}` + (r.lease ? "" : ` · $${(r.v * 2.12 / 730).toFixed(1)}/GPU-h`);
-      hover(b, `<b>${esc(r.label)}</b>${r.lease ? "Lease (no chips)" : "All-in compute"}: $${Math.round(r.v).toLocaleString()} per kW-month${badge(r.c.confidence)}<br>` +
-        `${money(r.c.value_usd)} · ${r.c.term_years} yrs · ${num(r.c.capacity_mw)} MW` + (r.c.implied_usd_per_gpu_hour_est ? `<br>≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h (floor)` : "")+`<br>${src(r.c.source_url)}`); });
+      const gpuh = !r.lease && r.gpu ? `${r.floor ? "≥" : ""}$${(r.v * 2.12 / 730).toFixed(1)}/GPU-h` : "";
+      el("text", { x: L + (r.v / max) * (R - L) + 4, y: y + 14, "font-size": 11 }, svg).textContent = `${r.floor ? "≥" : ""}$${Math.round(r.v).toLocaleString()}` + (gpuh ? ` · ${gpuh}` : "") + (r.floor && !gpuh ? " floor" : "");
+      const rel = (k, v) => r.c[k] ? `${esc(r.c[k])} ${v}` : v;
+      hover(b, `<b>${esc(r.label)}</b>${r.lease ? "Lease (no chips)" : "All-in compute"}: ${r.floor ? "at least " : ""}$${Math.round(r.v).toLocaleString()} per kW-month${r.floor ? " (floor: a minimum value or a maximum capacity; left out of the median)" : ""}${badge(r.c.confidence)}<br>` +
+        `${rel("value_relation", money(r.c.value_usd))} · ${r.c.term_years} yrs · ${rel("capacity_mw_relation", num(r.c.capacity_mw) + " MW")}${r.c.gpu_type ? ` · ${esc(r.c.gpu_type)}` : ""}` +
+        (gpuh ? `<br>${gpuh} at 2.12 kW per GB300-class GPU and 730 h/month (E)` + (r.c.implied_usd_per_gpu_hour_est ? `; ≈$${r.c.implied_usd_per_gpu_hour_est.low}–${r.c.implied_usd_per_gpu_hour_est.high}/GPU-h at 2.0–2.6 kW per GPU, pre-Rubin draw (floor for later deliveries)` : "") : r.lease ? "" : "<br>Not NVIDIA or AMD GPUs, so no $/GPU-hour") + `<br>${src(r.c.source_url)}`); });
   }
   onTheme(() => { draw(); drawIdx(); drawKw(); }); draw(); drawIdx(); drawKw();
 })();

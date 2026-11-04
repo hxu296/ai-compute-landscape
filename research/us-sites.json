@@ -3708,7 +3708,7 @@
       "name": "Stream Phoenix",
       "owner": null,
       "users": null,
-      "city": null,
+      "city": "Goodyear",
       "state": "AZ",
       "state_basis": "site name",
       "state_evidence": "Name: \"Phoenix\"",

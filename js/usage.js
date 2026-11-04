@@ -6,8 +6,8 @@
     const svg = $("#infSvg"); if (!svg || !SPLIT) return; svg.innerHTML = "";
     const L = 150, R = 418, rh = 26, T = 34, x = v => L + v * (R - L);
     let y = T; const rows = [];
-    // Latest dated observation per company; forecasts after the build date are left to the hover notes.
-    const today = String(NC.built).slice(0, 10), latest = Object.values(SPLIT.rows.filter(r => r.as_of <= today).reduce((m, r) => (!m[r.who] || r.as_of > m[r.who].as_of ? { ...m, [r.who]: r } : m), {}));
+    // Latest dated observation per company. Forecasts (by period label, or dated after the build) never replace data.
+    const today = String(NC.built).slice(0, 10), observed = r => r.as_of <= today && !/forecast/i.test(r.period || ""), latest = Object.values(SPLIT.rows.filter(observed).reduce((m, r) => (!m[r.who] || r.as_of > m[r.who].as_of ? { ...m, [r.who]: r } : m), {}));
     for (const [head, keep] of GROUPS) { rows.push({ head, y }); y += 20; for (const r of latest.filter(keep)) { rows.push({ r, y }); y += rh; } y += 6; }
     svg.setAttribute("viewBox", `0 0 440 ${y + 22}`);
     el("text", { x: L + 14, y: 12, "font-size": 11, class: "ink" }, svg).textContent = "inference (serving)";

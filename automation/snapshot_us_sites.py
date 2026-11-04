@@ -33,7 +33,7 @@ CITY_FIX = {'Amazon Madison Mega Site': 'Canton', 'Amazon Ridgeland': 'Ridgeland
             'Google Cedar Rapids': 'Cedar Rapids'}
 # Reviewed overrides for US sites whose Address names no state: name -> (state, basis, Epoch field, evidence text, city).
 # 'source text' = the site's own Epoch "Selected Sources" names the state; 'site name' = only the site name supports it
-# (the sources were checked and do not name a state, nor contradict it). City only where the same text names it.
+# (the sources were checked and do not name a state, nor contradict it). City only where the site's Epoch text names it.
 # Checked and left unlocated: Anthropic Barber Lake (no state in its Name, Address or Selected Sources).
 STATE_OVERRIDES = {
     'OpenAI Stargate New Mexico': ('NM', 'site name', 'Name', 'New Mexico', None),        # sources: Project Jupiter, BorderPlex; no state named
@@ -43,7 +43,9 @@ STATE_OVERRIDES = {
     'AWS New Albany': ('OH', 'source text', 'Selected Sources', 'newalbanyohio.org', 'New Albany'),
     'Google Storey County': ('NV', 'source text', 'Selected Sources', 'storey-county-nevada', None),
     'Google Mesa': ('AZ', 'source text', 'Selected Sources', 'mesa-data-center-campus-in-arizona', 'Mesa'),
-    'Stream Phoenix': ('AZ', 'site name', 'Name', 'Phoenix', None),                       # sources: /locations/phoenix/, SDC-Goodyear; no state named
+    # Stream Phoenix: sources /locations/phoenix/ and the SDC-Goodyear case study name no state. City Goodyear: its address
+    # "2950 S. Litchfield Road" is in Goodyear, AZ (reviewer check) and its Epoch sources name the Goodyear case study.
+    'Stream Phoenix': ('AZ', 'site name', 'Name', 'Phoenix', 'Goodyear'),
     'Google Kansas City East': ('MO', 'source text', 'Selected Sources', 'kansas-city-missouri', 'Kansas City'),
 }
 clean = lambda s: re.sub(r'\s*#\w+', '', s or '').strip()

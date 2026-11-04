@@ -44,6 +44,11 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => redr
 const SER = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6", "--s7", "--s8"];
 function money(v) { if (v == null || isNaN(v)) return ""; const a = Math.abs(v);
   return a >= 1e12 ? `$${(v / 1e12).toFixed(2)}T` : a >= 1e9 ? `$${(v / 1e9).toFixed(a >= 1e10 ? 0 : 1)}B` : a >= 1e6 ? `$${(v / 1e6).toFixed(0)}M` : `$${v.toLocaleString()}`; }
+// A deal's $/kW-month is a floor when its value is a minimum or its capacity a maximum.
+function kwFloor(c) { return /at least|more than|minimum|over/i.test(c.value_relation || "") || c.value_status === "minimum" || /up to/i.test(c.capacity_mw_relation || ""); }
+// $/GPU-hour applies only to NVIDIA or AMD GPU capacity (no contract gives a chip field beyond gpu_type, so text is checked too).
+function gpuDeal(c) { const t = [c.gpu_type, c.supplier, c.structure, c.note].join(" ");
+  return !/Trainium|Inferentia|TPU|Cerebras|WSE|wafer|Groq|Ascend/i.test(t) && (!c.gpu_type || /NVIDIA|GB\d|\b[BH]\d{2,3}|Rubin|Blackwell|AMD|MI\d{3}/i.test(c.gpu_type)); }
 function num(v) { if (v == null) return ""; const a = Math.abs(v); return a >= 1e6 ? `${(v / 1e6).toFixed(2)}M` : a >= 1e4 ? `${Math.round(v / 1e3)}k` : Math.round(v).toLocaleString(); }
 function badge(c) { const k = { reported: "r", derived: "d", estimated: "e" }[c]; return k ? `<span class="badge ${k}" title="${c}">${k.toUpperCase()}</span>` : ""; }
 function src(u, t = "source") { return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${t}</a>` : ""; }

@@ -58,8 +58,9 @@
   if (typeof module !== 'undefined') module.exports = api;
   if (typeof document === 'undefined') return;
 
-  const svg = document.getElementById('usMapSvg');
-  if (!svg || !window.US_SITES || !window.US_STATES) return;
+  if (!window.US_SITES || !window.US_STATES) return;
+  const svg = document.getElementById('usMapSvg'), heroSvg = document.getElementById('heroMap');
+  if (!svg && !heroSvg) return;
   const D = window.US_SITES, G = window.US_STATES, CITY = window.US_CITIES || {}, META = window.US_MAP_META || {width: 960, height: 567};
   const note = $('#usMapNote'), legend = $('#usMapLegend'), unloc = $('#usMapUnlocated'), slider = $('#usMapTime'), readout = $('#usMapReadout'),
     play = $('#usMapPlay'), b3 = $('#usMap3d'), b2 = $('#usMap2d'), ticks = $('#usMapTicks'), bPow = $('#usMapPower'), bCap = $('#usMapCapex');
@@ -71,7 +72,7 @@
     capex: {short: v => usd(v), long: v => usd(v), name: 'capex', unit: '$B', col: '$B'}};
   const dayLong = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'});
   const dayMonth = d => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', {month: 'short', year: 'numeric', timeZone: 'UTC'});
-  const label = i => i === NOW ? dayLong(MONTHS[i]) : dayMonth(MONTHS[i]);
+  const label = i => i === NOW ? dayLong(MONTHS[i]) : dayMonth(MONTHS[i]), dayLabel = d => d === D.now_date ? dayLong(d) : dayMonth(d);
   const byAddress = D.sites.filter(s => s.state && s.state_basis !== 'site name' && s.state_basis !== 'source text').length;
   const byName = D.sites.filter(s => s.state_basis === 'site name').length, bySource = D.sites.filter(s => s.state_basis === 'source text').length;
   let mode = '3d', measure = 'mw', idx = NOW < 0 ? MONTHS.length - 1 : NOW, timer = null;
@@ -109,15 +110,16 @@
 
   function siteRows(sites, day, limit) {
     const basis = s => s.state_basis === 'site name' ? ' · <i>state inferred from site name</i>' : s.state_basis === 'source text' ? ' · <i>state from Epoch source text, not address</i>' : '';
-    return `<span class="muted small">Site · owner; at ${esc(label(idx))}, then end-2028 (MW · est. capex)</span><table class="usmap-tip">` +
+    return `<span class="muted small">Site · owner; at ${esc(dayLabel(day))}, then end-2028 (MW · est. capex)</span><table class="usmap-tip">` +
       sites.slice(0, limit).map(s => `<tr><td>${esc(s.name)}<span class="muted"> · ${esc(s.owner || 'owner not listed')}${s.city ? '' : ' · city not given'}${basis(s)}</span></td>` +
-        `<td>${fmt(levelAt(s.series, MONTHS[idx]))} MW · ${usd(levelAt(s.capex_series, MONTHS[idx]))}<br><span class="muted">${fmt(s.mw['2028'])} MW · ${usd(s.capex_busd['2028'])}</span></td></tr>`).join('') +
+        `<td>${fmt(levelAt(s.series, day))} MW · ${usd(levelAt(s.capex_series, day))}<br><span class="muted">${fmt(s.mw['2028'])} MW · ${usd(s.capex_busd['2028'])}</span></td></tr>`).join('') +
       '</table>' + (sites.length > limit ? `<span class="muted">+${sites.length - limit} more sites</span>` : '');
   }
-  const status = () => MONTHS[idx] > D.now_date ? 'Epoch projection' : MONTHS[idx] === D.now_date ? 'latest Epoch data (retrieval date)' : 'Epoch dated observations';
+  const statusOf = day => day > D.now_date ? 'Epoch projection' : day === D.now_date ? 'latest Epoch data (retrieval date)' : 'Epoch dated observations';
+  const status = () => statusOf(MONTHS[idx]);
 
   // ---- labels: city + GW above the tallest columns, skipped when they would collide or leave the frame
-  function labeller(gLabels, fs, frame, P) {
+  function labeller(gLabels, fs, frame, P, measure) {
     const boxes = [];
     return (x, yTop, name, value) => {
       const w = fs * 0.56 * Math.max(name.length, 6), h = fs * 2.3;
@@ -137,33 +139,37 @@
     };
   }
 
-  function draw() {
-    const P = palette(), day = MONTHS[idx], m = modelAt(D, day, measure), is3d = mode === '3d', T = is3d ? tilt : p => p, S = SHOW[measure];
+  // Draw the map into any <svg>; Fig. 1b and the page hero both use this (window.USMap.render).
+  // o: {day: 'YYYY-MM-DD', measure: 'mw' | 'capex', mode: '3d' | '2d', compact: fewer labels for the hero}
+  function render(svg, o = {}) {
+    const day = o.day || D.now_date, measure = MEASURES[o.measure] ? o.measure : 'mw', mode = o.mode === '2d' ? '2d' : '3d', compact = !!o.compact;
+    const label = () => dayLabel(day), status = () => statusOf(day), hOf = v => HMAX * v / CMAX[measure], hatch = svg.id + 'Hatch';
+    const P = palette(), m = modelAt(D, day, measure), is3d = mode === '3d', T = is3d ? tilt : p => p, S = SHOW[measure];
     const both = sites => [sites.reduce((a, s) => a + levelAt(s.series, day), 0), sites.reduce((a, s) => a + levelAt(s.capex_series, day), 0)];
     const bothLine = sites => { const [w, c] = both(sites); return `${mw(w)} · ${usd(c)} est. capex`; };
     const frame = is3d ? b3d : [0, 0, W, H];
     svg.setAttribute('viewBox', frame.map(v => v.toFixed(1)).join(' '));
     svg.replaceChildren();
-    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center ${measure === 'mw' ? 'power (MW)' : 'estimated capex ($B)'} by US city at ${label(idx)} (${status()}), states coloured by state`);
+    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center ${measure === 'mw' ? 'power (MW)' : 'estimated capex ($B)'} by US city at ${label()} (${status()}), states coloured by state`);
     const scale = (svg.getBoundingClientRect().width || frame[2]) / frame[2], narrow = scale < 0.6, fs = Math.min(30, 11 / scale);
-    const defs = el('defs', {}, svg), pat = el('pattern', {id: 'usMapHatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
+    const defs = el('defs', {}, svg), pat = el('pattern', {id: hatch, width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
     el('rect', {width: 6, height: 6, fill: P.none}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: P.line, 'stroke-width': 1.2}, pat);
     if (is3d) { const slab = el('g', {transform: 'translate(0,5)', 'pointer-events': 'none'}, svg); for (const k of Object.keys(G)) el('path', {d: PATHS['3d'][k], fill: mix(P.line, P.ink, 0.12), stroke: mix(P.line, P.ink, 0.12), 'stroke-width': 1}, slab); }
     const gStates = el('g', {}, svg), outline = el('path', {d: '', fill: 'none', stroke: P.ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round', 'pointer-events': 'none'}, svg);
     const gCols = el('g', {}, svg), gLabels = el('g', {'pointer-events': 'none'}, svg);
     for (const k of Object.keys(G)) {
       const r = m.states.get(k), d = PATHS[mode][k];
-      const p = el('path', {d, fill: r ? P.tint(k) : 'url(#usMapHatch)', stroke: P.paper, 'stroke-width': 1, 'stroke-linejoin': 'round', class: 'usmap-state'}, gStates);
+      const p = el('path', {d, fill: r ? P.tint(k) : `url(#${hatch})`, stroke: P.paper, 'stroke-width': 1, 'stroke-linejoin': 'round', class: 'usmap-state'}, gStates);
       p.addEventListener('mouseenter', () => outline.setAttribute('d', d)); p.addEventListener('mouseleave', () => outline.setAttribute('d', ''));
-      p.setAttribute('aria-label', G[k].name + (r ? `: ${S.long(r.value)} at ${label(idx)}` : ': no tracked site'));
+      p.setAttribute('aria-label', G[k].name + (r ? `: ${S.long(r.value)} at ${label()}` : ': no tracked site'));
       hover(p, () => r
-        ? `<b>${esc(G[k].name)}</b>${bothLine(r.sites)} at ${esc(label(idx))} (${esc(status())}) · ${r.sites.length} tracked site${r.sites.length > 1 ? 's' : ''}<br><span class="muted">End-2028: ${mw(r.sites.reduce((a, s) => a + s.mw['2028'], 0))} · ${usd(r.sites.reduce((a, s) => a + s.capex_busd['2028'], 0))}</span>` + siteRows(r.sites, day, innerWidth < 600 ? 6 : 12)
+        ? `<b>${esc(G[k].name)}</b>${bothLine(r.sites)} at ${esc(label())} (${esc(status())}) · ${r.sites.length} tracked site${r.sites.length > 1 ? 's' : ''}<br><span class="muted">End-2028: ${mw(r.sites.reduce((a, s) => a + s.mw['2028'], 0))} · ${usd(r.sites.reduce((a, s) => a + s.capex_busd['2028'], 0))}</span>` + siteRows(r.sites, day, innerWidth < 600 ? 6 : 12)
         : `<b>${esc(G[k].name)}</b>No tracked site in this state. That is not zero data-center capacity: Epoch tracks frontier campuses only${m.unlocated.sites.length ? `, and ${m.unlocated.sites.length} tracked US site${m.unlocated.sites.length > 1 ? 's have' : ' has'} no supported state` : ''}.`);
     }
     const cols = m.cities.filter(c => c.value > 0).map(c => ({...c, p: pos(c)}));
-    const tipFor = c => () => `<b>${esc(c.city || G[c.state].name + ' · city not given')}</b>${bothLine(c.sites)} at ${esc(label(idx))} (${esc(status())}) · ${c.sites.length} site${c.sites.length > 1 ? 's' : ''}` +
+    const tipFor = c => () => `<b>${esc(c.city || G[c.state].name + ' · city not given')}</b>${bothLine(c.sites)} at ${esc(label())} (${esc(status())}) · ${c.sites.length} site${c.sites.length > 1 ? 's' : ''}` +
       `<span class="muted small">${CITY[c.key] ? 'Placed at the Census Gazetteer point for the city, not the site parcel.' : c.city ? 'No Census point for this city: placed at the state’s centre.' : 'Epoch gives no city: placed at the state’s centre.'}</span>` + siteRows(c.sites, day, innerWidth < 600 ? 4 : 8);
-    const place = labeller(gLabels, fs, frame, P), nLabels = narrow ? 4 : 6;
+    const place = labeller(gLabels, fs, frame, P, measure), nLabels = compact ? (narrow ? 2 : 4) : narrow ? 4 : 6;
     if (is3d) {
       // Prisms drawn back to front (north first). Faces: hidden back faces first, then the lit front faces, then the top.
       const prisms = cols.map(c => {
@@ -208,9 +214,12 @@
       el('circle', {cx: rx, cy: ry, r: rr, fill: 'none', stroke: P.muted, 'stroke-width': 1}, ref);
       const rt = el('text', {x: rx - rr - 5, y: ry + 4, 'text-anchor': 'end', style: `font-size:${fs * 0.95}px;fill:${P.muted}`}, ref); rt.textContent = REF[measure][1];
     }
-    const text = `Online at ${label(idx)} · ${S.short(m.total)}${measure === 'capex' ? ' est. capex' : ''} tracked US · ${status()}`;
-    readout.textContent = text; slider.setAttribute('aria-valuetext', text);
-    drawLegend(P, is3d);
+    return {total: m.total, P, is3d, text: `Online at ${label()} · ${S.short(m.total)}${measure === 'capex' ? ' est. capex' : ''} tracked US · ${status()}`};
+  }
+  function draw() {
+    const r = render(svg, {day: MONTHS[idx], measure, mode});
+    readout.textContent = r.text; slider.setAttribute('aria-valuetext', r.text);
+    drawLegend(r.P, r.is3d);
   }
   const shortName = c => c.city ? c.city : `${G[c.state].name}, no city`;
 
@@ -242,6 +251,57 @@
     table('#usMapTable', rows, [{k: 'state', h: 'State'}, {k: 'sites', h: 'Sites'}, {k: 'value_at_date', h: `${S.col} at date`, f: r => cell(r.value_at_date)},
       {k: 'value_end_2028', h: `${S.col} end-2028`, f: r => cell(r.value_end_2028)}, {k: 'largest_site', h: 'Largest site at date', f: r => `${esc(r.largest_site)} <span class="muted small">${measure === 'mw' ? fmt(r.largest_site_value) + ' MW' : usd(r.largest_site_value)}</span>`}]);
   }
+
+  window.USMap = {render, months: MONTHS, nowIndex: NOW, total: (day, k = 'mw') => modelAt(D, day, k).total, gw, dayLabel, statusOf};
+
+  // ---- page hero: the same 3D map, scrubbed through time by scrolling a sticky hero (static under reduced motion
+  // or when the hero is taller than the viewport). At rest (before the hero pins) it shows the retrieval date, because
+  // Jan 2024 is nearly empty (0.6 GW); once pinned, scrolling replays Jan 2024 -> Epoch's last projection.
+  function hero() {
+    const track = document.getElementById('heroTrack'), sec = heroSvg && heroSvg.closest('.hero');
+    if (!heroSvg || !track || !sec) return;
+    const out = document.getElementById('heroReadout'), bar = document.getElementById('heroProgress'), hint = document.getElementById('heroHint'), nav = document.getElementById('readingNav');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    let shown = -1, raf = 0, still = false, stick = 0;
+    const navH = () => nav ? nav.offsetHeight : 0;
+    const layout = () => {
+      const kids = [...sec.children].map(e => e.getBoundingClientRect()), cs = getComputedStyle(sec);
+      const need = Math.max(...kids.map(r => r.bottom)) - Math.min(...kids.map(r => r.top)) + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      still = reduce.matches || need > innerHeight - navH();
+      track.classList.toggle('hero-static', still);
+      // Pin the hero centred in the viewport below the reading nav, so the stage reads as intentional, not blank.
+      stick = Math.round(Math.max(navH(), navH() + (innerHeight - navH() - sec.offsetHeight) / 2));
+      document.documentElement.style.setProperty('--hero-top', stick + 'px');
+      if (hint) hint.textContent = still ? `Shown at the retrieval date, ${dayLong(D.now_date)}.` : 'Scroll to replay 2024 to Epoch’s last projection.';
+    };
+    const frame = () => {
+      raf = 0;
+      let p = 1, i = NOW < 0 ? MONTHS.length - 1 : NOW;
+      if (!still) { const range = Math.max(1, track.offsetHeight - sec.offsetHeight), raw = (stick - track.getBoundingClientRect().top) / range;
+        p = Math.min(1, Math.max(0, raw)); if (raw > 0) i = Math.round(p * (MONTHS.length - 1)); }
+      if (bar) bar.style.width = (100 * i / (MONTHS.length - 1)).toFixed(1) + '%';
+      track.classList.toggle('hero-playing', !still && p > 0);
+      if (i === shown) return;
+      shown = i;
+      const day = MONTHS[i], r = render(heroSvg, {day, measure: 'mw', mode: '3d', compact: true});
+      out.innerHTML = `<span class="hero-date">${esc(dayMonth(day))}</span><span class="hero-total">${esc(gw(r.total))} tracked US</span><span class="hero-status">${esc(statusOf(day))}</span>`;
+      heroSvg.setAttribute('aria-label', `3D map of tracked AI data-center power by US city, ${dayMonth(day)}: ${gw(r.total)} tracked US (${statusOf(day)})`);
+    };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(frame); };
+    addEventListener('scroll', queue, {passive: true});
+    let hw = innerWidth;
+    addEventListener('resize', () => { if (Math.abs(innerWidth - hw) < 2 && !still) { queue(); return; } hw = innerWidth; layout(); shown = -1; queue(); });
+    reduce.addEventListener('change', () => { layout(); shown = -1; queue(); });
+    onTheme(() => { shown = -1; queue(); });
+    // Content above the hero (the news banner, fonts) can settle after this script runs: re-measure on layout changes.
+    let lastTop = null;
+    const settle = () => { const t = Math.round(track.getBoundingClientRect().top + scrollY); if (t !== lastTop) { lastTop = t; layout(); queue(); } };
+    if (window.ResizeObserver) new ResizeObserver(settle).observe(document.body);
+    addEventListener('load', settle);
+    layout(); frame(); lastTop = Math.round(track.getBoundingClientRect().top + scrollY);
+  }
+  hero();
+  if (!svg) return;
 
   // ---- controls
   slider.min = 0; slider.max = MONTHS.length - 1; slider.step = 1; slider.value = idx;
