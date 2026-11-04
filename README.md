@@ -1,4 +1,4 @@
-# Is AI compute tight now, and will it stay tight?
+# Will AI compute stay tight?
 
 **Who powers the Token Economy?** A source-linked field guide to AI compute: chips, data centers, contracts, prices and inference traffic, built to answer two questions. Every figure on the page links to its source.
 
