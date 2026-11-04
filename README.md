@@ -29,7 +29,7 @@ The page refreshes prices and the token projection daily, so the live numbers mo
 **3. Who holds the compute, and who is exposed if it loosens.**
 - Tracked frontier sites hold ≈22 GW at end-2026 and ≈50 GW by end-2028. OpenAI and Anthropic use 26–39% of the end-2026 total and 38–50% of the end-2028 total (exclusive sites → including sites they share). Of the capacity added, they take 20–32% in 2027 but 65–75% in 2028 (48–59% across both years), so "most of the world's compute" holds only for 2028's additions.
 - OpenAI and Anthropic sign ≈$1.26T of the ≈$1.44T in disclosed compute deals since 2025 (≈$1.06T of it firm; the rest is "up to", conditional or cancellable), mostly through Oracle, Microsoft, AWS and Google.
-- Most exposed if demand falters (tied at 15/18): Core Scientific, CoreWeave, Galaxy Digital and WhiteFiber (debt, customer concentration, term mismatch).
+- Most exposed if demand falters: WhiteFiber (16/18: one unrated tenant, Nscale, at 86% of backlog; thin backlog cover after its August notes), then Galaxy Digital (15/18). Scores add debt filed after each company's last quarter; most Q3 filings land Nov 4–14.
 - Stress test: if all ten independent labs (Mistral, Cohere, Reflection, Thinking Machines, SSI and others) failed at once, ≈240–600 MW of compute would come free and ≈0.4% of tokens would disappear (E). Rents fall ≈1–6% and, net of the builds they cancel, the November 2027 crossing barely moves. The control case, OpenAI paying for only 75% of its next year, is looser now and tighter later: the crossing moves about a week later, but ≈1.4 GW of slipped 2027–28 builds bring the outright shortage ≈11 days sooner.
 
 ![Who uses the tracked data-center power](docs/screenshots/04-who-uses-compute.png)
