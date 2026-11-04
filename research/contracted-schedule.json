@@ -78,7 +78,13 @@
       "overlap_with_epoch": "Epoch's +106 MW at Mantsala (Finland) in 2027 is taken to be part of the stated >1 GW 2027 deployment, so it is subtracted from the 2027 segment (1,000 - 106 = 894). Epoch's Vineland NJ is flat at 70 MW, so nothing is after now. The rest of Vineland is inside the 2026 connected-power increment.",
       "notes": "The 2026 segment is the company’s year-end target (800 MW) minus 170 MW online at Dec 31 2025, so it already includes capacity Epoch tracks; Epoch-tracked additions are taken out of it. The contracted figure (>3.5 GW, May 2026) is stale. The Q2 2026 letter (2026-08-12) raised the year-end contracted target to 5 GW, and management said 'Almost all of that power will come online over the next 3, maybe to 3.5 years' (Q2 call). The 700 MW undated is the part of 3.5 GW left after the 2026-2028 increments; the 3-3.5 year window points it to about 2029 but gives no date. Online 170 MW is active power at 2025-12-31 and is stale: Nebius said capacity came online in late Q2 and that it expects 'to significantly increase our capacity in place in 3Q', but it published no current active o",
       "includes_epoch": "same_year",
-      "power_basis": "connected"
+      "power_basis": "connected",
+      "target_end_2026": {
+        "mw": 800,
+        "power_basis": "connected",
+        "derives_2026": true,
+        "basis": "“800MW to 1GW of connected power by year-end” (Q1 2026 letter; reaffirmed on the Q2 call), low end"
+      }
     },
     "Lambda": {
       "contracted_mw": 425,

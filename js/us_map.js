@@ -66,7 +66,7 @@
     play = $('#usMapPlay'), b3 = $('#usMap3d'), b2 = $('#usMap2d'), ticks = $('#usMapTicks'), bPow = $('#usMapPower'), bCap = $('#usMapCapex');
   const MONTHS = months(D), NOW = MONTHS.findIndex(d => d === D.now_date), COLOUR = colourStates(D);
   const fmt = v => Math.round(v).toLocaleString('en-US'), mw = v => fmt(v) + ' MW', gw = v => (v / 1000).toFixed(1) + ' GW';
-  const usd = v => '$' + (v >= 100 ? fmt(v) : v >= 1 || v === 0 ? v.toFixed(1) : v.toFixed(2)) + 'B';
+  const usd = v => v >= 1000 ? '$' + (v / 1000).toFixed(2) + 'T' : '$' + (v >= 100 ? fmt(v) : v >= 1 || v === 0 ? v.toFixed(1) : v.toFixed(2)) + 'B';
   // Display rules per measure; colours stay ranked by MW (colourStates) whichever measure is shown.
   const SHOW = {mw: {short: v => gw(v), long: v => mw(v), name: 'power', unit: 'MW', col: 'MW'},
     capex: {short: v => usd(v), long: v => usd(v), name: 'capex', unit: '$B', col: '$B'}};
@@ -272,14 +272,16 @@
       // Pin the hero centred in the viewport below the reading nav, so the stage reads as intentional, not blank.
       stick = Math.round(Math.max(navH(), navH() + (innerHeight - navH() - sec.offsetHeight) / 2));
       document.documentElement.style.setProperty('--hero-top', stick + 'px');
-      if (hint) hint.textContent = still ? `Shown at the retrieval date, ${dayLong(D.now_date)}.` : 'Scroll to replay 2024 to Epoch’s last projection.';
+      if (hint) hint.textContent = still ? `Shown at the retrieval date, ${dayLong(D.now_date)}.` : 'Scroll to play 2025 to Epoch’s last projection.';
     };
     const frame = () => {
       raf = 0;
-      let p = 1, i = NOW < 0 ? MONTHS.length - 1 : NOW;
+      // The hero opens on Jan 2025 and scrolling plays Jan 2025 -> Epoch's last projection (owner's choice).
+      const S0 = Math.max(0, MONTHS.findIndex(d => d >= '2025-01-01'));
+      let p = 1, i = still ? (NOW < 0 ? MONTHS.length - 1 : NOW) : S0;
       if (!still) { const range = Math.max(1, track.offsetHeight - sec.offsetHeight), raw = (stick - track.getBoundingClientRect().top) / range;
-        p = Math.min(1, Math.max(0, raw)); if (raw > 0) i = Math.round(p * (MONTHS.length - 1)); }
-      if (bar) bar.style.width = (100 * i / (MONTHS.length - 1)).toFixed(1) + '%';
+        p = Math.min(1, Math.max(0, raw)); if (raw > 0) i = S0 + Math.round(p * (MONTHS.length - 1 - S0)); }
+      if (bar) bar.style.width = (100 * (i - S0) / Math.max(1, MONTHS.length - 1 - S0)).toFixed(1) + '%';
       track.classList.toggle('hero-playing', !still && p > 0);
       if (i === shown) return;
       shown = i;
