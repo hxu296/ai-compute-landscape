@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="d189133eca80">
+<meta name="build" content="077039d06925">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Will AI compute stay tight?</title>
@@ -363,23 +363,15 @@
 <section class="chapter" id="method">
   <div class="prose">
     <div class="label"><span class="num">11</span>Sources and method</div>
-    <h2>Sources and methods</h2>
-<div class="method-reading">
-  <p class="lede">Most numbers in this business are announced rather than measured. Contract terms can include floors or ceilings, a GPU count is often worked out from megawatts, and a hyperscaler's fleet is somebody else's model. So every figure here carries its source and a tag distinguishing reporting, calculation, and estimation.</p>
-  <div class="legend-box"><span class="h">How to read the tags</span>
-    <dl><dt><span class="badge r">R</span></dt><dd>Reported by a company, filing, or named press source; this tag is not independent verification.</dd>
-      <dt><span class="badge d">D</span></dt><dd>Derived from reported numbers by a stated formula, such as value ÷ term ÷ GPUs.</dd>
-      <dt><span class="badge e">E</span></dt><dd>Estimated by an analyst or inferred from indirect evidence. Source ranges are retained where available.</dd></dl></div>
-  <p>Hover over any mark for its terms and source; click to pin the box and open its links. Close it with Escape, the close button, or a click outside. Click a buyer or supplier in the contract flow to see only its deals. Tables sort when you click a column. A source-note marker opens the two dated claims: “source conflict” means unresolved disagreement, “different bases” means the definitions differ, and “later evidence” identifies dated updates. Source-date warnings remain separate from verified revisions.</p>
-</div>
+    <h2>Sources and method</h2>
 
     <div class="method" id="methodBox"></div>
-    <details class="fig-notes" id="evidenceLedger"><summary>Selected primary-source evidence, with dates and scope</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
-    <details class="fig-notes" id="sourceComparisons"><summary>Source conflicts, later evidence and differences in definition</summary><p>Each badge opens both sources, their dates, the exact issue and our treatment. A difference in date or unit is not automatically a contradiction.</p><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
-    <details class="fig-notes"><summary>Related surveys: where they are stronger and what this page adds</summary><p>Established surveys already cover this market. This comparison describes inspected public features; it is not a ranking of accuracy or a claim to be first.</p><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
-    <details class="fig-notes" id="watchSignals"><summary>Signals we track (all rows, with basis)</summary><div class="fig-sub" id="watchVerdict"></div><div class="table-wrap"><table class="t" id="watchTable"></table></div></details>
-    <p class="download-links">Download the presentation data: <a href="data/providers.csv">providers CSV</a> · <a href="data/contracts.csv">contracts CSV</a> · <a href="data/prices.csv">prices CSV</a>. Source URLs, units and dates are retained.</p>
-    <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><p><a href="research/SANITY-2026-11-03.md">Latest coverage and consistency review</a> · <a href="research/GAPS.md">Priority research gaps</a>. Remaining priorities include measured utilization, comparable token accounting, financing and cash flow, and HBM, networking and grid commissioning.</p><div class="scroll"><table class="t" id="tGaps"></table></div></details>
+    <details class="fig-notes" id="evidenceLedger"><summary>Primary-source evidence</summary><label class="small">Search evidence <input type="search" id="evidenceSearch" placeholder="Company, chip, capacity…"></label><div class="table-wrap"><table class="t" id="tEvidence"></table></div></details>
+    <details class="fig-notes" id="sourceComparisons"><summary>Source conflicts and updates</summary><div class="seg controls" id="conflictCtl"></div><div class="table-wrap"><table class="t" id="tConflicts"></table></div></details>
+    <details class="fig-notes"><summary>Related surveys</summary><div class="scroll"><table class="t" id="tComparisons"></table></div><p><a href="research/COMPARISON.md">Comparison and concrete quality criteria</a></p></details>
+    <details class="fig-notes" id="watchSignals"><summary>All signals, with basis</summary><div class="fig-sub" id="watchVerdict"></div><div class="table-wrap"><table class="t" id="watchTable"></table></div></details>
+    <p class="download-links">Download: <a href="data/providers.csv">providers</a> · <a href="data/contracts.csv">contracts</a> · <a href="data/prices.csv">prices</a> (CSV, with sources and dates).</p>
+    <details class="fig-notes"><summary>Known gaps (<span id="gapN"></span>)</summary><p><a href="research/GAPS.md">Priority gaps</a> · <a href="research/SANITY-2026-11-03.md">latest consistency review</a></p><div class="scroll"><table class="t" id="tGaps"></table></div></details>
   </div>
 </section>
 </main>
@@ -411,7 +403,7 @@
 <script src="js/us_map.js?v=18d3e899c9a5"></script>
 <script src="js/gw_years.js?v=4a9b5af7b9f8"></script>
 <script src="js/capacity.js?v=0371c9e53121"></script>
-<script src="js/lists.js?v=1f486d4727f0"></script>
+<script src="js/lists.js?v=29831dcfe9f1"></script>
 <script src="js/research.js?v=1894d1af937c"></script>
 <script src="js/reader.js?v=0c0c71d93eb4"></script>
 </body>

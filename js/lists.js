@@ -61,26 +61,13 @@
   $("#providerSearch").oninput=cards;cards();
   // Sources and method as a compact definition list: short heads, the same statements and links.
   $("#methodBox").innerHTML = `<dl class="method-list">
-    <dt>Sources</dt><dd><p>SEC filings, earnings releases and calls, company pages and price APIs, named press reports and Epoch AI's public datasets provide the evidence. Each row keeps its source.</p>
-      <p>Pipeline, contracted and online power are separate measures; company and segment revenue retain their scope. Hosts and tenants can refer to the same buildings, and dated observations are not additive.</p></dd>
+    <dt>Evidence</dt><dd>Filings, earnings calls, company pages, price APIs, named press and <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch AI</a> datasets (CC BY 4.0). Every figure links to its source; tags mark it <b>R</b> reported, <b>D</b> derived by a stated formula, or <b>E</b> estimated. The <a href="AUDIT.md">source audit</a> records selection rules and limits.</dd>
     <dt>Rules</dt><dd><ul>
-      <li>Hosts carry MW only; GPUs belong to their owners.</li>
-      <li>Money uses the cloud segment where one is reported.</li>
-      <li>Two power conventions, for two jobs. Company MW are converted into GPU estimates at 1,400 W of IT power per Hopper GPU and 2,000 W per GB200/GB300 GPU (PUE 1.3 from gross). $/GPU-hour figures and the capacity calculator’s MW use 2.12 kW, SemiAnalysis’s all-in facility power per GB300-class GPU.</li>
-      <li>Source ranges are retained where available; other estimates carry an approximation mark.</li>
-      <li>H100-equivalents are a compute yardstick at dense peak, not delivered throughput.</li>
-      <li>Prices are converted at the ECB rate on the source date.</li>
-      <li>Figures that mix online and planned capacity are marked and never summed as contracted.</li></ul></dd>
-    <dt>Limits</dt><dd><ul>
-      <li>Hyperscaler fleets are Epoch's model, not disclosures.</li>
-      <li>Neocloud GPU counts are mostly inferred from power.</li>
-      <li>Inference vs training is a set of statements, not a measurement.</li>
-      <li>ByteDance's fleet is a weak bottom-up estimate.</li>
-      <li>No complete company-wide hyperscaler power total or current private contract fixing is inferred.</li></ul></dd>
-    <dt>Credits</dt><dd><p>Fleet estimates and lab spending breakdowns are from <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch AI</a> (CC BY 4.0). Price references link to Silicon Data, Ornn, SemiAnalysis and Compute Desk; missing current fixings stay missing.</p>
-      <p>Source links are provenance, not a guarantee that every historical row has been independently re-read. The <a href="AUDIT.md">source audit</a> records evidence limits and selection rules. Exact source URLs and formulas appear beside the affected charts.</p></dd>
-    <dt>Source notes</dt><dd><p>Hover, focus or tap source-note badges to compare the dated claims and see the display decision. Red marks identify unresolved factual conflicts; neutral marks identify changed evidence or different definitions.</p></dd>
-    <dt>Data</dt><dd><p>The public presentation dataset ships with the page as <a href="data/nc.js">data/nc.js</a>.</p></dd>
+      <li>Online, contracted and pipeline power stay separate and are never summed; hosts carry MW, GPUs belong to their owners; money uses the cloud segment where one is reported.</li>
+      <li>Power: company MW → GPUs at 1.4 kW (Hopper) / 2.0 kW (GB200/GB300) IT power; $/GPU-hour and rack MW use 2.12 kW all-in facility power (SemiAnalysis).</li>
+      <li>H100-equivalents measure peak compute, not delivered throughput. Prices convert at the ECB rate on the source date.</li></ul></dd>
+    <dt>Limits</dt><dd>Hyperscaler fleets are Epoch’s model, neocloud GPU counts are mostly inferred from power, training vs inference comes from statements, and tracked data-center supply is a floor.</dd>
+    <dt>Use</dt><dd>Hover any mark for its terms and source; click to pin it. Red source-note marks flag unresolved conflicts. Data: <a href="data/nc.js">data/nc.js</a> and the CSVs below.</dd>
   </dl>`;
   table("#tComparisons",NC.comparisons||[],[{k:"name",h:"Survey",f:r=>src(r.url,esc(r.name))},{k:"scope",h:"Focus"},{k:"strength",h:"Strength of the inspected source"},{k:"ours",h:"This page’s contribution and limit"}]);
   $("#gapN").textContent = NC.gaps.length;
