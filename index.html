@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="b2e7c057a277">
+<meta name="build" content="c4c2a984d469">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Will AI compute stay tight?</title>
@@ -76,6 +76,7 @@
     <div class="research-controls">
       <label>Token growth <output id="buildGrowthValue"></output><input id="buildGrowth" type="range" min="0" max="25" step="1" value="12"></label>
       <label>Price per GB300-equivalent GPU-hour <output id="buildPriceValue"></output><input id="buildPrice" type="range" min="3" max="7" step="0.25" value="5"><span class="small">Turns serving dollars into GPUs. $3 ≈ new long-term rental deals, $7 ≈ today’s B200 rental index; older chips count at their GB300-equivalent share.</span></label>
+      <label>Software efficiency gain <output id="buildEffValue"></output><input id="buildEff" type="range" min="1" max="3" step="0.1" value="1"><span class="small">GPU-hours per token falling from software alone (quantization, speculative decoding, smaller models). Default 1× = serving cost per token flat: software gains and the shift to bigger, reasoning-heavy models roughly offset. At fixed quality it is ≈3× a year (<a href="https://arxiv.org/abs/2511.23455" target="_blank" rel="noopener">Gundlach et al.</a>, hardware removed), but traffic keeps moving to bigger frontier models, so that is an upper bound. Higher values raise the break-even.</span></label>
     </div>
     <svg id="buildoutSvg" viewBox="0 0 900 330" role="img" aria-label="Inference compute demand against compute being built, monthly to end-2028, log scale" style="width:100%;display:block"></svg>
     <div class="legend" id="buildoutLegend"><span><i style="background:var(--s3);opacity:.45"></i>inference fits in today’s serving share</span><span><i style="background:var(--s4);opacity:.5"></i>inference takes compute from training</span><span><i style="background:var(--s2);opacity:.4"></i>not enough compute at all</span><span><i style="background:var(--s1)"></i>today’s serving share: 30% of compute built (band 26–36%, if every owner split like Anthropic)</span><span><i style="border-top:2px dashed var(--ink);height:0;background:none"></i>all compute built (tracked sites, a floor)</span></div>
@@ -428,7 +429,7 @@
 <script src="js/tokens.js?v=aa5ded4797a0"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=e09a64c64e9d"></script>
-<script src="js/watch.js?v=f539b1f4106b"></script>
+<script src="js/watch.js?v=ef8ef17bbe12"></script>
 <script src="js/neolab.js?v=9700041b5775"></script>
 <script src="js/funding.js?v=cb12dbfbf0e5"></script>
 <script src="js/us_map.js?v=18d3e899c9a5"></script>

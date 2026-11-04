@@ -34,14 +34,14 @@
     const day=s=>Date.parse(s+'T00:00:00Z'),MON=30.4375*864e5,t0=day(est.as_of),ends=BuildoutMath.YEARS.map(y=>[day(y+'-12-31'),y]);
     const fmt=t=>new Date(t).toLocaleDateString('en-US',{month:'short',year:'numeric',timeZone:'UTC'});
     const SC=D.watch?.serving_cost;
-    const draw=()=>{const g=$('#buildGrowth').valueAsNumber/100,price=$('#buildPrice').valueAsNumber;S=BuildoutMath.supply(NC.providers,TL,+($('#buildRubin')?.value||1));
-      $('#buildGrowthValue').textContent=(g*100).toFixed(0)+'%/mo';$('#buildPriceValue').textContent='$'+price.toFixed(2)+'/h';
+    const draw=()=>{const g=$('#buildGrowth').valueAsNumber/100,price=$('#buildPrice').valueAsNumber,eff=$('#buildEff')?.valueAsNumber||1,eM=eff**(1/12);S=BuildoutMath.supply(NC.providers,TL,+($('#buildRubin')?.value||1));
+      $('#buildGrowthValue').textContent=(g*100).toFixed(0)+'%/mo';$('#buildPriceValue').textContent='$'+price.toFixed(2)+'/h';if($('#buildEffValue'))$('#buildEffValue').textContent=eff.toFixed(1)+'×/yr';
       // Built racks between year ends grow geometrically.
       const built=t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return S[ya].racks*(S[yb].racks/S[ya].racks)**f;}}return S['2028'].racks;};
-      const need0=exChina*SC.usd_per_mtok/1e6/(price*24)/72,implied=need0/(exChina/mixes[1].rate),need=t=>need0*(1+g)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
+      const need0=exChina*SC.usd_per_mtok/1e6/(price*24)/72,implied=need0/(exChina/mixes[1].rate),need=t=>need0*((1+g)/eM)**((t-t0)/MON),tEnd=ends.at(-1)[0],mEnd=(tEnd-t0)/MON;
       const pts=[];for(let t=t0;t<=tEnd+1;t+=MON/2)pts.push(t);pts.push(tEnd);
       const grid=[];for(let t=t0;t<=tEnd;t+=864e5)grid.push(t);const first=f=>grid.find(t=>f(t)),cross=first(t=>need(t)>=MID*built(t)),all=first(t=>need(t)>=built(t));
-      const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=(MID*built(tEnd)/need0)**(1/mEnd)-1;if(BE0===null){BE0=breakEven;BR0=buildRate;CR0=cross||null;G0=g;const Sf=S;
+      const buildRate=(built(tEnd)/built(t0))**(12/mEnd)-1,breakEven=((MID*built(tEnd)/need0)**(1/mEnd))*eM-1;if(BE0===null){BE0=breakEven;BR0=buildRate;CR0=cross||null;G0=g;const Sf=S;
         // Fig. 1 at its defaults, frozen, for the stress test (js/neolab.js): it changes only the inputs it names.
         window.BuildoutBase={need0,g,t0,MON,MID,tEnd,cross,all,fmt,rackKw:72*1.87,built:t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return Sf[ya].racks*(Sf[yb].racks/Sf[ya].racks)**f;}}return Sf['2028'].racks;}};}
       const svg=$('#buildoutSvg'),narrow=(svg.getBoundingClientRect().width||900)<600,W=narrow?420:900,H=narrow?340:330,L=narrow?40:64,R=W-(narrow?96:150),T=16,B=H-34,fs=narrow?12:11,lo=Math.min(need0,built(t0)*BAND[0])/3,hi=built(tEnd)*2.2;
@@ -77,7 +77,7 @@
         (cross?`At <b>${(g*100).toFixed(0)}%/month</b>, inference outgrows today’s serving share in <b>${fmt(cross)}</b>. After that it takes compute from training. `+(all?`At that pace, ≈${Math.round((1+g)**((all-t0)/MON))}× today’s tokens would need <b>more than all tracked compute</b> by <b>${fmt(all)}</b>. Read that as a warning, not a forecast.`:`It stays below all tracked compute through 2028: <b>no outright shortage</b>.`):`At <b>${(g*100).toFixed(0)}%/month</b>, inference fits inside today’s serving share through 2028: <b>room to spare</b>.`)+
         ` Break-even for today’s split: <b>≈${pctm(breakEven)}</b>. Tracked sites are a floor for 2027–28, so the chart leans toward shortage.`;
       $('#buildoutNote').textContent=`Log scale, so slope = growth rate. Compute built is Epoch’s tracked build-out, fixed; only demand responds to the sliders. Inference demand = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) × $${SC.usd_per_mtok.toFixed(3)} serving cost per million tokens (Anthropic’s filed cost of revenue ÷ its tokens, ${SC.period}) ÷ $${price.toFixed(2)} per GB300-equivalent hour, grown at ${(g*100).toFixed(0)}%/mo. That is ≈${implied.toFixed(1)}× the GPUs the DeepSeek-V4-Pro benchmark would need. Shaded band = 26–36% of all built compute: what serving would get if every owner split its fleet like Anthropic (its S-1/A, E). Meta’s own fleet (≈${Math.round(metaShare*100)}% of the end-2025 base) runs mostly recommender and ads work; leaving it out moves the crossing ${crossM?`to ${fmt(crossM)}`:'inside 2028 or later'}${cross&&crossM?` (${fmt(cross)} with it)`:''}.`;};
-    for(const id of ['buildGrowth','buildPrice','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
+    for(const id of ['buildGrowth','buildPrice','buildEff','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
     let wideB=innerWidth>=600;addEventListener('resize',()=>{if((innerWidth>=600)!==wideB){wideB=!wideB;draw();}});
   }
   // Watch table
@@ -164,6 +164,7 @@
         TF?`<li><b>Training budgets.</b> Training, research and internal use take ≈${Math.round(TF.training_share_low*100)}–${Math.round(TF.training_share_high*100)}% of Anthropic’s compute spend. Cuts to lab training plans would free compute for the rental market. <a href="#inference-split">Fig. 5 ↑</a></li>`:'',
         `<li><b>Whether buyers can pay.</b> ${ra!=null?`Anthropic’s next-12-month commitments are ≈${ra.toFixed(1)}× its revenue run-rate. `:''}If buyers can’t pay, landlords and neoclouds feel it first. <a href="#exposure">Table 1 ↓</a></li>`,
         SX?`<li><b>More supply than tracked.</b> SpaceX’s CEO targets ≈${SX.company_gw} GW nameplate by end-2027; Epoch tracks ${SX.tracked_gw.toFixed(1)} GW facility power at its sites. Untracked buildings would loosen compute sooner.</li>`:'',
+        (BE0!=null&&G0!=null?`<li><b>Software efficiency, the 2000-style risk.</b> In 2000, DWDM multiplied capacity on fiber already laid. The analogue is software cutting GPU-hours per token. Above ≈${(((1+G0)/(1+BE0))**12).toFixed(1)}× a year from software alone, today’s ${Math.round(G0*100)}%/month no longer outgrows the build-out. At fixed quality it is ≈3× a year, but traffic keeps moving to bigger frontier models. <a href="#buildout">Fig. 1 slider ↑</a></li>`:''),
         `<li><b>Cheaper GPU-hours or slower tokens.</b> Both move Fig. 1’s break-even. <a href="#buildout">Fig. 1 ↑</a></li>`].filter(Boolean).join('');
       if($('#closePrices')){const HP=W.hopper_2028;$('#closePrices').innerHTML=HP?`<b>2028:</b> a 1-year H100 rental at ≈$${HP.successor_path_usd.toFixed(2)}/h if a successor arrives in a shortage, ≈$${HP.glut_path_usd.toFixed(2)}/h if supply catches up (two precedents; estimates).`:'';}
       if($('#closeDeals'))$('#closeDeals').innerHTML=`<b>If it loosens:</b> two buyers sign most of the money, so their demand decides whether these contracts hold.`;
