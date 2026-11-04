@@ -43,34 +43,34 @@
       const x=t=>L+(t-t0)/(tEnd-t0)*(R-L),y=v=>B-(Math.log10(Math.max(v,lo))-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo))*(B-T),line=f=>pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(Math.min(f(t),hi)).toFixed(1)}`).join('');
       svg.innerHTML='';svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
       for(let e=Math.ceil(Math.log10(lo));e<=Math.log10(hi);e++){const v=10**e;el('line',{x1:L,x2:R,y1:y(v),y2:y(v),stroke:css('--grid')},svg);el('text',{x:L-8,y:y(v)+4,'text-anchor':'end','font-size':fs},svg).textContent=v>=1e6?(v/1e6)+'M':v>=1e3?(v/1e3)+'k':v;}
-      el('text',{x:L-8,y:T-4,'text-anchor':'end','font-size':10},svg).textContent='racks';
+      el('text',{x:L-8,y:T-4,'text-anchor':'start','font-size':10},svg).textContent=narrow?'GB300 racks':'GB300 rack-equivalents (log scale)';
       for(const[t,yr]of ends.slice(1)){el('line',{x1:x(t),x2:x(t),y1:T,y2:B,stroke:css('--grid')},svg);el('text',{x:x(t),y:B+16,'text-anchor':'middle','font-size':11},svg).textContent=narrow?yr:'End-'+yr;}
       if(x(ends[1][0])-x(t0)>70)el('text',{x:x(t0),y:B+16,'text-anchor':'start','font-size':11},svg).textContent=fmt(t0);
-      // Coloured areas: training and other uses (serving share up to all compute built), spare serving capacity (demand
-      // below the serving share), and shortage (demand above it).
+      // Three regions of the plane: inference fits in today's serving share (green), inference takes compute from training
+      // (amber), not enough compute at all (light red, above everything built).
       const area=(up,lo,attrs)=>el('path',{d:pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(Math.min(up(t),hi)).toFixed(1)}`).join('')+[...pts].reverse().map(t=>`L${x(t).toFixed(1)},${y(Math.min(lo(t),hi)).toFixed(1)}`).join('')+'Z',...attrs},svg);
-      area(built,t=>MID*built(t),{fill:css('--line'),opacity:.45,'data-area':'training'});
-      area(t=>MID*built(t),t=>Math.min(need(t),MID*built(t)),{fill:css('--s3'),opacity:.22,'data-area':'spare'});
-      area(t=>Math.max(need(t),MID*built(t)),t=>MID*built(t),{fill:css('--s2'),opacity:.25,'data-area':'shortage'});
+      area(t=>MID*built(t),()=>lo,{fill:css('--s3'),opacity:.14,'data-area':'fits'});
+      area(built,t=>MID*built(t),{fill:css('--s4'),opacity:.16,'data-area':'from-training'});
+      area(()=>hi,built,{fill:css('--s2'),opacity:.12,'data-area':'short'});
       // Shortage region: demand above the serving band's midpoint.
       el('path',{d:pts.map((t,i)=>`${i?'L':'M'}${x(t).toFixed(1)},${y(BAND[1]*built(t)).toFixed(1)}`).join('')+[...pts].reverse().map(t=>`L${x(t).toFixed(1)},${y(BAND[0]*built(t)).toFixed(1)}`).join('')+'Z',fill:css('--s1'),opacity:.18},svg);
       el('path',{d:line(built),fill:'none',stroke:css('--ink'),'stroke-width':1.5,'stroke-dasharray':'5 4'},svg);
       el('path',{d:line(t=>MID*built(t)),fill:'none',stroke:css('--s1'),'stroke-width':2.5},svg);
-      // Band label sits in the gap between the band and the built line, parallel to both, clear of the crossing label.
-      const bk=narrow?.68:.62,bx=x(t0)+6,by=y(bk*built(t0))+4,ang=Math.atan2(y(built(t0+6*MON))-y(built(t0)),x(t0+6*MON)-x(t0))*180/Math.PI;
-      el('text',{x:bx,y:by,transform:`rotate(${ang.toFixed(2)} ${bx.toFixed(1)} ${by.toFixed(1)})`,'font-size':narrow?11:fs,fill:css('--s1'),'font-weight':600},svg).textContent=narrow?'Band: if all owners split like Anthropic':'Serving band 26–36%: if every owner split its fleet like Anthropic';
-      el('path',{d:line(need),fill:'none',stroke:css('--s2'),'stroke-width':3,'data-build-need':'1'},svg);
+      const zone=t=>need(t)>=built(t)?'--s2':need(t)>=MID*built(t)?'--s4':'--s3';
+      el('path',{d:line(need),fill:'none',stroke:css('--ink'),'stroke-width':4.5,opacity:.12,'data-build-need':'1'},svg);
+      for(let k=1;k<pts.length;k++){const a=pts[k-1],b2=pts[k];el('line',{x1:x(a).toFixed(1),y1:y(Math.min(need(a),hi)).toFixed(1),x2:x(b2).toFixed(1),y2:y(Math.min(need(b2),hi)).toFixed(1),stroke:css(zone(b2)),'stroke-width':3,'stroke-linecap':'round'},svg);}
       // End labels, pushed apart so close lines stay readable.
-      const tags=[[built(tEnd),narrow?'All built':'All compute built',css('--ink')],[MID*built(tEnd),narrow?'Serving 30%':'Serving share (30%)',css('--s1')],[need(tEnd),need(tEnd)>hi?(narrow?'Inference ↑':'Inference ↑ off scale'):(narrow?'Inference':'Inference demand'),css('--s2')]].map(([v,text,color])=>({py:y(Math.min(v,hi))+4,text,color})).sort((a,b)=>a.py-b.py);
-      tags.forEach((g,i)=>{if(i&&g.py-tags[i-1].py<15)g.py=tags[i-1].py+15;el('text',{x:R+8,y:g.py,'font-size':12,'font-weight':600,fill:g.color},svg).textContent=g.text;});
-      if(cross){el('circle',{cx:x(cross),cy:y(need(cross)),r:6,fill:css('--s2')},svg);el('text',{x:x(cross),y:y(need(cross))-12,'text-anchor':'middle','font-size':12,'font-weight':600,class:'ink'},svg).textContent=(narrow?'':'Shortage from ')+fmt(cross);}
+      const tags=[[built(tEnd),narrow?'All built':'All compute built',css('--ink')],[MID*built(tEnd),narrow?'Serving 30%':'Serving share (30%)',css('--s1')],[need(tEnd),need(tEnd)>hi?(narrow?'Inference ↑':'Inference ↑ off scale'):(narrow?'Inference':'Inference demand'),css('--ink')]].map(([v,text,color])=>({py:y(Math.min(v,hi))+4,text,color})).sort((a,b)=>a.py-b.py);
+      tags.forEach((g,i)=>{if(i&&g.py-tags[i-1].py<19)g.py=tags[i-1].py+19;el('text',{x:R+8,y:g.py,'font-size':12,'font-weight':600,fill:g.color},svg).textContent=g.text;});
+      if(cross){el('circle',{cx:x(cross),cy:y(need(cross)),r:6,fill:css('--s4'),stroke:'#fff','stroke-width':1.5},svg);el('text',{x:x(cross),y:y(need(cross))+22,'text-anchor':'middle','font-size':12,'font-weight':600,class:'ink'},svg).textContent=(narrow?'':'Outgrows today’s serving share · ')+fmt(cross);}
+      if(all){el('circle',{cx:x(all),cy:y(need(all)),r:6,fill:css('--s2'),stroke:'#fff','stroke-width':1.5},svg);el('text',{x:x(all),y:y(need(all))-12,'text-anchor':'middle','font-size':12,'font-weight':600,class:'ink'},svg).textContent=(narrow?'':'Real shortage · ')+fmt(all);}
       const pctm=v=>(v*100).toFixed(1)+'%/mo';
       // Same crossing with Meta's own fleet left out (mostly recommender and ads work, so the lab split fits it worst).
       const META='Meta (own use)',SM=BuildoutMath.supply(NC.providers.filter(p=>p.name!==META),{...TL,providers:Object.fromEntries(Object.entries(TL.providers).filter(([n])=>n!==META))},+($('#buildRubin')?.value||1));
       const builtM=t=>{for(let i=1;i<ends.length;i++){const[a,ya]=ends[i-1],[b,yb]=ends[i];if(t<=b){const f=(t-a)/(b-a);return SM[ya].racks*(SM[yb].racks/SM[ya].racks)**f;}}return SM['2028'].racks;},crossM=first(t=>need(t)>=MID*builtM(t)),metaShare=1-SM['2025'].racks/S['2025'].racks;
       $('#buildoutHeadline').innerHTML=`Compute being built grows <b>≈${Math.round(buildRate*100)}% a year</b> through 2028 (Epoch, fixed). Inference demand grows at the token rate you choose. `+
-        (cross?`At <b>${(g*100).toFixed(0)}%/month</b>, inference outgrows labs’ serving share of compute in <b>${fmt(cross)}</b>: from then on there is a <b>shortage</b> unless training gives up compute${all?`, and by ${fmt(all)} inference alone would need everything built`:''}.`:`At <b>${(g*100).toFixed(0)}%/month</b>, inference stays inside labs’ serving share through 2028: <b>room to spare</b> for inference, so any shortage comes from training.`)+
-        ` Break-even: <b>≈${pctm(breakEven)}</b> token growth just fills the serving share by end-2028; faster means shortage, slower means oversupply for inference.`;
+        (cross?`At <b>${(g*100).toFixed(0)}%/month</b>, inference outgrows the share labs give serving today in <b>${fmt(cross)}</b>; after that it has to take compute from training. `+(all?`It needs <b>more than everything built</b> by <b>${fmt(all)}</b>: a real shortage.`:`It stays below everything built through 2028, so there is <b>no outright shortage</b> on this chart.`):`At <b>${(g*100).toFixed(0)}%/month</b>, inference fits inside today’s serving share through 2028: <b>room to spare</b>.`)+
+        ` Break-even for today’s split: <b>≈${pctm(breakEven)}</b>. “All compute built” counts tracked sites only, a floor for 2027–28, so the chart leans toward shortage.`;
       $('#buildoutNote').textContent=`Log scale, so slope = growth rate. Inference demand = ≈${(exChina/1e12).toFixed(0)}T/day ex-China tokens (${est.as_of}) × $${SC.usd_per_mtok.toFixed(3)} serving cost per million tokens (Anthropic’s filed cost of revenue ÷ its tokens, ${SC.period}) ÷ $${price.toFixed(2)} per GB300-equivalent hour, grown at ${(g*100).toFixed(0)}%/mo. That is ≈${implied.toFixed(1)}× the GPUs the DeepSeek-V4-Pro benchmark would need. Shaded band = 26–36% of all built compute: what serving would get if every owner split its fleet like Anthropic (its S-1/A, E). Meta’s own fleet (≈${Math.round(metaShare*100)}% of the end-2025 base) runs mostly recommender and ads work; leaving it out moves the crossing ${crossM?`to ${fmt(crossM)}`:'inside 2028 or later'}${cross&&crossM?` (${fmt(cross)} with it)`:''}.`;};
     for(const id of ['buildGrowth','buildPrice','buildRubin'])$('#'+id).addEventListener('input',draw);draw();
     let wideB=innerWidth>=600;addEventListener('resize',()=>{if((innerWidth>=600)!==wideB){wideB=!wideB;draw();}});

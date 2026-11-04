@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="09e6881eddd7">
+<meta name="build" content="855fb8c824e8">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Who powers the Token Economy?</title>
@@ -239,7 +239,7 @@
       <label>Price per GB300-equivalent GPU-hour <output id="buildPriceValue"></output><input id="buildPrice" type="range" min="3" max="7" step="0.25" value="5"><span class="small">Turns serving dollars into GPUs. $3 ≈ new long-term rental deals, $7 ≈ today’s B200 rental index; older chips count at their GB300-equivalent share.</span></label>
     </div>
     <svg id="buildoutSvg" viewBox="0 0 900 330" role="img" aria-label="Inference compute demand against compute being built, monthly to end-2028, log scale" style="width:100%;display:block"></svg>
-    <div class="legend" id="buildoutLegend"><span><i style="background:var(--s2)"></i>inference demand</span><span><i style="background:var(--s1)"></i>serving share of compute built (30%; band 26–36%)</span><span><i style="background:var(--s3);opacity:.5"></i>spare serving capacity</span><span><i style="background:var(--s2);opacity:.45"></i>shortage: inference needs more than its share</span><span><i style="background:var(--line)"></i>training and other uses</span><span><i style="border-top:2px dashed var(--ink);height:0;background:none"></i>all compute built</span></div>
+    <div class="legend" id="buildoutLegend"><span><i style="background:var(--s3);opacity:.45"></i>inference fits in today’s serving share</span><span><i style="background:var(--s4);opacity:.5"></i>inference takes compute from training</span><span><i style="background:var(--s2);opacity:.4"></i>not enough compute at all</span><span><i style="background:var(--s1)"></i>today’s serving share: 30% of compute built (band 26–36%, if every owner split like Anthropic)</span><span><i style="border-top:2px dashed var(--ink);height:0;background:none"></i>all compute built (tracked sites, a floor)</span></div>
     <details class="fig-notes"><summary>How demand is calculated</summary><p class="small" id="buildoutNote"></p></details>
     <details class="fig-notes"><summary>More assumptions, method and limits</summary>
       <div class="research-controls"><label>Count 2028 additions by<select id="buildRubin"><option value="1" selected>8-bit FLOPs (Epoch H100e)</option><option value="0.824">bandwidth for Rubin, high HBM4 (Rubin ÷1.3)</option><option value="0.619">bandwidth for Rubin, low HBM4 (Rubin ÷2)</option></select></label></div>
@@ -354,7 +354,7 @@
 <script src="js/tokens.js?v=f2cee2df5fd7"></script>
 <script src="js/capacity_math.js?v=626c07e1375f"></script>
 <script src="js/demand.js?v=045455b7d7a9"></script>
-<script src="js/watch.js?v=4b08d41ed6c5"></script>
+<script src="js/watch.js?v=da0b0d2cc5b5"></script>
 <script src="js/us_map.js?v=e0b4135306c3"></script>
 <script src="js/gw_years.js?v=26541f5781e8"></script>
 <script src="js/capacity.js?v=350457fea4d2"></script>
