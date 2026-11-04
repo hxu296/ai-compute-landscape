@@ -45,6 +45,7 @@
     return {states, cities: [...cities.values()], unlocated: states.get(null) || {state: null, sites: [], value: 0, y2028: 0},
       total: M.round(D.sites.reduce((a, s) => a + levelAt(s[M.series], day), 0))};
   }
+  // State ranking kept for the data tests and any full map view; the hero itself now draws one neutral land colour and one column colour.
   // Fixed colour assignment: the seven states with the most tracked MW by end-2028 get a categorical slot, in this order;
   // every other state with a site is neutral. Ranked once, never by the slider, so a colour follows its state.
   const SLOTS = ['--s1', '--s2', '--s3', '--s4', '--s6', '--s5', '--s8'];
@@ -103,9 +104,11 @@
   const mix = (a, b, t) => '#' + hex(a).map((v, i) => Math.round(v * (1 - t) + hex(b)[i] * t).toString(16).padStart(2, '0')).join('');
   function palette() {
     const paper = css('--paper') || '#fffdf8', ink = css('--ink') || '#161513', line = css('--line') || '#d8d0c4';
-    const base = k => COLOUR.has(k) ? css(COLOUR.get(k)) : '#8d8579';
+    // One neutral land colour and one column colour: the state fills carried no meaning, the columns carry the measure.
+    const land = mix(line, paper, 0.18), column = css('--map-column') || '#2c7a70';
+    const base = () => column;
     return {paper, ink, line, muted: css('--muted') || '#6d6860', wash: css('--wash') || '#f3eee4', base,
-      tint: k => COLOUR.has(k) ? mix(base(k), paper, 0.74) : mix(line, paper, 0.25), none: mix(line, paper, 0.55)};
+      tint: () => land, none: land};
   }
 
   function siteRows(sites, day, limit) {
@@ -122,7 +125,7 @@
   function labeller(gLabels, fs, frame, P, measure) {
     const boxes = [];
     return (x, yTop, name, value) => {
-      const w = fs * 0.56 * Math.max(name.length, 6), h = fs * 2.3;
+      const w = fs * 0.64 * Math.max(name.length, 6) + fs * 0.6, h = fs * 2.4;
       const tries = [[0, 0, 'middle'], [0, h * 0.9, 'middle'], [0, h * 1.8, 'middle'], [-w / 2 - fs * 0.4, h * 0.6, 'end'], [w / 2 + fs * 0.4, h * 0.6, 'start']];
       for (const [dx, up, anchor] of tries) {
         const cx = x + dx, base = yTop - up, l = anchor === 'middle' ? cx - w / 2 : anchor === 'end' ? cx - w : cx, box = [l - 2, base - h - 2, l + w + 2, base + 1];
@@ -150,7 +153,7 @@
     const frame = is3d ? b3d : [0, 0, W, H];
     svg.setAttribute('viewBox', frame.map(v => v.toFixed(1)).join(' '));
     svg.replaceChildren();
-    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center ${measure === 'mw' ? 'power (MW)' : 'estimated capex ($B)'} by US city at ${label()} (${status()}), states coloured by state`);
+    svg.setAttribute('aria-label', `${is3d ? '3D columns' : 'Circles'} of tracked AI data-center ${measure === 'mw' ? 'power (MW)' : 'estimated capex ($B)'} by US city at ${label()} (${status()})`);
     const scale = (svg.getBoundingClientRect().width || frame[2]) / frame[2], narrow = scale < 0.6, fs = Math.min(30, 11 / scale);
     const defs = el('defs', {}, svg), pat = el('pattern', {id: hatch, width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)'}, defs);
     el('rect', {width: 6, height: 6, fill: P.none}, pat); el('line', {x1: 0, y1: 0, x2: 0, y2: 6, stroke: P.line, 'stroke-width': 1.2}, pat);
@@ -159,7 +162,7 @@
     const gCols = el('g', {}, svg), gLabels = el('g', {'pointer-events': 'none'}, svg);
     for (const k of Object.keys(G)) {
       const r = m.states.get(k), d = PATHS[mode][k];
-      const p = el('path', {d, fill: r ? P.tint(k) : `url(#${hatch})`, stroke: P.paper, 'stroke-width': 1, 'stroke-linejoin': 'round', class: 'usmap-state'}, gStates);
+      const p = el('path', {d, fill: P.tint(k), stroke: P.paper, 'stroke-width': 1, 'stroke-linejoin': 'round', class: 'usmap-state'}, gStates);
       p.addEventListener('mouseenter', () => outline.setAttribute('d', d)); p.addEventListener('mouseleave', () => outline.setAttribute('d', ''));
       p.setAttribute('aria-label', G[k].name + (r ? `: ${S.long(r.value)} at ${label()}` : ': no tracked site'));
       hover(p, () => r
@@ -192,7 +195,8 @@
         q.labelAt = [(x0 + x1) / 2, yt - 3];
         hover(g, tipFor(q.c));
       }
-      for (const q of [...prisms].sort((a, b) => b.c.value - a.c.value).slice(0, nLabels)) place(q.labelAt[0], q.labelAt[1], shortName(q.c), q.c.value);
+      // Label the tallest columns that have a real city (a state-centre placeholder is not a place); try more candidates so collisions skip, not stack.
+      let shown = 0; for (const q of [...prisms].filter(q => q.c.city).sort((a, b) => b.c.value - a.c.value)) { if (shown >= nLabels) break; if (place(q.labelAt[0], q.labelAt[1], shortName(q.c), q.c.value)) shown++; }
       // Reference column (1 GW or $10B/$25B) on the same scale, in the empty Atlantic corner.
       const rx = frame[0] + frame[2] - 54 / Math.max(scale, 0.5), ry = frame[1] + frame[3] - 22, rh = hOf(REF[measure][0]);
       const rb = [[rx - A, ry - A * K], [rx + A, ry - A * K], [rx + A, ry + A * K], [rx - A, ry + A * K]];

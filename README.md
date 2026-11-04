@@ -1,24 +1,39 @@
-# Who powers the Token Economy?
+# Is AI compute tight now, and will it stay tight?
 
-An interactive page on who supplies AI compute: hyperscalers (AWS, Microsoft Azure, Google Cloud, Oracle, Meta, xAI/SpaceX), neoclouds (CoreWeave, Nebius, Lambda, Crusoe, Nscale, Fluidstack and others), power hosts, and the Chinese clouds.
+**Who powers the Token Economy?** A source-linked field guide to AI compute: chips, data centers, contracts, prices and inference traffic, built to answer two questions. Every figure on the page links to its source.
 
 **Live page:** https://hxu296.github.io/ai-compute-landscape/
 
-**New maintainer or agent?** Start with [ONBOARDING.md](ONBOARDING.md) for setup, source curation, verification, publication and a ready-to-copy starter prompt. [AGENTS.md](AGENTS.md) is the short entry point.
+**New maintainer or agent?** Start with [ONBOARDING.md](ONBOARDING.md) for setup, source curation, verification, publication and a ready-to-copy starter prompt. [AGENTS.md](AGENTS.md) is the short entry point. **Agent messages:** use the [GitHub scratchpad](https://github.com/hxu296/ai-compute-landscape/tree/main/scratchpad).
 
-**Agent messages:** use the [GitHub scratchpad](https://github.com/hxu296/ai-compute-landscape/tree/main/scratchpad) for committed requests, acknowledgements and replies.
+![Hero: tracked US data-center power and estimated capex, played forward as you scroll](docs/screenshots/01-hero.png)
 
-It covers:
+## Main results (as of November 4, 2026)
 
-- fleet sizes, by chip designer;
-- the big compute contracts and who signed them with whom;
-- growth in revenue, power and backlog;
-- published GPU-hour prices and price indices;
-- what the large deals imply per kW-month;
-- statements on inference versus training;
-- dated token disclosures and conditional DeepSeek rack, power and ownership-cost scenarios;
-- native accelerator counts stacked by owner, using a consistent Epoch snapshot;
-- China's chip mix.
+The page refreshes prices and the token projection daily, so the live numbers move; these are the values on the date above. E = estimate.
+
+**1. Now: compute is tight.**
+- Rental prices for current GPUs are up over 90 days: H100 $3.41/h (+7%), B200 $6.47/h (+18%), SemiAnalysis composites. Older-chip list prices at hyperscalers fell 26–54% since Q1 2025, so "tight" holds mainly for current-generation chips.
+- Anthropic bought $5.0B of short-term compute in Q3 2026 at a premium to its multi-year contracts, and its commitments due in the next 12 months are ≈1.0× its revenue run-rate (S-1/A, Nov 2).
+- On the record: NVIDIA expects supply "to remain a bottleneck at least through the end of fiscal year 2028"; Microsoft says demand "continues to exceed available supply"; CoreWeave's near-term capacity is "effectively sold out". Backlog grows faster than tracked capacity at Google Cloud and AWS, roughly even at CoreWeave, and slower at Microsoft and Oracle.
+
+![Is compute tight now? Five measured signals and verbatim statements, with counter-signals](docs/screenshots/02-tight-now.png)
+
+**2. 2027–28: it depends on one number.**
+- Compute being built grows ≈64% a year through 2028 (Epoch AI tracked sites, ex-China; a floor).
+- Token demand is ≈1.7 quadrillion logical tokens/day worldwide (E), growing ≈15% a month on each company's own trend.
+- Priced at Anthropic's filed serving cost (≈$0.143 per million tokens) and $5 per GB300-equivalent GPU-hour, inference outgrows today's serving share of compute in **March 2028** at 12%/month growth. The break-even is **≈9%/month (≈2.9× a year)**: faster means it stays tight, slower means it loosens. Demand stays below everything built through 2028, so the squeeze falls on training.
+
+![Shortage or oversupply: inference demand against the build-out](docs/screenshots/03-will-it-stay-tight.png)
+
+**3. Who holds the compute, and who is exposed if it loosens.**
+- Tracked frontier sites reach ≈50 GW by end-2028. OpenAI and Anthropic use 26–39% of it at end-2026 and 38–50% at end-2028 (exclusive sites → including sites they share); "most of the world's compute" holds only for new capacity in 2027–28.
+- OpenAI and Anthropic sign ≈$1.26T of the ≈$1.44T in disclosed compute deals since 2025, mostly through Oracle, Microsoft, AWS and Google.
+- Most exposed if demand falters: Core Scientific, CoreWeave and Galaxy Digital (debt, customer concentration, term mismatch).
+
+![Who uses the tracked data-center power](docs/screenshots/04-who-uses-compute.png)
+![How the companies connect: buyers, clouds and landlords](docs/screenshots/05-who-pays-whom.png)
+![Who gets hurt first if demand falters](docs/screenshots/06-who-is-exposed.png)
 
 ## Reading the numbers
 
@@ -39,7 +54,7 @@ The rules used throughout:
 
 The method section at the bottom of the page lists what the data cannot tell you, with a [prioritized evidence queue](research/GAPS.md).
 
-The inference calculator uses raw SemiAnalysis InferenceX serving-group rates, not the interpolated total-token headline. Its default 500T/day traffic is an **assumption**, not an observed market total. Cached input, output and fresh input are distinct. Cache composition does not recalibrate rack demand because isolated uncached-prefill capacity is unavailable. Only GB200/GB300 NVL72 runs are compared (72 physical GPUs per rack), using for each model and rack type the run with the highest output throughput per GPU above 50 tokens/s per user; whole-rack counts include spare slots. Ownership cost and power allowances apply only to the GB200 runs. Selected benchmark records and exact API URLs are in [research/capacity.json](research/capacity.json) and [research/capacity-expanded.json](research/capacity-expanded.json); run arithmetic and dataset checks with `node --test tests/*.test.cjs`.
+The rack calculator (appendix) uses raw SemiAnalysis InferenceX serving-group rates, not the interpolated total-token headline. Its default traffic is this page's token projection, an **estimate**, not an observed market total. Cached input, output and fresh input are distinct. Cache composition does not recalibrate rack demand because isolated uncached-prefill capacity is unavailable. Only GB200/GB300 NVL72 runs are compared (72 physical GPUs per rack), using for each model and rack type the run with the highest output throughput per GPU above 50 tokens/s per user; whole-rack counts include spare slots. Ownership cost and power allowances apply only to the GB200 runs. Selected benchmark records and exact API URLs are in [research/capacity.json](research/capacity.json) and [research/capacity-expanded.json](research/capacity-expanded.json); run arithmetic and dataset checks with `node --test tests/*.test.cjs`.
 
 ## Files
 

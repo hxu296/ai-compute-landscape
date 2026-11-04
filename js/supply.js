@@ -4,6 +4,17 @@
   const DES = [["Nvidia", "--s1"], ["Google", "--s2"], ["Amazon", "--s3"], ["AMD", "--s4"]];
   // Delivered chips (Epoch chip owners, end-2025) plus dated additions at Epoch-tracked frontier sites, by year online.
   const TL=window.DC_TIMELINES,YRS=[['2026','--s5',.9],['2027','--s5',.65],['2028','--s5',.42],['final','--s5',.24]],yLabel=y=>y==='final'?'after 2028':'in '+y;
+  // Presentation: planned segments are lighter shades of the owner's own colour (darker = sooner); company-stated phases add a hatch.
+  const PL=o=>0.18+o*0.5;
+  // Row geometry: wide = label left, bar, value right (900-unit frame); phones = a list, label and value above a full-width bar, drawn 1:1 in px.
+  function geom(svg,L,R,rh){const w=svg.parentElement.getBoundingClientRect().width||900,narrow=w<560;svg.classList.toggle('narrow',narrow);
+    if(!narrow)return{narrow,W:900,L,R,T:20,rh,lab:(y,dy)=>({x:L-10,y:y+dy,'text-anchor':'end'}),bar:(dy,h)=>[dy,h],val:(y,xEnd,dy)=>({x:xEnd+6,y:y+dy})};
+    const W=Math.max(300,Math.round(w));return{narrow,W,L:0,R:W-2,T:8,rh:42,lab:y=>({x:0,y:y+13,'text-anchor':'start'}),bar:()=>[19,13],val:y=>({x:W,y:y+13,'text-anchor':'end'})};}
+  // Phones: shorten a row label so it never runs into the value on the same line.
+  function fit(label,value,W){if(!label||!value)return;const full=label.textContent;let t=full;while(t.length>3&&label.getComputedTextLength()+value.getComputedTextLength()+12>W){t=t.slice(0,-1);label.textContent=t+'…';}if(t!==full)el('title',{},label).textContent=full;}
+  function ticks(svg,G,y,vals,fmt){vals.forEach((v,i)=>{const x=G.L+(v.f)*(G.R-G.L);el('line',{x1:x,x2:x,y1:G.T-6,y2:y-4,stroke:css('--grid')},svg);
+    el('text',{x,y:y+12,'text-anchor':G.narrow&&i===0?'start':G.narrow&&i===vals.length-1?'end':'middle',class:'axis'},svg).textContent=fmt(v.v);});}
+  function hatchDef(svg){const d=el('defs',{},svg),p=el('pattern',{id:'supHatch',width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},d);el('line',{x1:0,y1:0,x2:0,y2:5,stroke:css('--paper'),'stroke-width':1.6,'stroke-opacity':.85},p);}
   // One year's segment: the Epoch-tracked sites that add capacity in that year, with their own increments.
   const yearTip=(name,j,metric,fmt,fromNow=false,from=null,barValue=null)=>{const t=TL?.providers?.[name],[y]=YRS[j],prev=j?YRS[j-1][0]:fromNow&&t?.mw?.now!=null&&(!from||from>=String(TL.retrieved_utc).slice(0,10))?'now':'2025',mid=j===0&&from&&prev!=='now'&&t?.mw?.now!=null&&from>'2025-12-31',base=mid?'now':prev,sites=(t?.sites||[]).map(s=>({n:s.name,v:Math.max(0,(s[metric][y]||0)-(s[metric][base]||0)),end:s[metric][y]||0})).filter(s=>s.v>0).sort((a,b)=>b.v-a.v);
     const head=j===0&&from&&prev!=='now'?`from ${esc(from)} (the company figure’s date) to end-${y}`:prev==='now'?`in the rest of ${y} (after ${String(TL.retrieved_utc).slice(0,10)})`:yLabel(y);
@@ -16,26 +27,26 @@
         const sitesOnly=!base&&t?t.h100e['2025']:0;
         return {name,d,base,sitesOnly,fut,t,total:base+sitesOnly+fut.reduce((a,b)=>a+b,0)};})
       .filter(r=>r.total>0).sort((a, b) => b.total - a.total);
-    const L = 190, R = 700, T = 20, rh = 30, max = Math.max(...rows.map(r => r.total));
-    svg.setAttribute("viewBox", `0 0 900 ${T + rows.length * rh + 40}`);
+    const G = geom(svg, 190, 700, 30), {L, R, T, rh} = G, max = Math.max(...rows.map(r => r.total)), [by, bh] = G.bar(7, 15);
+    svg.setAttribute("viewBox", `0 0 ${G.W} ${T + rows.length * rh + 40}`);
     const x = v => L + (v / max) * (R - L);
-    for (let i=0;i<=4;i++) { const v=max*i/4; el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: T + rows.length * rh, stroke: css("--grid") }, svg);
-      el("text", { x: x(v), y: T + rows.length * rh + 16, "text-anchor": "middle" }, svg).textContent = max>=1e6?`${+(v/1e6).toFixed(1)}M`:num(v); }
+    ticks(svg, G, T + rows.length * rh + 4, [0,1,2,3,4].map(i => ({v: max * i / 4, f: i / 4})), v => max>=1e6?`${+(v/1e6).toFixed(1)}M`:num(v));
     rows.forEach((r, i) => {
       const y = T + i * rh; let acc = 0;
-      el("text", { x: L - 10, y: y + 18, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
+      const lab = el("text", { ...G.lab(y, 18), class: "ink" }, svg); lab.textContent = r.name;
       DES.forEach(([k, c]) => { const v = r.d[k] || 0; if (!v) return;
-        const b = el("rect", { x: x(acc) + 1, y: y + 7, width: Math.max(1, x(acc + v) - x(acc) - 2), height: 15, rx: 3, fill: css(c) }, svg); acc += v;
+        const b = el("rect", { x: x(acc) + 1, y: y + by, width: Math.max(1, x(acc + v) - x(acc) - 2), height: bh, rx: 2, fill: css(c) }, svg); acc += v;
         hover(b, `<b>${esc(r.name)}: ${k} chips</b>${num(v)} H100-equivalents (Epoch median, end-2025)<br>${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology","Epoch methodology")}`); });
       acc=r.base;
-      if(r.sitesOnly){const b=el("rect",{x:x(0)+1,y:y+7,width:Math.max(1,x(r.sitesOnly)-x(0)-2),height:15,rx:3,fill:"none",stroke:css("--s1"),"stroke-dasharray":"3 2"},svg);acc=r.sitesOnly;
+      if(r.sitesOnly){const b=el("rect",{x:x(0)+1,y:y+by,width:Math.max(1,x(r.sitesOnly)-x(0)-2),height:bh,rx:2,fill:"none",stroke:companyColor(r.name,"--muted"),"stroke-dasharray":"3 2"},svg);acc=r.sitesOnly;
         hover(b,`<b>${esc(r.name)}</b>${num(r.sitesOnly)} H100e at Epoch-tracked sites, end-2025 (sites only, not a whole fleet)`);}
       const tip=()=>`<b>${esc(r.name)}</b>${r.base?`${num(r.base)} H100e delivered by end-2025 (Epoch chip owners)<br>`:''}Coming online at Epoch-tracked sites (E):<br>${YRS.map(([y],j)=>`${yLabel(y)}: +${num(r.fut[j])} H100e`).join('<br>')}<br><span class="small">${(r.t?.sites||[]).slice(0,6).map(s=>esc(s.name)).join(', ')}${(r.t?.sites||[]).length>6?'…':''}</span><br>${src(TL.source_url,'Epoch data-center timelines')}`;
-      YRS.forEach(([yr,c,o],j)=>{const v=r.fut[j];if(!v)return;const b=el("rect",{x:x(acc)+1,y:y+7,width:Math.max(1,x(acc+v)-x(acc)-2),height:15,rx:3,fill:css(c),opacity:o,"data-year":yr},svg);hover(b,()=>yearTip(r.name,j,'h100e',v=>num(Math.round(v))+' H100e'));acc+=v;});
+      YRS.forEach(([yr,c,o],j)=>{const v=r.fut[j];if(!v)return;const b=el("rect",{x:x(acc)+1,y:y+by,width:Math.max(1,x(acc+v)-x(acc)-2),height:bh,rx:2,fill:companyColor(r.name),opacity:PL(o),"data-year":yr},svg);hover(b,()=>yearTip(r.name,j,'h100e',v=>num(Math.round(v))+' H100e'));acc+=v;});
       const f=r.fut.reduce((a,b)=>a+b,0),now=r.base||r.sitesOnly;
-      el("text", { x: x(r.total) + 6, y: y + 18, class: "ink", "font-family": "JetBrains Mono, monospace", "font-size": 11 }, svg).textContent = (now?`${(now/1e6).toFixed(2)}M`:'')+(f?`${now?' + ':'+'}${(f/1e6).toFixed(2)}M planned`:'');
+      const val = el("text", { ...G.val(y, x(r.total), 18), class: "value" }, svg); val.textContent = (now?`${(now/1e6).toFixed(2)}M`:'')+(f?`${now?' + ':'+'}${(f/1e6).toFixed(2)}M planned`:'');
+      if (G.narrow) fit(lab, val, G.W);
     });
-    $("#supLegend").innerHTML = DES.filter(([k])=>all||k===designer).map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("")+(all?`<span><i style="width:28px;background:linear-gradient(90deg,var(--s5) 0 25%,color-mix(in srgb,var(--s5) 70%,white) 25% 50%,color-mix(in srgb,var(--s5) 45%,white) 50% 75%,color-mix(in srgb,var(--s5) 25%,white) 75%)"></i>planned at tracked sites, by year (darker = sooner)</span>`:'');
+    $("#supLegend").innerHTML = DES.filter(([k])=>all||k===designer).map(([k, c]) => `<span><i style="background:var(${c})"></i>${k === "Google" ? "Google TPU" : k === "Amazon" ? "Amazon Trainium" : k}</span>`).join("")+(all?`<span><i style="width:28px;background:linear-gradient(90deg,color-mix(in srgb,var(--ink-2) 63%,var(--paper)) 0 25%,color-mix(in srgb,var(--ink-2) 50%,var(--paper)) 25% 50%,color-mix(in srgb,var(--ink-2) 39%,var(--paper)) 50% 75%,color-mix(in srgb,var(--ink-2) 30%,var(--paper)) 75%)"></i>planned at tracked sites, in the owner’s colour (lighter = later)</span>`:'');
     $("#supNote").innerHTML = `Solid: Epoch AI "AI chip owners" median cumulative deliveries to 2025-12-31, in H100-equivalents at dense 8-bit performance. Lighter segments: additional H100e scheduled to come online at Epoch-tracked frontier data centers, by year, from <a href="${TL?.source_url}" target="_blank" rel="noopener">Epoch's data-center timelines</a>${TL?` (retrieved ${String(TL.retrieved_utc).slice(0,10)})`:''}. These cover tracked frontier sites only, so whole-fleet additions are larger; projected sites can slip. Owners as Epoch records them (e.g. Oracle owns Stargate Abilene, which Crusoe built). Estimates, not disclosures. Planned additions are shown with "All" designers only. ${src("https://epoch.ai/data/ai-chip-owners-documentation/methodology", "Epoch's chip-owner method")}`;
   }
   // Power, facility MW where Epoch is the source: online (company figure, or Epoch-tracked sites), Epoch-tracked additions by year,
@@ -67,15 +78,15 @@
       return {name:p.name,group:p.group,t,on,ct,ctv,fct,fs,rb,from,epoch,sch,undated,inserviceCommitted:p.latest.mw_contracted?.stage==="in-service commitment"?p.latest.mw_contracted:null,pipe:p.latest.mw_pipeline,
         end:Math.max(ctv,known)};})
       .filter(r => r.on || r.ct).sort((a, b) => b.end - a.end);
-    const L = 205, R = 640, T = 20, rh = 26, max = Math.max(...rows.map(r=>r.end));
-    svg.setAttribute("viewBox", `0 0 900 ${T + rows.length * rh + 40}`);
-    const x = v => L + (v / max) * (R - L);
-    for (let v = 0; v <= max; v += 1000) { el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: T + rows.length * rh, stroke: css("--grid") }, svg);
-      el("text", { x: x(v), y: T + rows.length * rh + 16, "text-anchor": "middle" }, svg).textContent = `${v / 1000} GW`; }
+    const G = geom(svg, 205, 640, 26), {L, R, T, rh} = G, max = Math.max(...rows.map(r=>r.end)), [by, bh] = G.bar(4, 16);
+    svg.setAttribute("viewBox", `0 0 ${G.W} ${T + rows.length * rh + 40}`); hatchDef(svg);
+    const x = v => L + (v / max) * (R - L), step = G.narrow && max > 4000 ? 2000 : 1000, tv = [];
+    for (let v = 0; v <= max; v += step) tv.push({v, f: v / max});
+    ticks(svg, G, T + rows.length * rh + 4, tv, v => `${v / 1000} GW`);
     rows.forEach((r, i) => {
       const y = T + i * rh;
-      markConflict(svg,r.name,"mw_online",L-193,y+15);
-      el("text", { x: L - 10, y: y + 15, "text-anchor": "end", class: "ink" }, svg).textContent = r.name;
+      if(!G.narrow)markConflict(svg,r.name,"mw_online",L-193,y+15);
+      const lab = el("text", { ...G.lab(y, 15), class: "ink" }, svg); lab.textContent = r.name; const co = companyColor(r.name);
       const onTip=()=>{const o=r.on;const conv=o.f!==1?`<br><span class="small">≈${num(Math.round(o.value))} MW facility power at ×${PUE} (company figure is ${esc(o.pb||'IT')} power).</span>`:'';
         if(o.kind==='corrected')return`<b>${esc(r.name)} · online (corrected)</b>${num(o.raw)} MW ${esc(o.pb||'')} · ${esc(o.as_of)} · grade ${esc(o.grade)}${conv}<br><span class="muted">${esc(o.basis)}</span><br>${src(o.source_url)}`;
         if(o.kind==='company')return`<b>${esc(r.name)} · online (company figure)</b>${cell(o.cell,"mw")} · ${esc(o.pb)}${conv}`+(r.inserviceCommitted?`<br>Within the in-service fleet: ${cell(r.inserviceCommitted,"mw")} customer-committed (subset)`:'');
@@ -83,15 +94,17 @@
       const schTip=(k,drawn)=>{const g=CS[r.name]?.segments?.[k],lab=SCHED.find(s=>s[0]===k)[1];return`<b>${esc(r.name)} · company-stated, in service ${esc(lab)}</b>+${num(Math.round(drawn))} MW facility (E)${Math.abs(drawn-g.mw)>1?`<br><span class="small muted">Company figure ${num(Math.round(g.mw))} MW ${esc(r.rb||'')}${r.fs!==1?` × ${PUE} to facility`:''}${CS[r.name]?.includes_epoch?', less capacity already in the Epoch-tracked segments':''}.</span>`:''}<br>${g.items.map(it=>`${num(Math.round(it.mw))} MW · ${esc(it.basis)}${it.grade?` · grade ${esc(it.grade)}`:''} ${it.source_url?src(it.source_url,'↗'):''}`).join('<br>')}<br><span class="small">Contracted capacity outside Epoch-tracked sites. Landlord and tenant rows can overlap (e.g. Fluidstack MW inside TeraWulf, Hut 8 and Cipher).</span>`;};
       const undTip=()=>`<b>${esc(r.name)} · contracted, no date disclosed</b>≈${num(Math.round(r.undated))} MW facility of ${cell(r.ct,"mw")}${r.fct!==1?` (×${PUE} to facility)`:''}<br><span class="small">Contracted total minus online, Epoch-tracked additions and company-stated phases.${CS[r.name]?.notes?' '+esc(CS[r.name].notes.slice(0,300))+'…':''}</span>`+(r.pipe?`<br>Pipeline (not contracted): ${cell(r.pipe,"mw")}`:'');
       let acc=0;
-      if (r.on) { hover(el("rect", { x: L, y: y + 4, width: Math.max(2, x(r.on.value) - L), height: 16, rx: 3, fill: css("--s1"), opacity: r.on.kind==='company'||r.on.kind==='corrected'?1:.6, "data-seg":"online" }, svg), onTip); acc=r.on.value; }
-      r.epoch.forEach((v,j)=>{if(!v)return;const [yr,c,o]=YRS[j];hover(el("rect",{x:x(acc),y:y+4,width:Math.max(1,x(acc+v)-x(acc)),height:16,fill:css(c),opacity:o,"data-year":yr},svg),()=>yearTip(r.name,j,'mw',v=>num(Math.round(v))+' MW',true,r.on&&r.on.kind!=='epoch'?r.from:null,v));acc+=v;});
-      r.sch.forEach((v,j)=>{if(!v)return;const [k,,o]=SCHED[j];hover(el("rect",{x:x(acc),y:y+4,width:Math.max(1,x(acc+v)-x(acc)),height:16,fill:css("--s2"),opacity:o,"data-sched":k},svg),()=>schTip(k,v));acc+=v;});
-      if(r.undated>0){hover(el("rect",{x:x(acc),y:y+5,width:Math.max(1,x(acc+r.undated)-x(acc)),height:14,rx:2,fill:"none",stroke:css("--s2"),"stroke-dasharray":"3 2","data-sched":"undated"},svg),undTip);acc+=r.undated;}
+      if (r.on) { hover(el("rect", { x: L, y: y + by, width: Math.max(2, x(r.on.value) - L), height: bh, rx: 2, fill: co, opacity: r.on.kind==='company'||r.on.kind==='corrected'?1:.72, "data-seg":"online" }, svg), onTip); acc=r.on.value; }
+      r.epoch.forEach((v,j)=>{if(!v)return;const [yr,c,o]=YRS[j];hover(el("rect",{x:x(acc),y:y+by,width:Math.max(1,x(acc+v)-x(acc)),height:bh,fill:co,opacity:PL(o),stroke:css("--paper"),"stroke-width":1,"data-year":yr},svg),()=>yearTip(r.name,j,'mw',v=>num(Math.round(v))+' MW',true,r.on&&r.on.kind!=='epoch'?r.from:null,v));acc+=v;});
+      r.sch.forEach((v,j)=>{if(!v)return;const [k,,o]=SCHED[j],wd=Math.max(1,x(acc+v)-x(acc)),seg=el("g",{"data-sched":k},svg);el("rect",{x:x(acc),y:y+by,width:wd,height:bh,fill:co,opacity:PL(o),stroke:css("--paper"),"stroke-width":1},seg);el("rect",{x:x(acc),y:y+by,width:wd,height:bh,fill:"url(#supHatch)"},seg);hover(seg,()=>schTip(k,v));acc+=v;});
+      if(r.undated>0){hover(el("rect",{x:x(acc),y:y+by+1,width:Math.max(1,x(acc+r.undated)-x(acc)),height:bh-2,rx:2,fill:"none",stroke:co,"stroke-dasharray":"3 2","data-sched":"undated"},svg),undTip);acc+=r.undated;}
       const plannedE=r.epoch.reduce((a,b)=>a+b,0),plannedC=r.sch.reduce((a,b)=>a+b,0);
-      el("text", { x: x(r.end) + 6, y: y + 16 }, svg).textContent = r.inserviceCommitted ? `${num(r.on.value)} MW · in service` :
+      const val = el("text", { ...G.val(y, x(r.end), 16), class: "value" }, svg); val.textContent = r.inserviceCommitted ? `${num(r.on.value)} MW · in service` :
         `${r.on?num(Math.round(r.on.value)):'?'}${r.ct?` / ${num(Math.round(r.ctv))}`:''} MW`+(plannedE+plannedC?` · +${num(Math.round(plannedE+plannedC))} dated`:'')+(r.undated>0?` · ${num(Math.round(r.undated))} undated`:'')+(r.on&&r.on.kind==='epoch'?' · tracked sites':'');
+      if (G.narrow) fit(lab, val, G.W);
     });
-    $("#supLegend").innerHTML = `<span><i style="background:var(--s1)"></i>online now (lighter: tracked sites only)</span><span><i style="width:28px;background:linear-gradient(90deg,var(--s5) 0 25%,color-mix(in srgb,var(--s5) 70%,white) 25% 50%,color-mix(in srgb,var(--s5) 45%,white) 50% 75%,color-mix(in srgb,var(--s5) 25%,white) 75%)"></i>coming online at tracked sites (darker = sooner)</span><span><i style="width:28px;background:linear-gradient(90deg,var(--s2) 0 25%,color-mix(in srgb,var(--s2) 70%,white) 25% 50%,color-mix(in srgb,var(--s2) 45%,white) 50% 75%,color-mix(in srgb,var(--s2) 25%,white) 75%)"></i>company-stated schedule (darker = sooner)</span><span><i style="border:1px dashed var(--s2)"></i>no date disclosed</span>`;
+    const g = (t, c = "var(--ink-2)") => `color-mix(in srgb,${c} ${t}%,var(--paper))`;
+    $("#supLegend").innerHTML = `<span class="legend-note">Colour = company (grey: all others)</span><span><i style="background:var(--ink-2)"></i>online now (lighter: tracked sites only)</span><span><i style="width:28px;background:linear-gradient(90deg,${g(63)} 0 25%,${g(50)} 25% 50%,${g(39)} 50% 75%,${g(30)} 75%)"></i>coming online at tracked sites (lighter = later)</span><span><i style="width:28px;background:repeating-linear-gradient(45deg,transparent 0 2px,var(--paper) 2px 3.5px),${g(52)}"></i>company-stated schedule</span><span><i style="border:1px dashed var(--ink-2)"></i>no date disclosed</span>`;
     $("#supNote").innerHTML = `Each bar adds, left to right: power online today; capacity Epoch’s tracker schedules at the company’s own sites (facility MW, E), counted from the date of the company’s online figure; then the company’s own stated in-service schedule for the rest of its contracted MW (filings, calls and decks, graded in the hover); and only what nobody dates as “no date disclosed”. Everything is in facility power: company figures stated as IT (or billable) power are scaled by ×${PUE} (Epoch’s implied ratio at Colossus is 1.25–1.35); gross and connected power count as facility; hover any segment for the company’s own figure and basis. Hyperscaler rows use Epoch’s facility power at their tracked sites, which is not their whole fleet. Landlord and tenant rows overlap. Cipher’s online figure excludes its bitcoin-mining load; Fluidstack and DayOne use their latest in-service figures. ${src("https://epoch.ai/data/ai-data-centers","Epoch data and coverage")}`;
   }
   function draw() { const svg = $("#supSvg"); svg.innerHTML = ""; if(mode==="compute")drawCompute(svg);else drawPower(svg);
@@ -100,6 +113,7 @@
   $("#supCompute").onclick = () => { mode = "compute"; draw(); }; $("#supPower").onclick = () => { mode = "power"; draw(); };
   $("#supDesigner").onchange=()=>{designer=$("#supDesigner").value;draw();};
   onTheme(draw); draw();
+  let supNarrow=$("#supSvg").classList.contains("narrow");addEventListener("resize",()=>{const w=$("#supSvg").parentElement.getBoundingClientRect().width,n=w<560;if(n!==supNarrow||n){supNarrow=n;draw();}});
   const family = c => /^(MI|Instinct MI)/.test(c) ? "AMD" : /^TPU/.test(c) ? "Google TPU" : /^Trainium/.test(c) ? "AWS Trainium" : /^Ascend/.test(c) ? "Huawei" : "NVIDIA";
   let chipFamily="All";
   function chipTable(){

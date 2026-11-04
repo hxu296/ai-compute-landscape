@@ -1,9 +1,15 @@
-// Contracts: buyer -> supplier flow (band width = disclosed value) and a table that follows the selection.
+// The deal network: buyers ← clouds / operators ← disclosed landlords, drawn from the same contract rows as Table 2.
+// Buyer–cloud links are sized by disclosed dollars, cloud–landlord links by contracted MW (one scale per side). Presentation only.
 (function () {
-  let from = "2025", kind = "all", view = "relations", sel = null, minimum = 0;
+  // Default: compute rentals and building leases; chip-supply orders (NVIDIA, AMD, Broadcom…) are one toggle away.
+  let from = "2025", kind = "rent", sel = null, minimum = 0, chips = false;
+  // Buyers drawn by name; everyone else is one grey "Other buyers" row and every undisclosed counterparty one "Undisclosed buyers" row.
+  const BIG = [["OpenAI", /^openai/i], ["Anthropic", /^anthropic/i], ["Meta", /^meta\b/i], ["Microsoft", /^microsoft/i], ["Google", /^google/i], ["xAI / SpaceX", /^(xai|spacex)/i]];
+  const buyerGroup = n => /undisclosed/i.test(n) ? "Undisclosed buyers" : (BIG.find(([, re]) => re.test(n)) || ["Other buyers"])[0];
+  const groupColor = g => g === "Other buyers" ? css("--c-other") : g === "Undisclosed buyers" ? tint(css("--c-other"), .4) : companyColor(g, "--chart-axis");
+  const canonical = n => ({ "Microsoft": "Microsoft Azure", "Google": "Google Cloud", "Oracle": "Oracle OCI", "Amazon": "AWS" }[n] || n);
   const maxDeal=Math.max(1,...[...NC.contracts,...NC.hardware].filter(c=>!c.excluded).map(c=>c.value_usd||0));
-  const W = 900, H = 560, NW = 14, GAP = 8, LX = 170, RX = 900 - 250;
-  const short = s => s.length > 24 ? s.slice(0, 23) + "…" : s;
+  const short = (s, n = 26) => s.length > n ? s.slice(0, n - 1) + "…" : s;
   function priceTxt(c) {
     if (c.implied_usd_per_gpu_hour) return `$${c.implied_usd_per_gpu_hour}/GPU-h`;
     if (c.implied_usd_per_kw_month) return `lease $${Math.round(c.implied_usd_per_kw_month)}/kW-mo`;
@@ -11,101 +17,124 @@
     if (c.implied_usd_per_gpu_hour_est) s += ` (≈$${c.implied_usd_per_gpu_hour_est.low}–${c.implied_usd_per_gpu_hour_est.high}/GPU-h, floor)`;
     return s;
   }
-  function deals() {
-    const base = kind === "all" ? [...NC.contracts, ...NC.hardware] : kind === "hardware" ? NC.hardware : NC.contracts.filter(c => c.kind === kind);
-    return base.filter(c => !c.excluded && String(c.announced || "").slice(0, 4) >= from && (c.value_usd ? c.value_usd >= minimum : $("#dealUnpriced").checked));
+  const inKind = c => kind === "all" ? true : kind === "hardware" ? c.kind === "hardware" : kind === "rent" ? c.kind === "compute" || c.kind === "lease" || (chips && c.kind === "hardware") : c.kind === kind || (kind === "compute" && chips && c.kind === "hardware");
+  const pool = () => [...NC.contracts, ...NC.hardware].filter(c => !c.excluded && String(c.announced || "").slice(0, 4) >= from);
+  function deals() { return pool().filter(c => inKind(c) && (c.value_usd ? c.value_usd >= minimum : $("#dealUnpriced").checked)); }
+  // Columns: a lease runs tenant (a cloud, middle) → landlord (right); every other deal runs buyer (left) → supplier (middle).
+  const isLease = c => c.kind === "lease";
+  const MAXMID = 14, MAXRIGHT = 10;
+  // A row that its note calls the same underlying deal as another row in the same pair with the same MW (e.g. OpenAI–Oracle 4.5 GW,
+  // 2025-07-22 and 2025-09-10) is counted once in MW totals; dollars are summed only where disclosed.
+  const once = cs => cs.filter(c => !(/same underlying deal/i.test(c.note || "") && cs.some(o => o !== c && o.capacity_mw && o.capacity_mw === c.capacity_mw && !/same underlying deal/i.test(o.note || ""))));
+  let layout = null;
+  function build(ds) {
+    const midTot = new Map(), rightTot = new Map(), add = (m, k, v) => m.set(k, (m.get(k) || 0) + v);
+    ds.forEach(c => { if (isLease(c)) { add(rightTot, c.supplier, c.capacity_mw || 0); add(midTot, canonical(c.buyer), (c.capacity_mw || 0) * 1e7); } else add(midTot, canonical(c.supplier), (c.value_usd || 0) + 1); });
+    const topMid = new Set([...midTot].sort((a, b) => b[1] - a[1]).slice(0, MAXMID).map(x => x[0])), topRight = new Set([...rightTot].sort((a, b) => b[1] - a[1]).slice(0, MAXRIGHT).map(x => x[0]));
+    const mid = n => topMid.has(n) ? n : "Other operators", right = n => topRight.has(n) ? n : "Other landlords";
+    const ends = c => isLease(c) ? ["1|" + mid(canonical(c.buyer)), "2|" + right(c.supplier)] : ["0|" + buyerGroup(c.buyer), "1|" + mid(canonical(c.supplier))];
+    const links = new Map();
+    ds.forEach(c => { const [a, b] = ends(c), k = a + "→" + b; if (!links.has(k)) links.set(k, { k, a, b, lease: isLease(c), cs: [] }); links.get(k).cs.push(c); });
+    const L = [...links.values()];
+    L.forEach(l => { l.usd = l.lease ? 0 : l.cs.reduce((s, c) => s + (c.value_usd || 0), 0); l.mw = l.lease ? once(l.cs).reduce((s, c) => s + (c.capacity_mw || 0), 0) : 0; l.size = l.lease ? l.mw : l.usd; });
+    const ids = [...new Set(L.flatMap(l => [l.a, l.b]))], N = Object.fromEntries(ids.map(id => [id, { id, col: +id[0], name: id.slice(2) }]));
+    Object.values(N).forEach(n => { const out = L.filter(l => l.a === n.id), inn = L.filter(l => l.b === n.id);
+      n.usdOut = out.reduce((s, l) => s + l.usd, 0); n.usdIn = inn.reduce((s, l) => s + l.usd, 0); n.mwOut = out.reduce((s, l) => s + l.mw, 0); n.mwIn = inn.reduce((s, l) => s + l.mw, 0);
+      n.partners = new Set((n.col === 0 ? out.map(l => l.b) : n.col === 2 ? inn.map(l => l.a) : inn.map(l => l.a))).size; n.deals = out.concat(inn).reduce((s, l) => s + l.cs.length, 0);
+      n.grouped = /^(Other|Undisclosed) /.test(n.name); });
+    const rankL = n => n.name === "Undisclosed buyers" ? 2 : n.name === "Other buyers" ? 1 : 0;
+    const cols = [0, 1, 2].map(cl => Object.values(N).filter(n => n.col === cl).sort((a, b) => cl === 0 ? rankL(a) - rankL(b) || b.usdOut - a.usdOut : (a.grouped - b.grouped) || (cl === 1 ? b.usdIn - a.usdIn || b.mwOut - a.mwOut : b.mwIn - a.mwIn) || a.name.localeCompare(b.name)));
+    return { L, N, cols, ends };
   }
+  const gw = v => v >= 1000 ? `${(v / 1000).toFixed(1)} GW` : `${Math.round(v).toLocaleString()} MW`;
+  const metric = n => n.col === 0 ? `${n.usdOut ? money(n.usdOut) + " disclosed" : "value undisclosed"} · ${n.partners} supplier${n.partners === 1 ? "" : "s"}` :
+    n.col === 1 ? [n.usdIn ? `${money(n.usdIn)} sold` : "", n.mwOut ? `${gw(n.mwOut)} leased` : ""].filter(Boolean).join(" · ") || `${n.deals} deal${n.deals === 1 ? "" : "s"}, size undisclosed` :
+    n.mwIn ? `${gw(n.mwIn)} leased out` : `${n.deals} lease${n.deals === 1 ? "" : "s"}, MW undisclosed`;
+  const nodeColor = n => n.col === 0 ? groupColor(n.name) : n.grouped ? css("--c-other") : companyColor(n.name, "--chart-axis");
   function draw() {
-    $("#dealRelations").classList.toggle("on", view === "relations"); $("#dealDollars").classList.toggle("on", view === "dollars");
-    if (view === "relations") { drawRelations(); table1(); return; }
-    const svg = $("#sankey"); svg.innerHTML = "";
+    const svg = $("#flowSvg"); if (!svg) { table1(); return; } svg.innerHTML = "";
+    const ds = deals(), all = pool(), G = layout = build(ds), { L, N, cols } = G;
+    // Coverage line: what the current filters leave out of the network and Table 2, counted from the same rows.
+    const out = all.filter(c => !ds.includes(c)), why = c => !inKind(c) ? (c.kind === "hardware" ? "chip supply" : c.kind === "lease" ? "building leases" : "compute services") : !c.value_usd ? "unpriced" : "below the minimum value";
+    const miss = new Map(); out.forEach(c => miss.set(why(c), (miss.get(why(c)) || 0) + 1));
+    if ($("#flowCoverage")) $("#flowCoverage").textContent = `Showing ${ds.length} of ${all.length} deals announced from ${from}` + (miss.size ? `; left out: ${[...miss].map(([k, v]) => `${k} (${v})`).join(", ")}.` : ".");
+    const W = 1080, rows = Math.max(...cols.map(c => c.length), 1), H = Math.max(340, 64 + rows * 38), left = [8, 443, 878], width = 194;
+    cols.forEach(c => c.forEach((n, i) => { n.x = left[n.col]; n.y = 52 + (i + .5) * (H - 68) / c.length; }));
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    const ds = deals().filter(c => c.value_usd > 0 && (c.kind !== "compute" || firmCompute(c)));
-    const tot = (key) => { const m = new Map(); ds.forEach(c => m.set(c[key], (m.get(c[key]) || 0) + c.value_usd)); return [...m].sort((a, b) => b[1] - a[1]); };
-    const topB = tot("buyer").slice(0, 7).map(x => x[0]), topS = tot("supplier").slice(0, 14).map(x => x[0]);
-    const bk = c => topB.includes(c.buyer) ? c.buyer : "Other buyers", sk = c => topS.includes(c.supplier) ? c.supplier : "Other suppliers";
-    const agg = new Map(); ds.forEach(c => { const k = bk(c) + "→" + sk(c); const a = agg.get(k) || { b: bk(c), s: sk(c), v: 0, deals: [] }; a.v += c.value_usd; a.deals.push(c); agg.set(k, a); });
-    const sum = (arr, f) => arr.reduce((a, x) => a + f(x), 0);
-    const bN = [...new Set([...agg.values()].map(a => a.b))].map(n => ({ n, v: sum([...agg.values()].filter(a => a.b === n), a => a.v) })).sort((a, b) => b.v - a.v);
-    const sN = [...new Set([...agg.values()].map(a => a.s))].map(n => ({ n, v: sum([...agg.values()].filter(a => a.s === n), a => a.v) })).sort((a, b) => b.v - a.v);
-    const total = sum(bN, x => x.v); if (!total) { el("text", { x: 20, y: 40 }, svg).textContent = "No deals with a disclosed value in this range."; table1(); return; }
-    const scale = v => v / total * (H - 20 - GAP * (Math.max(bN.length, sN.length) - 1));
-    const place = (nodes) => { let y = 10; nodes.forEach(n => { n.y = y; n.h = Math.max(2, scale(n.v)); n.off = 0; y += n.h + GAP; }); };
-    place(bN); place(sN);
-    const color = new Map(bN.map((n, i) => [n.n, n.n === "Other buyers" ? css("--text-muted") : css(SER[i % 8])]));
-    const B = Object.fromEntries(bN.map(n => [n.n, n])), S = Object.fromEntries(sN.map(n => [n.n, n]));
-    const active = a => !sel || (sel.side === "buyer" ? a.b === sel.name : a.s === sel.name);
-    [...agg.values()].sort((a, b) => b.v - a.v).forEach(a => {
-      const h = Math.max(1, scale(a.v)), b = B[a.b], s = S[a.s];
-      const y1 = b.y + b.off + h / 2, y2 = s.y + s.off + h / 2; b.off += h; s.off += h;
-      const p = el("path", { d: `M${LX + NW},${y1} C${(LX + RX) / 2},${y1} ${(LX + RX) / 2},${y2} ${RX},${y2}`, class: "band", stroke: color.get(a.b), "stroke-width": h,
-        "stroke-opacity": active(a) ? 0.5 : 0.08 }, svg);
-      hover(p, () => `<b>${esc(a.b)} → ${esc(a.s)}</b>${money(a.v)} across ${a.deals.length} deal${a.deals.length > 1 ? "s" : ""}<br>` +
-        a.deals.slice(0, 6).map(c => `${String(c.announced || "").slice(0, 7)} · ${money(c.value_usd)}${c.term_years ? ` · ${c.term_years} yrs` : ""}${badge(c.confidence)} ${esc(priceTxt(c))}`).join("<br>"));
+    ["BUYERS", "CLOUDS / OPERATORS", "DISCLOSED LANDLORDS"].forEach((t, i) => el("text", { x: left[i] + 4, y: 20, class: "flow-heading" }, svg).textContent = t);
+    el("text", { x: left[2] + 4, y: 34, class: "flow-degree" }, svg).textContent = "listed hosts and builders";
+    // Headline, computed from the drawn links.
+    const lUsd = L.filter(l => !l.lease), tot = lUsd.reduce((s, l) => s + l.usd, 0), oa = lUsd.filter(l => /^0\|(OpenAI|Anthropic)$/.test(l.a)), oaV = oa.reduce((s, l) => s + l.usd, 0);
+    const via = new Map(); oa.forEach(l => via.set(l.b.slice(2), (via.get(l.b.slice(2)) || 0) + l.usd)); const top4 = [...via].sort((a, b) => b[1] - a[1]).slice(0, 4), t4 = top4.reduce((s, x) => s + x[1], 0);
+    const list = a => a.length > 1 ? a.slice(0, -1).join(", ") + " and " + a.at(-1) : a[0] || "", lease = cols[1].filter(n => n.mwOut && !n.grouped).sort((a, b) => b.mwOut - a.mwOut), lt = lease.reduce((s, n) => s + n.mwOut, 0);
+    if ($("#dealHeadline")) $("#dealHeadline").textContent = (oaV ? `OpenAI and Anthropic sign ≈${money(oaV)} of the ${money(tot)} disclosed; ${t4 / oaV > .5 ? "most of it" : "the largest part"} flows through ${list(top4.map(x => x[0]))}.` : tot ? `${money(tot)} disclosed in this view.` : "") +
+      (lt ? ` Disclosed landlords lease ≈${(lt / 1000).toFixed(1)} GW, mostly to ${list(lease.slice(0, 2).map(n => n.name))}.` : "");
+    const maxMW = Math.max(1, ...L.map(l => l.mw)), maxUSD = Math.max(1, ...L.map(l => l.usd)), wOf = l => l.size > 0 ? 1.2 + 12 * Math.sqrt(l.size / (l.lease ? maxMW : maxUSD)) : 1;
+    const scope = id => { if (!id) return new Set(L.map(l => l.k)); const n = N[id]; let keep = L.filter(l => l.a === id || l.b === id);
+      if (n.col === 0) { const m = new Set(keep.map(l => l.b)); keep = keep.concat(L.filter(l => m.has(l.a))); }
+      if (n.col === 2) { const m = new Set(keep.map(l => l.a)); keep = keep.concat(L.filter(l => m.has(l.b))); }
+      return new Set(keep.map(l => l.k)); };
+    const linkEls = new Map(), nodeEls = new Map(), selId = sel ? sel.id : null;
+    const highlight = (id = selId) => { const ks = scope(id), act = new Set(L.filter(l => ks.has(l.k)).flatMap(l => [l.a, l.b]));
+      linkEls.forEach((g, k) => { g.style.opacity = ks.has(k) ? "1" : ".05"; g.classList.toggle("flow-active", !!id && ks.has(k)); });
+      nodeEls.forEach((g, k) => { g.style.opacity = !id || act.has(k) ? "1" : ".3"; g.classList.toggle("flow-selected", k === selId); }); };
+    const choose = id => { sel = id && N[id] ? { id, col: N[id].col, name: N[id].name } : null; draw(); };
+    [...L].sort((a, b) => b.size - a.size).forEach(l => {
+      const a = N[l.a], b = N[l.b], x0 = a.x + width, x1 = b.x, d = `M${x0},${a.y} C${x0 + 110},${a.y} ${x1 - 110},${b.y} ${x1},${b.y}`;
+      const g = el("g", { class: "flow-link" }, svg); linkEls.set(l.k, g);
+      el("path", { d, fill: "none", stroke: l.lease ? css("--rule") : nodeColor(a), "stroke-width": wOf(l), "stroke-opacity": l.size > 0 ? .5 : .75, "stroke-dasharray": l.size > 0 ? "" : "3 3" }, g);
+      const hit = el("path", { d, fill: "none", stroke: "transparent", "stroke-width": Math.max(10, wOf(l) + 4), tabindex: 0, role: "button", "aria-label": `${a.name} → ${b.name}; ${l.cs.length} deals` }, g);
+      hover(hit, `<b>${esc(a.name)} → ${esc(b.name)}</b>${l.size > 0 ? (l.lease ? `${gw(l.mw)} contracted` : `${money(l.usd)} disclosed`) : (l.lease ? "MW undisclosed" : "value undisclosed")} · ${l.cs.length} deal${l.cs.length === 1 ? "" : "s"}<br>` +
+        l.cs.slice(0, 5).map(c => `${esc(String(c.announced || "").slice(0, 10))} · ${a.grouped || b.grouped ? esc(c.buyer) + " → " + esc(c.supplier) + " · " : ""}${c.value_usd ? esc(c.value_relation || "") + " " + money(c.value_usd) : c.capacity_mw ? num(c.capacity_mw) + " MW" : "undisclosed"}${badge(c.confidence)}<br><span class="muted">${esc(String(c.structure || "").slice(0, 90))}</span>`).join("<br>") + (l.cs.length > 5 ? `<br>+${l.cs.length - 5} more in Table 2` : ""));
+      hit.onpointerenter = () => highlight(l.b); hit.onpointerleave = () => highlight(); hit.onclick = () => choose(l.b);
     });
-    const lastY = { buyer: -1e9, supplier: -1e9 };
-    const node = (n, x, side, anchor, tx) => {
-      const r = el("rect", { x, y: n.y, width: NW, height: n.h, rx: 3, class: "node", fill: side === "buyer" ? color.get(n.n) : css("--text-secondary") }, svg);
-      const ly = Math.max(n.y + n.h / 2 + 4, lastY[side] + 13); lastY[side] = ly;
-      const t = el("text", { x: tx, y: ly, "text-anchor": anchor, class: "ink", "font-size": n.h < 10 ? 11 : 12 }, svg); t.textContent = `${short(n.n)} ${money(n.v)}`;
-      r.onclick = t.onclick = () => { sel = sel && sel.name === n.n ? null : { side, name: n.n }; draw(); };
-      hover(r, `<b>${esc(n.n)}</b>${money(n.v)} in this view · click to filter`);
-    };
-    bN.forEach(n => node(n, LX, "buyer", "end", LX - 6)); sN.forEach(n => node(n, RX, "supplier", "start", RX + NW + 6));
-    $("#dealSel").textContent = sel ? `Showing ${sel.side} ${sel.name}` : `${ds.length} deals with a disclosed value, ${money(total)} in total`;
+    Object.values(N).forEach(n => {
+      const g = el("g", { class: "flow-node", tabindex: 0, role: "button", "aria-label": `${n.name}: ${metric(n)}; select to list its deals` }, svg); nodeEls.set(n.id, g);
+      el("rect", { x: n.x, y: n.y - 16, width, height: 32, rx: 3, fill: css("--paper"), stroke: css("--line-soft") }, g);
+      el("rect", { x: n.x, y: n.y - 16, width: 3, height: 32, fill: nodeColor(n) }, g);
+      const t = el("text", { x: n.x + 10, y: n.y - 2, class: "flow-name" }, g); t.textContent = short(n.name); if (n.name.length > 26) el("title", {}, t).textContent = n.name;
+      el("text", { x: n.x + 10, y: n.y + 11, class: "flow-degree" }, g).textContent = metric(n);
+      // A company that buys and sells is drawn once on each side it acts on; its other role is named here.
+      const alsoBuys = n.col === 1 && !n.grouped ? ds.filter(c => !isLease(c) && buyerGroup(c.buyer) === "Other buyers" && canonical(c.buyer) === n.name) : [];
+      const members = n.grouped ? [...new Set(ds.filter(c => G.ends(c).includes(n.id)).map(c => n.col === 0 ? c.buyer : n.col === 2 ? c.supplier : isLease(c) ? canonical(c.buyer) : canonical(c.supplier)))] : [];
+      hover(g, `<b>${esc(n.name)}</b>${esc(metric(n))}${alsoBuys.length ? `<br>Also buys ${money(alsoBuys.reduce((s, c) => s + (c.value_usd || 0), 0))} from ${esc(alsoBuys.map(c => c.supplier).join(", "))} (in “Other buyers”)` : ""}${members.length ? `<br><span class="muted">${members.slice(0, 12).map(esc).join(", ")}${members.length > 12 ? "…" : ""}</span>` : ""}<br><span class="muted">Click to highlight and list its deals in Table 2.</span>`);
+      g.onpointerenter = () => highlight(n.id); g.onpointerleave = () => highlight(); g.onclick = () => choose(selId === n.id ? "" : n.id);
+      g.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); choose(selId === n.id ? "" : n.id); } };
+      if (n.col === 1 && !n.grouped) { const cids = [...new Set(ds.filter(c => canonical(c.supplier) === n.name).flatMap(c => ["value_usd", "capacity_gpus", "capacity_mw"].flatMap(m => conflictIds(c.supplier, m, c))))];
+        if (cids.length) { const ct = el("text", { x: n.x + width - 8, y: n.y + 4, "text-anchor": "end", class: "svg-conflict", "data-conflict": cids.join(","), tabindex: 0, role: "button", "aria-label": "Source comparison for " + n.name }, svg); ct.textContent = "!"; } }
+    });
+    highlight();
+    const f = $("#flowFocus"); if (f) { f.innerHTML = `<option value="">All companies</option>` + [0, 1, 2].flatMap(cl => cols[cl].map(n => `<option value="${esc(n.id)}">${["Buyer", "Cloud", "Landlord"][cl]}: ${esc(n.name)}</option>`)).join(""); f.value = selId || ""; f.onchange = e => choose(e.target.value); }
+    if ($("#flowMeta")) $("#flowMeta").innerHTML = sel ? `<b>${esc(sel.name)}</b> · ${esc(metric(N[sel.id]))}. Table 2 lists its deals; linked upstream or downstream deals are context, and no capacity allocation is inferred.` :
+      `Width: disclosed $ (buyer → cloud) and contracted MW (cloud → landlord), one scale per side; dashed = size undisclosed. Hyperscalers’ own campuses (QTS, Vantage, Stack and self-built) are not in the deal data.`;
+    if ($("#dealSel")) $("#dealSel").textContent = sel ? `${sel.name} selected` : "";
     table1();
-  }
-  function drawRelations() {
-    const svg = $("#sankey"); svg.innerHTML = "";
-    const ds = deals(), buyers = [...new Set(ds.map(c => c.buyer))], suppliers = [...new Set(ds.map(c => c.supplier))];
-    const degree = (k, n) => ds.filter(c => c[k] === n).length;
-    buyers.sort((a,b) => degree("buyer",b)-degree("buyer",a)); suppliers.sort((a,b) => degree("supplier",b)-degree("supplier",a));
-    const h = Math.max(360, Math.max(buyers.length, suppliers.length) * 25 + 50);
-    svg.setAttribute("viewBox", `0 0 900 ${h}`);
-    const y = (arr, n) => 30 + arr.indexOf(n) * ((h - 60) / Math.max(1, arr.length - 1));
-    const pairs = new Map(); ds.forEach(c => { const k = c.buyer + "→" + c.supplier; if (!pairs.has(k)) pairs.set(k, []); pairs.get(k).push(c); });
-    pairs.forEach(cs => {
-      const c = cs[0], active = !sel || (sel.side === "buyer" ? c.buyer : c.supplier) === sel.name;
-      const col = css(SER[buyers.indexOf(c.buyer) % SER.length]);
-      const path = el("path", {d:`M190,${y(buyers,c.buyer)} C400,${y(buyers,c.buyer)} 490,${y(suppliers,c.supplier)} 690,${y(suppliers,c.supplier)}`,
-        fill:"none",stroke:col,"stroke-width":active ? (cs.some(d=>d.value_usd)?1.2+12*Math.sqrt(cs.reduce((v,d)=>v+(d.value_usd||0),0)/maxDeal):1.2) : 1,"stroke-opacity": active ? .48 : .06,
-        "stroke-dasharray":cs.every(c=>c.kind === "hardware") ? "5 4" : ""},svg);
-      hover(path, `<b>${esc(c.buyer)} → ${esc(c.supplier)}</b>` + cs.map(c=>`${esc(c.gpu_type || "chip type undisclosed")} · ${c.value_usd ? money(c.value_usd) : "value undisclosed"}<br>${esc(c.evidence || c.structure)}${badge(c.confidence)}`).join("<br>"));
-      path.onclick = () => {sel={side:"supplier",name:c.supplier};draw();};
-    });
-    const totals=(side,n)=>ds.filter(c=>c[side]===n).reduce((sum,c)=>sum+(c.value_usd||0),0);
-    const maxNode=Math.max(...buyers.map(n=>totals("buyer",n)),...suppliers.map(n=>totals("supplier",n)),1);
-    const nodes = (arr, side, x, tx, anchor) => arr.forEach((n,i)=>{
-      const active=!sel || sel.side === side && sel.name === n;
-      const total=totals(side,n),radius=total?Math.max(3,10*Math.sqrt(total/maxNode)):3;
-      const circle=el("circle",{cx:x,cy:y(arr,n),r:radius,fill:total?css(side === "buyer" ? SER[i%8] : "--s1"):css("--paper"),stroke:css(side === "buyer" ? SER[i%8] : "--s1"),"stroke-width":1.2,opacity:active?1:.45},svg);
-      hover(circle,`<b>${esc(n)}</b>${total?money(total)+" disclosed nominal deal value":"Deal value undisclosed"} in the current view. Circle area follows value, with a minimum visible size; overlapping or conditional amounts are retained.`);
-      const t=el("text",{x:tx,y:y(arr,n)+4,"text-anchor":anchor,class:"ink","font-size":12},svg);t.textContent=short(n);el("title",{},t).textContent=n;
-      t.style.cursor=circle.style.cursor="pointer"; t.onclick=circle.onclick=()=>{sel=sel?.side===side&&sel.name===n?null:{side,name:n};draw();};
-    });
-    nodes(buyers,"buyer",190,178,"end");nodes(suppliers,"supplier",690,702,"start");
-    suppliers.forEach(n=>{const ids=[...new Set(ds.filter(c=>c.supplier===n).flatMap(c=>["value_usd","capacity_gpus","capacity_mw"].flatMap(m=>conflictIds(n,m,c))))];if(ids.length){const t=el("text",{x:680,y:y(suppliers,n)+4,class:"svg-conflict","data-conflict":ids.join(","),tabindex:0,role:"button","aria-label":"Source comparison for "+n},svg);t.textContent="!";}});
-    $("#dealSel").textContent=sel?`${sel.name} selected`:`${pairs.size} relationships; width follows disclosed nominal value`;
   }
   let showAllDeals=false;
   function table1() {
-    const all = deals().filter(c => !sel || (sel.side === "buyer" ? (c.buyer === sel.name || (sel.name === "Other buyers")) : (c.supplier === sel.name || sel.name === "Other suppliers")))
+    const all = deals().filter(c => !sel || !layout || layout.ends(c).includes(sel.id))
       .map(c => ({ ...c, price: priceTxt(c), cap: c.capacity_text || (c.capacity_accelerators ? `${c.capacity_relation || ""} ${num(c.capacity_accelerators)} ${c.accelerator_unit}` : c.capacity_gpus ? `${c.capacity_relation || ""} ${num(c.capacity_gpus)} GPUs` : c.capacity_mw ? `${c.capacity_mw_relation || ""} ${num(c.capacity_mw)} MW` : "not disclosed") }))
       .sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0));
     // Top 20 by disclosed value unless searching or expanded.
     const q=($("#dealSearch")?.value||"").trim().toLowerCase(),matched=q?all.filter(c=>[c.buyer,c.supplier,c.gpu_type,c.site,c.structure].join(" ").toLowerCase().includes(q)):all,rows=q||showAllDeals?matched:matched.slice(0,20);
-    if($("#dealCount"))$("#dealCount").textContent=`${rows.length} of ${all.length} deals shown`;if($("#dealShowAll")){$("#dealShowAll").textContent=showAllDeals?"Show top 20":"Show all deals";$("#dealShowAll").hidden=!!q||all.length<=20;}
-    table("#tDeals", rows, [{ k: "buyer", h: "Buyer" }, { k: "supplier", h: "Supplier" }, { k: "announced", h: "Announced", f: r => `<span class="nw">${esc(String(r.announced || "").slice(0, 10))}</span>` },
-      { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : esc(r.value_text || "not disclosed")) + badge(r.confidence) + conflictBadge(r.supplier,"value_usd",r) }, { k: "term_years", h: "Years", f:r=>r.term_years || "not disclosed" }, { k: "cap", h: "Capacity", f:r=>esc(r.cap)+conflictBadge(r.supplier,"capacity_gpus",r)+conflictBadge(r.supplier,"capacity_mw",r) },
-      { k:"gpu_type", h:"Chip / system" }, { k: "price", h: "Implied price" }, { k: "structure", h: "Terms", f: r => { const t = r.evidence || r.structure || "", n = r.note || ""; return `<span class="small">${esc(t.length > 90 ? t.slice(0, 88) + "…" : t)}</span>${n ? `<details class="cell-more"><summary>Notes${r.source_date ? ` · source ${esc(r.source_date)}` : ""}</summary><span class="small muted">${esc(n)}</span></details>` : ""}`; } }, { k: "source_url", h: "", f: r => src(r.source_url) }]);
+    if($("#dealCount"))$("#dealCount").textContent=`${rows.length} of ${all.length} deals shown (${kind==="all"?"all kinds":kind==="rent"?"compute services and leases"+(chips?" and chip orders":""):kind==="compute"?"compute services"+(chips?" and chip orders":""):kind==="lease"?"building leases":"hardware orders"}${sel?", "+sel.name:""}, announced from ${from})`;if($("#dealShowAll")){$("#dealShowAll").textContent=showAllDeals?"Show top 20":"Show all deals";$("#dealShowAll").hidden=!!q||all.length<=20;}
+    // Six visible columns; date, chip, capacity, terms, notes and the source sit in each row's Details.
+    const kwm = r => r.implied_allin_usd_per_kw_month || r.implied_usd_per_kw_month;
+    table("#tDeals", rows, [{ k: "buyer", h: "Buyer", f: r => `<span class="co">${companyDot(r.buyer)}<span>${esc(r.buyer)}</span></span>` }, { k: "supplier", h: "Supplier", f: r => `<span class="co">${companyDot(r.supplier)}<span>${esc(r.supplier)}</span></span>` },
+      { k: "value_usd", h: "Value", f: r => (r.value_usd ? `${esc(r.value_relation || "")} ${money(r.value_usd)}` : `<span class="na">${esc(r.value_text || "not disclosed")}</span>`) + badge(r.confidence) + conflictBadge(r.supplier,"value_usd",r) },
+      { k: "term_years", h: "Years", f: r => r.term_years || `<span class="na">—</span>` },
+      { k: "capacity_mw", h: "MW", f: r => r.capacity_mw ? `${esc(r.capacity_mw_relation || "")} ${num(r.capacity_mw)}${conflictBadge(r.supplier,"capacity_mw",r)}` : `<span class="na">—</span>` },
+      { k: "implied_allin_usd_per_kw_month", h: "$/kW-month", f: r => kwm(r) ? `${r.implied_usd_per_kw_month && !r.implied_allin_usd_per_kw_month ? "lease " : "all-in "}$${Math.round(kwm(r)).toLocaleString()}` : `<span class="na">—</span>` },
+      { k: "announced", h: "", f: r => { const t = r.evidence || r.structure || "", n = r.note || ""; return `<details class="cell-more"><summary>Details</summary><span class="small"><b>Announced</b> ${esc(String(r.announced || "").slice(0, 10))}${r.gpu_type ? ` · <b>Chip</b> ${esc(r.gpu_type)}` : ""} · <b>Capacity</b> ${esc(r.cap)}${conflictBadge(r.supplier,"capacity_gpus",r)}${r.price ? ` · <b>Implied</b> ${esc(r.price)}` : ""}<br>${esc(t)}${n ? `<br><span class="muted">${esc(n)}</span>` : ""}${r.source_date ? `<br><span class="muted">Latest source ${esc(r.source_date)}</span>` : ""} ${src(r.source_url)}</span></details>`; } }]);
   }
   $("#dealFrom").onchange = e => { from = e.target.value; sel = null; draw(); };
-  $("#dealKind").onchange = e => { kind = e.target.value; if(kind === "all")view="relations"; sel = null; draw(); };
+  const syncCtl = () => { if ($("#dealChipsCtl")) $("#dealChipsCtl").hidden = !(kind === "rent" || kind === "compute"); };
+  $("#dealKind").onchange = e => { kind = e.target.value; sel = null; syncCtl(); draw(); };
+  if ($("#dealChips")) $("#dealChips").onchange = e => { chips = e.target.checked; sel = null; draw(); };
+  syncCtl();
   $("#dealReset").onclick = () => { sel = null; draw(); };
   if($("#dealSearch"))$("#dealSearch").oninput=()=>table1();
   if($("#dealShowAll"))$("#dealShowAll").onclick=()=>{showAllDeals=!showAllDeals;table1();};
-  $("#dealRelations").onclick=()=>{view="relations";draw();};
-  $("#dealDollars").onclick=()=>{view="dollars";if(kind==="all"){kind="compute";$("#dealKind").value=kind;}sel=null;draw();};
   $("#dealMin").oninput=e=>{minimum=maxDeal*(Number(e.target.value)/100)**2;$("#dealMinLabel").textContent=minimum?money(minimum)+" and above":"All values";if(minimum>0)$("#dealUnpriced").checked=false;sel=null;draw();};
   $("#dealUnpriced").onchange=()=>{sel=null;draw();};
   onTheme(draw); draw();

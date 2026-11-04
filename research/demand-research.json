@@ -735,7 +735,135 @@
       "usd_per_mtok": 0.1431,
       "note": "Anthropic S-1/A Note 8: cost of revenue $4.812B in January–September 2026, “substantially all” compute for customer-serving workloads, ÷ its consumption-billed tokens over the same months (our revenue-based estimate, averaged on its own trend). Subscription traffic is not in the token count, so this overstates cost per token; Anthropic’s models are also likely heavier than the market average.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm"
-    }
+    },
+    "capacity_quotes": [
+      {
+        "company": "NVIDIA",
+        "speaker": "Colette Kress, EVP & CFO",
+        "date": "2026-08-26",
+        "quote": "Although we will work to close the supply-demand gap, we expect supply to remain a bottleneck at least through the end of fiscal year 2028.",
+        "source_url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+        "context": "Q2 FY27 call (NVIDIA IR-hosted FactSet transcript). Kress called the ~70% FY28 growth guide 'a supply-constrained outlook'; Huang said 'our demand is much greater than 70%'.",
+        "direction": "tight"
+      },
+      {
+        "company": "Microsoft (Azure)",
+        "speaker": "Amy Hood, CFO",
+        "date": "2026-10-28",
+        "quote": "Customer demand continues to exceed available supply.",
+        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/TranscriptQandAFY27Q1.docx",
+        "context": "FY27 Q1 guidance: Azure +49-50% cc despite 3P GPU-as-a-service contracts slipping to H2; Q1 capex $45.2B, below plan on delayed 3P deliveries. Transcript linked from microsoft.com/en-us/investor.",
+        "direction": "tight"
+      },
+      {
+        "company": "CoreWeave",
+        "speaker": "Michael Intrator, Co-founder, Chairman & CEO",
+        "date": "2026-08-11",
+        "quote": "Our near-term capacity remains effectively sold out.",
+        "source_url": "https://www.webull.com/news/15426275319522304",
+        "context": "Q2 2026 call (Motley Fool transcript syndicated on Webull; CoreWeave IR site returned 403). Same call: 'We expect demand to meaningfully exceed supply for years.' Q3 call is Nov 10, not yet held.",
+        "direction": "tight"
+      },
+      {
+        "company": "Anthropic",
+        "speaker": "Form S-1/A (company filing)",
+        "date": "2026-11-02",
+        "quote": "We have historically operated in a compute-constrained environment in which demand for compute has exceeded the supply available to us.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+        "context": "IPO risk factors. Also says it has 'in the past sought quantities of compute from CSPs in excess of what those partners were willing to provide.'",
+        "direction": "tight"
+      },
+      {
+        "company": "Anthropic",
+        "speaker": "Form S-1/A (company filing, MD&A)",
+        "date": "2026-11-02",
+        "quote": "When customer demand or research needs exceed this long-term capacity, we procure short-term compute that currently costs significantly more than comparable compute procured under our multi-year commitments.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+        "context": "Q3 2026 included $5.0B of short-term compute, cutting adjusted operating margin from 19% to 15%; it expects short-term compute use to keep rising near term.",
+        "direction": "tight"
+      },
+      {
+        "company": "Nebius",
+        "speaker": "Q2 2026 shareholder letter (Arkady Volozh, Founder & CEO)",
+        "date": "2026-08-12",
+        "quote": "We could sell our entire 2027 capacity on these terms today. We are deliberately not doing so because we see higher value in retaining some capacity for immediate customer needs.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+        "context": "Letter filed as 6-K Ex. 99.2. It also calls prepayment 'the market standard for securing capacity in a supply-constrained environment.' Q3 results are due Nov 12, not yet out.",
+        "direction": "tight"
+      },
+      {
+        "company": "Amazon (AWS)",
+        "speaker": "Andy Jassy, President & CEO",
+        "date": "2026-10-29",
+        "quote": "We're installing an AI accelerator about every 14 seconds, and almost as fast as we install capacity, customers are gobbling it up.",
+        "source_url": "https://www.aboutamazon.com/news/company-news/aws-growth-ai-demand-q3-2026-earnings",
+        "context": "Q3 2026 call, AWS +39.3%. Backlog $578B, 'growing triple digits'; short-term prior-gen Trainium capacity now sells 'at a premium compared to the first half of the year.'",
+        "direction": "tight"
+      },
+      {
+        "company": "Meta",
+        "speaker": "Susan Li, CFO",
+        "date": "2026-10-21",
+        "quote": "overall the landscape for compute, remains pretty constrained and that's certainly something that we are experiencing ourselves.",
+        "source_url": "https://s21.q4cdn.com/399680738/files/content_files/META-Q3-2026-Follow-Up-Call-Transcript.pdf",
+        "context": "Q3 2026 follow-up call (Meta IR PDF). She added Meta is 'facing the same kinds of capacity constraints as everyone else'; Zuckerberg said Muse isn't global yet because it is compute-intensive.",
+        "direction": "tight"
+      },
+      {
+        "company": "Alphabet (Google Cloud)",
+        "speaker": "Anat Ashkenazi, SVP & CFO",
+        "date": "2026-10-28",
+        "quote": "given the supply constrained environment, we started utilizing third-party compute capacity at the end of Q3 and will ramp usage in Q4.",
+        "source_url": "https://www.fool.com/earnings/call-transcripts/2026/10/29/alphabet-googl-q3-2026-earnings-call-transcript/",
+        "context": "Q3 2026 call (Motley Fool transcript; abc.xyz returned 403). Flagged near-term Cloud margin headwinds. Kurian: 'we could obviously serve a lot more demand with capacity.'",
+        "direction": "tight"
+      },
+      {
+        "company": "Oracle (OCI)",
+        "speaker": "Q1 FY27 earnings release (company statement)",
+        "date": "2026-09-10",
+        "quote": "Customer demand for AI Cloud Training and Inferencing Services continues to grow faster than supply.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-ex99_1.htm",
+        "context": "8-K Ex. 99.1: RPO at $664B, >300k GPUs delivered. On the call, CEO Clay Magouyrk cited 97.9% GPU utilization and renewals or resales at a 20% premium (per Motley Fool transcript).",
+        "direction": "tight"
+      },
+      {
+        "company": "Silicon Data (GPU rental price index; not a cloud provider)",
+        "speaker": "Yang Gao, Data Analyst",
+        "date": "2026-07-31",
+        "quote": "Hyperscaler H100 rates fell in every region, but at very different speeds",
+        "source_url": "https://www.silicondata.com/blog/h100-rental-prices-by-region-q3-2026",
+        "context": "Prior-gen pricing softening at hyperscalers: H100 rates fell ~26-54% from Q1 2025 to Q3 2026. Neocloud H100 rates have recovered since early 2026, so this is mixed rather than a glut.",
+        "direction": "loosening"
+      },
+      {
+        "company": "Microsoft (Azure)",
+        "speaker": "Amy Hood, CFO",
+        "date": "2026-10-28",
+        "quote": "Across our CPU fleet, engineering work enabled us to identify and monetize underutilized capacity this quarter, helping us serve more of the growing demand with our existing capacity.",
+        "source_url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/TranscriptQandAFY27Q1.docx",
+        "context": "An admission of slack, but it concerns CPUs and was recovered through efficiency. GPU efficiency gains also freed capacity for Foundry. Not a sign of idle AI GPUs.",
+        "direction": "loosening"
+      },
+      {
+        "company": "Meta",
+        "speaker": "Susan Li, CFO (CFO Outlook Commentary)",
+        "date": "2026-10-21",
+        "quote": "Our current capacity and what is scheduled to come online gives us the flexibility to allocate resources across model training, core business growth, and the development and support of new products.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-09302026xexhibit991.htm",
+        "context": "Q3 2026 press release (8-K Ex. 99.1). Signals comfort with planned supply, and 2026 capex was narrowed to $135-145B. Contrast with her 'pretty constrained' remark on the same day.",
+        "direction": "loosening"
+      },
+      {
+        "company": "Amazon (AWS)",
+        "speaker": "Andy Jassy, President & CEO",
+        "date": "2026-10-29",
+        "quote": "they will have plenty of capacity to be able to use in AWS",
+        "source_url": "https://www.fool.com/earnings/call-transcripts/2026/10/30/amazon-amzn-q3-2026-earnings-call-transcript/",
+        "context": "Q3 2026 Q&A reassurance that AWS keeps on-demand capacity for EC2/Bedrock. He also said gigawatt-scale blocks are reserved well in advance, into 2027-2029.",
+        "direction": "loosening"
+      }
+    ]
   },
   "neocloud_risk": {
     "as_of": "2026-11-03",
@@ -1109,7 +1237,9 @@
         "interest_basis": "filed interest expense, latest quarter, ÷ that quarter's revenue (D)",
         "top1_basis": "backlog",
         "tenor_why": "$288B of 15–19-year leases not yet started against customer contracts averaging ≈3.2 years (its debt, ≈14.8 years, is long)",
-        "score_notes": {"concentration": "the share rule gives 2; scored 3 for the size, about $300B of backlog with one unrated buyer"},
+        "score_notes": {
+          "concentration": "the share rule gives 2; scored 3 for the size, about $300B of backlog with one unrated buyer"
+        },
         "model": "Hyperscale cloud (investment-grade, BBB-)",
         "row_grade": "A",
         "filing": "10-Q Q1 FY2027 (filed 2026-09-11)",

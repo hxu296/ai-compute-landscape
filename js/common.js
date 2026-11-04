@@ -42,6 +42,21 @@ $("#theme").onclick = () => { const cur = document.documentElement.getAttribute(
   document.documentElement.setAttribute("data-theme", cur === "dark" ? "light" : "dark"); redraw.forEach(f => f()); };
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => redraw.forEach(f => f()));
 const SER = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6", "--s7", "--s8"];
+// One colour per company across the site (Fig. 2 power view, Fig. 3, Fig. 6, A1, A2, Table 2). Ten named companies get a
+// fixed hue; every other company is the same neutral grey, so colour always means the same firm. Chip designers have
+// their own fixed set (DESIGNER_COLOR). Presentation only: no value depends on these.
+// Hues are assigned so that the owners most often stacked next to each other (Figs. 2 and 3) differ most; AWS and Google
+// match their chips' designer colours (Trainium green, TPU red).
+const COMPANY_COLORS = [[/^(aws|amazon)\b/i, "--s3"], [/^microsoft/i, "--s1"], [/^google/i, "--s2"], [/^oracle/i, "--s4"], [/^meta\b/i, "--s7"],
+  [/^coreweave/i, "--s8"], [/^openai/i, "--s5"], [/^anthropic/i, "--s6"], [/^(xai|spacex)/i, "--c-xai"], [/^nebius/i, "--c-nebius"], [/^bytedance/i, "--c-bytedance"]];
+function companyVar(name) { const n = String(name || "").trim(), m = COMPANY_COLORS.find(([re]) => re.test(n)); return m ? m[1] : null; }
+function companyColor(name, fallback = "--c-other") { return css(companyVar(name) || fallback); }
+const DESIGNER_COLOR = { Nvidia: "--d-nvidia", NVIDIA: "--d-nvidia", Google: "--d-google", "Google TPU": "--d-google", Amazon: "--d-amazon", "AWS Trainium": "--d-amazon", AMD: "--d-amd", Huawei: "--d-huawei" };
+// A lighter shade of a colour (t = 0 the colour, 1 the paper), for "planned" segments drawn in the owner's own colour.
+function tint(color, t) { const h = c => { const m = /^#?([0-9a-f]{6})$/i.exec(String(c).trim()); const n = m ? parseInt(m[1], 16) : 0x999999; return [n >> 16, n >> 8 & 255, n & 255]; };
+  const a = h(color), b = h(css("--paper") || "#fffdf8"); return "#" + a.map((v, i) => Math.round(v * (1 - t) + b[i] * t).toString(16).padStart(2, "0")).join(""); }
+// A small colour dot for a company name in tables and lists (grey for companies outside the named set).
+function companyDot(name) { const v = companyVar(name); return `<i class="co-dot${v ? "" : " other"}" style="background:var(${v || "--c-other"})" aria-hidden="true"></i>`; }
 function money(v) { if (v == null || isNaN(v)) return ""; const a = Math.abs(v);
   return a >= 1e12 ? `$${(v / 1e12).toFixed(2)}T` : a >= 1e9 ? `$${(v / 1e9).toFixed(a >= 1e10 ? 0 : 1)}B` : a >= 1e6 ? `$${(v / 1e6).toFixed(0)}M` : `$${v.toLocaleString()}`; }
 // A deal's $/kW-month is a floor when its value is a minimum or its capacity a maximum.
@@ -71,8 +86,12 @@ function table(id, rows, cols) {
   download.textContent=`Download shown rows (${rows.length})`;download.onclick=()=>downloadCsv(id.replace("#",""),rows);
   function render() {
     const rs = key ? [...rows].sort((a, b) => { const x = a[key] ?? "", y = b[key] ?? ""; return (typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y))) * dir; }) : rows;
-    t.innerHTML = "<thead><tr>" + cols.map(c => `<th data-k="${c.k}">${c.h}${key === c.k ? (dir > 0 ? " ▲" : " ▼") : ""}</th>`).join("") + "</tr></thead><tbody>" +
-      rs.map(r => "<tr>" + cols.map(c => `<td>${c.f ? c.f(r) : esc(r[c.k])}</td>`).join("") + "</tr>").join("") + "</tbody>";
+    // Presentation: a column whose raw values are all numbers (or empty) is right-aligned.
+    const nc = cols.map(c => rows.some(r => typeof r[c.k] === "number") && rows.every(r => r[c.k] == null || typeof r[c.k] === "number")), cl = i => nc[i] ? ' class="n"' : "";
+    t.innerHTML = "<thead><tr>" + cols.map((c, i) => `<th data-k="${c.k}"${cl(i)}>${c.h}${key === c.k ? (dir > 0 ? " ▲" : " ▼") : ""}</th>`).join("") + "</tr></thead><tbody>" +
+      rs.map(r => "<tr>" + cols.map((c, i) => `<td${cl(i)}>${c.f ? c.f(r) : esc(r[c.k])}</td>`).join("") + "</tr>").join("") + "</tbody>";
+    // ...unless its rendered cells carry prose (a qualifier, scope or grade): those stay left-aligned.
+    nc.forEach((on, i) => { if (on && [...t.querySelectorAll(`tbody tr > :nth-child(${i + 1})`)].some(td => td.textContent.trim().length > 22)) t.querySelectorAll(`tr > :nth-child(${i + 1})`).forEach(c => c.classList.remove("n")); });
     t.querySelectorAll("th").forEach(th => th.onclick = () => { const k = th.dataset.k; dir = key === k ? -dir : -1; key = k; render(); });
   }
   render();

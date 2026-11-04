@@ -62,16 +62,27 @@ def build(zip_path, retrieved_utc):
             site['h100e'][y] = round(h); site['mw'][y] = round(mw, 1)
         providers[provider]['sites'].append(site)
         site_series[provider].append(s)
-    # Users: the labs Epoch lists as using each site, sharing a multi-user site equally (Epoch gives no split).
-    users = defaultdict(lambda: dict(mw=defaultdict(float), h100e=defaultdict(float), sites=[]))
+    # Users: the labs Epoch lists as using each site. A site with one listed user is credited to it; a site with several
+    # users and no stated split goes to one "Shared site (several users)" bucket rather than equal slices. Each lab also
+    # carries shared_mw: the full power of shared sites it is listed at, an upper bound on its share of them.
+    SHARED = 'Shared site (several users)'
+    users = defaultdict(lambda: dict(mw=defaultdict(float), h100e=defaultdict(float), shared_mw=defaultdict(float), sites=[]))
     for name, s in series.items():
         names = [clean(u) for u in (centers.get(name, {}).get('Users') or '').split(',') if clean(u)] or ['Undisclosed user']
-        for u in names:
-            for y, day in YEARS + [('now', retrieved_utc[:10])]:
-                h, mw = level(s, day)
-                users[u]['mw'][y] += mw / len(names); users[u]['h100e'][y] += h / len(names)
-            users[u]['sites'].append(dict(name=name, shared_with=len(names) - 1, mw_final=round(level(s, '9999-12-31')[1], 1)))
-    by_user = {u: dict(mw={k: round(v, 1) for k, v in d['mw'].items()}, h100e={k: round(v) for k, v in d['h100e'].items()}, sites=sorted(d['sites'], key=lambda x: -x['mw_final'])) for u, d in users.items()}
+        owner_key = names[0] if len(names) == 1 else SHARED
+        for y, day in YEARS + [('now', retrieved_utc[:10])]:
+            h, mw = level(s, day)
+            users[owner_key]['mw'][y] += mw; users[owner_key]['h100e'][y] += h
+            if len(names) > 1:
+                for u in names:
+                    users[u]['shared_mw'][y] += mw
+        users[owner_key]['sites'].append(dict(name=name, users=names if len(names) > 1 else None, mw_final=round(level(s, '9999-12-31')[1], 1)))
+        if len(names) > 1:
+            for u in names:
+                users[u]['sites'].append(dict(name=name, shared=True, users=names, mw_final=round(level(s, '9999-12-31')[1], 1)))
+                users[u]['mw']; users[u]['h100e']
+    keys = [y for y, _ in YEARS] + ['now']
+    by_user = {u: dict(mw={k: round(d['mw'].get(k, 0.0), 1) for k in keys}, h100e={k: round(d['h100e'].get(k, 0.0)) for k in keys}, shared_mw={k: round(d['shared_mw'].get(k, 0.0), 1) for k in keys}, sites=sorted(d['sites'], key=lambda x: -x['mw_final'])) for u, d in users.items()}
     for name, p in providers.items():
         p['h100e'] = {k: round(v) for k, v in p['h100e'].items()}; p['mw'] = {k: round(v, 1) for k, v in p['mw'].items()}
         p['sites'].sort(key=lambda s: -s['h100e']['final'])
@@ -79,7 +90,7 @@ def build(zip_path, retrieved_utc):
     return dict(schema_version=1, source_url=SOURCE, retrieved_utc=retrieved_utc, response_sha256=hashlib.sha256(raw).hexdigest(),
                 years=[y for y, _ in YEARS], method='Epoch AI frontier data-center timelines: level at each year end from the latest dated observation or projection on or before that date; "now" is the level on the retrieval date; "final" is the last projected level (to 2030). Covers tracked frontier sites only, not whole fleets. Power is Epoch facility power (MW). Sites with no owner listed are "Undisclosed owner". "series" is each provider\'s summed facility MW at every change point ([date, MW], same latest-on-or-before rule).',
                 providers=dict(sorted(providers.items(), key=lambda kv: -kv[1]['h100e']['final'])),
-                users_method='All tracked sites (including owners not mapped to a provider above), credited to the labs Epoch lists as users; a site with several users is split equally, a site without listed users is "Undisclosed user".',
+                users_method='All tracked sites, credited to the lab Epoch lists as the user. Sites with several listed users and no stated split are one "Shared site (several users)" bucket; each lab’s shared_mw is the full power of shared sites it is listed at (an upper bound). Sites without listed users are "Undisclosed user".',
                 by_user=dict(sorted(by_user.items(), key=lambda kv: -kv[1]['mw']['final'])))
 
 if __name__ == '__main__':

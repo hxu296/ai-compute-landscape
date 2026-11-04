@@ -24,18 +24,18 @@
     const rows=[...groups].map(([key,rs])=>{rs.sort((a,b)=>a.as_of.localeCompare(b.as_of));return{key,first:rs[0],last:rs.at(-1)};}).sort((a,b)=>b.last.value-a.last.value);
     const missing=[...(NC.token_coverage||[]),...(window.DEMAND_RESEARCH?.unavailable_tokens||[])].filter(r=>r.show_in_plot).map(r=>({key:r.subject+' · total unavailable',first:null,last:{...r,value:null,confidence:null,display_scope:'Comparable total unavailable'}}));
     const plotted=rows.concat(missing);
-    const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=22,rh=43,max=Math.max(1,...plotted.map(r=>r.last.value||0));svg.setAttribute('viewBox',`0 0 680 ${T+rh*plotted.length+40}`);
+    const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=22,rh=32,max=Math.max(1,...plotted.map(r=>r.last.value||0));svg.setAttribute('viewBox',`0 0 680 ${T+rh*plotted.length+40}`);
     const x=v=>L+(R-L)*v/max;
     for(let i=0;i<=4;i++){const v=max*i/4;el('line',{x1:x(v),x2:x(v),y1:T-5,y2:T+rh*plotted.length,stroke:css('--grid')},svg);el('text',{x:x(v),y:T+rh*plotted.length+20,'text-anchor':'middle'},svg).textContent=tok(v);}
     plotted.forEach((r,i)=>{const y=T+i*rh,p=r.last;
-      chartLabel(svg,p.subject,y+14,'ink token-company');
+      // Scope and dates live in the hover (they were ~8px sub-labels); the row keeps name, bar and value.
+      chartLabel(svg,p.subject,y+20,'ink token-company');
       const scope=p.display_scope||p.unit?.match(/\((.*)\)/)?.[1]||'Source-specific scope';
-      chartLabel(svg,scope,y+28,'token-scope');
-      if(p.value==null){const label=el('text',{x:L+8,y:y+19,'font-size':11,fill:css('--muted')},svg);label.textContent=EST[p.subject]?`Not disclosed · estimate ≈${tok(EST[p.subject].central)}/day E`:'Total unavailable';hover(label,`<b>${esc(p.subject)}</b>${esc(p.note)}<br>${src(p.source_url,'Sources checked')}`);return;}
+      if(p.value==null){const label=el('text',{x:L+8,y:y+20,class:'token-value',fill:css('--muted')},svg);label.textContent=EST[p.subject]?`Not disclosed · estimate ≈${tok(EST[p.subject].central)}/day E`:'Total unavailable';hover(label,`<b>${esc(p.subject)}</b>${esc(p.note)}<br>${src(p.source_url,'Sources checked')}`);return;}
 
-      const bar=el('rect',{x:L,y:y+5,width:Math.max(2,x(p.value)-L),height:24,rx:3,fill:css(p.confidence==='derived'?'--s4':'--s1'),opacity:.72},svg);
-      el('text',{x:x(p.value)+7,y:y+18,class:'token-value','font-size':12},svg).textContent=qualifier(p)+rangeText(p)+(p.confidence==='derived'?' D':'')+' · '+p.as_of.slice(0,7);
-      hover(bar,`<b>${esc(p.subject)}</b>${esc(qualifier(p))}${rangeText(p)} ${esc(p.unit)}${badge(p.confidence)}<br>Dated disclosure / observation: ${esc(p.as_of)}${p.as_of_basis?` (${esc(p.as_of_basis)})`:""}${p.source_date?` · published ${esc(p.source_date)}`:''}<br>${esc(p.note||'Source-specific scope; token accounting may differ.')}<br>${src(p.source_url)}`);
+      const bar=el('rect',{x:L,y:y+6,width:Math.max(2,x(p.value)-L),height:20,rx:2,fill:css(p.confidence==='derived'?'--s4':'--s1'),opacity:.8},svg);
+      el('text',{x:x(p.value)+7,y:y+20,class:'token-value'},svg).textContent=qualifier(p)+rangeText(p)+(p.confidence==='derived'?' D':'')+' · '+p.as_of.slice(0,7);
+      hover(bar,`<b>${esc(p.subject)} · ${esc(scope)}</b>${esc(qualifier(p))}${rangeText(p)} ${esc(p.unit)}${badge(p.confidence)}<br>Dated disclosure / observation: ${esc(p.as_of)}${p.as_of_basis?` (${esc(p.as_of_basis)})`:""}${p.source_date?` · published ${esc(p.source_date)}`:''}<br>${esc(p.note||'Source-specific scope; token accounting may differ.')}<br>${src(p.source_url)}`);
     });
     table('#tokenTable',rows.concat(missing),[{k:'key',h:'Provider / exact series'},{k:'first',h:'First collected observation',f:r=>r.first?`${esc(qualifier(r.first))}${rangeText(r.first)} · ${esc(r.first.as_of)} ${src(r.first.source_url,'↗')}`:'Unavailable'},{k:'last',h:'Latest collected observation',f:r=>r.last.value==null?`Unavailable ${src(r.last.source_url,'sources checked')}`:`${esc(qualifier(r.last))}${rangeText(r.last)}${badge(r.last.confidence)} · ${esc(r.last.as_of)} ${src(r.last.source_url,'↗')}`},{k:'scope',h:'Scope and limits',f:r=>esc(r.last.note||'The exact reporting basis is retained in the series label; token types are not standardized across providers.')}]);
   }
@@ -47,27 +47,24 @@
     const groups=[['platform','Platform and API disclosures'],['subset','Limited coverage'],['historical','Historical observations'],['aggregate','National aggregate'],['unavailable','No disclosed total · estimate (E)']];
     const missing=[...(snapshot.unavailable||[]),...(window.DEMAND_RESEARCH?.unavailable_tokens||[])].filter(r=>r.show_in_plot).map(r=>({...r,daily:null,comparison_group:'unavailable'})),all=groups.flatMap(([key])=>rows.filter(r=>r.comparison_group===key).concat(missing.filter(r=>r.comparison_group===key)));
     $('#tokenViewNote').textContent=`Daily equivalents by coverage group, checked ${snapshot.reviewed_at||snapshot.checked_at}. Groups overlap and are not additive; D = converted period.`;
-    const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=28,rh=47,gh=28,used=groups.filter(([key])=>all.some(r=>r.comparison_group===key)),end=T+rh*all.length+gh*used.length,max=Math.max(1,...rows.map(r=>r.daily.high||r.daily.value));svg.setAttribute('viewBox',`0 0 680 ${end+40}`);const x=v=>L+(R-L)*v/max;
-    el('text',{x:L,y:12,'font-size':11},svg).textContent='Daily equivalent · tokens/day';
+    const svg=$('#tokenSvg');svg.innerHTML='';const L=195,R=505,T=28,rh=33,gh=30,used=groups.filter(([key])=>all.some(r=>r.comparison_group===key)),end=T+rh*all.length+gh*used.length,max=Math.max(1,...rows.map(r=>r.daily.high||r.daily.value));svg.setAttribute('viewBox',`0 0 680 ${end+40}`);const x=v=>L+(R-L)*v/max;
+    el('text',{x:L,y:12,class:'axis'},svg).textContent='Daily equivalent · tokens/day';
     for(let i=0;i<=4;i++){const v=max*i/4;el('line',{x1:x(v),x2:x(v),y1:T-5,y2:end,stroke:css('--grid')},svg);el('text',{x:x(v),y:end+20,'text-anchor':'middle'},svg).textContent=tok(v);}
     let cursor=T,lastGroup=null;
     all.forEach((r,i)=>{
-      if(r.comparison_group!==lastGroup){el('text',{x:4,y:cursor+14,class:'ink','font-size':11,'font-weight':600,'data-token-group':r.comparison_group},svg).textContent=groups.find(([key])=>key===r.comparison_group)[1];cursor+=gh;lastGroup=r.comparison_group;}
+      if(r.comparison_group!==lastGroup){el('text',{x:4,y:cursor+18,class:'group','data-token-group':r.comparison_group},svg).textContent=groups.find(([key])=>key===r.comparison_group)[1];cursor+=gh;lastGroup=r.comparison_group;}
       const y=cursor,scope=r.display_scope||'Comparable total unavailable';cursor+=rh;
-      chartLabel(svg,r.subject==='ByteDance / Volcano Engine'?'ByteDance / Volcano':r.subject,y+14,'ink token-company');
-      chartLabel(svg,scope,y+29,'token-scope');
+      chartLabel(svg,r.subject==='ByteDance / Volcano Engine'?'ByteDance / Volcano':r.subject,y+20,'ink token-company');
       if(!r.daily){const e=EST[r.subject];
-        if(e){const w=Math.max(2,x(Math.min(e.central,max))-L),bar=el('rect',{x:L,y:y+5,width:w,height:25,rx:3,fill:'none',stroke:css('--s1'),'stroke-width':1.5,'stroke-dasharray':'4 3','data-token-estimate':r.subject},svg);
-          el('line',{x1:x(Math.min(e.low,max)),x2:x(Math.min(e.high,max)),y1:y+17,y2:y+17,stroke:css('--muted'),'stroke-width':1.5},svg);
-          el('text',{x:x(Math.min(e.high,max))+7,y:y+15,class:'token-value'},svg).textContent='≈'+tok(e.central)+' E';
-          el('text',{x:x(Math.min(e.high,max))+7,y:y+29,class:'token-scope'},svg).textContent='range '+tok(e.low)+'–'+tok(e.high);
+        if(e){const w=Math.max(2,x(Math.min(e.central,max))-L),bar=el('rect',{x:L,y:y+6,width:w,height:20,rx:2,fill:'none',stroke:css('--s1'),'stroke-width':1.5,'stroke-dasharray':'4 3','data-token-estimate':r.subject},svg);
+          el('line',{x1:x(Math.min(e.low,max)),x2:x(Math.min(e.high,max)),y1:y+16,y2:y+16,stroke:css('--muted'),'stroke-width':1.5},svg);
+          el('text',{x:x(Math.min(e.high,max))+7,y:y+20,class:'token-value'},svg).textContent='≈'+tok(e.central)+' E';
           hover(bar,`<b>${esc(r.subject)}</b>Estimate, not a disclosure: ≈${tok(e.central)}/day (range ${tok(e.low)}–${tok(e.high)}), ${esc(window.DEMAND_RESEARCH?.global_estimate?.as_of||'')}.<br>${esc(e.basis)}<br>${src(e.source_url,'Basis ↗')}`);return;}
-        const label=el('text',{x:L+8,y:y+19,class:'token-value'},svg);label.textContent='Total unavailable';hover(label,`<b>${esc(r.subject)}</b>${esc(r.note||'No comparable total verified.')}<br>${r.source_url?src(r.source_url,'Sources checked'):''}`);return;}
-      const d=r.daily,bar=el('rect',{x:L,y:y+5,width:Math.max(2,x(d.value)-L),height:25,rx:3,fill:css(d.converted?'--s4':'--s1'),opacity:.72,'data-token-scope':r.scope_id},svg);
-      if(d.high!=null){el('line',{x1:x(d.value),x2:x(d.high),y1:y+17,y2:y+17,stroke:css('--s1'),'stroke-width':2,'stroke-dasharray':'3 2'},svg);el('line',{x1:x(d.high),x2:x(d.high),y1:y+10,y2:y+24,stroke:css('--s1'),'stroke-width':2},svg);}
+        const label=el('text',{x:L+8,y:y+20,class:'token-value'},svg);label.textContent='Total unavailable';hover(label,`<b>${esc(r.subject)}</b>${esc(r.note||'No comparable total verified.')}<br>${r.source_url?src(r.source_url,'Sources checked'):''}`);return;}
+      const d=r.daily,bar=el('rect',{x:L,y:y+6,width:Math.max(2,x(d.value)-L),height:20,rx:2,fill:css(d.converted?'--s4':'--s1'),opacity:.8,'data-token-scope':r.scope_id},svg);
+      if(d.high!=null){el('line',{x1:x(d.value),x2:x(d.high),y1:y+16,y2:y+16,stroke:css('--s1'),'stroke-width':2,'stroke-dasharray':'3 2'},svg);el('line',{x1:x(d.high),x2:x(d.high),y1:y+9,y2:y+23,stroke:css('--s1'),'stroke-width':2},svg);}
       const label=relation(r)+tok(d.value)+(d.high!=null?'–'+tok(d.high):'')+(d.converted?' D':'');
-      el('text',{x:x(d.high||d.value)+7,y:y+15,class:'token-value'},svg).textContent=label;
-      el('text',{x:x(d.high||d.value)+7,y:y+29,class:'token-scope'},svg).textContent=(r.observation_end?'FY ended ':r.observation_date?'obs ':'pub ')+(r.observation_end||r.observation_date||r.source_date).slice(0,7);
+      el('text',{x:x(d.high||d.value)+7,y:y+20,class:'token-value'},svg).textContent=label;
       hover(bar,`<b>${esc(r.subject)} · ${esc(scope)}</b>${esc(native(r))}<br>Daily equivalent: ${esc(relation(r))}${tok(d.value)}${d.high!=null?'–'+tok(d.high):''}${d.converted?' D':''}<br>${esc(d.formula)}<br>Observation: ${esc(r.observation_start?r.observation_start+' to '+r.observation_end:r.observation_date||'window not specified')} · published ${esc(r.source_date)}<br>${esc(r.date_basis||'')}${r.date_basis?'<br>':''}${esc(r.note||'Input/output/cache accounting is not standardized.')}<br>${src(r.source_url)}${r.supporting_disclosures?.length?'<br>'+contextSources(r):''}`);
     });
     table('#tokenTable',all,[{k:'subject',h:'Company / scope',f:r=>`<b>${esc(r.subject)}</b><br>${esc(r.display_scope||'Comparable total unavailable')}`},{k:'value',h:'Latest native disclosure',f:r=>r.daily?`${esc(native(r))}${badge(r.confidence||'reported')}`:EST[r.subject]?`Not disclosed · estimate ≈${tok(EST[r.subject].central)}/day (${tok(EST[r.subject].low)}–${tok(EST[r.subject].high)})${badge('estimated')}`:'Unavailable'},{k:'daily_value',h:'Daily equivalent',f:r=>r.daily?`${esc(relation(r))}${tok(r.daily.value)}${r.daily.high!=null?'–'+tok(r.daily.high):''}${r.daily.converted?badge('derived'):''}<br><span class="small">${esc(r.daily.formula)}</span>`:'Unavailable'},{k:'observation_date',h:'Observation / publication',f:r=>`${esc(r.observation_start?r.observation_start+' to '+r.observation_end:r.observation_date||'Window unspecified')}<br><span class="small">Published ${esc(r.source_date||'not dated')}</span>`},{k:'note',h:'Scope, limits and source',f:r=>`${esc(r.note||'No comparable total verified.')} ${r.source_url?src(r.source_url,'Source ↗'):''}${r.supporting_disclosures?.length?'<br>'+contextSources(r):''}`}]);

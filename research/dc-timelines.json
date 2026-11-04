@@ -3469,129 +3469,149 @@
       ]
     }
   },
-  "users_method": "All tracked sites (including owners not mapped to a provider above), credited to the labs Epoch lists as users; a site with several users is split equally, a site without listed users is \"Undisclosed user\".",
+  "users_method": "All tracked sites, credited to the lab Epoch lists as the user. Sites with several listed users and no stated split are one \"Shared site (several users)\" bucket; each lab’s shared_mw is the full power of shared sites it is listed at (an upper bound). Sites without listed users are \"Undisclosed user\".",
   "by_user": {
     "OpenAI": {
       "mw": {
-        "2025": 1139.0,
-        "2026": 3523.0,
-        "2027": 5356.5,
-        "2028": 15496.5,
-        "final": 15696.5,
-        "now": 3119.0
+        "2025": 791.0,
+        "2026": 2741.0,
+        "2027": 4353.0,
+        "2028": 13578.0,
+        "final": 13778.0,
+        "now": 2337.0
       },
       "h100e": {
-        "2025": 937892,
-        "2026": 3190364,
-        "2027": 5625937,
-        "2028": 26137057,
-        "final": 26296609,
-        "now": 2640086
+        "2025": 641324,
+        "2026": 2480562,
+        "2027": 4694307,
+        "2028": 23386326,
+        "final": 23545878,
+        "now": 1930284
+      },
+      "shared_mw": {
+        "2025": 696.0,
+        "2026": 1564.0,
+        "2027": 2007.0,
+        "2028": 3837.0,
+        "final": 3837.0,
+        "now": 1564.0
       },
       "sites": [
         {
           "name": "Microsoft Fairwater Wisconsin",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 2715.0
         },
         {
           "name": "OpenAI Stargate New Mexico",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 2450.0
         },
         {
           "name": "OpenAI Stargate Shackelford",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1960.0
         },
         {
           "name": "OpenAI Stargate UAE",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1400.0
         },
         {
           "name": "OpenAI Stargate Michigan",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1383.0
         },
         {
           "name": "OpenAI Stargate Wisconsin",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1300.0
         },
         {
           "name": "OpenAI Stargate Milam",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1200.0
         },
         {
           "name": "OpenAI Stargate Abilene",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1154.0
         },
         {
           "name": "Microsoft Fairwater Atlanta",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 859.0
         },
         {
           "name": "Coreweave Helios",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 800.0
         },
         {
           "name": "CoreWeave Ellendale ND",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 520.0
         },
         {
           "name": "CoreWeave Denton TX",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 395.0
         },
         {
           "name": "OpenAI Stargate Lordstown",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 300.0
         },
         {
           "name": "Microsoft Goodyear",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 263.0
         },
         {
           "name": "Microsoft Project Osmium",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 228.0
         },
         {
           "name": "CoreWeave Chester VA",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 197.0
         },
         {
           "name": "CoreWeave Muskogee OK",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 181.0
         },
         {
           "name": "CoreWeave Lancaster Greenfield site",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 124.0
         },
         {
           "name": "CoreWeave Marble NC",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 91.0
         },
         {
           "name": "CoreWeave Norway",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 55.0
         },
         {
           "name": "CoreWeave Dalton 1 & 2",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 40.0
         }
       ]
@@ -3613,95 +3633,103 @@
         "final": 11847584,
         "now": 2523897
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "Meta Hyperion",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 2203.0
         },
         {
           "name": "QTS Cedar Rapids",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1587.0
         },
         {
           "name": "Meta Prometheus",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1328.0
         },
         {
           "name": "Meta Bowling Green",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 570.0
         },
         {
           "name": "Meta Montgomery",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 465.0
         },
         {
           "name": "QTS Eagle Mountain",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 411.0
         },
         {
           "name": "Meta Los Lunas",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 273.0
         },
         {
           "name": "Meta Cheyenne",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 249.0
         },
         {
           "name": "Meta-QTS Hillsboro 2",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 243.0
         },
         {
           "name": "Meta Rosemount",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 241.0
         },
         {
           "name": "Meta Jeffersonville",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 241.0
         },
         {
           "name": "Meta Temple",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 231.0
         },
         {
           "name": "Meta Kuna",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 198.0
         },
         {
           "name": "Meta Huntsville",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 198.0
         },
         {
           "name": "Meta Eagle Mountain",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 179.0
         },
         {
           "name": "Meta Aiken",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 168.0
         },
         {
           "name": "Meta Gallatin",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 114.0
         },
         {
           "name": "Meta Sarpy",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 105.0
         }
       ]
@@ -3723,191 +3751,200 @@
         "final": 6012519,
         "now": 3916780
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "DayOne Nusajaya",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 662.0
         },
         {
           "name": "Envision Galaxy Ulanqab",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 612.0
         },
         {
           "name": "DayOne Kempas",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 590.4
         },
         {
           "name": "Huawei Wuhu",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 526.0
         },
         {
           "name": "STACK Infrastructure NVA02",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 487.0
         },
         {
           "name": "Huawei Horinger",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 414.6
         },
         {
           "name": "AWS New Albany",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 405.0
         },
         {
           "name": "YTL Johor",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 389.0
         },
         {
           "name": "Google Lincoln",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 339.0
         },
         {
           "name": "QTS Richmond 3",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 336.0
         },
         {
           "name": "QTS Richmond 1",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 333.0
         },
         {
           "name": "Stream Phoenix",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 267.0
         },
         {
           "name": "QTS Richmond 2",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 252.0
         },
         {
           "name": "Google Mesa",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 237.0
         },
         {
           "name": "Google The Dalles",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 185.0
         },
         {
           "name": "Google Red Oak",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 185.0
         },
         {
           "name": "Vantage TX1",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 179.2
         },
         {
           "name": "Google Lancaster",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 164.0
         },
         {
           "name": "Google Kansas City East",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 126.0
         },
         {
           "name": "Google Midlothian",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 123.0
         },
         {
           "name": "Microsoft SAT40",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 106.0
         },
         {
           "name": "Google Arcola",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 93.0
         },
         {
           "name": "Microsoft SAT14",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 66.0
         },
         {
           "name": "Southgate Melbourne",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 57.0
         },
         {
           "name": "Nscale Keflavik",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 13.3
         }
       ]
     },
-    "Anthropic": {
+    "Shared site (several users)": {
       "mw": {
-        "2025": 1707.7,
-        "2026": 3336.3,
-        "2027": 4129.3,
-        "2028": 6203.3,
-        "final": 6203.3,
-        "now": 3092.3
+        "2025": 1019.0,
+        "2026": 2840.0,
+        "2027": 4072.0,
+        "2028": 5902.0,
+        "final": 5902.0,
+        "now": 2840.0
       },
       "h100e": {
-        "2025": 1089554,
-        "2026": 2459074,
-        "2027": 3177249,
-        "2028": 4893235,
-        "final": 4893235,
-        "now": 2224613
+        "2025": 871054,
+        "2026": 2531275,
+        "2027": 3687415,
+        "2028": 7325616,
+        "final": 7325616,
+        "now": 2531275
+      },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
       },
       "sites": [
         {
-          "name": "Anthropic-Amazon New Carlisle",
-          "shared_with": 0,
-          "mw_final": 2310.0
+          "name": "Microsoft Fairwater Wisconsin",
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
+          "mw_final": 2715.0
         },
         {
           "name": "Colossus 2",
-          "shared_with": 2,
+          "users": [
+            "Anthropic",
+            "Cursor",
+            "SpaceXAI"
+          ],
           "mw_final": 2065.0
         },
         {
-          "name": "Amazon Ridgeland",
-          "shared_with": 0,
-          "mw_final": 1008.0
+          "name": "Microsoft Fairwater Atlanta",
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
+          "mw_final": 859.0
         },
         {
-          "name": "Amazon Madison Mega Site",
-          "shared_with": 0,
-          "mw_final": 819.0
-        },
-        {
-          "name": "Anthropic Lake Mariner",
-          "shared_with": 0,
-          "mw_final": 441.0
-        },
-        {
-          "name": "Colossus 1",
-          "shared_with": 0,
-          "mw_final": 425.0
-        },
-        {
-          "name": "Anthropic Barber Lake",
-          "shared_with": 0,
-          "mw_final": 300.0
-        },
-        {
-          "name": "AWS Berwick",
-          "shared_with": 0,
-          "mw_final": 212.0
+          "name": "Microsoft Goodyear",
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
+          "mw_final": 263.0
         }
       ]
     },
@@ -3928,125 +3965,226 @@
         "final": 9561654,
         "now": 2314964
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "Goodnight",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1294.1
         },
         {
           "name": "Google Fort Wayne",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 1035.0
         },
         {
           "name": "Google Omaha",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 474.0
         },
         {
           "name": "Google Columbus",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 464.0
         },
         {
           "name": "Google Pryor (North)",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 442.0
         },
         {
           "name": "Google New Albany",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 400.0
         },
         {
           "name": "Google Storey County",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 389.0
         },
         {
           "name": "Google Cedar Rapids",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 314.0
         },
         {
           "name": "Google Bristow",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 286.0
         },
         {
           "name": "Google Council Bluffs (East)",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 284.0
         },
         {
           "name": "Google Papillion",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 284.0
         },
         {
           "name": "Google Waltham Cross",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 124.0
+        }
+      ]
+    },
+    "Anthropic": {
+      "mw": {
+        "2025": 1600.0,
+        "2026": 2911.0,
+        "2027": 3441.0,
+        "2028": 5515.0,
+        "final": 5515.0,
+        "now": 2667.0
+      },
+      "h100e": {
+        "2025": 996915,
+        "2026": 2088517,
+        "2027": 2569198,
+        "2028": 4285183,
+        "final": 4285183,
+        "now": 1854055
+      },
+      "shared_mw": {
+        "2025": 323.0,
+        "2026": 1276.0,
+        "2027": 2065.0,
+        "2028": 2065.0,
+        "final": 2065.0,
+        "now": 1276.0
+      },
+      "sites": [
+        {
+          "name": "Anthropic-Amazon New Carlisle",
+          "users": null,
+          "mw_final": 2310.0
+        },
+        {
+          "name": "Colossus 2",
+          "shared": true,
+          "users": [
+            "Anthropic",
+            "Cursor",
+            "SpaceXAI"
+          ],
+          "mw_final": 2065.0
+        },
+        {
+          "name": "Amazon Ridgeland",
+          "users": null,
+          "mw_final": 1008.0
+        },
+        {
+          "name": "Amazon Madison Mega Site",
+          "users": null,
+          "mw_final": 819.0
+        },
+        {
+          "name": "Anthropic Lake Mariner",
+          "users": null,
+          "mw_final": 441.0
+        },
+        {
+          "name": "Colossus 1",
+          "users": null,
+          "mw_final": 425.0
+        },
+        {
+          "name": "Anthropic Barber Lake",
+          "users": null,
+          "mw_final": 300.0
+        },
+        {
+          "name": "AWS Berwick",
+          "users": null,
+          "mw_final": 212.0
         }
       ]
     },
     "Microsoft": {
       "mw": {
-        "2025": 396.0,
-        "2026": 1106.0,
-        "2027": 2614.5,
-        "2028": 3529.5,
-        "final": 3529.5,
-        "now": 982.0
+        "2025": 48.0,
+        "2026": 324.0,
+        "2027": 1611.0,
+        "2028": 1611.0,
+        "final": 1611.0,
+        "now": 200.0
       },
       "h100e": {
-        "2025": 321852,
-        "2026": 1112296,
-        "2027": 3728607,
-        "2028": 5547708,
-        "final": 5547708,
-        "now": 847010
+        "2025": 25284,
+        "2026": 402495,
+        "2027": 2796977,
+        "2028": 2796977,
+        "final": 2796977,
+        "now": 137209
+      },
+      "shared_mw": {
+        "2025": 696.0,
+        "2026": 1564.0,
+        "2027": 2007.0,
+        "2028": 3837.0,
+        "final": 3837.0,
+        "now": 1564.0
       },
       "sites": [
         {
           "name": "Microsoft Fairwater Wisconsin",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 2715.0
         },
         {
           "name": "Crusoe Abilene Expansion",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 941.0
         },
         {
           "name": "Microsoft Fairwater Atlanta",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 859.0
         },
         {
           "name": "Start Campus Sines Data Campus",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 280.0
         },
         {
           "name": "Microsoft Goodyear",
-          "shared_with": 1,
+          "shared": true,
+          "users": [
+            "OpenAI",
+            "Microsoft"
+          ],
           "mw_final": 263.0
         },
         {
           "name": "Nebius Mantsala",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 196.0
         },
         {
           "name": "Microsoft Narvik Norway",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 124.0
         },
         {
           "name": "Microsoft-Nebius New Jersey",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 70.0
         }
       ]
@@ -4068,71 +4206,24 @@
         "final": 609126,
         "now": 343841
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "VNET Bayin Ulanqab",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 798.0
         },
         {
           "name": "Bridge Data Centres MY06",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 315.0
-        }
-      ]
-    },
-    "SpaceXAI": {
-      "mw": {
-        "2025": 131.7,
-        "2026": 449.3,
-        "2027": 712.3,
-        "2028": 712.3,
-        "final": 712.3,
-        "now": 449.3
-      },
-      "h100e": {
-        "2025": 104110,
-        "2026": 382028,
-        "2027": 619522,
-        "2028": 619522,
-        "final": 619522,
-        "now": 382028
-      },
-      "sites": [
-        {
-          "name": "Colossus 2",
-          "shared_with": 2,
-          "mw_final": 2065.0
-        },
-        {
-          "name": "xAI QTS Atlanta",
-          "shared_with": 0,
-          "mw_final": 24.0
-        }
-      ]
-    },
-    "Cursor": {
-      "mw": {
-        "2025": 107.7,
-        "2026": 425.3,
-        "2027": 688.3,
-        "2028": 688.3,
-        "final": 688.3,
-        "now": 425.3
-      },
-      "h100e": {
-        "2025": 92639,
-        "2026": 370558,
-        "2027": 608051,
-        "2028": 608051,
-        "final": 608051,
-        "now": 370558
-      },
-      "sites": [
-        {
-          "name": "Colossus 2",
-          "shared_with": 2,
-          "mw_final": 2065.0
         }
       ]
     },
@@ -4153,10 +4244,18 @@
         "final": 31885,
         "now": 31885
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "Alibaba Zhangbei",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 203.0
         }
       ]
@@ -4178,10 +4277,18 @@
         "final": 84386,
         "now": 84386
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "Oracle Batam",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 94.0
         }
       ]
@@ -4203,10 +4310,18 @@
         "final": 138912,
         "now": 0
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "EcoDataCenter 2",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 67.0
         }
       ]
@@ -4228,11 +4343,100 @@
         "final": 71753,
         "now": 71753
       },
+      "shared_mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
       "sites": [
         {
           "name": "Core42 Lake Mariner",
-          "shared_with": 0,
+          "users": null,
           "mw_final": 58.0
+        }
+      ]
+    },
+    "SpaceXAI": {
+      "mw": {
+        "2025": 24.0,
+        "2026": 24.0,
+        "2027": 24.0,
+        "2028": 24.0,
+        "final": 24.0,
+        "now": 24.0
+      },
+      "h100e": {
+        "2025": 11470,
+        "2026": 11470,
+        "2027": 11470,
+        "2028": 11470,
+        "final": 11470,
+        "now": 11470
+      },
+      "shared_mw": {
+        "2025": 323.0,
+        "2026": 1276.0,
+        "2027": 2065.0,
+        "2028": 2065.0,
+        "final": 2065.0,
+        "now": 1276.0
+      },
+      "sites": [
+        {
+          "name": "Colossus 2",
+          "shared": true,
+          "users": [
+            "Anthropic",
+            "Cursor",
+            "SpaceXAI"
+          ],
+          "mw_final": 2065.0
+        },
+        {
+          "name": "xAI QTS Atlanta",
+          "users": null,
+          "mw_final": 24.0
+        }
+      ]
+    },
+    "Cursor": {
+      "mw": {
+        "2025": 0.0,
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "final": 0.0,
+        "now": 0.0
+      },
+      "h100e": {
+        "2025": 0,
+        "2026": 0,
+        "2027": 0,
+        "2028": 0,
+        "final": 0,
+        "now": 0
+      },
+      "shared_mw": {
+        "2025": 323.0,
+        "2026": 1276.0,
+        "2027": 2065.0,
+        "2028": 2065.0,
+        "final": 2065.0,
+        "now": 1276.0
+      },
+      "sites": [
+        {
+          "name": "Colossus 2",
+          "shared": true,
+          "users": [
+            "Anthropic",
+            "Cursor",
+            "SpaceXAI"
+          ],
+          "mw_final": 2065.0
         }
       ]
     }

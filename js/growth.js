@@ -11,7 +11,8 @@
     ctl.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===metric));
     $("#growthAbs").classList.toggle("on",mode==="absolute");$("#growthIdx").classList.toggle("on",mode==="index");
     const names=Object.keys(NC.growth).filter(n=>(NC.growth[n][metric]||[]).length);
-    const colors=Object.fromEntries(names.map((n,i)=>[n,SER[i%8]]));
+    // Site-wide company colours; companies outside the named set share one grey (dashed), so no hue repeats across firms.
+    const colors=Object.fromEntries(names.map(n=>[n,companyVar(n)||'--c-other']));
     $("#growthCompanies").innerHTML=names.map(n=>`<label><input type="checkbox" value="${esc(n)}" ${selected.has(n)?"checked":""}><i style="background:var(${colors[n]})"></i>${esc(n)}</label>`).join("");
     $("#growthCompanies").querySelectorAll("input").forEach(e=>e.onchange=()=>{e.checked?selected.add(e.value):selected.delete(e.value);draw();});
     const subs=names.filter(n=>selected.has(n)).map(n=>{
@@ -28,15 +29,17 @@
     if(!subs.length){el("text",{x:60,y:50},svg).textContent="Choose companies with observations in this period.";$("#growthSummary").innerHTML="";$("#growthLegend").innerHTML="";return;}
     const all=subs.flatMap(s=>s.pts),t0=Math.min(...all.map(p=>Date.parse(p[0]))),t1=Math.max(...all.map(p=>Date.parse(p[0])));
     const value=(s,p)=>mode==="index"?p[1]/s.base[1]*100:p[1];
-    const max=Math.max(1,...subs.flatMap(s=>s.pts.map(p=>value(s,p))))*1.08;
+    // Round y-ticks: a 1/2/5 step and a top that is a whole number of steps.
+    const raw=Math.max(1,...subs.flatMap(s=>s.pts.map(p=>value(s,p))))*1.02,mag=10**Math.floor(Math.log10(raw/4)),step=[1,2,5,10].map(m=>m*mag).find(v=>v>=raw/4),max=Math.ceil(raw/step)*step;
     const x=d=>76+(Date.parse(d)-t0)/(t1-t0||1)*770,y=v=>350-v/max*320;
     const fmt=v=>mode==="index"?`${Math.round(v)}`:metric==="mw_online"?`${num(v)} MW`:money(v);
-    for(let i=0;i<=4;i++){const v=max*i/4;el("line",{x1:76,x2:846,y1:y(v),y2:y(v),stroke:css("--grid")},svg);el("text",{x:68,y:y(v)+4,"text-anchor":"end"},svg).textContent=fmt(v);}
+    for(let v=0;v<=max+step/2;v+=step){el("line",{x1:76,x2:846,y1:y(v),y2:y(v),stroke:css("--grid")},svg);el("text",{x:68,y:y(v)+4,"text-anchor":"end",class:"axis"},svg).textContent=fmt(v);}
     el("text",{x:76,y:16,"font-size":11},svg).textContent=mode==="index"?"Q2 2025 observation = 100":metric==="mw_online"?"MW online · hover for power basis":metric==="revenue_usd"?"USD per quarter":"USD · backlog balance";
-    for(let yr=new Date(t0).getUTCFullYear();yr<=new Date(t1).getUTCFullYear();yr++)for(const mo of ["01","07"]){const d=`${yr}-${mo}-01`;if(Date.parse(d)>=t0&&Date.parse(d)<=t1)el("text",{x:x(d),y:374,"text-anchor":"middle"},svg).textContent=`${yr}-${mo}`;}
+    for(let yr=new Date(t0).getUTCFullYear();yr<=new Date(t1).getUTCFullYear();yr++)for(const mo of ["01","07"]){const d=`${yr}-${mo}-01`;if(Date.parse(d)>=t0&&Date.parse(d)<=t1)el("text",{x:x(d),y:374,"text-anchor":"middle",class:"axis"},svg).textContent=`${yr}-${mo}`;}
     subs.forEach((s,i)=>{
-      el("path",{d:s.pts.map((p,j)=>`${j?"L":"M"}${x(p[0])},${y(value(s,p))}`).join(""),fill:"none",stroke:css(s.c),"stroke-width":2.6,"stroke-dasharray":i>=8?"6 3":""},svg);
-      s.pts.forEach(p=>{const c=el("circle",{cx:x(p[0]),cy:y(value(s,p)),r:4,fill:p[2]==="reported"?css(s.c):css("--surface-1"),stroke:css(s.c),"stroke-width":1.7},svg);
+      // A gap of more than ~4.5 months between observations breaks the line instead of drawing straight across missing quarters.
+      el("path",{d:s.pts.map((p,j)=>`${j&&Date.parse(p[0])-Date.parse(s.pts[j-1][0])<=135*864e5?"L":"M"}${x(p[0])},${y(value(s,p))}`).join(""),fill:"none",stroke:css(s.c),"stroke-width":s.c==="--c-other"?1.6:2.2,"stroke-dasharray":s.c==="--c-other"?"5 3":""},svg);
+      s.pts.forEach(p=>{const c=el("circle",{cx:x(p[0]),cy:y(value(s,p)),r:s.c==="--c-other"?3:3.6,fill:p[2]==="reported"?css(s.c):css("--surface-1"),stroke:css(s.c),"stroke-width":1.7},svg);
         hover(c,`<b>${esc(s.n)}</b>${p[0]} · ${metric==="mw_online"?num(p[1])+" MW":money(p[1])}${badge(p[2])}<br>${esc(p[4]||"company")}${p[6]?' · '+esc(p[6])+' power':''}<br>${esc(p[7]||'')}${mode==="index"?`<br>Index ${value(s,p).toFixed(1)}; base ${s.base[0]}`:""}<br>${src(p[3])}`);});
     });
     $("#growthLegend").innerHTML="";
