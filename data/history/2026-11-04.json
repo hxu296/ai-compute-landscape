@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-04T13:46:20.498652+00:00",
+  "checked_at": "2026-11-04T20:26:07.298237+00:00",
   "sources": {
     "compute_desk": {
       "state": "ok",
-      "checked_at": "2026-11-04T13:46:20.498652+00:00",
-      "last_success": "2026-11-04T13:46:20.498652+00:00",
+      "checked_at": "2026-11-04T20:26:07.298237+00:00",
+      "last_success": "2026-11-04T20:26:07.298237+00:00",
       "max_age_days": 1,
       "sha256": "c0e52705f31aef0dbcdcb90806b2a695c20376d765f652f5d6c04158d4357aae",
       "url": "https://data-api.compute-index.com/public/indices"
     },
     "semianalysis": {
       "state": "ok",
-      "checked_at": "2026-11-04T13:46:20.498652+00:00",
-      "last_success": "2026-11-04T13:46:20.498652+00:00",
+      "checked_at": "2026-11-04T20:26:07.298237+00:00",
+      "last_success": "2026-11-04T20:26:07.298237+00:00",
       "max_age_days": 0,
       "sha256": "0aaadca47ed036639df4f346871795cda8b18d433cf47cec5fad72d3e8895577",
       "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -245,20 +245,24 @@
     }
   ],
   "headline": {
-    "id": "brief-2026-11-04",
+    "id": "amd-q3-data-center-results-20261104",
     "date": "2026-11-04",
-    "impact_score": 1,
-    "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-    "title": "Daily market brief: SemiAnalysis H100 at $3.39",
-    "summary": "The latest observation is dated 2026-11-04 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+    "title": "AMD’s data-center revenue nearly doubles to $8.55B as MI450 systems reach customers",
+    "summary": "AMD’s November 3 earnings release reports $8.546 billion of Data Center revenue for the quarter ended September 26, up 97% year over year. AMD attributes growth to EPYC processors and the launch of Instinct MI450 GPUs, and says Anthropic, Meta, Microsoft, OpenAI and Oracle are running workloads on the first Helios systems. This is evidence of commercial momentum for another large AI infrastructure supplier, but the segment includes CPUs and other products: it is not GPU-only sales or an installed-accelerator count. AMD’s approximately $17 billion fourth-quarter outlook is company-wide guidance, rather than a reported data-center result or a guarantee of future deliveries.",
     "sources": [
       {
-        "title": "SemiAnalysis H100",
-        "url": "https://gpu-index.semianalysis.com/",
-        "date": "2026-11-04"
+        "title": "AMD third-quarter 2026 financial results, segment table and current outlook",
+        "url": "https://newsroom.amd.com/news/amd-reports-third-quarter-2026-earnings/",
+        "date": "2026-11-03"
       }
     ],
-    "status": "automated",
-    "kind": "market_brief"
+    "status": "reviewed",
+    "kind": "news",
+    "impact_score": 3,
+    "impact_reason": "Nearly doubled quarterly sales and reported Helios workload deployments are substantial developments for the AI hardware segment. Product mix and deployment scale remain unspecified.",
+    "confidence": "High for the company-reported financial results; customer workload deployments are AMD’s assertion, without disclosed system counts.",
+    "event_date": "2026-11-03",
+    "event_date_scope": "Earnings announcement; results cover the quarter ended September 26. Editorial review is November 4.",
+    "future_target": "Approximately $17B company-wide Q4 revenue, plus or minus 3%, is management guidance."
   }
 }
