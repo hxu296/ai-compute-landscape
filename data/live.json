@@ -276,21 +276,50 @@
     "schema_version": 2,
     "items": [
       {
-        "id": "brief-2026-11-04",
+        "id": "amd-q3-data-center-results-20261104",
         "date": "2026-11-04",
-        "impact_score": 1,
-        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-        "title": "Daily market brief: SemiAnalysis H100 at $3.39",
-        "summary": "The latest observation is dated 2026-11-04 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "title": "AMD’s data-center revenue nearly doubles to $8.55B as MI450 systems reach customers",
+        "summary": "AMD’s November 3 earnings release reports $8.546 billion of Data Center revenue for the quarter ended September 26, up 97% year over year. AMD attributes growth to EPYC processors and the launch of Instinct MI450 GPUs, and says Anthropic, Meta, Microsoft, OpenAI and Oracle are running workloads on the first Helios systems. This is evidence of commercial momentum for another large AI infrastructure supplier, but the segment includes CPUs and other products: it is not GPU-only sales or an installed-accelerator count. AMD’s approximately $17 billion fourth-quarter outlook is company-wide guidance, rather than a reported data-center result or a guarantee of future deliveries.",
         "sources": [
           {
-            "title": "SemiAnalysis H100",
-            "url": "https://gpu-index.semianalysis.com/",
+            "title": "AMD third-quarter 2026 financial results, segment table and current outlook",
+            "url": "https://newsroom.amd.com/news/amd-reports-third-quarter-2026-earnings/",
+            "date": "2026-11-03"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "Nearly doubled quarterly sales and reported Helios workload deployments are substantial developments for the AI hardware segment. Product mix and deployment scale remain unspecified.",
+        "confidence": "High for the company-reported financial results; customer workload deployments are AMD’s assertion, without disclosed system counts.",
+        "event_date": "2026-11-03",
+        "event_date_scope": "Earnings announcement; results cover the quarter ended September 26. Editorial review is November 4.",
+        "future_target": "Approximately $17B company-wide Q4 revenue, plus or minus 3%, is management guidance."
+      },
+      {
+        "id": "landgate-us-data-center-pipeline-20261104",
+        "date": "2026-11-04",
+        "title": "LandGate counts 819 US data-center announcements through October, above all of 2025",
+        "summary": "LandGate’s November 4 report says 819 US data-center projects were announced in 2026 through October, exceeding its 764 for all of 2025. In its 6,561-project tracker, 3,045 are in development and 3,191 operating; 71% of the development pipeline is classified as hyperscale. The survey points to a large proposed buildout, while project counts do not measure megawatts, AI utilization or completed construction. LandGate identifies grid interconnection and local approvals as execution constraints. Its claim that capital has ceased to be the limiting factor is the research provider’s interpretation, not proof that every developer is funded. The tracked development pipeline must remain separate from operating supply.",
+        "sources": [
+          {
+            "title": "LandGate Q4 2026 Data Center Activity Report announcement (company-issued PR Newswire release)",
+            "url": "https://www.prnewswire.com/news-releases/2026-data-center-announcements-pass-all-of-2025-as-local-restrictions-spread-to-42-states-302929189.html",
+            "date": "2026-11-04"
+          },
+          {
+            "title": "LandGate’s complete release syndicated by StreetInsider",
+            "url": "https://www.streetinsider.com/PRNewswire/2026%2BData%2BCenter%2BAnnouncements%2BPass%2BAll%2Bof%2B2025%2Bas%2BLocal%2BRestrictions%2BSpread%2Bto%2B42%2BStates/27285251.html",
             "date": "2026-11-04"
           }
         ],
-        "status": "automated",
-        "kind": "market_brief"
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "A national tracker reports substantial announced expansion, with a development pipeline approaching the operating project count. Counts and approval exposure do not establish delivered compute capacity.",
+        "confidence": "Reported findings from LandGate’s own tracker; the underlying project database and classification completeness were not independently audited.",
+        "event_date": "2026-11-04",
+        "event_date_scope": "Report publication. Announcement comparison covers January–October 2026 versus full-year 2025; the release does not specify an exact tracker snapshot day."
       },
       {
         "id": "digitalocean-q3-inference-growth-20261103",
