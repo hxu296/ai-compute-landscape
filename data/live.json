@@ -276,21 +276,50 @@
     "schema_version": 2,
     "items": [
       {
-        "id": "brief-2026-11-05",
+        "id": "terawulf-justified-google-backstop-20261105",
         "date": "2026-11-05",
-        "impact_score": 1,
-        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-        "title": "Daily market brief: SemiAnalysis H100 at $3.41",
-        "summary": "The latest observation is dated 2026-11-05 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "title": "TeraWulf adds conditional Google backstop and Fluor construction contract at Justified",
+        "summary": "TeraWulf’s November 4 filing describes Google credit support for certain Anthropic obligations under existing Justified leases in Kentucky. The backstop becomes effective for each lease when its final data hall starts. Following specified tenant defaults, Google can assume the lease and pay rent or, in certain circumstances, pay a termination fee that entitles it to an equity interest in the project subsidiary. The approximately $19 billion is existing lease commitments, not a new loan or another lease to add. A separate Fluor engineering, procurement and construction agreement covers three buildings; guaranteed maximum pricing is still being established. Phased service is expected from late 2027 through Q2 2028. These are financing and execution milestones, while debt funding and delivered capacity remain prospective.",
         "sources": [
           {
-            "title": "SemiAnalysis H100",
-            "url": "https://gpu-index.semianalysis.com/",
-            "date": "2026-11-05"
+            "title": "TeraWulf Form 8-K, Justified Credit Support Agreements, Items 1.01 and 8.01",
+            "url": "https://investors.terawulf.com/sec-filings/all-sec-filings/content/0001628280-26-069810/wulf-20261104.htm",
+            "date": "2026-11-04"
+          },
+          {
+            "title": "TeraWulf announces Google credit support and definitive Fluor EPC agreement",
+            "url": "https://investors.terawulf.com/news-events/press-releases/detail/148/terawulf-secures-google-credit-backstop-for-project-financing-in-support-of-19-billion-anthropic-lease-executes-definitive-fluor-epc-agreement",
+            "date": "2026-11-04"
           }
         ],
-        "status": "automated",
-        "kind": "market_brief"
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "Conditional credit support and a definitive construction agreement advance a substantial regional AI campus. Effectiveness conditions, debt funding and future delivery limit immediate supply implications.",
+        "confidence": "High for the filed contractual terms; financing benefits and service milestones remain forward-looking.",
+        "event_date": "2026-11-04",
+        "event_date_scope": "Agreements and announcement; the underlying Anthropic lease was announced July 6. Editorial review is November 5.",
+        "future_target": "Phased ready-for-service completions expected from late 2027 through Q2 2028; no operating capacity established here."
+      },
+      {
+        "id": "coherent-q1-fy2027-optical-results-20261105",
+        "date": "2026-11-05",
+        "title": "Coherent’s datacenter and communications sales rise 79% to $1.95B",
+        "summary": "Coherent’s November 4 results show $1.9517 billion of Datacenter & Communications revenue for the quarter ended September 30, compared with $1.0900 billion a year earlier. That is 79.1% growth calculated from its segment table. Company-wide revenue was $2.3703 billion, up about 50%. The expansion is a substantial commercial signal from an optical-component supplier serving AI infrastructure, but the segment also includes communications products and is not AI-only revenue. Sales dollars do not establish how much networking capacity is installed, utilized or available to AI users. The report supports strong supplier demand without resolving downstream construction and power constraints.",
+        "sources": [
+          {
+            "title": "Coherent first-quarter fiscal 2027 results, segment revenues in Table 5",
+            "url": "https://ir.coherent.com/news-releases/news-release-details/coherent-corp-reports-first-quarter-fiscal-2027-results",
+            "date": "2026-11-04"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "Strong growth in a nearly $2B quarterly optical and communications segment is a substantial supply-chain development. Mixed end markets and absent deployment quantities limit broader capacity conclusions.",
+        "confidence": "High for company-reported revenue; 79.1% segment growth is derived as (1,951.7 / 1,090.0 − 1) × 100.",
+        "event_date": "2026-11-04",
+        "event_date_scope": "Results announcement; financial measurements cover the quarter ended September 30. Editorial review is November 5."
       },
       {
         "id": "amd-q3-data-center-results-20261104",
