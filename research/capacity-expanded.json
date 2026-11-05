@@ -1,33 +1,33 @@
 {
   "schema_version": 1,
-  "retrieved_utc": "2026-11-04T20:26:09+00:00",
+  "retrieved_utc": "2026-11-05T13:46:16+00:00",
   "method": "One run per model: across GB200 and GB300 NVL72, the AgentX run with the highest output tokens/s per physical GPU above 50 tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.",
   "api_contract_url": "https://inferencex.semianalysis.com/api",
   "query_manifest": {
     "DeepSeek-V4-Pro": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=DeepSeek-V4-Pro",
       "response_rows": 935,
-      "response_sha256": "b99de7db92d7e053a675ab75903433c492e512daead574a6caf5a6f476559dbc"
+      "response_sha256": "c59dbd3c1cc7a10632b7eb1207f4619ed31527ac8e106490e1a367cf08026d40"
     },
     "DeepSeek-V4.1-Flash": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=DeepSeek-V4.1-Flash",
       "response_rows": 204,
-      "response_sha256": "ea2ecba2e58af53e3b0f6c8950c7813576f7b65bf04d361131cef9fac656c4be"
+      "response_sha256": "db09e78cd6389fa602a4a992d629bdaa1922a98877b786fa799730d0a6424637"
     },
     "GLM-5.2": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=GLM-5.2",
       "response_rows": 134,
-      "response_sha256": "58b37eb7c60a044a800222438194069343a31e4a58a2bf289eb478d954f078af"
+      "response_sha256": "dd6e51d3d743ce6f662026972bdbea823ba73a49c60c8bf4360a795a2e60b860"
     },
     "Kimi-K3": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=Kimi-K3",
       "response_rows": 114,
-      "response_sha256": "a439bd175178d15841fef75f7d4afa75905ec504e40fa0941bf74bc62d8e67f3"
+      "response_sha256": "855ffc967496da61ba888931e10d6797b8e79bff9f7d329253b9a10c37abc31a"
     },
     "Qwen3.8-Flash-Next": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=Qwen3.8-Flash-Next",
       "response_rows": 47,
-      "response_sha256": "90e44f21681e125b14e1344bcca82f05ca6203dff172af72b3c6a507ed2ac869"
+      "response_sha256": "92d253f83ccce7b3cf4f18851aac1e6ee84a458c6c29384394d303902e36fc14"
     }
   },
   "unavailable": [
@@ -140,6 +140,7 @@
           "median_intvty": 61.19951040391677,
           "input_tput_tps": 4353045.24809,
           "router_version": "1.6.0.dev20261010",
+          "spec_algorithm": "dspark",
           "total_tput_tps": 4385760.64815,
           "decode_dcp_size": 1,
           "decode_pcp_size": 1,
@@ -151,6 +152,7 @@
           "p95_input_tokens": 418724.2,
           "prefill_dcp_size": 1,
           "prefill_pcp_size": 1,
+          "spec_draft_model": "native",
           "std_input_tokens": 132606.94306,
           "mean_input_tokens": 130617.79744,
           "input_tput_per_gpu": 272065.32801,
@@ -308,6 +310,7 @@
           "median_intvty": 115.2073732718894,
           "input_tput_tps": 36936405.10335,
           "router_version": "1.7.0.dev20261027",
+          "spec_algorithm": "dspark",
           "total_tput_tps": 37207799.70368,
           "decode_dcp_size": 1,
           "decode_pcp_size": 1,
@@ -319,6 +322,7 @@
           "p95_input_tokens": 430140,
           "prefill_dcp_size": 1,
           "prefill_pcp_size": 1,
+          "spec_draft_model": "native",
           "std_input_tokens": 137985.27762,
           "mean_input_tokens": 139077.18399,
           "input_tput_per_gpu": 2052022.5057400002,
@@ -481,6 +485,7 @@
           "median_intvty": 96.61835748792271,
           "input_tput_tps": 1263781.1753,
           "router_version": "1.6.0.dev20261016",
+          "spec_algorithm": "mtp",
           "total_tput_tps": 1272944.20266,
           "decode_dcp_size": 1,
           "decode_pcp_size": 1,
@@ -492,6 +497,7 @@
           "p95_input_tokens": 436688,
           "prefill_dcp_size": 1,
           "prefill_pcp_size": 1,
+          "spec_draft_model": "native",
           "std_input_tokens": 135587.36594,
           "mean_input_tokens": 138651.70525,
           "input_tput_per_gpu": 105315.09795000001,
@@ -652,6 +658,7 @@
           "median_intvty": 63.97952655150351,
           "input_tput_tps": 968392.38943,
           "router_version": "a0de541ea8c861d5ac01d15953ca529bea68637b",
+          "spec_algorithm": "dspark",
           "total_tput_tps": 975496.62125,
           "decode_dcp_size": 8,
           "decode_pcp_size": 1,
@@ -663,6 +670,7 @@
           "p95_input_tokens": 418481,
           "prefill_dcp_size": 8,
           "prefill_pcp_size": 1,
+          "spec_draft_model": "Inferact/Kimi-K3-DSpark",
           "std_input_tokens": 133536.57167,
           "mean_input_tokens": 135837.55081,
           "decode_avg_power_w": 1035.686,
@@ -842,12 +850,14 @@
           "kv_offloading": "dram",
           "median_intvty": 127.71392081736909,
           "input_tput_tps": 78843.5254,
+          "spec_algorithm": "mtp",
           "total_tput_tps": 79543.38092,
           "output_tput_tps": 699.85553,
           "duration_seconds": 3619.87855,
           "p75_input_tokens": 143164.75,
           "p90_input_tokens": 193066.4,
           "p95_input_tokens": 223405.85,
+          "spec_draft_model": "native",
           "std_input_tokens": 58830.92266,
           "mean_input_tokens": 105548.81139,
           "input_tput_per_gpu": 78843.5254,
