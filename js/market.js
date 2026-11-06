@@ -12,9 +12,14 @@
       {k:'implied_return_pct',h:'Implied yearly return',f:r=>`<b>${rng(r.implied_return_pct)}</b><br><span class="small muted">${esc(r.margin)}</span>`},
       {k:'wacc_pct',h:'Cost of capital',f:r=>`${pct(r.wacc_pct)}<br><span class="small"><b>${esc(rated(r)?r.verdict:'not rated')}</b></span>`},
       {k:'read',h:'Read',f:r=>`<span class="small">${esc(r.read)}</span>${r.debt_yield?`<br><span class="small muted">Bonds: ${esc(r.debt_yield)}</span>`:''}`}];
+    // Narrow screens: two columns, verdict and cost of capital under the return, read under the company.
+    const narrowCols=[
+      {k:'name',h:'Company',f:r=>`<b>${esc(r.name)}</b> <span class="small muted">${esc(r.ticker)}</span><br><span class="small muted">$${(+r.close).toFixed(2)} · ${r.nov5_pct>0?'+':''}${r.nov5_pct}% Nov 5</span><br><span class="small">${esc(r.read)}</span>`},
+      {k:'implied_return_pct',h:'Return vs cost of capital',f:r=>`<b>${rng(r.implied_return_pct)}</b> <span class="small muted">vs ${pct(r.wacc_pct)}</span><br><span class="small"><b>${esc(rated(r)?r.verdict:'not rated')}</b></span>`}];
+    const mq=matchMedia('(max-width: 640px)');
     const nRated=M.rows.filter(rated).length;
-    const draw=all=>{table('#marketTable',all?M.rows:M.rows.filter(rated),cols);$('#marketAll').textContent=all?`Show rated only (${nRated})`:`Show all ${M.rows.length} (incl. not rated)`;};
-    let all=false;draw(all);$('#marketAll').onclick=()=>{all=!all;draw(all);};
+    const draw=all=>{table('#marketTable',all?M.rows:M.rows.filter(rated),mq.matches?narrowCols:cols);$('#marketAll').textContent=all?`Show rated only (${nRated})`:`Show all ${M.rows.length} (incl. not rated)`;};
+    let all=false;draw(all);$('#marketAll').onclick=()=>{all=!all;draw(all);};mq.addEventListener('change',()=>draw(all));
     const nr=M.rows.filter(r=>!rated(r)),why=v=>v.replace(/^not rated \(/,'').replace(/\)$/,'');
     $('#marketRules').innerHTML=`<summary>Margin rule, limits and sources</summary><table class="t small"><thead><tr><th>Case</th><th>Margin used</th></tr></thead><tbody>${M.rule.map(([a,b])=>`<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('')}</tbody></table><ul class="small"><li>Not rated: ${nr.map(r=>`${esc(r.name)} (${esc(why(r.verdict))})`).join('; ')}.</li>${M.limits.map(l=>`<li>${esc(l)}</li>`).join('')}<li>Prices: ${esc(M.prices)}. Consensus revenue, debt and cash: company filings and stockanalysis.com. Margins: annual net margin from company financials.</li></ul>`;
   }
