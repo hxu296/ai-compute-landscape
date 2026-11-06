@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-06T13:47:00.522632+00:00",
+  "checked_at": "2026-11-06T19:56:56.900663+00:00",
   "sources": {
     "compute_desk": {
       "state": "ok",
-      "checked_at": "2026-11-06T13:47:00.522632+00:00",
-      "last_success": "2026-11-06T13:47:00.522632+00:00",
+      "checked_at": "2026-11-06T19:56:56.900663+00:00",
+      "last_success": "2026-11-06T19:56:56.900663+00:00",
       "max_age_days": 1,
       "sha256": "4c778d3af79ec41f9938a76068cce3af9a983f2e1f171b7d74de1a6161e96362",
       "url": "https://data-api.compute-index.com/public/indices"
     },
     "semianalysis": {
       "state": "ok",
-      "checked_at": "2026-11-06T13:47:00.522632+00:00",
-      "last_success": "2026-11-06T13:47:00.522632+00:00",
+      "checked_at": "2026-11-06T19:56:56.900663+00:00",
+      "last_success": "2026-11-06T19:56:56.900663+00:00",
       "max_age_days": 0,
       "sha256": "03f47e2d83b859e1e97bf0009fb82a0ccc6911751127f659004f8c941f849fa2",
       "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -245,20 +245,23 @@
     }
   ],
   "headline": {
-    "id": "brief-2026-11-06",
+    "id": "meta-senior-notes-completion-20261106",
     "date": "2026-11-06",
-    "impact_score": 1,
-    "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-    "title": "Daily market brief: SemiAnalysis H100 at $3.37",
-    "summary": "The latest observation is dated 2026-11-06 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+    "title": "Meta completes $15B of senior-note issuance",
+    "summary": "Meta’s November 5 SEC filing confirms completion that day of five senior-note tranches totaling $15 billion in principal. That total is the sum of the disclosed $3.25B, $3.25B, $4B, $1.75B and $2.75B issues. Coupons range from 5.850% to 7.500%, with maturities from 2031 to 2056. This is completed company-level financing by a major AI infrastructure buyer; the principal amount does not establish net cash proceeds, an AI-specific spending allocation or installed compute capacity.",
     "sources": [
       {
-        "title": "SemiAnalysis H100",
-        "url": "https://gpu-index.semianalysis.com/",
-        "date": "2026-11-06"
+        "title": "Meta Form 8-K, Item 8.01: completed USD senior-note offering",
+        "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312526450074/d166273d8k.htm",
+        "date": "2026-11-05"
       }
     ],
-    "status": "automated",
-    "kind": "market_brief"
+    "status": "reviewed",
+    "kind": "news",
+    "impact_score": 4,
+    "impact_reason": "A substantial completed capital-market transaction changes the funding and obligations of a major compute owner. The filing does not establish an AI allocation or capacity conversion.",
+    "confidence": "High for SEC-filed completion and terms; $15B is the arithmetic sum of the five disclosed principal amounts.",
+    "event_date": "2026-11-05",
+    "event_date_scope": "Offering completion and filing date; the cover reports November 3 as the earliest event. Editorial review is November 6."
   }
 }

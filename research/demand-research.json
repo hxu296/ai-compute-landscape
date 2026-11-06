@@ -408,7 +408,7 @@
         "growth_basis": "Doubao 120T/day (March) → 180T/day (June): ByteDance is the only Chinese platform with two comparable dated levels",
         "central": 943.172,
         "low": 500,
-        "high": 1178.967,
+        "high": 1178.968,
         "category": "E",
         "source_url": "https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html",
         "note": "Lower bound is the reported >500T/day held flat. Includes DeepSeek, Doubao, Qwen and others.",
@@ -552,7 +552,7 @@
         "growth_basis": "6B tokens/min (DevDay, October 6, 2025) → 15B/min (March 31, 2026)",
         "central": 67.901,
         "low": 21.6,
-        "high": 84.877,
+        "high": 84.878,
         "category": "E",
         "source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
         "note": "No disclosure after March 31.",
@@ -684,7 +684,7 @@
     "OpenAI · all products (projection)": {
       "central": 107901000000000.0,
       "low": 31600000000000.0,
-      "high": 184877000000000.0,
+      "high": 184878000000000.0,
       "basis": "API: 15B tokens/min (March 31) projected at its own trend from 6B/min (October 6, 2025), +17.2% a month, to ≈67T/day; ChatGPT and Codex ≈40T/day (10–100T) from 2.5B prompts/day (July 2025) with assumed context and reasoning tokens. OpenAI has not said whether its tokens/min counts cached input; Anthropic’s estimate includes ~80% cache reads, so the like-for-like gap may be smaller.",
       "source_url": "https://openai.com/devday/2025/"
     }
