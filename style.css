@@ -636,3 +636,5 @@ details.china-table{margin-top:18px}
 .fund-key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px;vertical-align:-1px}.fund-key i:first-child{margin-left:0}.fund-key i.fund-cap{position:static;width:0;height:12px;border-radius:0}
 .fund-tests{padding-left:18px;margin:10px 0 0}.fund-tests li{margin:4px 0;line-height:1.5}
 .fund-row:first-of-type{margin-top:26px}.fund-cap em{position:absolute;bottom:calc(100% + 2px);left:0;transform:translateX(-50%);font:400 10.5px/1 var(--sans);font-style:normal;color:var(--muted);white-space:nowrap}
+
+.nowrap{white-space:nowrap}

@@ -1,0 +1,673 @@
+{
+ "schema_version": 1,
+ "as_of": "2026-11-06",
+ "prices": "2026-11-05 close (stockanalysis.com; checked against a second source)",
+ "method": "Implied return: the yearly return on the whole firm (debt plus equity) at which today’s enterprise value equals consensus revenue for the next fiscal year (calendar 2027 for most; NVIDIA’s year to Jan 2028; Broadcom’s year in progress), at a steady-state margin set by one rule, growing 5% a year after that. Enterprise value excludes leases, matching free cash flow measured after lease payments. It is compared with each company’s cost of capital: own bond yield (or the 10-year Treasury ≈4.8% plus 1 point for investment grade, plus 5 points for unrated), equity at debt plus 4 points, weighted by market value, 21% tax.",
+ "rule": [
+  [
+   "Free cash flow held down by AI capex (Microsoft, Alphabet, Amazon, Meta, Oracle)",
+   "Average net margin FY2020–22, before the boom"
+  ],
+  [
+   "Cyclical: net margin swung more than 15 points over FY2020–25 for business reasons (NVIDIA, Micron). Swings from non-cash acquisition amortization (Broadcom, AMD) do not count",
+   "Average net margin FY2020–25 (NVIDIA shown as a range up to its latest margin)"
+  ],
+  [
+   "No mature history (neoclouds)",
+   "15–25%, an assumption; shown as a range"
+  ],
+  [
+   "Everyone else",
+   "Trailing free-cash-flow margin"
+  ]
+ ],
+ "verdict_rule": "One cutoff for all: more than 2 points below its cost of capital = rich; more than 2 points above = cheap if forecasts hold; in between = about fair. The cutoff is wider than the rule-of-thumb noise (moving the equity premium by a point moves cost of capital by about a point).",
+ "limits": [
+  "Consensus estimates mostly predate Nov 5.",
+  "Net margin stands in for free-cash-flow margin: it is after interest and ignores the capex that growth needs, so it flatters capex-heavy firms (Oracle most).",
+  "Cost of equity is a rule of thumb (debt + 4 points), not a measured beta.",
+  "Mid-ramp landlords: next-year revenue understates signed leases.",
+  "Leases signed but not yet started (Oracle, CoreWeave) are not included.",
+  "Research, not investment advice. No position sizes."
+ ],
+ "rows": [
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "group": "Chips",
+   "close": 181.6,
+   "nov5_pct": -9.3,
+   "off_high_pct": -25,
+   "ev_b": 4366.8,
+   "revenue_b": 692.21,
+   "implied_return_pct": [
+    10.1,
+    13.0
+   ],
+   "implied_return_lead": 10.1,
+   "margin": "34.8% through-cycle to 55.6% latest net margin",
+   "debt_yield": null,
+   "wacc_pct": 9.8,
+   "gap_pts": [
+    0.3,
+    3.2
+   ],
+   "verdict": "about fair; cheap only if today’s margins hold",
+   "read": "Demand supports forecasts to 2028; the debate is margins after."
+  },
+  {
+   "ticker": "AMD",
+   "name": "AMD",
+   "group": "Chips",
+   "close": 404.4,
+   "nov5_pct": -17.3,
+   "off_high_pct": -39,
+   "ev_b": 654.55,
+   "revenue_b": 93.1,
+   "implied_return_pct": [
+    7.1,
+    7.1
+   ],
+   "implied_return_lead": 7.1,
+   "margin": "15.5% trailing FCF margin",
+   "debt_yield": null,
+   "wacc_pct": 9.7,
+   "gap_pts": [
+    -2.6,
+    -2.6
+   ],
+   "verdict": "rich",
+   "read": "Priced for margins well above anything it has earned."
+  },
+  {
+   "ticker": "AVGO",
+   "name": "Broadcom",
+   "group": "Chips",
+   "close": 291.53,
+   "nov5_pct": -10.4,
+   "off_high_pct": -41,
+   "ev_b": 1425.4,
+   "revenue_b": 174.23,
+   "implied_return_pct": [
+    10.2,
+    10.2
+   ],
+   "implied_return_lead": 10.2,
+   "margin": "44.2% trailing FCF margin",
+   "debt_yield": null,
+   "wacc_pct": 9.6,
+   "gap_pts": [
+    0.6,
+    0.6
+   ],
+   "verdict": "about fair",
+   "read": "Fair at today’s margins; gains if Anthropic’s IPO goes well."
+  },
+  {
+   "ticker": "TSM",
+   "name": "TSMC",
+   "group": "Chips",
+   "close": 353.1,
+   "nov5_pct": -10.8,
+   "off_high_pct": -28,
+   "ev_b": 1731,
+   "revenue_b": 241.5,
+   "implied_return_pct": [
+    8.8,
+    8.8
+   ],
+   "implied_return_lead": 8.8,
+   "margin": "29.0% trailing FCF margin",
+   "debt_yield": null,
+   "wacc_pct": 9.7,
+   "gap_pts": [
+    -0.9,
+    -0.9
+   ],
+   "verdict": "about fair",
+   "read": "Fair at its trailing margin."
+  },
+  {
+   "ticker": "MU",
+   "name": "Micron",
+   "group": "Chips",
+   "close": 656.39,
+   "nov5_pct": -17.5,
+   "off_high_pct": -48,
+   "ev_b": 674.35,
+   "revenue_b": 320.06,
+   "implied_return_pct": [
+    8.6,
+    8.6
+   ],
+   "implied_return_lead": 8.6,
+   "margin": "8.4% through-cycle net margin",
+   "debt_yield": null,
+   "wacc_pct": 9.8,
+   "gap_pts": [
+    -1.2,
+    -1.2
+   ],
+   "verdict": "about fair",
+   "read": "Priced for average memory margins, not today’s peak."
+  },
+  {
+   "ticker": "MSFT",
+   "name": "Microsoft",
+   "group": "Clouds",
+   "close": 535.93,
+   "nov5_pct": -3.6,
+   "off_high_pct": -4,
+   "ev_b": 4050,
+   "revenue_b": 475.92,
+   "implied_return_pct": [
+    8.7,
+    8.7
+   ],
+   "implied_return_lead": 8.7,
+   "margin": "34.7% pre-boom net margin",
+   "debt_yield": "4.85–6.35% (new notes, Oct 29, coupons)",
+   "wacc_pct": 9.6,
+   "gap_pts": [
+    -0.9,
+    -0.9
+   ],
+   "verdict": "about fair",
+   "read": "Needs at least its pre-boom margin; small midterm exposure."
+  },
+  {
+   "ticker": "GOOGL",
+   "name": "Alphabet",
+   "group": "Clouds",
+   "close": 282.57,
+   "nov5_pct": -2.2,
+   "off_high_pct": -31,
+   "ev_b": 3360,
+   "revenue_b": 634.5,
+   "implied_return_pct": [
+    9.3,
+    9.3
+   ],
+   "implied_return_lead": 9.3,
+   "margin": "24.3% pre-boom net margin",
+   "debt_yield": null,
+   "wacc_pct": 9.6,
+   "gap_pts": [
+    -0.3,
+    -0.3
+   ],
+   "verdict": "about fair",
+   "read": "Fair at its pre-boom margin; sells scarce cloud capacity."
+  },
+  {
+   "ticker": "AMZN",
+   "name": "Amazon",
+   "group": "Clouds",
+   "close": 260.21,
+   "nov5_pct": -2.2,
+   "off_high_pct": -9,
+   "ev_b": 3000,
+   "revenue_b": 949.99,
+   "implied_return_pct": [
+    6.2,
+    6.2
+   ],
+   "implied_return_lead": 6.2,
+   "margin": "4.0% pre-boom net margin",
+   "debt_yield": null,
+   "wacc_pct": 9.5,
+   "gap_pts": [
+    -3.3,
+    -3.3
+   ],
+   "verdict": "rich",
+   "read": "Needs margins above its history; 2022 includes the Rivian markdown."
+  },
+  {
+   "ticker": "META",
+   "name": "Meta",
+   "group": "Clouds",
+   "close": 605.08,
+   "nov5_pct": -4.0,
+   "off_high_pct": -22,
+   "ev_b": 1580,
+   "revenue_b": 312.41,
+   "implied_return_pct": [
+    10.4,
+    10.4
+   ],
+   "implied_return_lead": 10.4,
+   "margin": "29.1% pre-boom net margin",
+   "debt_yield": null,
+   "wacc_pct": 9.5,
+   "gap_pts": [
+    0.9,
+    0.9
+   ],
+   "verdict": "about fair",
+   "read": "Fair at its own history; little midterm exposure."
+  },
+  {
+   "ticker": "ORCL",
+   "name": "Oracle",
+   "group": "Clouds",
+   "close": 115.16,
+   "nov5_pct": -6.9,
+   "off_high_pct": -54,
+   "ev_b": 491.1,
+   "revenue_b": 131.82,
+   "implied_return_pct": [
+    11.0,
+    11.0
+   ],
+   "implied_return_lead": 11.0,
+   "margin": "25.2% pre-boom net margin",
+   "debt_yield": "7.00–8.65% (new notes, Nov 2)",
+   "wacc_pct": 10.3,
+   "gap_pts": [
+    0.7,
+    0.7
+   ],
+   "verdict": "about fair",
+   "read": "Software-era margin flatters it; financing and New Mexico permit are the risks."
+  },
+  {
+   "ticker": "CRWV",
+   "name": "CoreWeave",
+   "group": "Neoclouds",
+   "close": 43.66,
+   "nov5_pct": -9.8,
+   "off_high_pct": -68,
+   "ev_b": 53.62,
+   "revenue_b": 26.45,
+   "implied_return_pct": [
+    11.8,
+    15.9
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": "≈16–17% (2031 notes reported at 79.5 on Nov 4; not verified)",
+   "wacc_pct": 16.1,
+   "gap_pts": [
+    -4.3,
+    -0.2
+   ],
+   "verdict": "not rated (margin assumed; its bond yield is a promised yield)",
+   "read": "About what its bonds promise; credit and equity both price risk."
+  },
+  {
+   "ticker": "NBIS",
+   "name": "Nebius",
+   "group": "Neoclouds",
+   "close": 120.37,
+   "nov5_pct": -14.9,
+   "off_high_pct": -60,
+   "ev_b": 33.49,
+   "revenue_b": 12.24,
+   "implied_return_pct": [
+    10.2,
+    13.3
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": null,
+   "wacc_pct": 12.6,
+   "gap_pts": [
+    -2.4,
+    0.7
+   ],
+   "verdict": "not rated (margin assumed)",
+   "read": "Sites outside the new-rule states; watch its 364-day bank facility."
+  },
+  {
+   "ticker": "IREN",
+   "name": "IREN",
+   "group": "Neoclouds",
+   "close": 18.03,
+   "nov5_pct": -17.0,
+   "off_high_pct": -77,
+   "ev_b": 11.53,
+   "revenue_b": 7.41,
+   "implied_return_pct": [
+    13.2,
+    17.9
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": null,
+   "wacc_pct": 10.3,
+   "gap_pts": [
+    2.9,
+    7.6
+   ],
+   "verdict": "not rated (margin assumed; also rests on debt at ≈58% of value)",
+   "read": "Rests on debt being ≈58% of value; Texas and unfunded capex."
+  },
+  {
+   "ticker": "CIFR",
+   "name": "Cipher",
+   "group": "Neoclouds",
+   "close": 5.55,
+   "nov5_pct": -14.6,
+   "off_high_pct": -82,
+   "ev_b": 7.43,
+   "revenue_b": 0.857,
+   "implied_return_pct": [
+    6.7,
+    7.8
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": "7.125% (coupon)",
+   "wacc_pct": 7.3,
+   "gap_pts": [
+    -0.6,
+    0.5
+   ],
+   "verdict": "not rated (mid-ramp: next-year revenue understates its leases)",
+   "read": "Mid-ramp: next year’s revenue understates its leases."
+  },
+  {
+   "ticker": "WULF",
+   "name": "TeraWulf",
+   "group": "Neoclouds",
+   "close": 10.08,
+   "nov5_pct": -13.8,
+   "off_high_pct": -66,
+   "ev_b": 7.62,
+   "revenue_b": 0.8875,
+   "implied_return_pct": [
+    6.7,
+    7.8
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": null,
+   "wacc_pct": 10.7,
+   "gap_pts": [
+    -4.0,
+    -2.9
+   ],
+   "verdict": "not rated (mid-ramp: next-year revenue understates its leases)",
+   "read": "Mid-ramp: next year’s revenue understates its leases."
+  },
+  {
+   "ticker": "CORZ",
+   "name": "Core Scientific",
+   "group": "Neoclouds",
+   "close": 11.38,
+   "nov5_pct": -10.8,
+   "off_high_pct": -63,
+   "ev_b": 7.26,
+   "revenue_b": 1.15,
+   "implied_return_pct": [
+    7.3,
+    8.8
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": "≈7.9% (secured notes at issue)",
+   "wacc_pct": 8.8,
+   "gap_pts": [
+    -1.5,
+    -0.0
+   ],
+   "verdict": "not rated (mid-ramp)",
+   "read": "Mid-ramp; about its own secured debt yield."
+  },
+  {
+   "ticker": "APLD",
+   "name": "Applied Digital",
+   "group": "Neoclouds",
+   "close": 14.17,
+   "nov5_pct": -14.7,
+   "off_high_pct": -72,
+   "ev_b": 7.71,
+   "revenue_b": 1.97,
+   "implied_return_pct": [
+    8.5,
+    10.7
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": "≈8.4% (2031 notes, mid-Oct)",
+   "wacc_pct": 9.0,
+   "gap_pts": [
+    -0.5,
+    1.7
+   ],
+   "verdict": "not rated (mid-ramp)",
+   "read": "Mid-ramp; a little above its own bond yield."
+  },
+  {
+   "ticker": "WYFI",
+   "name": "WhiteFiber",
+   "group": "Neoclouds",
+   "close": 7.8,
+   "nov5_pct": -14.8,
+   "off_high_pct": -83,
+   "ev_b": 0.553,
+   "revenue_b": 0.29634,
+   "implied_return_pct": [
+    12.4,
+    16.8
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": null,
+   "wacc_pct": 10.8,
+   "gap_pts": [
+    1.6,
+    6.0
+   ],
+   "verdict": "not rated (margin assumed)",
+   "read": "≈92% of backlog from one customer."
+  },
+  {
+   "ticker": "HUT",
+   "name": "Hut 8",
+   "group": "Neoclouds",
+   "close": 45.95,
+   "nov5_pct": -6.1,
+   "off_high_pct": -67,
+   "ev_b": 13.02,
+   "revenue_b": 0.5768,
+   "implied_return_pct": [
+    5.7,
+    6.1
+   ],
+   "implied_return_lead": null,
+   "margin": "15–25% (no mature history; assumption)",
+   "debt_yield": "6.1–6.2% (investment-grade project notes)",
+   "wacc_pct": 7.1,
+   "gap_pts": [
+    -1.4,
+    -1.0
+   ],
+   "verdict": "not rated (mid-ramp: lease revenue starts Q2 2027)",
+   "read": "Mid-ramp: lease revenue starts in Q2 2027."
+  },
+  {
+   "ticker": "VST",
+   "name": "Vistra",
+   "group": "Power",
+   "close": 112.89,
+   "nov5_pct": -6.2,
+   "off_high_pct": -43,
+   "ev_b": 57.96,
+   "revenue_b": 23.1,
+   "implied_return_pct": [
+    6.1,
+    6.1
+   ],
+   "implied_return_lead": 6.1,
+   "margin": "2.8% through-cycle net margin",
+   "debt_yield": null,
+   "wacc_pct": 8.0,
+   "gap_pts": [
+    -1.9,
+    -1.9
+   ],
+   "verdict": "not rated (margin history distorted by the 2021 storm loss and hedge marks)",
+   "read": "Texas new load is its main midterm exposure."
+  },
+  {
+   "ticker": "CEG",
+   "name": "Constellation",
+   "group": "Power",
+   "close": 239.65,
+   "nov5_pct": -2.5,
+   "off_high_pct": -37,
+   "ev_b": 108.91,
+   "revenue_b": 37.16,
+   "implied_return_pct": [
+    7.5,
+    7.5
+   ],
+   "implied_return_lead": 7.5,
+   "margin": "7.7% through-cycle net margin",
+   "debt_yield": null,
+   "wacc_pct": 8.6,
+   "gap_pts": [
+    -1.1,
+    -1.1
+   ],
+   "verdict": "not rated (margin history starts at its 2022 spin-off)",
+   "read": "Short margin history since its 2022 spin-off."
+  },
+  {
+   "ticker": "GEV",
+   "name": "GE Vernova",
+   "group": "Power",
+   "close": 770.51,
+   "nov5_pct": -7.5,
+   "off_high_pct": -36,
+   "ev_b": 190.24,
+   "revenue_b": 53.57,
+   "implied_return_pct": [
+    14.8,
+    14.8
+   ],
+   "implied_return_lead": 14.8,
+   "margin": "38.9% trailing FCF margin",
+   "debt_yield": null,
+   "wacc_pct": 9.7,
+   "gap_pts": [
+    5.1,
+    5.1
+   ],
+   "verdict": "not rated (trailing free cash flow includes customer down payments)",
+   "read": "Down payments inflate trailing cash flow."
+  },
+  {
+   "ticker": "TLN",
+   "name": "Talen",
+   "group": "Power",
+   "close": 316.23,
+   "nov5_pct": -3.2,
+   "off_high_pct": -30,
+   "ev_b": 22.99,
+   "revenue_b": 5.17,
+   "implied_return_pct": [
+    6.4,
+    6.4
+   ],
+   "implied_return_lead": 6.4,
+   "margin": "6.3% trailing FCF margin",
+   "debt_yield": null,
+   "wacc_pct": 11.3,
+   "gap_pts": [
+    -4.9,
+    -4.9
+   ],
+   "verdict": "not rated (no clean margin history)",
+   "read": "Priced near a utility-like return."
+  }
+ ],
+ "policy": {
+  "adds_2027_gw": 9.0,
+  "adds_2028_gw": 15.9,
+  "ordinary_slip_2028_gw": [
+   2.3,
+   4.6
+  ],
+  "policy_2027_gw": [
+   0.3,
+   1.0
+  ],
+  "policy_2028_gw": [
+   0.9,
+   2.0
+  ],
+  "policy_2028_fleet_share_pct": [
+   3.4,
+   7.5
+  ],
+  "fleet_denominator": "Epoch US frontier tracker, end-2028 H100e = 59.7M",
+  "capex_shifted_2028_busd": [
+   25,
+   56
+  ],
+  "nm_case_b_gw": 1.4,
+  "owners_2028_policy_pct": {
+   "Microsoft": [
+    5,
+    14
+   ],
+   "OpenAI": [
+    9,
+    20
+   ],
+   "Oracle": [
+    8,
+    20
+   ],
+   "Meta": [
+    0,
+    2
+   ],
+   "Google": [
+    0,
+    0
+   ],
+   "Softbank": [
+    26,
+    35
+   ],
+   "CoreWeave": [
+    0,
+    9
+   ]
+  },
+  "shortage_shift_months": [
+   0.4,
+   0.8
+  ],
+  "notes": [
+   "Ordinary slip is an assumption (E): sites with only a year-end placeholder date slip 25–50% of the time, dated ramps 10–20%, expanding sites 5–10%.",
+   "Policy shares and delay lengths are set per site by stage (E), and apply only to capacity that would not slip anyway: Texas’s grid pause exempts sites already approved and under construction; the state permit halt is broader.",
+   "New Mexico: Project Jupiter is under construction; its air permit for on-site generation is due ≈Nov 23. If denied, ≈1.4 GW more slips 6–8 quarters, close to a restart.",
+   "NVIDIA’s $105B guarantee sits on the PORTS-Pike campus in Ohio (leased to OpenAI), which Epoch does not track; not modelled.",
+   "A delay moves spend and revenue later; it does not remove them. It moves part of OpenAI’s 2028 funding gap into 2029.",
+   "Federal: Democratic majorities from Jan 3, 2027; a veto blocks a federal ban. No federal change is modelled."
+  ],
+  "sources": [
+   [
+    "Epoch AI frontier data-center tracker",
+    "https://epoch.ai/data/ai-data-centers"
+   ],
+   [
+    "Texas Tribune, Nov 4",
+    "https://www.texastribune.org/2026/11/04/data-center-texas-pause-gina-hinojosa-governor-policies/"
+   ],
+   [
+    "SemiAnalysis, Nov 1",
+    "https://newsletter.semianalysis.com/p/the-datacenter-backlash-goes-bipartisan"
+   ],
+   [
+    "MultiState governor results",
+    "https://www.multistate.us/resources/governors-2026-state-election-results"
+   ]
+  ]
+ }
+}

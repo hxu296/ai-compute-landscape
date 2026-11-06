@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="build" content="fa630e2032fa">
+<meta name="build" content="4b6ea8580634">
 <script>(function(){var m=document.querySelector('meta[name=build]');if(!m||!m.content||location.protocol==='file:'||!window.fetch)return;fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(v){var k='build-reload-'+(v&&v.build);if(v&&v.build&&v.build!==m.content&&!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.reload();}}).catch(function(){});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Will AI compute stay tight?</title>
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hxu296.github.io/ai-compute-landscape/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='6' fill='%23161513'/%3E%3Crect x='6.5' y='15' width='4' height='6.5' rx='1' fill='%23fffdf8' fill-opacity='.6'/%3E%3Crect x='12' y='10.5' width='4' height='11' rx='1' fill='%23fffdf8' fill-opacity='.85'/%3E%3Crect x='17.5' y='6' width='4' height='15.5' rx='1' fill='%2366c2b1'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=679a0d164c5f">
+<link rel="stylesheet" href="style.css?v=15205ccec91c">
 </head>
 <body>
 <div class="tip" id="tip"></div>
@@ -162,6 +162,13 @@
     <ul class="small fund-tests" id="fundTests"></ul>
     <details class="fig-notes"><summary>Sources, signals and method</summary><div id="fundSignals"></div></details>
   </div></div>
+  <div class="fig" id="policyFig"><div class="fig-frame">
+    <div class="fig-head"><h3 class="fig-title">Do the Nov 2026 midterms slow the build-out?</h3></div>
+    <p class="fig-sub" id="policyHeadline"></p>
+    <div class="table-wrap"><table class="t" id="policyTable"></table></div>
+    <p class="small" id="policyOwners"></p>
+    <details class="fig-notes" id="policyNotes"><summary>Method, assumptions and sources</summary></details>
+  </div></div>
 </section>
 
 <section class="chapter" id="stress">
@@ -197,6 +204,15 @@
     <p class="fig-sub" id="riskNote"></p>
     <div class="table-scroll"><table class="t" id="riskTable"></table></div>
     <details class="fig-notes" id="riskRules"><summary>How each factor is scored</summary></details>
+  </div></div>
+  <div class="fig" id="marketFig"><div class="fig-frame">
+    <div class="fig-head"><span class="fig-no">Table 2</span><h3 class="fig-title">What do stock prices assume?</h3></div>
+    <p class="fig-headline" id="marketHeadline"></p>
+    <p class="fig-sub" id="marketNote"></p>
+    <div class="fig-controls"><button id="marketAll" type="button"></button></div>
+    <div class="table-scroll"><table class="t" id="marketTable"></table></div>
+    <details class="fig-notes" id="marketRules"><summary>Margin rule, limits and sources</summary></details>
+    <p class="fig-caption">Research, not investment advice.</p>
   </div></div>
 </section>
 
@@ -414,7 +430,7 @@
 <button id="theme" hidden></button>
 <script src="data/nc.js?v=dd35ea677c1e"></script>
 <script src="data/live.js?v=8cf49b9b7b90"></script>
-<script src="data/research.js?v=b893a7b775a2"></script>
+<script src="data/research.js?v=bb474b2c116b"></script>
 <script src="data/us_states.js?v=8dcf93263303"></script>
 <script src="js/common.js?v=c11cc3cabcf5"></script>
 <script src="js/conflicts.js?v=6ea6ec87c88c"></script>
@@ -433,6 +449,7 @@
 <script src="js/watch.js?v=2327db62086c"></script>
 <script src="js/neolab.js?v=9700041b5775"></script>
 <script src="js/funding.js?v=cb12dbfbf0e5"></script>
+<script src="js/market.js?v=1e0985025def"></script>
 <script src="js/us_map.js?v=18d3e899c9a5"></script>
 <script src="js/gw_years.js?v=34a8be03f666"></script>
 <script src="js/capacity.js?v=0371c9e53121"></script>
