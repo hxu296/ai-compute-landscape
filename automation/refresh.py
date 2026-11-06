@@ -42,6 +42,8 @@ def editorial(document,today):
     seen=set()
     for item in document['items']:
         day=dt.date.fromisoformat(item['date']).isoformat()
+        updated=dt.date.fromisoformat(item.get('updated_date',day)).isoformat()
+        if not day<=updated<=today:raise ValueError('Invalid editorial correction date')
         identity=item.get('id')
         if not isinstance(identity,str) or not identity or len(identity)>100:raise ValueError('Missing editorial id')
         if identity in seen or day>today:raise ValueError('Duplicate id or future editorial date')
@@ -53,12 +55,12 @@ def editorial(document,today):
             if not isinstance(item.get(k),str) or not 1<=len(item[k])<=limit:raise ValueError('Invalid editorial '+k)
         for k in ['confidence','event_date_scope','future_target']:
             if item.get(k) is not None and (not isinstance(item[k],str) or len(item[k])>1000):raise ValueError('Invalid editorial '+k)
-        if item.get('event_date') and dt.date.fromisoformat(item['event_date']).isoformat()>day:raise ValueError('Future event must be a target, not an observed event')
+        if item.get('event_date') and dt.date.fromisoformat(item['event_date']).isoformat()>updated:raise ValueError('Future event must be a target, not an observed event')
         if not 1<=len(item.get('sources',[]))<=8:raise ValueError('Missing supporting sources')
         for source in item['sources']:
             u=urllib.parse.urlparse(source['url'])
             if u.scheme!='https' or not u.hostname or u.username or u.password:raise ValueError('Unsafe source URL')
-            if not source.get('title') or date(source['date'])>day:raise ValueError('Invalid source publication date')
+            if not source.get('title') or date(source['date'])>updated:raise ValueError('Invalid source publication date')
     return sorted(document['items'],key=lambda i:(i['date'],i['impact_score'],i.get('published_at','')),reverse=True)
 def load(path,default):return json.loads(path.read_text()) if path.exists() else default
 def write(path,value):path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')

@@ -22,6 +22,13 @@ class ETL(unittest.TestCase):
             with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[{**item,'impact_score':score}]},'2026-11-02')
         item['sources'][0]['url']='javascript:bad'
         with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[item]},'2026-11-02')
+    def test_correction_preserves_original_publication_date(self):
+        item={'id':'original-story','impact_score':4,'impact_reason':'Completed company-level financing.','date':'2026-11-02','updated_date':'2026-11-06','event_date':'2026-11-04','title':'Completed offering','summary':'Later closing evidence corrects the original story.','status':'reviewed','kind':'news','sources':[{'date':'2026-11-04','url':'https://example.com/closing','title':'Closing filing'}]}
+        self.assertEqual(m.editorial({'schema_version':2,'items':[item]},'2026-11-06'),[item])
+        for change in [{'updated_date':'2026-11-01'},{'updated_date':'2026-11-07'},{'updated_date':'2026-11-03'},{'event_date':'2026-11-07'},{'sources':[{'date':'2026-11-07','url':'https://example.com/future','title':'Future filing'}]}]:
+            with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[{**item,**change}]},'2026-11-06')
+        original={k:v for k,v in item.items() if k!='updated_date'}
+        with self.assertRaises(ValueError):m.editorial({'schema_version':2,'items':[original]},'2026-11-06')
     def test_total_failure_preserves_published_cache(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);m.write(root/'data/live.json',{'schema_version':1,'sources':{},'daily':{'items':[]}});before=(root/'data/live.json').read_bytes()

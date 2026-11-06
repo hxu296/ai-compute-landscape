@@ -276,21 +276,86 @@
     "schema_version": 2,
     "items": [
       {
-        "id": "brief-2026-11-06",
+        "id": "meta-senior-notes-completion-20261106",
         "date": "2026-11-06",
-        "impact_score": 1,
-        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-        "title": "Daily market brief: SemiAnalysis H100 at $3.37",
-        "summary": "The latest observation is dated 2026-11-06 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "title": "Meta completes $15B of senior-note issuance",
+        "summary": "Meta’s November 5 SEC filing confirms completion that day of five senior-note tranches totaling $15 billion in principal. That total is the sum of the disclosed $3.25B, $3.25B, $4B, $1.75B and $2.75B issues. Coupons range from 5.850% to 7.500%, with maturities from 2031 to 2056. This is completed company-level financing by a major AI infrastructure buyer; the principal amount does not establish net cash proceeds, an AI-specific spending allocation or installed compute capacity.",
         "sources": [
           {
-            "title": "SemiAnalysis H100",
-            "url": "https://gpu-index.semianalysis.com/",
+            "title": "Meta Form 8-K, Item 8.01: completed USD senior-note offering",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312526450074/d166273d8k.htm",
+            "date": "2026-11-05"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 4,
+        "impact_reason": "A substantial completed capital-market transaction changes the funding and obligations of a major compute owner. The filing does not establish an AI allocation or capacity conversion.",
+        "confidence": "High for SEC-filed completion and terms; $15B is the arithmetic sum of the five disclosed principal amounts.",
+        "event_date": "2026-11-05",
+        "event_date_scope": "Offering completion and filing date; the cover reports November 3 as the earliest event. Editorial review is November 6."
+      },
+      {
+        "id": "iren-q1-fy2027-cloud-ramp-20261106",
+        "date": "2026-11-06",
+        "title": "IREN reports $200M AI Cloud revenue as its >$4B run-rate target moves into 2027",
+        "summary": "IREN’s November 5 release reports $200 million of AI Cloud revenue for the quarter ended September 30: $135 million of services and $65 million of leases. Its more-than-$4 billion annualized run-rate target moves from year-end 2026 to January 31, potentially the end of February, following a customer-requested change and supplier timing. Management calls that 0.3GW IT program fully funded, but its definition includes restricted cash, undrawn financing and contracted prepayments not yet received, with funding conditions. Operating run-rate revenue is about $1 billion. Neither operating ARR nor the future target is GAAP revenue; commissioning and customer acceptance govern the ramp.",
+        "sources": [
+          {
+            "title": "IREN Q1 FY27 results, financial summary and assumptions 1, 4 and 5",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
+            "date": "2026-11-05"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "A major neocloud reports a larger AI business while moving a substantial contracted ramp into 2027. Mixed revenue streams and conditional funding require separate measures.",
+        "confidence": "Company-reported results and timing; run-rate targets depend on pricing, utilization and delivery assumptions.",
+        "event_date": "2026-11-05",
+        "event_date_scope": "Results announcement; quarterly revenue covers July–September 2026. Editorial review is November 6.",
+        "future_target": "> $4B ARR targeted for January 31, 2027, potentially extending to February end."
+      },
+      {
+        "id": "core-scientific-q3-colocation-ramp-20261106",
+        "date": "2026-11-06",
+        "title": "Core Scientific reports $215.4M colocation revenue and 485MW billing capacity",
+        "summary": "Core Scientific’s November 5 results report $215.4 million of third-quarter colocation revenue, compared with $136.7 million in Q2. The company was billing 485MW at September 30, up from 395MW at June 30. Its definition requires service to have commenced and customers to be actively billed; this is a customer billing metric, not measured electricity consumption or GPU utilization. Management says its first colocation agreement is nearing full delivery while construction under its second continues across five campuses. The results show a real revenue and service ramp, while undelivered contracted capacity remains future supply.",
+        "sources": [
+          {
+            "title": "Core Scientific Q3 2026 results, operating metrics and Term Library",
+            "url": "https://investors.corescientific.com/news-events/press-releases/detail/146/core-scientific-announces-third-quarter-2026-results",
+            "date": "2026-11-05"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "Higher colocation revenue and billable capacity demonstrate a substantial hosting ramp. Billing power and future construction cannot establish tenant-owned GPU availability or utilization.",
+        "confidence": "High for the company-reported financial and billing metrics; service and construction commentary is management-reported.",
+        "event_date": "2026-11-05",
+        "event_date_scope": "Results publication; quarter-end billing observations are September 30 and June 30, 2026. Editorial review is November 6."
+      },
+      {
+        "id": "terawulf-q3-hpc-lease-revenue-20261106",
+        "date": "2026-11-06",
+        "title": "TeraWulf’s HPC lease revenue reaches $63M; 102MW operates while 336MW is being built",
+        "summary": "TeraWulf’s November 6 results report $62.986 million of third-quarter HPC lease revenue, roughly 83% of $76.230 million total revenue. Lake Mariner had 102MW of revenue-generating critical IT capacity at September 30 and another 336MW under construction across CB-4 and CB-5. Phased CB-4 delivery and rent commencement remain expected in Q4; CB-5 is targeted to begin phased delivery in early 2027. The growing lease business remains distinct from the construction pipeline. The release also repeats the November 4 Justified credit-support and EPC agreements; those are the previously reported development, not another $19 billion lease or completed financing.",
+        "sources": [
+          {
+            "title": "TeraWulf Q3 2026 results, Lake Mariner milestones and income statement",
+            "url": "https://investors.terawulf.com/news-events/press-releases/detail/149/terawulf-reports-third-quarter-2026-results",
             "date": "2026-11-06"
           }
         ],
-        "status": "automated",
-        "kind": "market_brief"
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "HPC leases now account for most quarterly revenue, while a much larger construction pipeline still awaits delivery. This is a material regional hosting transition.",
+        "confidence": "High for reported revenue and September operating/construction figures; future service dates remain targets.",
+        "event_date": "2026-11-06",
+        "event_date_scope": "Results announcement; revenue and operating capacity describe the quarter ended September 30.",
+        "future_target": "CB-4 phased delivery/rent in Q4 2026; CB-5 phased delivery beginning early 2027."
       },
       {
         "id": "terawulf-justified-google-backstop-20261105",
@@ -460,9 +525,14 @@
       {
         "id": "oracle-preliminary-stock-and-notes-offerings-20261102",
         "date": "2026-11-02",
-        "title": "Oracle prices $10B stock sale and $10B notes; closing expected November 4",
-        "summary": "Oracle’s November 2 pricing release sets 86,206,897 common shares at $116 each, approximately $10 billion gross, alongside $10 billion of senior notes. The five debt tranches carry coupons from 7.000% to 8.650% and mature between 2029 and 2046. Both offerings are expected to close November 4, subject to customary conditions, and neither closing depends on the other. Pricing replaces the preliminary terms reported here earlier. The financing is material to a major cloud supplier, but proceeds have broad corporate uses; this does not establish completed fundraising, an AI-specific construction budget or delivered capacity.",
+        "title": "Oracle completes $10B stock sale and $10B note issuance on November 4",
+        "summary": "Oracle’s November 4 SEC filing confirms that its 86,206,897-share common-stock sale and $10 billion principal amount of senior notes closed that day. The shares were priced at $116, approximately $10 billion gross. The five note tranches mature from 2029 to 2046. This updates the November 2 pricing story under its original archive ID and date. Proceeds have broad corporate uses, including possible capital expenditure and debt repayment; the completed financing does not establish an AI-specific construction budget or delivered capacity.",
         "sources": [
+          {
+            "title": "Oracle Form 8-K, Item 8.01: stock and notes completion",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526447507/d131790d8k.htm",
+            "date": "2026-11-04"
+          },
           {
             "title": "Oracle pricing announcement (company-issued release via PR Newswire)",
             "url": "https://www.prnewswire.com/news-releases/oracle-announces-pricing-of-20-billion-of-common-stock-and-senior-notes-302927244.html",
@@ -487,11 +557,11 @@
         "status": "reviewed",
         "kind": "news",
         "impact_score": 4,
-        "impact_reason": "A $20B financing priced by a major cloud supplier materially changes its funding terms. Closing and the infrastructure allocation remain unresolved.",
-        "confidence": "High for company-announced pricing and SEC-filed note terms; completion and any AI-specific allocation remain unverified.",
-        "event_date": "2026-11-02",
-        "event_date_scope": "Pricing announcement dated November 2 in the issuer release (posted 22:09 ET, November 3 UTC); replaces preliminary terms under the same story ID.",
-        "future_target": "November 4, 2026 expected closing, subject to customary conditions"
+        "impact_reason": "A major cloud supplier has completed $20B of gross stock and principal debt financing. Its infrastructure allocation remains unspecified.",
+        "confidence": "High for SEC-filed completion and issuer-announced pricing; any AI-specific allocation remains unverified.",
+        "event_date": "2026-11-04",
+        "event_date_scope": "Offerings closed November 4 after November 2 pricing; reviewed November 6 under the existing November 2 archive ID and date.",
+        "updated_date": "2026-11-06"
       },
       {
         "date": "2026-11-02",

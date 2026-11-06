@@ -9,7 +9,7 @@ test('growth endpoints agree with provider cards and each series keeps one defin
  }
 });
 test('AI and hosting revenue is never replaced by a mining total or another segment',()=>{
- const expected={'IREN':70.5e6,'Applied Digital':262.6e6,'Core Scientific':136.7e6,'TeraWulf':31.9e6};
+ const expected={'IREN':135e6,'Applied Digital':262.6e6,'Core Scientific':215.4e6,'TeraWulf':62986000};
  for(const [s,value] of Object.entries(expected)){assert.equal(provider(s).latest.revenue_usd.value,value);assert.equal(n.growth[s].revenue_usd.at(-1)[1],value);}
  assert.equal(provider('Microsoft Azure').latest.backlog_usd.value,677e9);assert(n.growth['Microsoft Azure'].backlog_usd.every(r=>r[4].includes('commercial RPO')));
  assert.equal(n.growth.Nebius.revenue_usd.find(r=>r[0]==='2025-03-31')[1],50.9e6);
