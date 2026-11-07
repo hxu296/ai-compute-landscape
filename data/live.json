@@ -276,21 +276,55 @@
     "schema_version": 2,
     "items": [
       {
-        "id": "brief-2026-11-07",
+        "id": "ecb-ai-financing-risk-letter-20261107",
         "date": "2026-11-07",
-        "impact_score": 1,
-        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-        "title": "Daily market brief: SemiAnalysis H100 at $3.35",
-        "summary": "The latest observation is dated 2026-11-07 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "title": "ECB flags debt-like AI commitments; bond-market spillovers remain limited so far",
+        "summary": "Christine Lagarde’s November 6 letter to European lawmakers highlights AI infrastructure leases, purchase commitments, circular financing and private credit as sources of financial risk. The ECB says heavy bond issuance has raised the hyperscalers’ own borrowing costs, while effects on similar corporate issuance have been small and temporary and government yields show no significant impact so far. Future financing needs could change that picture. The warning connects compute expansion to the ability to earn enough revenue to sustain its obligations; it announces neither new lending rules nor a finding of widespread European debt losses.",
         "sources": [
           {
-            "title": "SemiAnalysis H100",
-            "url": "https://gpu-index.semianalysis.com/",
-            "date": "2026-11-07"
+            "title": "ECB President letter on AI-related financing, pages 1–3",
+            "url": "https://www.ecb.europa.eu/pub/pdf/other/ecb.mepletter261106_Heinaluoma_Fernandez~6e406be51f.en.pdf",
+            "date": "2026-11-06"
           }
         ],
-        "status": "automated",
-        "kind": "market_brief"
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "A central-bank assessment highlights financing channels that can affect the AI build-out, with limited spillovers observed so far.",
+        "confidence": "High for the published assessment; prospective risks remain conditional.",
+        "event_date": "2026-11-06",
+        "event_date_scope": "ECB letter dated November 6; editorial review November 7."
+      },
+      {
+        "id": "cochise-arizona-campus-approval-scope-20261107",
+        "date": "2026-11-07",
+        "title": "SpaceX-linked Arizona plan targets 6GW at full build-out; approvals remain pending",
+        "summary": "Cochise County’s November 6 update describes a proposed nine-building campus on about 747 acres, with applicant-estimated electrical demand of 6GW at full build-out. Tombstone Resources’ November 4 statement identifies SpaceX as its town-hall host. The utility’s October 26 FAQ describes a 1.5GW first phase and says the energy-services agreement is unfinished and subject to regulatory approval. The county lists land-use review as pending, with a December 9 hearing. These are separate development stages: the proposal establishes neither secured power nor operating IT capacity, and the full-build estimate must not be added to the initial phase.",
+        "sources": [
+          {
+            "title": "Cochise County project status, revised November 6",
+            "url": "https://www.cochise.az.gov/1014/Data-Centers",
+            "date": "2026-11-06"
+          },
+          {
+            "title": "Tombstone Resources November 4 town-hall statement naming SpaceX",
+            "url": "https://www.cochise.az.gov/DocumentCenter/View/29062",
+            "date": "2026-11-04"
+          },
+          {
+            "title": "SSVEC project FAQ, last-revised date printed October 26",
+            "url": "https://www.ssvec-projectinfo.org/",
+            "date": "2026-10-26"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "analysis",
+        "impact_score": 3,
+        "impact_reason": "The proposed electrical load is substantial, but land-use approval, power agreements and staged delivery remain unresolved.",
+        "confidence": "High for the filed proposal and stated review status. Demand is an applicant estimate; the sources do not establish operating capacity.",
+        "event_date": "2026-11-06",
+        "event_date_scope": "County status-page revision; application received October 30 and applicant town hall November 4. Utility FAQ carries an October 26 revision date.",
+        "future_target": "County hearing December 9, 2026; full-build demand has no verified delivery date."
       },
       {
         "id": "meta-senior-notes-completion-20261106",

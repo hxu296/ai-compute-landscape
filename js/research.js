@@ -22,7 +22,7 @@
   }else $('#dailyBrief').hidden=true;
 
   const facts=NC.research_facts||[];
-  function evidence(){const q=$('#evidenceSearch').value.toLowerCase();table('#tEvidence',facts.filter(r=>JSON.stringify(r).toLowerCase().includes(q)),[{k:'subject',h:'Subject'},{k:'metric',h:'Metric / unit',f:r=>`${esc(r.metric)} · ${esc(r.unit)}`},{k:'value',h:'Checked claim',f:r=>`${esc(r.value_relation||'')} ${esc(typeof r.value==='number'?r.value.toLocaleString():r.value)}${badge(r.confidence)}${conflictBadge(r.subject,r.metric)}`},{k:'as_of',h:'Observation / claim date'},{k:'scope',h:'Scope'},{k:'note',h:'Limits / interpretation'},{k:'source_url',h:'',f:r=>src(r.source_url)}]);}
+  function evidence(){const q=$('#evidenceSearch').value.toLowerCase();table('#tEvidence',facts.filter(r=>JSON.stringify(r).toLowerCase().includes(q)),[{k:'subject',h:'Subject'},{k:'metric',h:'Metric / unit',f:r=>`${esc(r.metric)} · ${esc(r.unit)}`},{k:'value',h:'Checked claim',f:r=>`${esc(r.value_relation||'')} ${esc(typeof r.value==='number'?r.value.toLocaleString():r.value)}${badge(r.confidence)}${conflictBadge(r.subject,r.metric,r)}`},{k:'as_of',h:'Observation / claim date'},{k:'scope',h:'Scope'},{k:'note',h:'Limits / interpretation'},{k:'source_url',h:'',f:r=>src(r.source_url)}]);}
   $('#evidenceSearch').oninput=evidence;evidence();
   let category='All';
   function ledger(){
