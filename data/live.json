@@ -144,8 +144,8 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-08T13:46:10.368921+00:00",
-        "last_success": "2026-11-08T13:46:10.368921+00:00",
+        "checked_at": "2026-11-08T18:21:12.247707+00:00",
+        "last_success": "2026-11-08T18:21:12.247707+00:00",
         "max_age_days": 2,
         "sha256": "b77b7c8750200fcc59a18285c2a417c8bab6bc7e279ad7ba0faf9b48b56214d8",
         "url": "https://data-api.compute-index.com/public/indices"
@@ -264,8 +264,8 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-08T13:46:10.368921+00:00",
-        "last_success": "2026-11-08T13:46:10.368921+00:00",
+        "checked_at": "2026-11-08T18:21:12.247707+00:00",
+        "last_success": "2026-11-08T18:21:12.247707+00:00",
         "max_age_days": 0,
         "sha256": "6993e9bf2962bee2354f0769a82aa86c6e92a84084e53fc2ddfda8d3a3a4121d",
         "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -708,7 +708,7 @@
       }
     ]
   },
-  "checked_at": "2026-11-08T13:46:10.368921+00:00",
+  "checked_at": "2026-11-08T18:21:12.247707+00:00",
   "market_checks": [
     {
       "name": "Compute Desk B200",

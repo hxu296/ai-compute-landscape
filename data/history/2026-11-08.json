@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-08T13:46:10.368921+00:00",
+  "checked_at": "2026-11-08T18:21:12.247707+00:00",
   "sources": {
     "compute_desk": {
       "state": "ok",
-      "checked_at": "2026-11-08T13:46:10.368921+00:00",
-      "last_success": "2026-11-08T13:46:10.368921+00:00",
+      "checked_at": "2026-11-08T18:21:12.247707+00:00",
+      "last_success": "2026-11-08T18:21:12.247707+00:00",
       "max_age_days": 2,
       "sha256": "b77b7c8750200fcc59a18285c2a417c8bab6bc7e279ad7ba0faf9b48b56214d8",
       "url": "https://data-api.compute-index.com/public/indices"
     },
     "semianalysis": {
       "state": "ok",
-      "checked_at": "2026-11-08T13:46:10.368921+00:00",
-      "last_success": "2026-11-08T13:46:10.368921+00:00",
+      "checked_at": "2026-11-08T18:21:12.247707+00:00",
+      "last_success": "2026-11-08T18:21:12.247707+00:00",
       "max_age_days": 0,
       "sha256": "6993e9bf2962bee2354f0769a82aa86c6e92a84084e53fc2ddfda8d3a3a4121d",
       "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -245,20 +245,29 @@
     }
   ],
   "headline": {
-    "id": "brief-2026-11-08",
+    "id": "google-wyoming-investment-and-power-plan-20261108",
     "date": "2026-11-08",
-    "impact_score": 1,
-    "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-    "title": "Daily market brief: SemiAnalysis H100 at $3.39",
-    "summary": "The latest observation is dated 2026-11-08 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+    "title": "Google’s $17B Wyoming data-center plan includes 702MW fuel-cell development",
+    "summary": "Google’s November 5 announcement sets out a long-term $17 billion investment for its first Wyoming data center. Its power plan includes a 702MW Bloom fuel-cell development through AEP. That arrangement is older evidence: AEP’s October 14 release describes a 20-year power purchase agreement and targets full operation of the generating facility by the end of 2028. This is generation capacity, not data-center IT power or proof of commissioned compute. Carbon capture is planned, while a separate Tallgrass turbine retrofit remains under engineering study. Google does not provide a data-center opening date or an annual spending schedule for the $17 billion.",
     "sources": [
       {
-        "title": "SemiAnalysis H100",
-        "url": "https://gpu-index.semianalysis.com/",
-        "date": "2026-11-08"
+        "title": "Google Wyoming investment announcement",
+        "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/wyoming-data-center/",
+        "date": "2026-11-05"
+      },
+      {
+        "title": "AEP October 14 release: 702MW generation, PPA and timetable",
+        "url": "https://www.aep.com/news/stories/view/12314/",
+        "date": "2026-10-14"
       }
     ],
-    "status": "automated",
-    "kind": "market_brief"
+    "status": "reviewed",
+    "kind": "news",
+    "impact_score": 4,
+    "impact_reason": "A major cloud owner sets out a substantial regional investment and power-supply program. Its scale matters even though delivered compute and the investment timetable remain undisclosed.",
+    "confidence": "High for the issuer-announced investment and agreement terms. Construction, operation and emissions outcomes remain prospective.",
+    "event_date": "2026-11-05",
+    "event_date_scope": "Google announcement November 5, reviewed November 8. The AEP power agreement was announced October 14, not newly signed on the editorial day.",
+    "future_target": "AEP targets full fuel-cell facility operation by end-2028; this is not a disclosed opening date for Google’s data center."
   }
 }
