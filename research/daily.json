@@ -2,6 +2,52 @@
   "schema_version": 2,
   "items": [
     {
+      "id": "google-wyoming-investment-and-power-plan-20261108",
+      "date": "2026-11-08",
+      "title": "Google’s $17B Wyoming data-center plan includes 702MW fuel-cell development",
+      "summary": "Google’s November 5 announcement sets out a long-term $17 billion investment for its first Wyoming data center. Its power plan includes a 702MW Bloom fuel-cell development through AEP. That arrangement is older evidence: AEP’s October 14 release describes a 20-year power purchase agreement and targets full operation of the generating facility by the end of 2028. This is generation capacity, not data-center IT power or proof of commissioned compute. Carbon capture is planned, while a separate Tallgrass turbine retrofit remains under engineering study. Google does not provide a data-center opening date or an annual spending schedule for the $17 billion.",
+      "sources": [
+        {
+          "title": "Google Wyoming investment announcement",
+          "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/wyoming-data-center/",
+          "date": "2026-11-05"
+        },
+        {
+          "title": "AEP October 14 release: 702MW generation, PPA and timetable",
+          "url": "https://www.aep.com/news/stories/view/12314/",
+          "date": "2026-10-14"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 4,
+      "impact_reason": "A major cloud owner sets out a substantial regional investment and power-supply program. Its scale matters even though delivered compute and the investment timetable remain undisclosed.",
+      "confidence": "High for the issuer-announced investment and agreement terms. Construction, operation and emissions outcomes remain prospective.",
+      "event_date": "2026-11-05",
+      "event_date_scope": "Google announcement November 5, reviewed November 8. The AEP power agreement was announced October 14, not newly signed on the editorial day.",
+      "future_target": "AEP targets full fuel-cell facility operation by end-2028; this is not a disclosed opening date for Google’s data center."
+    },
+    {
+      "id": "openai-reported-initial-funding-close-20261108",
+      "date": "2026-11-08",
+      "title": "Reuters reports an initial $11B OpenAI funding close at a $1.25T valuation",
+      "summary": "Reuters reported on November 6 that OpenAI had closed an initial $11 billion of a new funding round at a $1.25 trillion valuation, citing a person familiar with the transaction. This is reported partial funding, with no issuer confirmation retrieved in this review. The valuation is a transaction term, not cash available to spend. The report does not establish a final round size or a compute-spending allocation.",
+      "sources": [
+        {
+          "title": "Reuters via StreetInsider: initial OpenAI funding close, unnamed source",
+          "url": "https://new.streetinsider.com/Reuters/OpenAI%2Bgets%2B%2411%2Bbillion%2Bfunding%2Bat%2B%241.25%2Btrillion%2Bvaluation%2C%2Bsource%2Bsays/27307823.html",
+          "date": "2026-11-06"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 4,
+      "impact_reason": "A capital infusion of this scale would materially affect a major compute buyer’s financing. The report does not establish a corresponding infrastructure order.",
+      "confidence": "Attributed Reuters reporting based on an unnamed source and investors; issuer confirmation was not retrieved.",
+      "event_date": "2026-11-06",
+      "event_date_scope": "Reuters report dated November 6; editorial review November 8. Exact legal settlement documentation was not retrieved."
+    },
+    {
       "id": "ecb-ai-financing-risk-letter-20261107",
       "date": "2026-11-07",
       "title": "ECB flags debt-like AI commitments; bond-market spillovers remain limited so far",
