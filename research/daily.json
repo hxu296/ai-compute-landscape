@@ -2,6 +2,62 @@
   "schema_version": 2,
   "items": [
     {
+      "id": "nvidia-rebellions-sk-telecom-inference-roadmap-20261109",
+      "date": "2026-11-09",
+      "title": "NVIDIA and Rebellions plan mixed GPU/NPU inference systems for SK Telecom in 2028",
+      "summary": "At AI Day Seoul, NVIDIA, Rebellions and SK Telecom outlined R200 systems using NVLink Fusion and the MGX rack architecture, with deployment readiness expected in 2028. Their proposed split assigns prompt processing, or prefill, to NVIDIA GPUs and response generation, or decode, to Rebellions NPUs. SK Telecom plans to deploy the systems. No processor quantity, contract value or measured end-to-end performance is disclosed. Separately, NVIDIA released B200 deployment recipes for four Korean open models. That software release is distinct from future R200 hardware availability; it does not establish a new installed accelerator fleet.",
+      "sources": [
+        {
+          "title": "NVIDIA–Rebellions–SK Telecom release (page November 8; Seoul dateline November 9)",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-rebellions-and-sk-telecom-announce-collaboration-to-advance-sovereign-ai-infrastructure-with-nvidia-nvlink-fusion",
+          "date": "2026-11-08"
+        },
+        {
+          "title": "NVIDIA B200 Dynamo recipes for Korean open models",
+          "url": "https://blogs.nvidia.com/blog/nvidia-dynamo-korea-open-models/",
+          "date": "2026-11-08"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 3,
+      "impact_reason": "The collaboration gives a Korean inference-chip developer a route into NVIDIA’s rack ecosystem and an operator’s deployment plan. Commercial scale remains undisclosed.",
+      "confidence": "High for announced architecture and plans; performance, commercial scale and deployment remain unverified outcomes.",
+      "event_date": "2026-11-09",
+      "event_date_scope": "Seoul announcement datelined November 9; issuer pages display November 8. NVIDIA’s event log places the software release at 9pm PST November 8 (November 9 UTC).",
+      "future_target": "R200 systems expected to be ready for deployment in 2028; no month or day disclosed."
+    },
+    {
+      "id": "openai-campus-compact-financial-assurances-20261109",
+      "date": "2026-11-09",
+      "title": "OpenAI’s campus compact puts financial assurances before major power spending",
+      "summary": "OpenAI’s November 5 National Community Compact says future campuses it owns and operates will provide financial assurances before major spending, protecting utility customers from power infrastructure costs if a project is delayed, reduced or canceled. It also promises site-level water and electricity disclosures, independent noise studies and annual progress reporting. A companion policy blueprint asks lawmakers and utilities to adopt broader protections; those recommendations are not enacted rules. The documents disclose neither assurance amounts nor proof that project security has already been provided.",
+      "sources": [
+        {
+          "title": "OpenAI November 5 announcement and scope",
+          "url": "https://openai.com/index/setting-new-standard-responsible-ai-infrastructure/",
+          "date": "2026-11-05"
+        },
+        {
+          "title": "National Community Compact, released with November 5 announcement (PDF cover: November 2026)",
+          "url": "https://cdn.openai.com/pdf/community-compact.pdf",
+          "date": "2026-11-05"
+        },
+        {
+          "title": "Compute Campus Policy Blueprint, released November 5",
+          "url": "https://cdn.openai.com/pdf/compute-campus-policy-blueprint.pdf",
+          "date": "2026-11-05"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "analysis",
+      "impact_score": 3,
+      "impact_reason": "Pre-spending assurances and public reporting address who bears development risk at major compute campuses. Their scope and implementation determine the protection actually delivered.",
+      "confidence": "High for the published commitments and policy proposals; site-level implementation and security amounts are not established.",
+      "event_date": "2026-11-05",
+      "event_date_scope": "Documents published with the November 5 issuer announcement; analysis reviewed November 9. This is separate from the November 2 Grid Protectors launch."
+    },
+    {
       "id": "google-wyoming-investment-and-power-plan-20261108",
       "date": "2026-11-08",
       "title": "Google’s $17B Wyoming data-center plan includes 702MW fuel-cell development",
