@@ -144,9 +144,9 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-09T22:58:46.959705+00:00",
-        "last_success": "2026-11-09T22:58:46.959705+00:00",
-        "max_age_days": 0,
+        "checked_at": "2026-11-10T13:47:46.531749+00:00",
+        "last_success": "2026-11-10T13:47:46.531749+00:00",
+        "max_age_days": 1,
         "sha256": "db95925ae304bcf9350e5668a06ff3ac25c7833a979c5eb5053979b9dded5f1c",
         "url": "https://data-api.compute-index.com/public/indices"
       }
@@ -158,29 +158,29 @@
           "sku": "H100",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-09",
-          "usd": 3.36,
+          "date": "2026-11-10",
+          "usd": 3.37,
           "changes": {
             "7": {
-              "first_date": "2026-11-02",
+              "first_date": "2026-11-03",
               "first": 3.41,
-              "last_date": "2026-11-09",
-              "last": 3.36,
-              "percent": -1.466
+              "last_date": "2026-11-10",
+              "last": 3.37,
+              "percent": -1.173
             },
             "30": {
-              "first_date": "2026-10-10",
+              "first_date": "2026-10-11",
               "first": 3.31,
-              "last_date": "2026-11-09",
-              "last": 3.36,
-              "percent": 1.511
+              "last_date": "2026-11-10",
+              "last": 3.37,
+              "percent": 1.813
             },
             "90": {
-              "first_date": "2026-08-11",
+              "first_date": "2026-08-12",
               "first": 3.18,
-              "last_date": "2026-11-09",
-              "last": 3.36,
-              "percent": 5.66
+              "last_date": "2026-11-10",
+              "last": 3.37,
+              "percent": 5.975
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -190,29 +190,29 @@
           "sku": "B200",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-09",
-          "usd": 6.41,
+          "date": "2026-11-10",
+          "usd": 6.27,
           "changes": {
             "7": {
-              "first_date": "2026-11-02",
+              "first_date": "2026-11-03",
               "first": 6.49,
-              "last_date": "2026-11-09",
-              "last": 6.41,
-              "percent": -1.233
+              "last_date": "2026-11-10",
+              "last": 6.27,
+              "percent": -3.39
             },
             "30": {
-              "first_date": "2026-10-10",
-              "first": 6.57,
-              "last_date": "2026-11-09",
-              "last": 6.41,
-              "percent": -2.435
+              "first_date": "2026-10-11",
+              "first": 6.63,
+              "last_date": "2026-11-10",
+              "last": 6.27,
+              "percent": -5.43
             },
             "90": {
-              "first_date": "2026-08-11",
+              "first_date": "2026-08-12",
               "first": 5.43,
-              "last_date": "2026-11-09",
-              "last": 6.41,
-              "percent": 18.048
+              "last_date": "2026-11-10",
+              "last": 6.27,
+              "percent": 15.47
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -222,27 +222,27 @@
           "sku": "A100",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-09",
+          "date": "2026-11-10",
           "usd": 1.67,
           "changes": {
             "7": {
-              "first_date": "2026-11-02",
-              "first": 1.73,
-              "last_date": "2026-11-09",
+              "first_date": "2026-11-03",
+              "first": 1.72,
+              "last_date": "2026-11-10",
               "last": 1.67,
-              "percent": -3.468
+              "percent": -2.907
             },
             "30": {
-              "first_date": "2026-10-10",
-              "first": 1.74,
-              "last_date": "2026-11-09",
+              "first_date": "2026-10-11",
+              "first": 1.75,
+              "last_date": "2026-11-10",
               "last": 1.67,
-              "percent": -4.023
+              "percent": -4.571
             },
             "90": {
-              "first_date": "2026-08-11",
+              "first_date": "2026-08-12",
               "first": 1.83,
-              "last_date": "2026-11-09",
+              "last_date": "2026-11-10",
               "last": 1.67,
               "percent": -8.743
             }
@@ -264,10 +264,10 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-09T22:58:46.959705+00:00",
-        "last_success": "2026-11-09T22:58:46.959705+00:00",
+        "checked_at": "2026-11-10T13:47:46.531749+00:00",
+        "last_success": "2026-11-10T13:47:46.531749+00:00",
         "max_age_days": 0,
-        "sha256": "3b75efe4ab880ef144adb57fcdf0c4fd03314ff129fb8e3a12f5cfd0bc730122",
+        "sha256": "9a5ab3f8c2b449a543c01e9bf4a283cf1b64d27f186992c5aa54471333b7f8aa",
         "url": "https://gpu-index.semianalysis.com/api/public-data"
       }
     }
@@ -275,6 +275,23 @@
   "daily": {
     "schema_version": 2,
     "items": [
+      {
+        "id": "brief-2026-11-10",
+        "date": "2026-11-10",
+        "impact_score": 1,
+        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
+        "title": "Daily market brief: SemiAnalysis H100 at $3.37",
+        "summary": "The latest observation is dated 2026-11-10 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "sources": [
+          {
+            "title": "SemiAnalysis H100",
+            "url": "https://gpu-index.semianalysis.com/",
+            "date": "2026-11-10"
+          }
+        ],
+        "status": "automated",
+        "kind": "market_brief"
+      },
       {
         "id": "nvidia-rebellions-sk-telecom-inference-roadmap-20261109",
         "date": "2026-11-09",
@@ -764,7 +781,7 @@
       }
     ]
   },
-  "checked_at": "2026-11-09T22:58:46.959705+00:00",
+  "checked_at": "2026-11-10T13:47:46.531749+00:00",
   "market_checks": [
     {
       "name": "Compute Desk B200",
@@ -899,29 +916,29 @@
       "sku": "H100",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-09",
-      "usd": 3.36,
+      "date": "2026-11-10",
+      "usd": 3.37,
       "changes": {
         "7": {
-          "first_date": "2026-11-02",
+          "first_date": "2026-11-03",
           "first": 3.41,
-          "last_date": "2026-11-09",
-          "last": 3.36,
-          "percent": -1.466
+          "last_date": "2026-11-10",
+          "last": 3.37,
+          "percent": -1.173
         },
         "30": {
-          "first_date": "2026-10-10",
+          "first_date": "2026-10-11",
           "first": 3.31,
-          "last_date": "2026-11-09",
-          "last": 3.36,
-          "percent": 1.511
+          "last_date": "2026-11-10",
+          "last": 3.37,
+          "percent": 1.813
         },
         "90": {
-          "first_date": "2026-08-11",
+          "first_date": "2026-08-12",
           "first": 3.18,
-          "last_date": "2026-11-09",
-          "last": 3.36,
-          "percent": 5.66
+          "last_date": "2026-11-10",
+          "last": 3.37,
+          "percent": 5.975
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -931,29 +948,29 @@
       "sku": "B200",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-09",
-      "usd": 6.41,
+      "date": "2026-11-10",
+      "usd": 6.27,
       "changes": {
         "7": {
-          "first_date": "2026-11-02",
+          "first_date": "2026-11-03",
           "first": 6.49,
-          "last_date": "2026-11-09",
-          "last": 6.41,
-          "percent": -1.233
+          "last_date": "2026-11-10",
+          "last": 6.27,
+          "percent": -3.39
         },
         "30": {
-          "first_date": "2026-10-10",
-          "first": 6.57,
-          "last_date": "2026-11-09",
-          "last": 6.41,
-          "percent": -2.435
+          "first_date": "2026-10-11",
+          "first": 6.63,
+          "last_date": "2026-11-10",
+          "last": 6.27,
+          "percent": -5.43
         },
         "90": {
-          "first_date": "2026-08-11",
+          "first_date": "2026-08-12",
           "first": 5.43,
-          "last_date": "2026-11-09",
-          "last": 6.41,
-          "percent": 18.048
+          "last_date": "2026-11-10",
+          "last": 6.27,
+          "percent": 15.47
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -963,27 +980,27 @@
       "sku": "A100",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "usd": 1.67,
       "changes": {
         "7": {
-          "first_date": "2026-11-02",
-          "first": 1.73,
-          "last_date": "2026-11-09",
+          "first_date": "2026-11-03",
+          "first": 1.72,
+          "last_date": "2026-11-10",
           "last": 1.67,
-          "percent": -3.468
+          "percent": -2.907
         },
         "30": {
-          "first_date": "2026-10-10",
-          "first": 1.74,
-          "last_date": "2026-11-09",
+          "first_date": "2026-10-11",
+          "first": 1.75,
+          "last_date": "2026-11-10",
           "last": 1.67,
-          "percent": -4.023
+          "percent": -4.571
         },
         "90": {
-          "first_date": "2026-08-11",
+          "first_date": "2026-08-12",
           "first": 1.83,
-          "last_date": "2026-11-09",
+          "last_date": "2026-11-10",
           "last": 1.67,
           "percent": -8.743
         }
