@@ -2,6 +2,26 @@
   "schema_version": 2,
   "items": [
     {
+      "id": "softbank-power-equipment-loss-openai-investment-20261110",
+      "date": "2026-11-10",
+      "title": "SoftBank books $3.73 billion power-equipment loss as OpenAI investment reaches $64.6 billion",
+      "summary": "SoftBank’s November 10 financial report recognizes a $3.73 billion loss from revising US AI data-center power-equipment procurement, including arrangements for Ohio’s PORTS-Pike campus. The loss comprises $2.85 billion tied to non-refundable advances and $0.88 billion for contract changes and settlements. Conditional rebates of up to $2.1 billion over ten years were not recognized as an asset; they cannot be treated as a cash recovery already received. Separately, SoftBank completed a $10 billion OpenAI tranche on October 1, fulfilling its February $30 billion follow-on commitment and taking cumulative investment to $64.6 billion. The final tranche used senior-note proceeds after the bridge facility was repaid and closed. This is completion of an existing commitment, separate from the new funding round reported last week. Together, the disclosures show capital reaching the model developer while power-procurement changes impose losses on its backer; neither amount establishes commissioned compute capacity.",
+      "sources": [
+        {
+          "title": "SoftBank Group November 10 financial report, pages 4–5 and notes 7/16",
+          "url": "https://group.softbank/media/Project/sbg/sbg/pdf/ir/financials/financial_reports/financial-report_q2fy2026_01_en.pdf",
+          "date": "2026-11-10"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 4,
+      "impact_reason": "A multi-billion-dollar procurement loss and completion of a major model-company investment expose both the scale of AI financing and the cost of changing infrastructure plans. Conditional rebates and investment cash are distinct from delivered capacity.",
+      "confidence": "High for the issuer’s recognized loss and completed investment; conditional rebate realization and future infrastructure delivery remain uncertain.",
+      "event_date": "2026-09-30",
+      "event_date_scope": "Financial report covers the six months ended September 30; the final OpenAI tranche closed October 1. Both are disclosed in the November 10 report."
+    },
+    {
       "id": "nvidia-rebellions-sk-telecom-inference-roadmap-20261109",
       "date": "2026-11-09",
       "title": "NVIDIA and Rebellions plan mixed GPU/NPU inference systems for SK Telecom in 2028",

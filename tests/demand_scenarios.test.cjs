@@ -3,7 +3,7 @@ const {estimate}=require('../js/capacity_math');
 const research=require('../research/demand-research.json'),capacity=require('../research/capacity-expanded.json');
 const close=(a,b,tolerance=1e-8)=>assert.ok(Math.abs(a-b)<=tolerance*Math.max(1,Math.abs(b)),`${a} != ${b}`);
 test('Flash GB300 includes prefill plus decode and reproduces the small-rack scenario',()=>{
- const p=capacity.points.find(p=>p.result_id==='446952');assert.equal(p.total_allocated_gpus,34);assert.equal(p.raw_row.num_prefill_gpu,18);assert.equal(p.raw_row.num_decode_gpu,16);
+ const p=require('./fixtures/flash-446952.json');assert.equal(p.total_allocated_gpus,34);assert.equal(p.raw_row.num_prefill_gpu,18);assert.equal(p.raw_row.num_decode_gpu,16);
  const options={tokensPerDay:500e12,outputShare:.02,cacheHit:.98,usableCapacity:1,costPerGpuHour:0,powerKwPerGpu:0};
  const r=estimate(p,options,{gpus_per_rack:72});assert.equal(r.racks,214);assert.equal(r.groupsPerRack,2);assert.equal(r.packedGpusPerRack,68);assert.equal(r.physicalGpus,15408);
  assert.equal(estimate(p,{...options,usableCapacity:.7},{gpus_per_rack:72}).racks,305);
