@@ -144,8 +144,8 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-10T13:55:00.323681+00:00",
-        "last_success": "2026-11-10T13:55:00.323681+00:00",
+        "checked_at": "2026-11-10T20:27:37.989155+00:00",
+        "last_success": "2026-11-10T20:27:37.989155+00:00",
         "max_age_days": 1,
         "sha256": "db95925ae304bcf9350e5668a06ff3ac25c7833a979c5eb5053979b9dded5f1c",
         "url": "https://data-api.compute-index.com/public/indices"
@@ -159,28 +159,28 @@
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
           "date": "2026-11-10",
-          "usd": 3.37,
+          "usd": 3.38,
           "changes": {
             "7": {
               "first_date": "2026-11-03",
               "first": 3.41,
               "last_date": "2026-11-10",
-              "last": 3.37,
-              "percent": -1.173
+              "last": 3.38,
+              "percent": -0.88
             },
             "30": {
               "first_date": "2026-10-11",
               "first": 3.31,
               "last_date": "2026-11-10",
-              "last": 3.37,
-              "percent": 1.813
+              "last": 3.38,
+              "percent": 2.115
             },
             "90": {
               "first_date": "2026-08-12",
               "first": 3.18,
               "last_date": "2026-11-10",
-              "last": 3.37,
-              "percent": 5.975
+              "last": 3.38,
+              "percent": 6.289
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -264,10 +264,10 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-10T13:55:00.323681+00:00",
-        "last_success": "2026-11-10T13:55:00.323681+00:00",
+        "checked_at": "2026-11-10T20:27:37.989155+00:00",
+        "last_success": "2026-11-10T20:27:37.989155+00:00",
         "max_age_days": 0,
-        "sha256": "9a5ab3f8c2b449a543c01e9bf4a283cf1b64d27f186992c5aa54471333b7f8aa",
+        "sha256": "73a0dbb84a17b2dffd860116e2bf0d5268251a6c2a852eaa8785b7ec7b63d6d3",
         "url": "https://gpu-index.semianalysis.com/api/public-data"
       }
     }
@@ -784,7 +784,7 @@
       }
     ]
   },
-  "checked_at": "2026-11-10T13:55:00.323681+00:00",
+  "checked_at": "2026-11-10T20:27:37.989155+00:00",
   "market_checks": [
     {
       "name": "Compute Desk B200",
@@ -920,28 +920,28 @@
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
       "date": "2026-11-10",
-      "usd": 3.37,
+      "usd": 3.38,
       "changes": {
         "7": {
           "first_date": "2026-11-03",
           "first": 3.41,
           "last_date": "2026-11-10",
-          "last": 3.37,
-          "percent": -1.173
+          "last": 3.38,
+          "percent": -0.88
         },
         "30": {
           "first_date": "2026-10-11",
           "first": 3.31,
           "last_date": "2026-11-10",
-          "last": 3.37,
-          "percent": 1.813
+          "last": 3.38,
+          "percent": 2.115
         },
         "90": {
           "first_date": "2026-08-12",
           "first": 3.18,
           "last_date": "2026-11-10",
-          "last": 3.37,
-          "percent": 5.975
+          "last": 3.38,
+          "percent": 6.289
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."

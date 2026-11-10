@@ -516,7 +516,7 @@
         "growth_basis": "Google first-party API 22B/min (July 22) → 32B/min (October 28)",
         "central": 208.264,
         "low": 106.667,
-        "high": 260.327,
+        "high": 260.326,
         "category": "E",
         "source_url": "https://blog.google/",
         "note": "Latest all-surfaces disclosure is May 19 (>3.2 quadrillion/month); the API meter, which is inside this total, supplies the recent trend.",

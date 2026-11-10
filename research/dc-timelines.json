@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "source_url": "https://epoch.ai/data/data_centers/data_centers.zip",
-  "retrieved_utc": "2026-11-10T13:55:01+00:00",
-  "response_sha256": "1cf5a2d5212cdf0a527677c927a3ce41c5d4ea2d3ac3e28b0384dcc17f915c99",
+  "retrieved_utc": "2026-11-10T20:27:39+00:00",
+  "response_sha256": "f57fcb5ea4536b9de622405fee446c0e78e4e59ce321e93b8ac854383cd19c0e",
   "years": [
     "2025",
     "2026",
