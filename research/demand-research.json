@@ -395,7 +395,7 @@
     }
   ],
   "global_estimate": {
-    "as_of": "2026-11-10",
+    "as_of": "2026-11-11",
     "unit": "logical tokens/day (trillions)",
     "method": "Each disclosed level is projected to the as-of date on that company’s own dated trend (rolled forward daily); components without a trend are held or estimated with stated ranges. Router traffic (OpenRouter) is excluded to avoid double counting hosts and labs. Logical tokens include cached input. Low = latest levels held flat or the low estimate; high = trend ×1.25 or the high estimate. This is an estimate, not a disclosure.",
     "components": [
@@ -406,15 +406,15 @@
         "latest_date": "2026-06-15",
         "monthly_growth": 0.1435586761784966,
         "growth_basis": "Doubao 120T/day (March) → 180T/day (June): ByteDance is the only Chinese platform with two comparable dated levels",
-        "central": 959.947,
+        "central": 964.187,
         "low": 500,
-        "high": 1199.935,
+        "high": 1205.235,
         "category": "E",
         "source_url": "https://www.nda.gov.cn/sjj/zwgk/zjjd/1025/20261025174331093963574_mobile.html",
         "note": "Lower bound is the reported >500T/day held flat. Includes DeepSeek, Doubao, Qwen and others.",
         "usd_per_mtok": 0.039,
         "price_basis": "OpenRouter 30-day deepseek mix at list prices",
-        "spend_usd_m_per_day": 37.4,
+        "spend_usd_m_per_day": 37.6,
         "spend_kind": "API-equivalent spend",
         "parts": {
           "note": "Disclosed company figures inside China’s total, each at its own date (not projected). Most are lower bounds. Model makers and serving platforms overlap (platforms host other makers’ models), so only model makers are stacked; platforms are listed. Alibaba, Baidu, MiniMax, Moonshot and iFlytek published only growth multiples in 2026, so they sit in the unattributed remainder.",
@@ -514,15 +514,15 @@
         "latest_date": "2026-05-19",
         "monthly_growth": 0.12341686669356822,
         "growth_basis": "Google first-party API 22B/min (July 22) → 32B/min (October 28)",
-        "central": 208.264,
+        "central": 209.061,
         "low": 106.667,
-        "high": 260.326,
+        "high": 261.323,
         "category": "E",
         "source_url": "https://blog.google/",
         "note": "Latest all-surfaces disclosure is May 19 (>3.2 quadrillion/month); the API meter, which is inside this total, supplies the recent trend.",
         "usd_per_mtok": 0.488,
         "price_basis": "OpenRouter 30-day google mix at list prices",
-        "spend_usd_m_per_day": 101.6,
+        "spend_usd_m_per_day": 102.0,
         "spend_kind": "subscription value at API prices"
       },
       {
@@ -532,15 +532,15 @@
         "latest_date": "2026-08-15",
         "monthly_growth": 0.16550303508482656,
         "growth_basis": "Consumption revenue/day H1 → Q3 at a constant realized price",
-        "central": 277.777,
+        "central": 279.178,
         "low": 165,
-        "high": 372.908,
+        "high": 374.789,
         "category": "E",
         "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
         "note": "Q3 revenue ÷ $0.80 per million logical tokens, the OpenRouter-measured Claude mix (80% cache reads, 2% output) at list prices. Range $0.6–1.3/Mtok. Cloud marketplaces: Anthropic recognizes CSP-marketplace sales gross; 44% of January–September revenue ($33.2B) is ≈$14.6B, or ≈67T/day through Bedrock, Vertex AI and Foundry combined at ≈$0.80/Mtok (January–September average), ≈56% of consumption-billed traffic if those sales are all consumption. This is inside the Anthropic estimate, not additional; no cloud reports Anthropic-only tokens, and Bedrock’s 17× growth has no absolute baseline.",
         "usd_per_mtok": 0.781,
         "price_basis": "OpenRouter 30-day anthropic mix at list prices",
-        "spend_usd_m_per_day": 216.9,
+        "spend_usd_m_per_day": 218.0,
         "spend_kind": "API-equivalent spend"
       },
       {
@@ -550,15 +550,15 @@
         "latest_date": "2026-03-31",
         "monthly_growth": 0.1717093101896492,
         "growth_basis": "6B tokens/min (DevDay, October 6, 2025) → 15B/min (March 31, 2026)",
-        "central": 69.33,
+        "central": 69.692,
         "low": 21.6,
-        "high": 86.665,
+        "high": 87.118,
         "category": "E",
         "source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
         "note": "No disclosure after March 31.",
         "usd_per_mtok": 0.315,
         "price_basis": "OpenRouter 30-day OpenAI-served mix at list prices (gpt-oss open-weight models excluded)",
-        "spend_usd_m_per_day": 21.8,
+        "spend_usd_m_per_day": 22.0,
         "spend_kind": "API-equivalent spend"
       },
       {
@@ -635,9 +635,9 @@
       }
     ],
     "total": {
-      "central": 1718.1,
+      "central": 1724.9,
       "low": 915.6,
-      "high": 2334.8
+      "high": 2343.5
     },
     "excluded": [
       "OpenRouter (routes traffic counted by hosts and labs)",
@@ -646,17 +646,17 @@
       "Bedrock/Vertex/Foundry meters (contain lab models counted above)"
     ],
     "spend": {
-      "total_usd_m_per_day": 416.1,
-      "total_usd_b_per_year": 151.9,
+      "total_usd_m_per_day": 418.0,
+      "total_usd_b_per_year": 152.6,
       "note": "Tokens × each vendor’s realized list price per million logical tokens on OpenRouter (last 30 days, cache reads included; OpenAI excludes open-weight gpt-oss). Consumer and subscription tokens are valued at API prices, not billed. Calibration: OpenAI’s ~$50B revenue run-rate with an assumed 25–30% API share implies $33–41M/day, about 1.6–2× this API estimate. DeepInfra’s >$100M ARR is consistent with an understatement, but it also includes image models, embeddings and GPU rental, so it is not a clean token check. Treat spend as a lower bound.",
       "source_url": "https://openrouter.ai/rankings"
     }
   },
   "token_estimates": {
     "Anthropic": {
-      "central": 277777000000000.0,
+      "central": 279178000000000.0,
       "low": 165000000000000.0,
-      "high": 372908000000000.0,
+      "high": 374789000000000.0,
       "basis": "Q3 consumption revenue ÷ $0.80 per million logical tokens (OpenRouter-measured Claude mix at list prices), projected to the as-of date on its revenue trend. Cloud marketplaces: Anthropic recognizes CSP-marketplace sales gross; 44% of January–September revenue ($33.2B) is ≈$14.6B, or ≈67T/day through Bedrock, Vertex AI and Foundry combined at ≈$0.80/Mtok (January–September average), ≈56% of consumption-billed traffic if those sales are all consumption. This is inside the Anthropic estimate, not additional; no cloud reports Anthropic-only tokens, and Bedrock’s 17× growth has no absolute baseline.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm"
     },
@@ -682,9 +682,9 @@
       "source_url": "https://futurumgroup.com/insights/coreweave-q2-fy-2026-ai-demand-drives-pricing-and-capacity-growth/"
     },
     "OpenAI · all products (projection)": {
-      "central": 109330000000000.0,
+      "central": 109692000000000.0,
       "low": 31600000000000.0,
-      "high": 186665000000000.03,
+      "high": 187118000000000.0,
       "basis": "API: 15B tokens/min (March 31) projected at its own trend from 6B/min (October 6, 2025), +17.2% a month, to ≈67T/day; ChatGPT and Codex ≈40T/day (10–100T) from 2.5B prompts/day (July 2025) with assumed context and reasoning tokens. OpenAI has not said whether its tokens/min counts cached input; Anthropic’s estimate includes ~80% cache reads, so the like-for-like gap may be smaller.",
       "source_url": "https://openai.com/devday/2025/"
     }

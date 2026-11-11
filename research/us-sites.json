@@ -3,9 +3,9 @@
   "source_url": "https://epoch.ai/data/data_centers/data_centers.zip",
   "dataset_url": "https://epoch.ai/data/ai-data-centers",
   "license": "CC BY 4.0 (Epoch AI)",
-  "retrieved_utc": "2026-11-10T20:27:39+00:00",
-  "now_date": "2026-11-10",
-  "response_sha256": "f57fcb5ea4536b9de622405fee446c0e78e4e59ce321e93b8ac854383cd19c0e",
+  "retrieved_utc": "2026-11-11T13:45:53+00:00",
+  "now_date": "2026-11-11",
+  "response_sha256": "93f348717f19dfe16a3449be495972462fdbd33ea098cf52b46fd278f6b12f5f",
   "years": [
     "2025",
     "2026",
@@ -2918,7 +2918,7 @@
         "final": 12.61,
         "now": 12.61
       },
-      "observations": 7,
+      "observations": 8,
       "series": [
         [
           "2024-04-20",
@@ -3068,7 +3068,7 @@
         "final": 11.36,
         "now": 6.1
       },
-      "observations": 6,
+      "observations": 7,
       "series": [
         [
           "2023-08-30",

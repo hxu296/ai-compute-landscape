@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "source_url": "https://epoch.ai/data/data_centers/data_centers.zip",
-  "retrieved_utc": "2026-11-10T20:27:39+00:00",
-  "response_sha256": "f57fcb5ea4536b9de622405fee446c0e78e4e59ce321e93b8ac854383cd19c0e",
+  "retrieved_utc": "2026-11-11T13:45:53+00:00",
+  "response_sha256": "93f348717f19dfe16a3449be495972462fdbd33ea098cf52b46fd278f6b12f5f",
   "years": [
     "2025",
     "2026",
@@ -1177,7 +1177,7 @@
       ],
       "series": [
         [
-          "2020-03-04",
+          "2019-03-18",
           0.0
         ],
         [
@@ -2601,7 +2601,7 @@
       ],
       "series": [
         [
-          "2023-10-01",
+          "2023-06-01",
           0.0
         ],
         [
@@ -3071,7 +3071,7 @@
       ],
       "series": [
         [
-          "2023-01-01",
+          "2022-12-01",
           0.0
         ],
         [
