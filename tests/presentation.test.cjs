@@ -3,6 +3,7 @@ const context={window:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname
 test('growth endpoints agree with provider cards and each series keeps one definition',()=>{
  for(const [s,metrics] of Object.entries(n.growth))for(const [m,rows] of Object.entries(metrics)){
   const latest=provider(s).latest[m];assert(latest,`${s} ${m} has a profile value`);
+  assert.equal(rows.at(-1)[8]||"",latest.value_relation||"",`${s} ${m} bound`);
   assert.equal(rows.at(-1)[1],latest.value,`${s} ${m} value`);assert.equal(rows.at(-1)[0],latest.as_of,`${s} ${m} date`);
   assert.equal(new Set(rows.map(r=>r[4])).size,1,`${s} ${m} scope`);assert.equal(new Set(rows.map(r=>r[6])).size,1,`${s} ${m} power basis`);
   for(const row of rows){assert.match(row[0],/^\d{4}-\d{2}-\d{2}$/);assert.match(row[3],/^https:\/\//);assert(row[0]<=n.built.slice(0,10));}

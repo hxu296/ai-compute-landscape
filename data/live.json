@@ -276,21 +276,64 @@
     "schema_version": 2,
     "items": [
       {
-        "id": "brief-2026-11-11",
+        "id": "anthropic-ipo-range-strategic-placement-20261111",
         "date": "2026-11-11",
-        "impact_score": 1,
-        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-        "title": "Daily market brief: SemiAnalysis H100 at $3.37",
-        "summary": "The latest observation is dated 2026-11-11 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "title": "Anthropic proposes $70–78 IPO plus conditional $26 billion strategic placement",
+        "summary": "Anthropic’s November 10 amended filing proposes 825 million publicly offered shares at $70–78, including about 23.65 million sold by existing holders. The company receives no proceeds from those secondary shares. Seven strategic partners separately agreed to a $26 billion non-voting share placement, conditional on the IPO closing and other requirements. Google’s $10 billion contribution draws on its earlier commitment; it is not another $10 billion of newly promised funding. At the assumed $74 midpoint, Anthropic estimates approximately $84.6 billion of combined net proceeds to the company, or $93.7 billion if the underwriters fully exercise their additional-share option. Those estimates include the placement and must not have $26 billion added again. The proposed capital would support general corporate purposes, including compute and infrastructure, rather than an exclusive hardware budget. These are proposed transactions, not completed fundraising or cash already available.",
         "sources": [
           {
-            "title": "SemiAnalysis H100",
-            "url": "https://gpu-index.semianalysis.com/",
-            "date": "2026-11-11"
+            "title": "Anthropic November 10 S-1/A amendment 2, cover and Use of Proceeds",
+            "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+            "date": "2026-11-10"
           }
         ],
-        "status": "automated",
-        "kind": "market_brief"
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 4,
+        "impact_reason": "The proposed financing could materially expand a frontier lab’s ability to fund compute. Completion, net proceeds, secondary sales and reused commitments determine how much new cash actually reaches it.",
+        "confidence": "High for filed terms and conditional agreements; final pricing, completion and proceeds remain uncertain.",
+        "event_date": "2026-11-10",
+        "event_date_scope": "November 10 preliminary filing; editorial review November 11. No completed IPO or trading debut is asserted."
+      },
+      {
+        "id": "coreweave-q3-delivery-cash-financing-20261111",
+        "date": "2026-11-11",
+        "title": "CoreWeave reaches $3.66 billion quarterly revenue as cash equipment spending rises to $9.44 billion",
+        "summary": "CoreWeave’s November 10 results report $3.661 billion of third-quarter revenue, $1.975 billion of operating cash inflow and $9.441 billion of cash purchases of property, equipment and internal-use software. Reported active power exceeded 1.7 GW; more than 4.6 GW of contracted power is a separate supply-development measure. Revenue backlog of approximately $132.5 billion remains subject to delivery and service availability. The company raised its 2026 capital-expenditure forecast to $37–39 billion and expects about $9 billion of customer prepayments and deposits over the next three months. Expected receipts are not current cash. Quarterly net interest expense of $846 million exceeded $207 million of GAAP operating income, while the net loss was $709 million. The results show rapid delivery growth alongside a large financing requirement; backlog and future deposits do not establish that the remaining build is already funded.",
+        "sources": [
+          {
+            "title": "CoreWeave November 10 Q3 2026 earnings exhibit",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm",
+            "date": "2026-11-10"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 4,
+        "impact_reason": "A major AI cloud provider reports higher delivered revenue and capacity alongside multi-billion-dollar equipment spending. Delivery conditions and financing costs matter as much as headline backlog.",
+        "confidence": "High for unaudited issuer results; capital spending, future receipts and further capacity delivery remain forward-looking.",
+        "event_date": "2026-11-10",
+        "event_date_scope": "Results released November 10 for the quarter ended September 30. Power figures are from the Q3 operating highlights."
+      },
+      {
+        "id": "tsmc-board-model-lab-investments-20261111",
+        "date": "2026-11-11",
+        "title": "TSMC approves up to $1 billion in Anthropic and OpenAI investments",
+        "summary": "TSMC’s November 10 board resolutions authorize up to $500 million for Anthropic common shares at its IPO price and up to $500 million for OpenAI preferred stock. These are investment approvals, not confirmation that cash has been paid or either transaction has closed. The board separately approved approximately $40.93 billion of capital appropriations for manufacturing capacity, packaging, facilities and 2027 research and sustaining investment. That appropriation is not actual spending in one quarter or a new annual capex forecast. Anthropic’s allocation overlaps its disclosed strategic placement and must not be counted as another independent financing round.",
+        "sources": [
+          {
+            "title": "TSMC November 10 board resolutions, items 3–5",
+            "url": "https://pr.tsmc.com/system/files/newspdf/attachment/e05987700f76438755c64d950b3b0b99369aeed2/1110%20board%20meeting%20(E)_final_wmn.pdf",
+            "date": "2026-11-10"
+          }
+        ],
+        "status": "reviewed",
+        "kind": "news",
+        "impact_score": 3,
+        "impact_reason": "The chip foundry is authorizing direct capital for model developers while approving production investment. The funding layers overlap and approvals do not establish deployment or completed investment.",
+        "confidence": "High for the published board resolutions; investment closing and spending schedules are not established.",
+        "event_date": "2026-11-10",
+        "event_date_scope": "Board approvals November 10; editorial review November 11."
       },
       {
         "id": "softbank-power-equipment-loss-openai-investment-20261110",
