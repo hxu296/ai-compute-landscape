@@ -22,13 +22,26 @@ def checks(name,sku,terms,url,history,today):
         changes[str(n)]=None if a is None else dict(first_date=a['date'],first=a['value'],last_date=last['date'],last=last['value'],percent=round(100*(last['value']/a['value']-1),3))
     return dict(name=name,sku=sku,terms=terms,source_url=url,date=last['date'],usd=last['value'],changes=changes,method='100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.')
 def desk(payload,today):
-    mapping={'CDGXH100':'H100','CDH200':'H200','CDB200':'B200','CDB300':'B300'};rows=[]
+    aliases={'H100':('CDGXH100',),'H200':('CDGXH200','CDH200'),
+             'B200':('CDGXB200','CDB200'),'B300':('CDGXB300','CDB300')}
+    by_alias={}
     for r in payload['indices']:
-        if r['alias'] not in mapping:continue
-        sku=mapping[r['alias']];rows.append(checks('Compute Desk '+sku,sku,'US one-year rental index','https://www.compute-desk.com/indexes/'+sku.lower(),r['history'],today))
-    if {r['sku'] for r in rows}!={'H100','H200','B200','B300'}:raise ValueError('Missing Compute Desk series')
+        alias=r['alias']
+        if alias in by_alias:raise ValueError('Duplicate Compute Desk alias: '+alias)
+        by_alias[alias]=r
+    rows=[]
+    for sku,accepted in aliases.items():
+        # GX takes precedence over a calculated fallback; never concatenate their histories.
+        r=next((by_alias[a] for a in accepted if a in by_alias),None)
+        if r is None:raise ValueError('Missing Compute Desk series: '+sku)
+        gx=r['alias'].startswith('CDGX')
+        terms='US one-year rental index'+('; General Index (GX)' if gx else '; calculated fallback')
+        row=checks('Compute Desk '+sku,sku,terms,'https://www.computedesk.com/indexes/'+sku.lower(),r['history'],today)
+        row.update(index_alias=r['alias'],index_source=r.get('source','gx' if gx else 'calculated fallback'))
+        rows.append(row)
     h=next(r for r in rows if r['sku']=='H100')
     return dict(market_checks=rows,benchmarks=[dict(name='Compute Desk DESKH100',sku='H100',usd=h['usd'],date=h['date'],terms=h['terms']+'; excludes hyperscalers',source_url=h['source_url'])])
+
 def semi(payload,today):
     rows=[]
     for sku,key in [('H100','h100'),('B200','b200'),('A100','a100')]:

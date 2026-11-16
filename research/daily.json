@@ -2,6 +2,78 @@
   "schema_version": 2,
   "items": [
     {
+      "id": "nvidia-interim-ceo-transition-20261116",
+      "date": "2026-11-16",
+      "title": "NVIDIA names Colette Kress interim CEO after Jensen Huang’s resignation",
+      "summary": "NVIDIA’s November 12 filing says the board accepted Jensen Huang’s resignation as president, CEO and director on November 11, effective immediately. CFO Colette Kress became interim CEO and keeps her finance role; Harvey Jones became board chair. The board is searching for a permanent CEO and says it expects operations, customer commitments and the product roadmap to continue without interruption. That is a continuity commitment, not evidence that future shipments or financing arrangements are guaranteed. The announcement keeps the November 17 earnings schedule. For AI infrastructure buyers, the immediate change is leadership and accountability at a central equipment supplier; the disclosed transition does not quantify a change in delivered compute capacity.",
+      "sources": [
+        {
+          "title": "NVIDIA November 12 Form 8-K, effective November 11",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm",
+          "date": "2026-11-12"
+        },
+        {
+          "title": "NVIDIA November 12 transition announcement",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvidiaannouncesceotransiti.htm",
+          "date": "2026-11-12"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 4,
+      "impact_reason": "Leadership changes at a major AI infrastructure supplier can affect execution and capital allocation. The filing confirms governance changes but does not establish a supply reduction.",
+      "confidence": "High for the filed appointments and dates; future execution and financing effects remain uncertain.",
+      "event_date": "2026-11-11",
+      "event_date_scope": "Board action effective November 11; filing and public announcement November 12. Catch-up editorial review November 16."
+    },
+    {
+      "id": "nebius-q3-delivery-target-financing-20261116",
+      "date": "2026-11-16",
+      "title": "Nebius moves its revenue run-rate target to February as 2027 spending plans expand",
+      "summary": "Nebius’s November 12 results show $980.8 million of third-quarter group revenue and $7.3004 billion of cash purchases of property, equipment and intangible assets. Group revenue includes approximately $325 million of non-recurring revenue from an initial asset-light rollout. Its letter moves the prior December $7–9 billion annualized revenue target to more than $7 billion for February 2027. Remaining New Jersey delivery tranches are now scheduled for Q2 2027; Microsoft was included in the planning. Nebius forecasts approximately $27 billion of 2026 capex and $40–45 billion in 2027, with prepayments and asset-backed financing against existing investment-grade contracts expected to fund 75–85% of the latter. Those are funding expectations, not all cash already received. Reported remaining performance obligations of $38.7 billion and current $6.4 billion annualized revenue describe different measures. The update pairs strong realized growth with later delivery and a larger future capital requirement.",
+      "sources": [
+        {
+          "title": "Nebius November 12 Q3 financial release",
+          "url": "https://assets.nebius.com/assets/508584f1-b73d-484f-b64f-f96a5bc3b515/Nebius%20Q3%202026%20Financial%20Results%20Press%20Release.pdf",
+          "date": "2026-11-12"
+        },
+        {
+          "title": "Nebius November 12 shareholder letter",
+          "url": "https://assets.nebius.com/assets/51f8e479-732f-4e56-bade-a6bde21024ab/SHL%20%282%29.pdf",
+          "date": "2026-11-12"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 4,
+      "impact_reason": "Delivery timing and funding scale at a major AI cloud provider affect when contracted infrastructure can generate revenue. Future financing coverage and annualized targets must remain distinct from actual results.",
+      "confidence": "High for reported results and revised plans; delivery, financing and revenue guidance remain forward-looking.",
+      "event_date": "2026-11-12",
+      "event_date_scope": "November 12 results for the quarter ended September 30; later delivery targets retained as forecasts.",
+      "future_target": "More than $7B annualized revenue for February 2027; remaining New Jersey tranches scheduled for Q2 2027. Neither is an achieved result."
+    },
+    {
+      "id": "cerebras-q3-cloud-capacity-20261116",
+      "date": "2026-11-16",
+      "title": "Cerebras plans Oracle cloud availability in 2027 with 700 gross MW contracted for future delivery",
+      "summary": "Cerebras’s November 12 release reports $210.809 million of GAAP quarterly revenue, including $141.928 million from cloud and other services. Its $230.9 million “Core” revenue is a different, non-GAAP measure. Oracle plans to integrate Cerebras inference into OCI in 2027; the release also describes a separate deal with an unnamed top-three hyperscaler. It does not disclose that customer’s identity or a contract value. Cerebras says it has secured 700 gross MW for delivery by end-2027, including additional European capacity. Contracted future gross power is not commissioned IT capacity. These disclosures broaden the company’s cloud distribution plans without establishing that the entire planned fleet is already available.",
+      "sources": [
+        {
+          "title": "Cerebras November 12 Q3 results and business highlights",
+          "url": "https://cerebras.gcs-web.com/node/7746/pdf",
+          "date": "2026-11-12"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "impact_score": 3,
+      "impact_reason": "The cloud integrations and contracted build expand an alternative inference platform’s potential reach. Timing, power basis and undisclosed commercial scale limit what can be concluded about delivered supply.",
+      "confidence": "High for the issuer’s reported figures and plans; customer identity, implementation and future capacity delivery remain unverified.",
+      "event_date": "2026-11-12",
+      "event_date_scope": "November 12 disclosure for Q3 results and future cloud/capacity plans.",
+      "future_target": "Oracle Cloud Infrastructure availability in 2027; 700 gross MW secured for delivery by end-2027, not current operating IT capacity."
+    },
+    {
       "id": "anthropic-ipo-range-strategic-placement-20261111",
       "date": "2026-11-11",
       "title": "Anthropic proposes $70–78 IPO plus conditional $26 billion strategic placement",
@@ -25,12 +97,17 @@
       "id": "coreweave-q3-delivery-cash-financing-20261111",
       "date": "2026-11-11",
       "title": "CoreWeave reaches $3.66 billion quarterly revenue as cash equipment spending rises to $9.44 billion",
-      "summary": "CoreWeave’s November 10 results report $3.661 billion of third-quarter revenue, $1.975 billion of operating cash inflow and $9.441 billion of cash purchases of property, equipment and internal-use software. Reported active power exceeded 1.7 GW; more than 4.6 GW of contracted power is a separate supply-development measure. Revenue backlog of approximately $132.5 billion remains subject to delivery and service availability. The company raised its 2026 capital-expenditure forecast to $37–39 billion and expects about $9 billion of customer prepayments and deposits over the next three months. Expected receipts are not current cash. Quarterly net interest expense of $846 million exceeded $207 million of GAAP operating income, while the net loss was $709 million. The results show rapid delivery growth alongside a large financing requirement; backlog and future deposits do not establish that the remaining build is already funded.",
+      "summary": "CoreWeave’s November 10 results report $3.661 billion of third-quarter revenue, $1.975 billion of operating cash inflow and $9.441 billion of cash purchases of property, equipment and internal-use software. Reported active power exceeded 1.7 GW; more than 4.6 GW of contracted power is a separate supply-development measure. Revenue backlog of approximately $132.5 billion remains subject to delivery and service availability. The company raised its 2026 capital-expenditure forecast to $37–39 billion and expects about $9 billion of customer prepayments and deposits over the next three months. Expected receipts are not current cash. Quarterly net interest expense of $846 million exceeded $207 million of GAAP operating income, while the net loss was $709 million. The results show rapid delivery growth alongside a large financing requirement; backlog and future deposits do not establish that the remaining build is already funded. The November 12 filing separately reports $132.3 billion of ASC 606 remaining performance obligations and $47.505 billion of debt principal. The $132.5 billion revenue-backlog measure has broader coverage; the two are not interchangeable.",
       "sources": [
         {
           "title": "CoreWeave November 10 Q3 2026 earnings exhibit",
           "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm",
           "date": "2026-11-10"
+        },
+        {
+          "title": "CoreWeave November 12 Q3 Form 10-Q, RPO and debt notes",
+          "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000465/crwv-20260930.htm",
+          "date": "2026-11-12"
         }
       ],
       "status": "reviewed",
@@ -39,7 +116,8 @@
       "impact_reason": "A major AI cloud provider reports higher delivered revenue and capacity alongside multi-billion-dollar equipment spending. Delivery conditions and financing costs matter as much as headline backlog.",
       "confidence": "High for unaudited issuer results; capital spending, future receipts and further capacity delivery remain forward-looking.",
       "event_date": "2026-11-10",
-      "event_date_scope": "Results released November 10 for the quarter ended September 30. Power figures are from the Q3 operating highlights."
+      "event_date_scope": "Results released November 10 for the quarter ended September 30. Power figures are from the Q3 operating highlights.",
+      "updated_date": "2026-11-16"
     },
     {
       "id": "tsmc-board-model-lab-investments-20261111",

@@ -8,6 +8,20 @@ class ETL(unittest.TestCase):
         r=m.checks('test','H100','test','https://example.com',list(reversed(points)),'2026-11-02')
         self.assertEqual(r['changes']['30']['first_date'],'2026-03-11');self.assertAlmostEqual(r['changes']['30']['percent'],100*(1.99/1.69-1),places=3)
         self.assertIsNone(m.checks('test','H100','test','https://example.com',points[:2],'2026-11-02')['changes']['7'])
+    def test_general_index_aliases_replace_fallback_without_splicing(self):
+        payload={'indices':[{'alias':a,'source':'gx','history':[{'date':'2026-10-14','value':4},{'date':'2026-11-13','value':5}]} for a in ['CDGXH100','CDGXH200','CDGXB200','CDGXB300']]}
+        payload['indices'].append({'alias':'CDB200','history':[{'date':'2026-10-14','value':100},{'date':'2026-11-13','value':200}]})
+        rows=m.desk(payload,'2026-11-16')['market_checks']
+        self.assertEqual(len(rows),4)
+        b=next(r for r in rows if r['sku']=='B200')
+        self.assertEqual(b['index_alias'],'CDGXB200');self.assertEqual(b['index_source'],'gx')
+        self.assertEqual(b['changes']['30']['percent'],25)
+        self.assertEqual(b['changes']['30']['first'],4)
+        self.assertIn('General Index',b['terms'])
+        payload['indices'].pop(0)
+        with self.assertRaises(ValueError):m.desk(payload,'2026-11-16')
+        payload['indices'].append(payload['indices'][0])
+        with self.assertRaises(ValueError):m.desk(payload,'2026-11-16')
     def test_bad_values_and_future_dates(self):
         for v in [0,-1,float('nan'),True,'2.0']:
             with self.assertRaises(ValueError):m.number(v)

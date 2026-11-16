@@ -43,6 +43,8 @@ TOPOLOGY = {
     '445854': 'one TP8/PP2 engine = 16 GPUs; API tensor-parallel field omits pipeline parallelism',
     '446753': '2P (TP8/DCP8/EP8) x 3D (TP8/DCP8) = 40 GPUs',
     # Verified Actions jobs: 126250715343 (447464), 129568368466 (447843).
+    # Verified 2026-11-16: https://github.com/SemiAnalysisAI/InferenceX/actions/runs/43029773811/job/130932161380
+    '448095': '9P (TP2/EP2/DPA) x 1D (TP16/EP16/DPA) = 34 GPUs; worker records independently sum to 34',
     '447464': '9P (TP2/EP2/DPA) x 1D (TP16/EP16/DPA) = 34 GPUs',
     '447843': 'one TP1 engine = 1 GPU; API workers and power audit both confirm one physical GPU',
     '447126': 'one TP1 engine = 1 GPU',

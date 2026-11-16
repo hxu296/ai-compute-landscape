@@ -310,7 +310,7 @@ input[type=search] { margin:0 }
 .table-download { display:inline-flex;align-items:center;gap:6px;font:500 12px/1 var(--sans);border:0;background:none;color:var(--accent);padding:4px 0;margin:2px 0 8px;cursor:pointer;border-radius:3px }
 .table-download::before { content:"";width:11px;height:11px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 1.5v6M3.2 5L6 7.8 8.8 5M2 10.5h8' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 1.5v6M3.2 5L6 7.8 8.8 5M2 10.5h8' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat }
 .table-download:hover { color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px }
-@media(max-width:560px){.source-popover{top:12px!important;bottom:12px;max-height:calc(100vh - 24px);width:calc(100vw - 24px)!important}}
+@media(max-width:560px){.source-popover{max-height:calc(100vh - 24px);width:calc(100vw - 24px)!important}}
 /* The opening is a connected market diagram rather than summary cards. */
 #landscape { padding-top:24px }
 #landscape .fig-head h2 { font-size:28px;margin:0 }

@@ -33,7 +33,11 @@ function markConflict(svg,subject,metric,x,y,match) {
     panel.innerHTML='<button class="source-close" aria-label="Close source comparison">×</button>'+ids.map(id=>CONFLICTS.has(id)?conflictHtml(CONFLICTS.get(id)):'').join('');
     panel.hidden=false;panel.querySelector('.source-close').onclick=close;
     const r=n.getBoundingClientRect();panel.style.width=Math.min(460,innerWidth-24)+'px';panel.style.left=Math.max(12,Math.min(r.left,innerWidth-panel.offsetWidth-12))+'px';
-    panel.style.top=Math.max(12,Math.min(r.bottom+8,innerHeight-panel.offsetHeight-12))+'px';
+    // Keep the popover clear of its trigger so hover cannot intercept the click that pins it.
+    const below=Math.max(0,innerHeight-r.bottom-20),above=Math.max(0,r.top-20),down=below>=above;
+    panel.style.maxHeight=Math.max(1,down?below:above)+'px';
+    panel.style.overflowY='auto';
+    panel.style.top=(down?r.bottom+8:Math.max(12,r.top-panel.offsetHeight-8))+'px';
   }
   document.addEventListener('pointerover',e=>{const n=e.target.closest('[data-conflict]');if(n&&!pinned)show(n);});
   document.addEventListener('pointerout',e=>{if(e.target.closest('[data-conflict]')&&!pinned)timer=setTimeout(()=>{if(!panel.matches(':hover'))close();},180);});
