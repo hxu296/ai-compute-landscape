@@ -23,3 +23,10 @@ The [CoreWeave Q3 filing](https://www.sec.gov/Archives/edgar/data/1769628/000176
 Concurrent exposure-table updates now align CoreWeave and Nebius to September 30, with scores of 14 and 12 respectively. This release preserves those separately maintained rows and explanatory notes in full, while adding the editorial evidence and source comparison. The risk model uses its own recurring-revenue, financing and interest definitions; headline GAAP figures are not substituted into its inputs.
 
 The comparison popover now stays clear of its trigger: hovering over the new source note cannot cover the button needed to pin it. Desktop, tablet and phone checks exercise an ordinary click and confirm that both dated source links remain available.
+
+
+## Scheduled review follow-up
+
+The scheduled review resumed at 17:14 UTC. Three distinct items were added to the November 16 archive while retaining the earlier lead and every existing story ID/date. The [Fed report](https://www.federalreserve.gov/publications/files/financial-stability-report-20261113.pdf) retains its November 13 publication date and separates issuance through October from the seven-firm Q2 obligations comparison. The [AMD completion announcement](https://ir.amd.com/news-events/press-releases/detail/1306/amd-completes-acquisition-of-world-labs) and [NVIDIA product announcement](https://nvidianews.nvidia.com/news/nvidia-expands-vera-cpu-platform-to-accelerate-scientific-discovery) are dated November 16. Future availability stays prospective. Supporting records use the evidence ledger, without changing company financial histories, fleet totals, contract rankings or rental prices.
+
+The 17:15 UTC manual workflow refreshed both benchmark feeds and the research inputs successfully. Compute Desk still reports Friday November 13 observations; SemiAnalysis reports November 16 observations. Same-day retrieval revisions remain source observations rather than a new market-wide event. Existing financial exposure rows and source-comparison behavior are preserved.

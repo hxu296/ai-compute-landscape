@@ -53,6 +53,23 @@
       "future_target": "More than $7B annualized revenue for February 2027; remaining New Jersey tranches scheduled for Q2 2027. Neither is an achieved result."
     },
     {
+      "id": "fed-compute-financing-assessment-20261116",
+      "date": "2026-11-16",
+      "impact_score": 4,
+      "impact_reason": "The assessment covers financing across the compute industry and shows why company debt alone understates exposure; it establishes neither a new financing close nor a realized loss.",
+      "title": "Fed highlights growing debt and contingent obligations behind the compute buildout",
+      "summary": "The Fed’s November 13 Financial Stability Report estimates more than $680 billion of advanced-computing debt issuance through October 2026. Separately, seven technology firms had over $1 trillion of leases yet to start and over $2 trillion of guarantees and other contract commitments in its Q2 comparison. Those undiscounted obligations are not directly comparable with balance-sheet debt and must not be added to issuance as new funding. The report explains how strong-credit customers and chipmakers help developers borrow, while taking on economic exposure that may absorb losses or transmit stress in a downturn. This is a dated risk assessment, not evidence that projects have defaulted.",
+      "sources": [
+        {
+          "title": "Federal Reserve November 2026 Financial Stability Report, Box 2.2",
+          "url": "https://www.federalreserve.gov/publications/files/financial-stability-report-20261113.pdf",
+          "date": "2026-11-13"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "analysis"
+    },
+    {
       "id": "cerebras-q3-cloud-capacity-20261116",
       "date": "2026-11-16",
       "title": "Cerebras plans Oracle cloud availability in 2027 with 700 gross MW contracted for future delivery",
@@ -72,6 +89,44 @@
       "event_date": "2026-11-12",
       "event_date_scope": "November 12 disclosure for Q3 results and future cloud/capacity plans.",
       "future_target": "Oracle Cloud Infrastructure availability in 2027; 700 gross MW secured for delivery by end-2027, not current operating IT capacity."
+    },
+    {
+      "id": "amd-world-labs-acquisition-completed-20261116",
+      "date": "2026-11-16",
+      "impact_score": 3,
+      "impact_reason": "A completed acquisition brings model research inside a major compute supplier and can influence future infrastructure development, but the release gives no transaction value, capacity or delivery commitment.",
+      "title": "AMD completes World Labs acquisition and brings model research into its infrastructure strategy",
+      "summary": "AMD announced on November 16 that it has completed its acquisition of World Labs, whose work spans interactive 3D environments and robotic learning and simulation. Fei-Fei Li joins as executive vice president and chief scientist, reporting to Lisa Su. AMD says the team will continue foundational model research and work with its engineers on future hardware, software and systems. The completed transaction makes that research organization part of AMD; expected infrastructure benefits remain prospective. The release does not disclose a purchase price, a GPU order or an operating-capacity increase.",
+      "sources": [
+        {
+          "title": "AMD November 16 acquisition completion announcement",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1306/amd-completes-acquisition-of-world-labs",
+          "date": "2026-11-16"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "event_date": "2026-11-16",
+      "event_date_scope": "announced acquisition completion"
+    },
+    {
+      "id": "nvidia-vera-hpc-rack-roadmap-20261116",
+      "date": "2026-11-16",
+      "impact_score": 3,
+      "impact_reason": "The planned CPU rack extends NVIDIA’s systems offering into memory-intensive scientific computing with a named customer, but commercial availability and that customer’s system remain future milestones.",
+      "title": "NVIDIA announces 192-CPU Vera racks with availability expected in early 2027",
+      "summary": "NVIDIA’s November 16 SC26 announcement describes a liquid-cooled rack combining 192 Vera CPUs with Quantum-X800 InfiniBand networking for memory-intensive scientific workloads. Racks are expected from Dell, HPE, Lenovo and Supermicro beginning in early 2027. NVIDIA also says DKRZ selected Vera for its Bull-built HLRE-5 climate supercomputer, expected in early 2028. The design reuses NVL72 rack infrastructure, extending NVIDIA’s systems reach beyond GPU-centered configurations. These are product and customer roadmaps, not delivered racks or an installed GPU count. Vendor performance claims are workload-specific and do not establish a general inference-speed or rental-price advantage.",
+      "sources": [
+        {
+          "title": "NVIDIA November 16 Vera CPU rack announcement",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-expands-vera-cpu-platform-to-accelerate-scientific-discovery",
+          "date": "2026-11-16"
+        }
+      ],
+      "status": "reviewed",
+      "kind": "news",
+      "event_date": "2026-11-16",
+      "event_date_scope": "product announcement"
     },
     {
       "id": "anthropic-ipo-range-strategic-placement-20261111",
