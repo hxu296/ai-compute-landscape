@@ -1388,7 +1388,7 @@
         "top1_basis_source": "Q3 2026 recurring revenue (D): Customer D 22% of total Q3 revenue (≈$216M) ÷ $655.7M after removing the one-off $325.1M strategic-partnership revenue = ≈33%. Customer E (33% of total) matches that one-off revenue and is excluded. Filed shares of total Q3 revenue: E 33%, D 22%, C 15% (interim FS, concentrations note)",
         "D_interest_to_revenue_pct": 11.6,
         "interest_basis": "filed interest expense after capitalization, before interest income, Q3 2026 ($112.5M) ÷ Q3 Nebius AI cloud revenue ($973.8M) (D). Upper bound: keeps all $58.7M of combined customer-advance + supplier-deferred-payment interest because the split is not filed. Debt-only $53.8M = 5.5%. On recurring revenue excluding $325.1M non-recurring strategic-partnership revenue: 17.3% / 8.3%. No lease interest in the line (all leases operating; lease cost is opex).",
-        "top1_basis": "revenue",
+        "top1_basis": "recurring revenue",
         "unfunded_usd_scope": "2027 capex ($40–45B guide) not covered by committed prepayments ($17–20B) or arranged financing",
         "unfunded_mw_scope": "contracted power for 2028–29; cost and financing undisclosed",
         "model": "GPU cloud",
@@ -1428,7 +1428,11 @@
         "unfunded_basis": "2026: capex guide raised to ~$27B (letter, B) vs 9M capex $15.43B (A) → Q4 need ≈$11.6B, vs $7.43B cash + ~$2.2B remaining 2026 prepayments ($10B committed − $7.83B 9M deferred-revenue increase, D) + undrawn-or-drawn Citi $3.5B → 2026 covered only with the Citi facility. 2027: capex $40–45B 'sized for more than 1 GW of new capacity' (B); company expects 'prepayments and financing against existing contracts with investment-grade customers to cover 75%-85%' (B) and $17–20B committed customer prepayments in 2027 (B). Secured today = prepayments $17–20B + $0.775B term loan → not yet arranged = 40−20−0.775 = $19.2B to 45−17−0.775 = $27.2B, midpoint ≈$23B (D) → 3. Company framing (15–25% residual) = $6.0–11.3B → 2. MW: >4 GW contracted, 5 GW YE26 target (B); 2028–29 build (owned sites >3 GW over 3–3.5 years) has no disclosed financing, implied ≈$40B/GW all-in on the 2027 guide (D). The 75–85% coverage is the company's plan, not arranged financing, so it is noted but not counted (rule: only financing already arranged counts).",
         "unfunded_source_url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-2.htm",
         "funding_unknown": false,
-        "interest_note": "an upper bound: filed interest includes customer-advance interest, reported together with supplier deferred-payment interest; debt interest alone is 5.5% (D)"
+        "interest_note": "an upper bound: filed interest includes customer-advance interest, reported together with supplier deferred-payment interest; debt interest alone is 5.5% (D)",
+        "score_notes": {
+          "concentration": "Customer D, likely Microsoft (estimate), is 22% of total Q3 revenue and ≈33% of recurring revenue once the one-off $325M strategic-partnership revenue is removed; unnamed with no credit stated, so non-investment-grade",
+          "tenor": "the $3.5B Citi 364-day bridge signed Oct 17 has no drawn amount in any filing, so it is not counted; if drawn, tenor becomes 3 and the total 13"
+        }
       },
       {
         "rank": 11,
