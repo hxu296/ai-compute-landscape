@@ -152,8 +152,8 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-16T02:05:24.775728+00:00",
-        "last_success": "2026-11-16T02:05:24.775728+00:00",
+        "checked_at": "2026-11-16T02:22:09.386571+00:00",
+        "last_success": "2026-11-16T02:22:09.386571+00:00",
         "max_age_days": 3,
         "sha256": "64e87a38defe219c63166ab5e6f2064ea764e0ae6e53f3f3d7e8b585d5b4acbc",
         "url": "https://data-api.compute-index.com/public/indices"
@@ -272,8 +272,8 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-16T02:05:24.775728+00:00",
-        "last_success": "2026-11-16T02:05:24.775728+00:00",
+        "checked_at": "2026-11-16T02:22:09.386571+00:00",
+        "last_success": "2026-11-16T02:22:09.386571+00:00",
         "max_age_days": 0,
         "sha256": "61a5b908ec23e17076ce395fd13e433011d92cc2d53113f9a3544789d662432a",
         "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -998,7 +998,7 @@
       }
     ]
   },
-  "checked_at": "2026-11-16T02:05:24.775728+00:00",
+  "checked_at": "2026-11-16T02:22:09.386571+00:00",
   "market_checks": [
     {
       "name": "Compute Desk H100",

@@ -1,18 +1,18 @@
 {
-  "checked_at": "2026-11-16T02:05:24.775728+00:00",
+  "checked_at": "2026-11-16T02:22:09.386571+00:00",
   "sources": {
     "compute_desk": {
       "state": "ok",
-      "checked_at": "2026-11-16T02:05:24.775728+00:00",
-      "last_success": "2026-11-16T02:05:24.775728+00:00",
+      "checked_at": "2026-11-16T02:22:09.386571+00:00",
+      "last_success": "2026-11-16T02:22:09.386571+00:00",
       "max_age_days": 3,
       "sha256": "64e87a38defe219c63166ab5e6f2064ea764e0ae6e53f3f3d7e8b585d5b4acbc",
       "url": "https://data-api.compute-index.com/public/indices"
     },
     "semianalysis": {
       "state": "ok",
-      "checked_at": "2026-11-16T02:05:24.775728+00:00",
-      "last_success": "2026-11-16T02:05:24.775728+00:00",
+      "checked_at": "2026-11-16T02:22:09.386571+00:00",
+      "last_success": "2026-11-16T02:22:09.386571+00:00",
       "max_age_days": 0,
       "sha256": "61a5b908ec23e17076ce395fd13e433011d92cc2d53113f9a3544789d662432a",
       "url": "https://gpu-index.semianalysis.com/api/public-data"
@@ -253,20 +253,28 @@
     }
   ],
   "headline": {
-    "id": "brief-2026-11-16",
+    "id": "nvidia-interim-ceo-transition-20261116",
     "date": "2026-11-16",
-    "impact_score": 1,
-    "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
-    "title": "Daily market brief: SemiAnalysis H100 at $3.37",
-    "summary": "The latest observation is dated 2026-11-16 and measures spot-contract composite. This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+    "title": "NVIDIA names Colette Kress interim CEO after Jensen Huang’s resignation",
+    "summary": "NVIDIA’s November 12 filing says the board accepted Jensen Huang’s resignation as president, CEO and director on November 11, effective immediately. CFO Colette Kress became interim CEO and keeps her finance role; Harvey Jones became board chair. The board is searching for a permanent CEO and says it expects operations, customer commitments and the product roadmap to continue without interruption. That is a continuity commitment, not evidence that future shipments or financing arrangements are guaranteed. The announcement keeps the November 17 earnings schedule. For AI infrastructure buyers, the immediate change is leadership and accountability at a central equipment supplier; the disclosed transition does not quantify a change in delivered compute capacity.",
     "sources": [
       {
-        "title": "SemiAnalysis H100",
-        "url": "https://gpu-index.semianalysis.com/",
-        "date": "2026-11-16"
+        "title": "NVIDIA November 12 Form 8-K, effective November 11",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm",
+        "date": "2026-11-12"
+      },
+      {
+        "title": "NVIDIA November 12 transition announcement",
+        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvidiaannouncesceotransiti.htm",
+        "date": "2026-11-12"
       }
     ],
-    "status": "automated",
-    "kind": "market_brief"
+    "status": "reviewed",
+    "kind": "news",
+    "impact_score": 4,
+    "impact_reason": "Leadership changes at a major AI infrastructure supplier can affect execution and capital allocation. The filing confirms governance changes but does not establish a supply reduction.",
+    "confidence": "High for the filed appointments and dates; future execution and financing effects remain uncertain.",
+    "event_date": "2026-11-11",
+    "event_date_scope": "Board action effective November 11; filing and public announcement November 12. Catch-up editorial review November 16."
   }
 }
