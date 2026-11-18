@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "retrieved_utc": "2026-11-17T21:45:36+00:00",
+  "retrieved_utc": "2026-11-18T21:25:35+00:00",
   "method": "One run per model: across GB200 and GB300 NVL72, the AgentX run with the highest output tokens/s per physical GPU above 50 tokens/s/user (reciprocal P90 ITL). Fixed-rate whole-group extrapolation; no quality equivalence or uncached-prefill calibration.",
   "api_contract_url": "https://inferencex.semianalysis.com/api",
   "query_manifest": {
     "DeepSeek-V4-Pro": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=DeepSeek-V4-Pro",
       "response_rows": 935,
-      "response_sha256": "c59dbd3c1cc7a10632b7eb1207f4619ed31527ac8e106490e1a367cf08026d40"
+      "response_sha256": "fc71ff287c04c319c5029e99c1f34c0aabf55826e473cfbed586c1a4858c7299"
     },
     "DeepSeek-V4.1-Flash": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=DeepSeek-V4.1-Flash",
-      "response_rows": 234,
-      "response_sha256": "9d7fa9d38860e271e786d52028e1134f8c4595b760b928eece064bd0cb9fafc3"
+      "response_rows": 227,
+      "response_sha256": "66c2922db0b76da10ba6f765a5987212aeb648bff546970feaac7bb4537d2afd"
     },
     "GLM-5.2": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=GLM-5.2",
-      "response_rows": 154,
-      "response_sha256": "381da55b7b68b5734b2f87cdee45764ddf7a08f03cff16817f1c478c3e192bde"
+      "response_rows": 163,
+      "response_sha256": "f3149c8091739ea5b71804d6015419da2b7f439f18ad536eef71314534d7f3ef"
     },
     "Kimi-K3": {
       "api_url": "https://inferencex.semianalysis.com/api/v1/benchmarks?model=Kimi-K3",
