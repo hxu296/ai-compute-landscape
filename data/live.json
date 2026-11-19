@@ -8,29 +8,29 @@
           "sku": "H100",
           "terms": "US one-year rental index; General Index (GX)",
           "source_url": "https://www.computedesk.com/indexes/h100",
-          "date": "2026-11-18",
-          "usd": 2.9,
+          "date": "2026-11-19",
+          "usd": 2.91,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
-              "first": 2.81,
-              "last_date": "2026-11-18",
-              "last": 2.9,
-              "percent": 3.203
+              "first_date": "2026-11-12",
+              "first": 2.87,
+              "last_date": "2026-11-19",
+              "last": 2.91,
+              "percent": 1.394
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 2.94,
-              "last_date": "2026-11-18",
-              "last": 2.9,
-              "percent": -1.361
+              "first_date": "2026-10-20",
+              "first": 2.9,
+              "last_date": "2026-11-19",
+              "last": 2.91,
+              "percent": 0.345
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 2.59,
-              "last_date": "2026-11-18",
-              "last": 2.9,
-              "percent": 11.969
+              "first_date": "2026-08-21",
+              "first": 2.58,
+              "last_date": "2026-11-19",
+              "last": 2.91,
+              "percent": 12.791
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -42,29 +42,29 @@
           "sku": "H200",
           "terms": "US one-year rental index; General Index (GX)",
           "source_url": "https://www.computedesk.com/indexes/h200",
-          "date": "2026-11-18",
-          "usd": 3.52,
+          "date": "2026-11-19",
+          "usd": 3.5,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
-              "first": 3.55,
-              "last_date": "2026-11-18",
-              "last": 3.52,
-              "percent": -0.845
+              "first_date": "2026-11-12",
+              "first": 3.56,
+              "last_date": "2026-11-19",
+              "last": 3.5,
+              "percent": -1.685
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 3.53,
-              "last_date": "2026-11-18",
-              "last": 3.52,
-              "percent": -0.283
+              "first_date": "2026-10-20",
+              "first": 3.45,
+              "last_date": "2026-11-19",
+              "last": 3.5,
+              "percent": 1.449
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 3.29,
-              "last_date": "2026-11-18",
-              "last": 3.52,
-              "percent": 6.991
+              "first_date": "2026-08-21",
+              "first": 3.27,
+              "last_date": "2026-11-19",
+              "last": 3.5,
+              "percent": 7.034
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -76,29 +76,29 @@
           "sku": "B200",
           "terms": "US one-year rental index; General Index (GX)",
           "source_url": "https://www.computedesk.com/indexes/b200",
-          "date": "2026-11-18",
-          "usd": 6.06,
+          "date": "2026-11-19",
+          "usd": 6.15,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
-              "first": 5.73,
-              "last_date": "2026-11-18",
-              "last": 6.06,
-              "percent": 5.759
+              "first_date": "2026-11-12",
+              "first": 5.77,
+              "last_date": "2026-11-19",
+              "last": 6.15,
+              "percent": 6.586
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 5.68,
-              "last_date": "2026-11-18",
-              "last": 6.06,
-              "percent": 6.69
+              "first_date": "2026-10-20",
+              "first": 5.76,
+              "last_date": "2026-11-19",
+              "last": 6.15,
+              "percent": 6.771
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 4.87,
-              "last_date": "2026-11-18",
-              "last": 6.06,
-              "percent": 24.435
+              "first_date": "2026-08-21",
+              "first": 4.89,
+              "last_date": "2026-11-19",
+              "last": 6.15,
+              "percent": 25.767
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -110,29 +110,29 @@
           "sku": "B300",
           "terms": "US one-year rental index; General Index (GX)",
           "source_url": "https://www.computedesk.com/indexes/b300",
-          "date": "2026-11-18",
-          "usd": 7.21,
+          "date": "2026-11-19",
+          "usd": 7.19,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
-              "first": 7.14,
-              "last_date": "2026-11-18",
-              "last": 7.21,
-              "percent": 0.98
+              "first_date": "2026-11-12",
+              "first": 7.16,
+              "last_date": "2026-11-19",
+              "last": 7.19,
+              "percent": 0.419
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 7.56,
-              "last_date": "2026-11-18",
-              "last": 7.21,
-              "percent": -4.63
+              "first_date": "2026-10-20",
+              "first": 7.59,
+              "last_date": "2026-11-19",
+              "last": 7.19,
+              "percent": -5.27
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 6.48,
-              "last_date": "2026-11-18",
-              "last": 7.21,
-              "percent": 11.265
+              "first_date": "2026-08-21",
+              "first": 6.44,
+              "last_date": "2026-11-19",
+              "last": 7.19,
+              "percent": 11.646
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -144,18 +144,18 @@
         {
           "name": "Compute Desk DESKH100",
           "sku": "H100",
-          "usd": 2.9,
-          "date": "2026-11-18",
+          "usd": 2.91,
+          "date": "2026-11-19",
           "terms": "US one-year rental index; General Index (GX); excludes hyperscalers",
           "source_url": "https://www.computedesk.com/indexes/h100"
         }
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-18T21:25:34.582834+00:00",
-        "last_success": "2026-11-18T21:25:34.582834+00:00",
+        "checked_at": "2026-11-19T21:29:46.836966+00:00",
+        "last_success": "2026-11-19T21:29:46.836966+00:00",
         "max_age_days": 0,
-        "sha256": "69db8a541b4559c97148fb9e75a4b83ff293a332b066333d59d6dd2e23fcf1f2",
+        "sha256": "0c19c24b944370580171e3a610ca6db081c043b71c1c81abcd9c908bfdf04142",
         "url": "https://data-api.compute-index.com/public/indices"
       }
     },
@@ -166,29 +166,29 @@
           "sku": "H100",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-18",
+          "date": "2026-11-19",
           "usd": 3.46,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
-              "first": 3.39,
-              "last_date": "2026-11-18",
+              "first_date": "2026-11-12",
+              "first": 3.42,
+              "last_date": "2026-11-19",
               "last": 3.46,
-              "percent": 2.065
+              "percent": 1.17
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 3.34,
-              "last_date": "2026-11-18",
+              "first_date": "2026-10-20",
+              "first": 3.35,
+              "last_date": "2026-11-19",
               "last": 3.46,
-              "percent": 3.593
+              "percent": 3.284
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 3.19,
-              "last_date": "2026-11-18",
+              "first_date": "2026-08-21",
+              "first": 3.2,
+              "last_date": "2026-11-19",
               "last": 3.46,
-              "percent": 8.464
+              "percent": 8.125
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -198,29 +198,29 @@
           "sku": "B200",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-18",
-          "usd": 6.21,
+          "date": "2026-11-19",
+          "usd": 6.22,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
+              "first_date": "2026-11-12",
               "first": 6.26,
-              "last_date": "2026-11-18",
-              "last": 6.21,
-              "percent": -0.799
+              "last_date": "2026-11-19",
+              "last": 6.22,
+              "percent": -0.639
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 6.88,
-              "last_date": "2026-11-18",
-              "last": 6.21,
-              "percent": -9.738
+              "first_date": "2026-10-20",
+              "first": 6.87,
+              "last_date": "2026-11-19",
+              "last": 6.22,
+              "percent": -9.461
             },
             "90": {
-              "first_date": "2026-08-20",
-              "first": 5.5,
-              "last_date": "2026-11-18",
-              "last": 6.21,
-              "percent": 12.909
+              "first_date": "2026-08-21",
+              "first": 5.49,
+              "last_date": "2026-11-19",
+              "last": 6.22,
+              "percent": 13.297
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -230,29 +230,29 @@
           "sku": "A100",
           "terms": "Spot-contract composite",
           "source_url": "https://gpu-index.semianalysis.com/",
-          "date": "2026-11-18",
-          "usd": 1.65,
+          "date": "2026-11-19",
+          "usd": 1.64,
           "changes": {
             "7": {
-              "first_date": "2026-11-11",
+              "first_date": "2026-11-12",
               "first": 1.66,
-              "last_date": "2026-11-18",
-              "last": 1.65,
-              "percent": -0.602
+              "last_date": "2026-11-19",
+              "last": 1.64,
+              "percent": -1.205
             },
             "30": {
-              "first_date": "2026-10-19",
-              "first": 1.71,
-              "last_date": "2026-11-18",
-              "last": 1.65,
-              "percent": -3.509
+              "first_date": "2026-10-20",
+              "first": 1.73,
+              "last_date": "2026-11-19",
+              "last": 1.64,
+              "percent": -5.202
             },
             "90": {
-              "first_date": "2026-08-20",
+              "first_date": "2026-08-21",
               "first": 1.83,
-              "last_date": "2026-11-18",
-              "last": 1.65,
-              "percent": -9.836
+              "last_date": "2026-11-19",
+              "last": 1.64,
+              "percent": -10.383
             }
           },
           "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -272,10 +272,10 @@
       ],
       "health": {
         "state": "ok",
-        "checked_at": "2026-11-18T21:25:34.582834+00:00",
-        "last_success": "2026-11-18T21:25:34.582834+00:00",
+        "checked_at": "2026-11-19T21:29:46.836966+00:00",
+        "last_success": "2026-11-19T21:29:46.836966+00:00",
         "max_age_days": 0,
-        "sha256": "167f498326d810320b8497dcc2b472df466ba0dcd3a6c1e1d80ec837ed4c2782",
+        "sha256": "46aa021e2067d43b28accd69e1c0615780ed33751aeb9bfd9a617870f82ea323",
         "url": "https://gpu-index.semianalysis.com/api/public-data"
       }
     }
@@ -283,6 +283,23 @@
   "daily": {
     "schema_version": 2,
     "items": [
+      {
+        "id": "brief-2026-11-19",
+        "date": "2026-11-19",
+        "impact_score": 1,
+        "impact_reason": "Routine benchmark reading; not an independently reviewed major news event.",
+        "title": "Daily market brief: Compute Desk H100 at $2.91",
+        "summary": "The latest observation is dated 2026-11-19 and measures us one-year rental index; general index (gx). This dated benchmark is not a bookable retail offer or a report of a new contract. Other company and fleet facts retain their original observation dates.",
+        "sources": [
+          {
+            "title": "Compute Desk H100",
+            "url": "https://www.computedesk.com/indexes/h100",
+            "date": "2026-11-19"
+          }
+        ],
+        "status": "automated",
+        "kind": "market_brief"
+      },
       {
         "id": "brief-2026-11-18",
         "date": "2026-11-18",
@@ -1087,36 +1104,36 @@
       }
     ]
   },
-  "checked_at": "2026-11-18T21:25:34.582834+00:00",
+  "checked_at": "2026-11-19T21:29:46.836966+00:00",
   "market_checks": [
     {
       "name": "Compute Desk H100",
       "sku": "H100",
       "terms": "US one-year rental index; General Index (GX)",
       "source_url": "https://www.computedesk.com/indexes/h100",
-      "date": "2026-11-18",
-      "usd": 2.9,
+      "date": "2026-11-19",
+      "usd": 2.91,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
-          "first": 2.81,
-          "last_date": "2026-11-18",
-          "last": 2.9,
-          "percent": 3.203
+          "first_date": "2026-11-12",
+          "first": 2.87,
+          "last_date": "2026-11-19",
+          "last": 2.91,
+          "percent": 1.394
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 2.94,
-          "last_date": "2026-11-18",
-          "last": 2.9,
-          "percent": -1.361
+          "first_date": "2026-10-20",
+          "first": 2.9,
+          "last_date": "2026-11-19",
+          "last": 2.91,
+          "percent": 0.345
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 2.59,
-          "last_date": "2026-11-18",
-          "last": 2.9,
-          "percent": 11.969
+          "first_date": "2026-08-21",
+          "first": 2.58,
+          "last_date": "2026-11-19",
+          "last": 2.91,
+          "percent": 12.791
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -1128,29 +1145,29 @@
       "sku": "H200",
       "terms": "US one-year rental index; General Index (GX)",
       "source_url": "https://www.computedesk.com/indexes/h200",
-      "date": "2026-11-18",
-      "usd": 3.52,
+      "date": "2026-11-19",
+      "usd": 3.5,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
-          "first": 3.55,
-          "last_date": "2026-11-18",
-          "last": 3.52,
-          "percent": -0.845
+          "first_date": "2026-11-12",
+          "first": 3.56,
+          "last_date": "2026-11-19",
+          "last": 3.5,
+          "percent": -1.685
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 3.53,
-          "last_date": "2026-11-18",
-          "last": 3.52,
-          "percent": -0.283
+          "first_date": "2026-10-20",
+          "first": 3.45,
+          "last_date": "2026-11-19",
+          "last": 3.5,
+          "percent": 1.449
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 3.29,
-          "last_date": "2026-11-18",
-          "last": 3.52,
-          "percent": 6.991
+          "first_date": "2026-08-21",
+          "first": 3.27,
+          "last_date": "2026-11-19",
+          "last": 3.5,
+          "percent": 7.034
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -1162,29 +1179,29 @@
       "sku": "B200",
       "terms": "US one-year rental index; General Index (GX)",
       "source_url": "https://www.computedesk.com/indexes/b200",
-      "date": "2026-11-18",
-      "usd": 6.06,
+      "date": "2026-11-19",
+      "usd": 6.15,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
-          "first": 5.73,
-          "last_date": "2026-11-18",
-          "last": 6.06,
-          "percent": 5.759
+          "first_date": "2026-11-12",
+          "first": 5.77,
+          "last_date": "2026-11-19",
+          "last": 6.15,
+          "percent": 6.586
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 5.68,
-          "last_date": "2026-11-18",
-          "last": 6.06,
-          "percent": 6.69
+          "first_date": "2026-10-20",
+          "first": 5.76,
+          "last_date": "2026-11-19",
+          "last": 6.15,
+          "percent": 6.771
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 4.87,
-          "last_date": "2026-11-18",
-          "last": 6.06,
-          "percent": 24.435
+          "first_date": "2026-08-21",
+          "first": 4.89,
+          "last_date": "2026-11-19",
+          "last": 6.15,
+          "percent": 25.767
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -1196,29 +1213,29 @@
       "sku": "B300",
       "terms": "US one-year rental index; General Index (GX)",
       "source_url": "https://www.computedesk.com/indexes/b300",
-      "date": "2026-11-18",
-      "usd": 7.21,
+      "date": "2026-11-19",
+      "usd": 7.19,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
-          "first": 7.14,
-          "last_date": "2026-11-18",
-          "last": 7.21,
-          "percent": 0.98
+          "first_date": "2026-11-12",
+          "first": 7.16,
+          "last_date": "2026-11-19",
+          "last": 7.19,
+          "percent": 0.419
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 7.56,
-          "last_date": "2026-11-18",
-          "last": 7.21,
-          "percent": -4.63
+          "first_date": "2026-10-20",
+          "first": 7.59,
+          "last_date": "2026-11-19",
+          "last": 7.19,
+          "percent": -5.27
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 6.48,
-          "last_date": "2026-11-18",
-          "last": 7.21,
-          "percent": 11.265
+          "first_date": "2026-08-21",
+          "first": 6.44,
+          "last_date": "2026-11-19",
+          "last": 7.19,
+          "percent": 11.646
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable.",
@@ -1230,29 +1247,29 @@
       "sku": "H100",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-18",
+      "date": "2026-11-19",
       "usd": 3.46,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
-          "first": 3.39,
-          "last_date": "2026-11-18",
+          "first_date": "2026-11-12",
+          "first": 3.42,
+          "last_date": "2026-11-19",
           "last": 3.46,
-          "percent": 2.065
+          "percent": 1.17
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 3.34,
-          "last_date": "2026-11-18",
+          "first_date": "2026-10-20",
+          "first": 3.35,
+          "last_date": "2026-11-19",
           "last": 3.46,
-          "percent": 3.593
+          "percent": 3.284
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 3.19,
-          "last_date": "2026-11-18",
+          "first_date": "2026-08-21",
+          "first": 3.2,
+          "last_date": "2026-11-19",
           "last": 3.46,
-          "percent": 8.464
+          "percent": 8.125
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -1262,29 +1279,29 @@
       "sku": "B200",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-18",
-      "usd": 6.21,
+      "date": "2026-11-19",
+      "usd": 6.22,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
+          "first_date": "2026-11-12",
           "first": 6.26,
-          "last_date": "2026-11-18",
-          "last": 6.21,
-          "percent": -0.799
+          "last_date": "2026-11-19",
+          "last": 6.22,
+          "percent": -0.639
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 6.88,
-          "last_date": "2026-11-18",
-          "last": 6.21,
-          "percent": -9.738
+          "first_date": "2026-10-20",
+          "first": 6.87,
+          "last_date": "2026-11-19",
+          "last": 6.22,
+          "percent": -9.461
         },
         "90": {
-          "first_date": "2026-08-20",
-          "first": 5.5,
-          "last_date": "2026-11-18",
-          "last": 6.21,
-          "percent": 12.909
+          "first_date": "2026-08-21",
+          "first": 5.49,
+          "last_date": "2026-11-19",
+          "last": 6.22,
+          "percent": 13.297
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -1294,29 +1311,29 @@
       "sku": "A100",
       "terms": "Spot-contract composite",
       "source_url": "https://gpu-index.semianalysis.com/",
-      "date": "2026-11-18",
-      "usd": 1.65,
+      "date": "2026-11-19",
+      "usd": 1.64,
       "changes": {
         "7": {
-          "first_date": "2026-11-11",
+          "first_date": "2026-11-12",
           "first": 1.66,
-          "last_date": "2026-11-18",
-          "last": 1.65,
-          "percent": -0.602
+          "last_date": "2026-11-19",
+          "last": 1.64,
+          "percent": -1.205
         },
         "30": {
-          "first_date": "2026-10-19",
-          "first": 1.71,
-          "last_date": "2026-11-18",
-          "last": 1.65,
-          "percent": -3.509
+          "first_date": "2026-10-20",
+          "first": 1.73,
+          "last_date": "2026-11-19",
+          "last": 1.64,
+          "percent": -5.202
         },
         "90": {
-          "first_date": "2026-08-20",
+          "first_date": "2026-08-21",
           "first": 1.83,
-          "last_date": "2026-11-18",
-          "last": 1.65,
-          "percent": -9.836
+          "last_date": "2026-11-19",
+          "last": 1.64,
+          "percent": -10.383
         }
       },
       "method": "100 × (last / first − 1); last observation on or before each calendar lookback. Missing history stays unavailable."
@@ -1326,8 +1343,8 @@
     {
       "name": "Compute Desk DESKH100",
       "sku": "H100",
-      "usd": 2.9,
-      "date": "2026-11-18",
+      "usd": 2.91,
+      "date": "2026-11-19",
       "terms": "US one-year rental index; General Index (GX); excludes hyperscalers",
       "source_url": "https://www.computedesk.com/indexes/h100"
     },
